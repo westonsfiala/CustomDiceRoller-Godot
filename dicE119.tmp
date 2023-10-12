@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://r1wcptjhbbjo"]
+
+[ext_resource type="Texture2D" uid="uid://be2p64g34ua5e" path="res://DiePNGs/basic/white/unknown-die.png" id="1_6s7rt"]
+
+[sub_resource type="GDScript" id="GDScript_3uqqx"]
+script/source = "extends TextureButton
+
+@export var roll_minimum : int = 1
+@export var roll_maximum : int = 20
+@export var dice_image : Texture2D
+
+func _ready():
+	texture_normal = dice_image
+
+func _on_pressed():
+	var dice_result = randi_range(roll_minimum, roll_maximum)
+	get_node(\"/root/Main\")._set_dice_result(dice_result)
+"
+
+[node name="DiceButton" type="TextureButton"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+action_mode = 0
+texture_normal = ExtResource("1_6s7rt")
+ignore_texture_size = true
+stretch_mode = 5
+script = SubResource("GDScript_3uqqx")
+dice_image = ExtResource("1_6s7rt")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
