@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://r1wcptjhbbjo"]
 
-[ext_resource type="Texture2D" uid="uid://be2p64g34ua5e" path="res://DiePNGs/basic/white/unknown-die.png" id="1_6s7rt"]
+[ext_resource type="Texture2D" uid="uid://be2p64g34ua5e" path="res://DicePNGs/basic/white/unknown-die.png" id="1_vo52k"]
 [ext_resource type="Script" path="res://button.gd" id="2_jjg4l"]
 
 [node name="DiceButton" type="TextureButton"]
@@ -13,10 +13,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 action_mode = 0
-texture_normal = ExtResource("1_6s7rt")
+texture_normal = ExtResource("1_vo52k")
 ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("2_jjg4l")
-dice_image = ExtResource("1_6s7rt")
+dice_image = ExtResource("1_vo52k")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

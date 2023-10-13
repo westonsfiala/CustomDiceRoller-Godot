@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://5vm2iatgmrxs"]
+[gd_scene load_steps=2 format=3 uid="uid://5vm2iatgmrxs"]
 
 [ext_resource type="Script" path="res://simple_roll.gd" id="1_tqmuk"]
-[ext_resource type="PackedScene" uid="uid://r1wcptjhbbjo" path="res://dice_button.tscn" id="2_a48lh"]
-[ext_resource type="Texture2D" uid="uid://bjpguo0k3luu2" path="res://DiePNGs/basic/white/d20.png" id="3_mxjsi"]
-[ext_resource type="Texture2D" uid="uid://dyy82xc5txgdr" path="res://DiePNGs/basic/white/d6.png" id="5_72rch"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("dice_result")]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +10,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tqmuk")
-dice_result = NodePath("Background/VBoxContainer/DiceResult")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -24,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.294118, 0.294118, 0.294118, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+[node name="VerticalLayout" type="VBoxContainer" parent="Background"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,22 +28,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Background/VBoxContainer"]
+[node name="DiceGrid" type="GridContainer" parent="Background/VerticalLayout"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
+columns = 3
 
-[node name="D20Button" parent="Background/VBoxContainer/HFlowContainer" instance=ExtResource("2_a48lh")]
+[node name="DiceResult" type="Label" parent="Background/VerticalLayout"]
 layout_mode = 2
-dice_image = ExtResource("3_mxjsi")
-
-[node name="D6Button" parent="Background/VBoxContainer/HFlowContainer" instance=ExtResource("2_a48lh")]
-layout_mode = 2
-roll_maximum = 6
-dice_image = ExtResource("5_72rch")
-
-[node name="DiceResult" type="Label" parent="Background/VBoxContainer"]
-layout_mode = 2
-text = "Temporary Text"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
