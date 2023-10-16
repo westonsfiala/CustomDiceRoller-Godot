@@ -28,11 +28,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DiceGrid" type="GridContainer" parent="Background/VerticalLayout"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/VerticalLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="DiceGrid" type="HFlowContainer" parent="Background/VerticalLayout/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 3
 
 [node name="DiceResult" type="Label" parent="Background/VerticalLayout"]
 layout_mode = 2

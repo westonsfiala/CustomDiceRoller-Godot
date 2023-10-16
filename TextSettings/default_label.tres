@@ -1,6 +1,6 @@
 [gd_resource type="LabelSettings" format=3 uid="uid://b6vgp8o1pg4rg"]
 
 [resource]
-font_size = 60
+font_size = 32
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
