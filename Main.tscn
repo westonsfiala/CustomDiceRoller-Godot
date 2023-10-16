@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4nvrn4hpsjtu"]
+
+[ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://simple_roll.tscn" id="1_1x8lj"]
+[ext_resource type="PackedScene" uid="uid://caksmi57k4y3t" path="res://history_screen.tscn" id="2_gmmby"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.294118, 0.294118, 0.294118, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Main" parent="ColorRect/ScrollContainer/HBoxContainer" instance=ExtResource("1_1x8lj")]
+layout_mode = 2
+
+[node name="HistoryScreen" parent="ColorRect/ScrollContainer/HBoxContainer" instance=ExtResource("2_gmmby")]
+layout_mode = 2
+size_flags_vertical = 1

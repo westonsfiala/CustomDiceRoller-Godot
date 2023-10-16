@@ -1,26 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://5vm2iatgmrxs"]
+[gd_scene load_steps=3 format=3 uid="uid://5vm2iatgmrxs"]
 
 [ext_resource type="Script" path="res://simple_roll.gd" id="1_tqmuk"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://TextSettings/settings_managed_label.tscn" id="2_gwd73"]
 
-[node name="Main" type="Control"]
+[node name="SimpleRoll" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_tqmuk")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.294118, 0.294118, 0.294118, 1)
-
-[node name="VerticalLayout" type="VBoxContainer" parent="Background"]
+[node name="VerticalLayout" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,18 +22,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Background/VerticalLayout"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VerticalLayout"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 0
 horizontal_scroll_mode = 0
 
-[node name="DiceGrid" type="HFlowContainer" parent="Background/VerticalLayout/ScrollContainer"]
+[node name="DiceGrid" type="HFlowContainer" parent="VerticalLayout/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DiceResult" type="Label" parent="Background/VerticalLayout"]
+[node name="DiceResult" parent="VerticalLayout" instance=ExtResource("2_gwd73")]
 layout_mode = 2
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
+text = "ROLL"

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://clickable_die.gd" id="1_3xkko"]
 [ext_resource type="Texture2D" uid="uid://o1xm76qu6h8h" path="res://DicePNGs/white/unknown-die.png" id="2_3b5f2"]
-[ext_resource type="LabelSettings" uid="uid://b6vgp8o1pg4rg" path="res://TextSettings/default_label.tres" id="3_jxxxj"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://TextSettings/settings_managed_label.tscn" id="3_2t56e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wugpb"]
 
@@ -23,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 script = ExtResource("1_3xkko")
 
 [node name="Button" type="Button" parent="."]
@@ -32,6 +33,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxFlat_wugpb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_wugpb")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_wugpb")
@@ -55,14 +57,7 @@ texture = ExtResource("2_3b5f2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DieName" type="Label" parent="Button/VerticalContainer"]
+[node name="DieName" parent="Button/VerticalContainer" instance=ExtResource("3_2t56e")]
 layout_mode = 2
-size_flags_vertical = 1
-size_flags_stretch_ratio = 0.2
-text = "TEMP"
-label_settings = ExtResource("3_jxxxj")
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

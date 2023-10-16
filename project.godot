@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Custom Dice Roller"
-run/main_scene="res://simple_roll.tscn"
+run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Settings="*res://settings.gd"
+SettingsManager="*res://settings_manager.gd"
+RollManager="*res://roll_manager.gd"
 
 [display]
 

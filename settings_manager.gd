@@ -45,3 +45,9 @@ func get_maximum_die_size() -> int:
 	
 func get_label_settings() -> LabelSettings:
 	return default_label_settings
+
+# Removes all the children nodes of a given node and frees them
+func remove_and_free_children(node: Node):
+	for n in node.get_children():
+		node.remove_child(n)
+		n.queue_free()

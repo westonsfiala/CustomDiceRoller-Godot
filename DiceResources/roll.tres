@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://7pjjqb1xl3bb"]
+
+[ext_resource type="Script" path="res://DiceResources/roll.gd" id="1_7uc4g"]
+
+[resource]
+script = ExtResource("1_7uc4g")
