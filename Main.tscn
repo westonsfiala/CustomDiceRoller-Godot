@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4nvrn4hpsjtu"]
+[gd_scene load_steps=4 format=3 uid="uid://d4nvrn4hpsjtu"]
 
 [ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://simple_roll.tscn" id="1_1x8lj"]
+[ext_resource type="Script" path="res://scroll_view.gd" id="1_jwrpk"]
 [ext_resource type="PackedScene" uid="uid://caksmi57k4y3t" path="res://history_screen.tscn" id="2_gmmby"]
 
 [node name="Main" type="Control"]
@@ -22,23 +23,34 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.294118, 0.294118, 0.294118, 1)
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-vertical_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer"]
+[node name="SceneScroller" type="ScrollContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("1_jwrpk")
+
+[node name="SceneContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer/SceneScroller"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Main" parent="ColorRect/ScrollContainer/HBoxContainer" instance=ExtResource("1_1x8lj")]
-layout_mode = 2
-
-[node name="HistoryScreen" parent="ColorRect/ScrollContainer/HBoxContainer" instance=ExtResource("2_gmmby")]
+[node name="HistoryScreen" parent="ColorRect/VBoxContainer/SceneScroller/SceneContainer" instance=ExtResource("2_gmmby")]
 layout_mode = 2
 size_flags_vertical = 1
+mouse_filter = 1
+
+[node name="SimpleRoll" parent="ColorRect/VBoxContainer/SceneScroller/SceneContainer" instance=ExtResource("1_1x8lj")]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="ScrollSnapTimer" type="Timer" parent="ColorRect/VBoxContainer/SceneScroller"]

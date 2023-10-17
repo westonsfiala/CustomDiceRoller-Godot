@@ -6,6 +6,7 @@ extends Control
 func _ready():
 	RollManager.new_roll_result.connect(add_history_item)
 	reconfigure()
+	custom_minimum_size.x = SettingsManager.get_window_size().x
 
 func reconfigure():
 	SettingsManager.remove_and_free_children(history_list)

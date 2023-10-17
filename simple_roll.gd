@@ -8,6 +8,7 @@ func _ready():
 	SettingsManager.reconfigure.connect(reconfigure)
 	RollManager.new_roll_result.connect(set_dice_result)
 	reconfigure()
+	custom_minimum_size.x = SettingsManager.get_window_size().x
 
 # Remove all of our currently set diced and place new ones
 func reconfigure():
