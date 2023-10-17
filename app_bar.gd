@@ -4,6 +4,7 @@ class_name AppBar
 @onready var name_label : Label = $ColorRect/NameLabel
 @onready var clear_history_button : Button = $ColorRect/ClearHistoryButton
 @onready var clear_history_image : TextureRect = $ColorRect/ClearHistoryButton/ClearHistoryImage
+@onready var clear_history_popup : PopupMenu = $ColorRect/ClearHistoryButton/ClearHistoryPopup
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,4 +34,8 @@ func reconfigure():
 	clear_history_image.position = Vector2.ONE * int(margin_padding/2.0)
 
 func _on_clear_history_button_pressed():
-	print("Clear History Pressed")
+	clear_history_popup.popup(Rect2i(clear_history_button.position, Vector2i.ZERO))
+
+func _on_clear_history_popup_index_pressed(_index):
+	print("Clearing History")
+	RollManager.clear_roll_history()

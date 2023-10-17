@@ -20,7 +20,8 @@ var margin_padding : int = 10
 
 enum {HISTORY_SCREEN, SIMPLE_ROLL}
 
-var default_label_settings : LabelSettings = preload("res://TextSettings/default_label.tres")
+var default_label_settings : LabelSettings = preload("res://TextSettings/default_normal_label.tres")
+var default_small_label_settings : LabelSettings = preload("res://TextSettings/default_small_label.tres")
 
 signal reconfigure()
 
@@ -51,6 +52,9 @@ func get_margin_padding() -> int:
 	
 func get_label_settings() -> LabelSettings:
 	return default_label_settings
+	
+func get_small_label_settings() -> LabelSettings:
+	return default_small_label_settings
 
 # Removes all the children nodes of a given node and frees them
 func remove_and_free_children(node: Node):

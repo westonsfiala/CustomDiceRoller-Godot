@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://d4nvrn4hpsjtu"]
 
 [ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://simple_roll.tscn" id="1_1x8lj"]
-[ext_resource type="Script" path="res://scroll_view.gd" id="1_jwrpk"]
 [ext_resource type="Script" path="res://main.gd" id="1_jwssx"]
 [ext_resource type="PackedScene" uid="uid://cqur83d6dqocf" path="res://app_bar.tscn" id="1_t0okv"]
 [ext_resource type="PackedScene" uid="uid://caksmi57k4y3t" path="res://history_screen.tscn" id="2_gmmby"]
+[ext_resource type="Script" path="res://scene_scroller.gd" id="3_6idua"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -44,7 +44,7 @@ size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
-script = ExtResource("1_jwrpk")
+script = ExtResource("3_6idua")
 
 [node name="ScrollSnapTimer" type="Timer" parent="ColorRect/VBoxContainer/SceneScroller"]
 

@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://bch2undeeqhje"]
+
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://TextSettings/settings_managed_label.tscn" id="1_iyjix"]
+[ext_resource type="PackedScene" uid="uid://ddjqvybswfgpm" path="res://scene_navigation_button.tscn" id="1_qi302"]
+[ext_resource type="LabelSettings" uid="uid://dqer082uhl6up" path="res://TextSettings/default_small_label.tres" id="2_t80uu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_noq0f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_51xo6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lvx26"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68ael"]
+
+[node name="SceneScrollButtonBar" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="HistoryButton" parent="ColorRect/ScrollContainer/HBoxContainer" instance=ExtResource("1_qi302")]
+layout_mode = 2
+
+[node name="SimpleRollButton" type="Button" parent="ColorRect/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_noq0f")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_51xo6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_lvx26")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_68ael")
+flat = true
+
+[node name="SimpleRollLabel" parent="ColorRect/ScrollContainer/HBoxContainer/SimpleRollButton" instance=ExtResource("1_iyjix")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+text = "Simple Roll"
+label_settings = ExtResource("2_t80uu")
+is_small_text = true
+
+[node name="ColorRect2" type="ColorRect" parent="ColorRect/ScrollContainer/HBoxContainer/SimpleRollButton"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 1, 1, 1)
