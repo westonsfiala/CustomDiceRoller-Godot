@@ -5,13 +5,17 @@ extends Control
 
 # Connect to the settings manager and setup the scene with all of our dice
 func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
 	RollManager.new_roll_result.connect(set_dice_result)
-	reconfigure()
-	custom_minimum_size.x = SettingsManager.get_window_size().x
+	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	deferred_reconfigure()
+	
+func deferred_reconfigure():
+	call_deferred("reconfigure")
 
 # Remove all of our currently set diced and place new ones
 func reconfigure():
+	print("reconfiguring simple roll")
+	custom_minimum_size.x = SettingsManager.get_window_size().x
 	SettingsManager.remove_and_free_children(dice_grid)
 	for die in SettingsManager.get_default_dice():
 		var dice_node = preload("res://clickable_die.tscn").instantiate()

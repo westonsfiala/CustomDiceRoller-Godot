@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4nvrn4hpsjtu"]
+[gd_scene load_steps=6 format=3 uid="uid://d4nvrn4hpsjtu"]
 
 [ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://simple_roll.tscn" id="1_1x8lj"]
 [ext_resource type="Script" path="res://scroll_view.gd" id="1_jwrpk"]
+[ext_resource type="Script" path="res://main.gd" id="1_jwssx"]
 [ext_resource type="PackedScene" uid="uid://cqur83d6dqocf" path="res://app_bar.tscn" id="1_t0okv"]
 [ext_resource type="PackedScene" uid="uid://caksmi57k4y3t" path="res://history_screen.tscn" id="2_gmmby"]
 
@@ -14,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_jwssx")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

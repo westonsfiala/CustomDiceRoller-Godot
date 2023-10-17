@@ -5,10 +5,15 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	RollManager.new_roll_result.connect(add_history_item)
-	reconfigure()
-	custom_minimum_size.x = SettingsManager.get_window_size().x
+	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	deferred_reconfigure()
+	
+func deferred_reconfigure():
+	call_deferred("reconfigure")
 
 func reconfigure():
+	print("reconfiguring history screen")
+	custom_minimum_size.x = SettingsManager.get_window_size().x
 	SettingsManager.remove_and_free_children(history_list)
 	for roll in RollManager.get_roll_history():
 		add_history_item(roll)

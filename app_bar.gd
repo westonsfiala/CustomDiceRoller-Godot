@@ -7,10 +7,14 @@ class_name AppBar
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
+	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	deferred_reconfigure()
+	
+func deferred_reconfigure():
 	call_deferred("reconfigure")
 	
 func reconfigure():
+	print("reconfiguring app bar")
 	var app_bar_size = SettingsManager.get_app_bar_size()
 	var margin_padding = SettingsManager.get_margin_padding()
 	var screen_size = SettingsManager.get_window_size()

@@ -11,6 +11,7 @@ var tween_duration : float = 0.5
 func _ready():
 	h_scroll_bar.value_changed.connect(value_changed_helper)
 	scroll_snap_timer.timeout.connect(snap_scroll_to_page)
+	scroll_to_page(SettingsManager.get_default_app_page(), 0.0)
 	
 func _on_scroll_ended():
 	call_deferred("snap_scroll_to_page")
@@ -18,12 +19,16 @@ func _on_scroll_ended():
 func value_changed_helper(_value: float):
 	scroll_snap_timer.start(timer_duration)
 	
+func scroll_to_page(page: int, duration: float):
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(h_scroll_bar, "value", page * SettingsManager.get_window_size().x, duration)
+	
 func snap_scroll_to_page():
-	scroll_snap_timer.stop()
 	print("starting screen snap")
+	scroll_snap_timer.stop()
 	var current_position = int(h_scroll_bar.value)
-	var num_scenes = scene_container.get_child_count(false)
-	var step_size = int(h_scroll_bar.max_value / num_scenes)
+	var step_size = int(SettingsManager.get_window_size().x)
 	var step_remainer = current_position % step_size
 	var destination_position = 0
 	var move_distance = 0

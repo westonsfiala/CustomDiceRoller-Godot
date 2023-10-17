@@ -18,11 +18,14 @@ var dice_size : int = 150
 var app_bar_size : int = 75
 var margin_padding : int = 10
 
+enum {HISTORY_SCREEN, SIMPLE_ROLL}
+
 var default_label_settings : LabelSettings = preload("res://TextSettings/default_label.tres")
 
 signal reconfigure()
 
 func trigger_reconfigure():
+	print("triggering reconfigure")
 	emit_signal("reconfigure")
 
 func get_default_die() -> AbstractDie:
@@ -30,6 +33,9 @@ func get_default_die() -> AbstractDie:
 
 func get_default_dice() -> Array[AbstractDie]:
 	return default_dice_array
+	
+func get_default_app_page() -> int:
+	return SIMPLE_ROLL
 	
 func get_window_size() -> Vector2:
 	return DisplayServer.window_get_size()

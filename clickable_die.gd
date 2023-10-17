@@ -10,7 +10,7 @@ var m_die : AbstractDie = SettingsManager.get_default_die()
 signal die_pressed(die: AbstractDie)
 
 func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
+	SettingsManager.reconfigure.connect(deferred_reconfigure)
 
 # Initializer that takes a die and connects to the SettingsManager
 func configure(die : AbstractDie):
@@ -19,8 +19,12 @@ func configure(die : AbstractDie):
 	die_image.texture = m_die.texture()
 	reconfigure()
 	
+func deferred_reconfigure():
+	call_deferred("reconfigure")
+	
 # Reconfigures the scene according to the settings
 func reconfigure() -> void:
+	print("reconfiguring clickable die")
 	var new_width = SettingsManager.get_dice_size()
 	var new_size = Vector2(new_width, new_width * 1.25)
 	
