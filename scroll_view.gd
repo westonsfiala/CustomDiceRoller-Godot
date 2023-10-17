@@ -12,13 +12,15 @@ func _ready():
 	h_scroll_bar.value_changed.connect(value_changed_helper)
 	scroll_snap_timer.timeout.connect(snap_scroll_to_page)
 	
-func value_changed_helper(value: float):
-	print(str("value = ", value))
+func _on_scroll_ended():
+	call_deferred("snap_scroll_to_page")
+	
+func value_changed_helper(_value: float):
 	scroll_snap_timer.start(timer_duration)
 	
 func snap_scroll_to_page():
 	scroll_snap_timer.stop()
-	print("starting snap")
+	print("starting screen snap")
 	var current_position = int(h_scroll_bar.value)
 	var num_scenes = scene_container.get_child_count(false)
 	var step_size = int(h_scroll_bar.max_value / num_scenes)
@@ -38,5 +40,4 @@ func snap_scroll_to_page():
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(h_scroll_bar, "value", destination_position, tween_duration * duration_modifier)
-	
-	
+

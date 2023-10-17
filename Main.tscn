@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4nvrn4hpsjtu"]
+[gd_scene load_steps=5 format=3 uid="uid://d4nvrn4hpsjtu"]
 
 [ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://simple_roll.tscn" id="1_1x8lj"]
 [ext_resource type="Script" path="res://scroll_view.gd" id="1_jwrpk"]
+[ext_resource type="PackedScene" uid="uid://cqur83d6dqocf" path="res://app_bar.tscn" id="1_t0okv"]
 [ext_resource type="PackedScene" uid="uid://caksmi57k4y3t" path="res://history_screen.tscn" id="2_gmmby"]
 
 [node name="Main" type="Control"]
@@ -30,6 +31,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="AppBar" parent="ColorRect/VBoxContainer" instance=ExtResource("1_t0okv")]
+layout_mode = 2
 
 [node name="SceneScroller" type="ScrollContainer" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
@@ -39,10 +44,13 @@ horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 script = ExtResource("1_jwrpk")
 
+[node name="ScrollSnapTimer" type="Timer" parent="ColorRect/VBoxContainer/SceneScroller"]
+
 [node name="SceneContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer/SceneScroller"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 0
 
 [node name="HistoryScreen" parent="ColorRect/VBoxContainer/SceneScroller/SceneContainer" instance=ExtResource("2_gmmby")]
 layout_mode = 2
@@ -53,4 +61,4 @@ mouse_filter = 1
 layout_mode = 2
 size_flags_vertical = 1
 
-[node name="ScrollSnapTimer" type="Timer" parent="ColorRect/VBoxContainer/SceneScroller"]
+[connection signal="scroll_ended" from="ColorRect/VBoxContainer/SceneScroller" to="ColorRect/VBoxContainer/SceneScroller" method="_on_scroll_ended"]

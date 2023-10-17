@@ -15,10 +15,10 @@ var default_dice_array : Array[AbstractDie] = [fate, d2, d3, d4, d6, d8, d10, d1
 
 var dice_size : int = 150
 
-var default_label_settings : LabelSettings = preload("res://TextSettings/default_label.tres")
+var app_bar_size : int = 75
+var margin_padding : int = 10
 
-var minimum_die_size : int = 100
-var maximum_die_size : int = 500
+var default_label_settings : LabelSettings = preload("res://TextSettings/default_label.tres")
 
 signal reconfigure()
 
@@ -37,11 +37,11 @@ func get_window_size() -> Vector2:
 func get_dice_size() -> int:
 	return dice_size
 	
-func get_minimum_die_size() -> int:
-	return minimum_die_size
+func get_app_bar_size() -> int:
+	return app_bar_size
 	
-func get_maximum_die_size() -> int:
-	return maximum_die_size
+func get_margin_padding() -> int:
+	return margin_padding
 	
 func get_label_settings() -> LabelSettings:
 	return default_label_settings
