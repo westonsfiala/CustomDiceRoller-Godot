@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="AbstractDie" load_steps=2 format=3 uid="uid://siw4y0fwdcut"]
-
-[ext_resource type="Script" path="res://DiceResources/abstract_die.gd" id="1_q6i5q"]
-
-[resource]
-script = ExtResource("1_q6i5q")
-name = ""
-type = ""
