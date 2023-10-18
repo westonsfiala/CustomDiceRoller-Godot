@@ -15,7 +15,7 @@ var default_dice_array : Array[AbstractDie] = [fate, d2, d3, d4, d6, d8, d10, d1
 
 var dice_size : int = 150
 
-var app_bar_size : int = 75
+var app_bar_size : int = 50
 var margin_padding : int = 10
 
 enum SCENE {HISTORY, SIMPLE_ROLL, NUM_SCENES}

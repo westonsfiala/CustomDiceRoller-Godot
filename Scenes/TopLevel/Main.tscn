@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4nvrn4hpsjtu"]
+[gd_scene load_steps=6 format=3 uid="uid://d4nvrn4hpsjtu"]
 
 [ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://Scenes/SimpleRollPage/simple_roll.tscn" id="1_1x8lj"]
 [ext_resource type="Script" path="res://Scenes/TopLevel/Scripts/main.gd" id="1_jwssx"]
 [ext_resource type="PackedScene" uid="uid://cqur83d6dqocf" path="res://Scenes/AppBar/app_bar.tscn" id="1_t0okv"]
 [ext_resource type="PackedScene" uid="uid://caksmi57k4y3t" path="res://Scenes/HistoryPage/history_screen.tscn" id="2_gmmby"]
 [ext_resource type="Script" path="res://Scenes/TopLevel/Scripts/scene_scroller.gd" id="3_6idua"]
-[ext_resource type="PackedScene" uid="uid://bch2undeeqhje" path="res://Scenes/AppBar/scene_scroll_button_bar.tscn" id="3_jxnqm"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -39,11 +38,6 @@ theme_override_constants/separation = 0
 [node name="AppBar" parent="ColorRect/VBoxContainer" instance=ExtResource("1_t0okv")]
 layout_mode = 2
 mouse_filter = 1
-
-[node name="SceneScrollButtonBar" parent="ColorRect/VBoxContainer" instance=ExtResource("3_jxnqm")]
-layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
 
 [node name="SceneScroller" type="ScrollContainer" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
