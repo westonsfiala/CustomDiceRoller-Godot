@@ -53,7 +53,6 @@ func set_scene_scroll_value(value: int):
 	emit_signal("scene_scroll_value_changed", value)
 	
 func set_scrolled_scene(scene: SCENE):
-	print(str("Navigating to: ", get_scene_name(scene)))
 	emit_signal("navigate_to_scene", scene)
 	
 func get_window_size() -> Vector2:

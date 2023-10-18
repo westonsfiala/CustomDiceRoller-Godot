@@ -8,6 +8,7 @@ func _ready():
 	
 # Reconfigures the scene according to the settings
 func reconfigure():
+	print("reconfiguring label")
 	if is_small_text:
 		label_settings = SettingsManager.get_small_label_settings()
 	else:
