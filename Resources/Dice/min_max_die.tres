@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dy0b360v6oihg"]
+
+[ext_resource type="Script" path="res://Resources/Dice/Scripts/min_max_die.gd" id="1_8c6hr"]
+
+[resource]
+script = ExtResource("1_8c6hr")
+name = ""
+type = ""
+info = ""
