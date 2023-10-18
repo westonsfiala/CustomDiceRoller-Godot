@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://caksmi57k4y3t"]
+[gd_scene load_steps=3 format=3 uid="uid://caksmi57k4y3t"]
 
 [ext_resource type="Script" path="res://history_screen.gd" id="1_blngv"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://TextSettings/settings_managed_label.tscn" id="2_8maqh"]
 
 [node name="HistoryScreen" type="Control"]
 layout_mode = 3
@@ -26,3 +27,8 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="EmptyHistoryLabel" parent="." instance=ExtResource("2_8maqh")]
+layout_mode = 1
+text = "No History
+Get Rolling!"

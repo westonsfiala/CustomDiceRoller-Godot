@@ -18,12 +18,14 @@ var dice_size : int = 150
 var app_bar_size : int = 75
 var margin_padding : int = 10
 
-enum {HISTORY_SCREEN, SIMPLE_ROLL}
+enum SCENE {HISTORY, SIMPLE_ROLL, NUM_SCENES}
 
 var default_label_settings : LabelSettings = preload("res://TextSettings/default_normal_label.tres")
 var default_small_label_settings : LabelSettings = preload("res://TextSettings/default_small_label.tres")
 
 signal reconfigure()
+signal scene_scroll_value_changed(value: int)
+signal navigate_to_scene(scene: SCENE)
 
 func trigger_reconfigure():
 	print("triggering reconfigure")
@@ -32,14 +34,33 @@ func trigger_reconfigure():
 func get_default_die() -> AbstractDie:
 	return default_die
 
-func get_default_dice() -> Array[AbstractDie]:
+func get_dice() -> Array[AbstractDie]:
 	return default_dice_array
 	
 func get_default_app_page() -> int:
-	return SIMPLE_ROLL
+	return SCENE.SIMPLE_ROLL
+
+func get_scene_name(scene_enum: SCENE) -> String:
+	match scene_enum:
+		SCENE.HISTORY: 
+			return "History"
+		SCENE.SIMPLE_ROLL: 
+			return "Simple Roll"
+		_:
+			return "TEMP"
+	
+func set_scene_scroll_value(value: int):
+	emit_signal("scene_scroll_value_changed", value)
+	
+func set_scrolled_scene(scene: SCENE):
+	print(str("Navigating to: ", get_scene_name(scene)))
+	emit_signal("navigate_to_scene", scene)
 	
 func get_window_size() -> Vector2:
 	return DisplayServer.window_get_size()
+	
+func get_num_scrollable_scenes() -> int:
+	return SCENE.NUM_SCENES
 	
 func get_dice_size() -> int:
 	return dice_size

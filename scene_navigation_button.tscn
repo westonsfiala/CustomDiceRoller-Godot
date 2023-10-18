@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddjqvybswfgpm"]
+[gd_scene load_steps=8 format=3 uid="uid://ddjqvybswfgpm"]
 
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://TextSettings/settings_managed_label.tscn" id="1_nkq6i"]
+[ext_resource type="Script" path="res://scene_navigation_button.gd" id="1_qfewp"]
 [ext_resource type="LabelSettings" uid="uid://dqer082uhl6up" path="res://TextSettings/default_small_label.tres" id="2_wd6na"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ussln"]
@@ -11,7 +12,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ywhy"]
 
-[node name="HistoryButton" type="Button"]
+[node name="SceneNavigationButton" type="Button"]
 custom_minimum_size = Vector2(150, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,20 +26,11 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_w0jkl")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_2fg2w")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2ywhy")
 flat = true
+script = ExtResource("1_qfewp")
 
-[node name="HistoryLabel" parent="." instance=ExtResource("1_nkq6i")]
+[node name="SceneNameLabel" parent="." instance=ExtResource("1_nkq6i")]
 layout_mode = 1
-text = "History"
 label_settings = ExtResource("2_wd6na")
 is_small_text = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(0, 5)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0, 1, 1, 1)
+[connection signal="pressed" from="." to="." method="_on_pressed"]
