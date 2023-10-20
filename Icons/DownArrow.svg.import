@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddurpjpqyfl0m"
-path="res://.godot/imported/BurningBook.png-7befb109f3333b145667d37a49d2ece0.ctex"
+uid="uid://bb1rdbn37n0gc"
+path="res://.godot/imported/DownArrow.svg-a31a4409f17bfdfde1b3b425b37b85b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Icons/BurningBook.png"
-dest_files=["res://.godot/imported/BurningBook.png-7befb109f3333b145667d37a49d2ece0.ctex"]
+source_file="res://Icons/DownArrow.svg"
+dest_files=["res://.godot/imported/DownArrow.svg-a31a4409f17bfdfde1b3b425b37b85b3.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/AppBar/Scripts/app_bar.gd" id="1_lm3o7"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="2_k271n"]
-[ext_resource type="Texture2D" uid="uid://ddurpjpqyfl0m" path="res://Icons/BurningBook.png" id="3_fomf7"]
+[ext_resource type="Texture2D" uid="uid://bqubwal71vuw3" path="res://Icons/BurningBook.svg" id="3_76rtm"]
 [ext_resource type="PackedScene" uid="uid://bch2undeeqhje" path="res://Scenes/AppBar/scene_scroll_button_bar.tscn" id="4_eob71"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7b1vp"]
@@ -92,7 +92,7 @@ offset_right = -5.0
 offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_fomf7")
+texture = ExtResource("3_76rtm")
 expand_mode = 1
 
 [node name="ClearHistoryPopup" type="PopupMenu" parent="ColorRect/VBoxContainer/Container/ClearHistoryButton"]

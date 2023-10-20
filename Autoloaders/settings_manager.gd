@@ -14,9 +14,11 @@ var d100 : MinMaxDie = MinMaxDie.new("d100", 1, 100, preload("res://DicePNGs/whi
 var default_dice_array : Array[AbstractDie] = [fate, d2, d3, d4, d6, d8, d10, d12, d20, d100]
 
 var dice_size : int = 150
-
+var button_size : int = 50
+var text_size : int = 50
+var text_size_small : int = 35
 var app_bar_size : int = 50
-var margin_padding : int = 10
+var margin_padding : int = 5
 
 enum SCENE {HISTORY, SIMPLE_ROLL, NUM_SCENES}
 
@@ -63,6 +65,15 @@ func get_num_scrollable_scenes() -> int:
 	
 func get_dice_size() -> int:
 	return dice_size
+	
+func get_button_size() -> int:
+	return button_size
+	
+func get_text_size() -> int:
+	return text_size
+	
+func get_text_size_small() -> int:
+	return text_size_small
 	
 func get_app_bar_size() -> int:
 	return app_bar_size
