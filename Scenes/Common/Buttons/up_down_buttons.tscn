@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://c6j8433ge4v87"]
 
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/up_down_buttons.gd" id="1_o2tqo"]
-[ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/UpArrow.svg" id="2_a0tp4"]
-[ext_resource type="PackedScene" uid="uid://b3qfehguf750m" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_qfj8j"]
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_52mnr"]
+[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/DownArrow.svg" id="3_48qfq"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="3_c7vqn"]
-[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/DownArrow.svg" id="4_cvhh6"]
+[ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/UpArrow.svg" id="5_4rc5u"]
 
 [node name="UpDownButtons" type="Control"]
 custom_minimum_size = Vector2(0, 75)
@@ -16,6 +16,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
+mouse_filter = 1
 script = ExtResource("1_o2tqo")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -30,17 +31,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="DownButton" parent="HBoxContainer" instance=ExtResource("2_qfj8j")]
+[node name="DownButton" parent="HBoxContainer" instance=ExtResource("2_52mnr")]
 layout_mode = 2
-texture_2d = ExtResource("4_cvhh6")
+texture_2d = ExtResource("3_48qfq")
 
 [node name="ValueLabel" parent="HBoxContainer" instance=ExtResource("3_c7vqn")]
 layout_mode = 2
 
-[node name="UpButton" parent="HBoxContainer" instance=ExtResource("2_qfj8j")]
+[node name="UpButton" parent="HBoxContainer" instance=ExtResource("2_52mnr")]
 layout_mode = 2
-texture_2d = ExtResource("2_a0tp4")
+texture_2d = ExtResource("5_4rc5u")
 
-[connection signal="button_down" from="HBoxContainer/DownButton" to="." method="_on_down_button_button_down"]
-[connection signal="pressed" from="HBoxContainer/DownButton" to="." method="_on_down_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/UpButton" to="." method="_on_up_button_pressed"]
+[connection signal="long_pressed" from="HBoxContainer/DownButton" to="." method="_on_down_button_long_pressed"]
+[connection signal="short_pressed" from="HBoxContainer/DownButton" to="." method="_on_down_button_short_pressed"]
+[connection signal="long_pressed" from="HBoxContainer/UpButton" to="." method="_on_up_button_long_pressed"]
+[connection signal="short_pressed" from="HBoxContainer/UpButton" to="." method="_on_up_button_short_pressed"]

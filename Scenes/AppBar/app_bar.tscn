@@ -49,13 +49,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="NameLabel" parent="ColorRect/VBoxContainer/Container" instance=ExtResource("2_k271n")]
-custom_minimum_size = Vector2(0, 50)
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -24.0
-offset_bottom = 24.0
 size_flags_horizontal = 1
 text = "RPG Dice Roller"
 horizontal_alignment = 0

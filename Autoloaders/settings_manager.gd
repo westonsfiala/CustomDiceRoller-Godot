@@ -20,6 +20,8 @@ var text_size_small : int = 35
 var app_bar_size : int = 50
 var margin_padding : int = 5
 
+const LONG_PRESS_DELAY : float = 0.5
+
 enum SCENE {HISTORY, SIMPLE_ROLL, NUM_SCENES}
 
 var default_label_settings : LabelSettings = preload("res://Resources/Styles/default_normal_label.tres")

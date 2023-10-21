@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://cvvyt7shl1nu3"]
+
+[ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/long_press_button.gd" id="1_aj1xq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3kpd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qx1bq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vc7qd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a1qrc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q2bs8"]
+
+[node name="LongPressButton" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxEmpty_t3kpd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qx1bq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vc7qd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_a1qrc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_q2bs8")
+flat = true
+script = ExtResource("1_aj1xq")
+
+[node name="LongPressTimer" type="Timer" parent="."]
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="timeout" from="LongPressTimer" to="." method="_on_long_press_timer_timeout"]

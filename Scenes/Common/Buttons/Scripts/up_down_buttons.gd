@@ -4,9 +4,9 @@ extends Control
 @export var show_plus_minus : bool
 @export var disallow_zero : bool
 
-@onready var down_button : Button = $HBoxContainer/DownButton
+@onready var down_button : LongPressButton = $HBoxContainer/DownButton
 @onready var label : Label = $HBoxContainer/ValueLabel
-@onready var up_button : Button = $HBoxContainer/UpButton
+@onready var up_button : LongPressButton = $HBoxContainer/UpButton
 
 var m_value : int = 0
 
@@ -78,12 +78,14 @@ func snap_to_next_increment(value_in: int, step_size: int) -> int:
 		return -value_rem + step_size
 
 # Decrement when pressed
-func _on_down_button_pressed():
+func _on_down_button_short_pressed():
 	handle_change(-1)
 
-func _on_down_button_button_down():
-	pass # Replace with function body.
+func _on_down_button_long_pressed():
+	handle_change(-100)
 
-# Increment when pressed
-func _on_up_button_pressed():
+func _on_up_button_short_pressed():
 	handle_change(1)
+
+func _on_up_button_long_pressed():
+	handle_change(100)
