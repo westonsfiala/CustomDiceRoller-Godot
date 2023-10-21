@@ -17,7 +17,6 @@ var dice_size : int = 150
 var button_size : int = 50
 var text_size : int = 50
 var text_size_small : int = 35
-var app_bar_size : int = 50
 var margin_padding : int = 5
 
 const LONG_PRESS_DELAY : float = 0.5
@@ -41,7 +40,7 @@ func get_default_die() -> AbstractDie:
 func get_dice() -> Array[AbstractDie]:
 	return default_dice_array
 	
-func get_default_app_page() -> int:
+func get_default_app_scene() -> int:
 	return SCENE.SIMPLE_ROLL
 
 func get_scene_name(scene_enum: SCENE) -> String:
@@ -76,9 +75,6 @@ func get_text_size() -> int:
 	
 func get_text_size_small() -> int:
 	return text_size_small
-	
-func get_app_bar_size() -> int:
-	return app_bar_size
 	
 func get_margin_padding() -> int:
 	return margin_padding

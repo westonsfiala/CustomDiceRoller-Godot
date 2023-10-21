@@ -1,9 +1,9 @@
 extends Control
 
-@onready var scroll_container_h_bar : HScrollBar = $ColorRect/VBoxContainer/ScrollContainer.get_h_scroll_bar()
-@onready var synced_scroll_bar : HScrollBar = $ColorRect/VBoxContainer/ScrollContainer/VBoxContainer/SyncedScrollBar
-@onready var history_button : Button = $ColorRect/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/HistoryButton
-@onready var simple_roll_button : Button = $ColorRect/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/SimpleRollButton
+@onready var scroll_container_h_bar : HScrollBar = $ColorRect/ScrollContainer.get_h_scroll_bar()
+@onready var synced_scroll_bar : HScrollBar = $ColorRect/ScrollContainer/VBoxContainer/SyncedScrollBar
+@onready var history_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/HistoryButton
+@onready var simple_roll_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/SimpleRollButton
 
 func _ready():
 	history_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
@@ -20,8 +20,10 @@ func deferred_reconfigure():
 func reconfigure():
 	print("reconfiguring scene scroll bar")
 	var page_size = SettingsManager.get_window_size().x
+	var margin_size = SettingsManager.get_margin_padding()
 	synced_scroll_bar.max_value = page_size * SettingsManager.get_num_scrollable_scenes()
 	synced_scroll_bar.page = page_size
+	synced_scroll_bar.custom_minimum_size.y = margin_size
 	
 # Set the scroll value, and match the scrolling of the buttons to match.
 # If we have manually scrolled the bar in the direction of movement already, don't update that scrolling

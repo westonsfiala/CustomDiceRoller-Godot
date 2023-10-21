@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnb44mjrsn3rh"]
+
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="1_ft43c"]
+[ext_resource type="Script" path="res://Scenes/AppBar/Scripts/scene_button.gd" id="2_hiens"]
+
+[node name="SceneButton" instance=ExtResource("1_ft43c")]
+custom_minimum_size = Vector2(150, 50)
+script = ExtResource("2_hiens")
+scene_enum = 0
+
+[node name="SettingsManagedLabel" parent="." index="1"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -24.0
+offset_bottom = 24.0
+
+[connection signal="short_pressed" from="." to="." method="_on_short_pressed"]

@@ -1,17 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqur83d6dqocf"]
+[gd_scene load_steps=4 format=3 uid="uid://cqur83d6dqocf"]
 
 [ext_resource type="Script" path="res://Scenes/AppBar/Scripts/app_bar.gd" id="1_lm3o7"]
-[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="2_k271n"]
-[ext_resource type="Texture2D" uid="uid://bqubwal71vuw3" path="res://Icons/BurningBook.svg" id="3_76rtm"]
+[ext_resource type="PackedScene" uid="uid://dsds4ja55fu4e" path="res://Scenes/AppBar/title_bar.tscn" id="2_kqjy6"]
 [ext_resource type="PackedScene" uid="uid://bch2undeeqhje" path="res://Scenes/AppBar/scene_scroll_button_bar.tscn" id="4_eob71"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7b1vp"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_34wgi"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ch8bf"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w1bqq"]
 
 [node name="AppBar" type="Control"]
 custom_minimum_size = Vector2(0, 100)
@@ -44,62 +35,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Container" type="Control" parent="ColorRect/VBoxContainer"]
+[node name="TitleBar" parent="ColorRect/VBoxContainer" instance=ExtResource("2_kqjy6")]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="NameLabel" parent="ColorRect/VBoxContainer/Container" instance=ExtResource("2_k271n")]
-layout_mode = 1
-size_flags_horizontal = 1
-text = "RPG Dice Roller"
-horizontal_alignment = 0
-
-[node name="ClearHistoryButton" type="Button" parent="ColorRect/VBoxContainer/Container"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -25.0
-offset_bottom = 25.0
-grow_horizontal = 0
-grow_vertical = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxEmpty_7b1vp")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_34wgi")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_ch8bf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_w1bqq")
-
-[node name="ClearHistoryImage" type="TextureRect" parent="ColorRect/VBoxContainer/Container/ClearHistoryButton"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_76rtm")
-expand_mode = 1
-
-[node name="ClearHistoryPopup" type="PopupMenu" parent="ColorRect/VBoxContainer/Container/ClearHistoryButton"]
-size = Vector2i(129, 35)
-item_count = 1
-item_0/text = "Clear History"
-item_0/id = 0
 
 [node name="SceneScrollButtonBar" parent="ColorRect/VBoxContainer" instance=ExtResource("4_eob71")]
-custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-
-[connection signal="pressed" from="ColorRect/VBoxContainer/Container/ClearHistoryButton" to="." method="_on_clear_history_button_pressed"]
-[connection signal="index_pressed" from="ColorRect/VBoxContainer/Container/ClearHistoryButton/ClearHistoryPopup" to="." method="_on_clear_history_popup_index_pressed"]

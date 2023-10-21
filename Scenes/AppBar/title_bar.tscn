@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsds4ja55fu4e"]
+
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="1_25e37"]
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_0p24n"]
+[ext_resource type="Texture2D" uid="uid://bqubwal71vuw3" path="res://Icons/BurningBook.svg" id="3_g17ps"]
+
+[node name="Container" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_vertical = 3
+
+[node name="NameLabel" parent="." instance=ExtResource("1_25e37")]
+layout_mode = 1
+size_flags_horizontal = 1
+text = "RPG Dice Roller"
+horizontal_alignment = 0
+
+[node name="ClearHistoryButton" parent="." instance=ExtResource("2_0p24n")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_top = -25.0
+offset_bottom = 25.0
+grow_horizontal = 0
+texture_2d = ExtResource("3_g17ps")
