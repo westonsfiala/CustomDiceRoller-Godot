@@ -3,6 +3,8 @@ extends Control
 @onready var dice_result : Label = $VerticalLayout/DiceResult
 @onready var dice_grid : HFlowContainer = $VerticalLayout/ScrollContainer/DiceGrid
 @onready var no_dice_label : Label = $NoDiceLabel
+@onready var num_dice_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown
+@onready var modifier_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown
 
 # Connect to the settings manager and setup the scene with all of our dice
 func _ready():
@@ -28,8 +30,8 @@ func reconfigure():
 # Roll the die that was clicked and set the results
 func roll_die(die: AbstractDie):
 	var roll_props = RollProperties.new({
-		RollProperties.NUM_DICE : 1, 
-		RollProperties.DICE_MODIFIER : 0,
+		RollProperties.NUM_DICE : num_dice_buttons.get_value(), 
+		RollProperties.DICE_MODIFIER : modifier_buttons.get_value(),
 		})
 	RollManager.simple_roll(die, roll_props)
 

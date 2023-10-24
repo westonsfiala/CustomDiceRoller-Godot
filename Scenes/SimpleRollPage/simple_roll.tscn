@@ -50,6 +50,11 @@ size_flags_horizontal = 3
 postfix = "d"
 disallow_zero = true
 
+[node name="ModifierUpDown" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("3_6vjsp")]
+layout_mode = 2
+size_flags_horizontal = 3
+show_plus_minus = true
+
 [node name="NoDiceLabel" parent="." instance=ExtResource("2_gwd73")]
 layout_mode = 1
 text = "No Dice Added"
