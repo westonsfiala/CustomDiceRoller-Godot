@@ -77,6 +77,13 @@ func configure(props : Dictionary) -> RollProperties:
 func check_key_value_correctness(prop_name: StringName, value: Variant) -> bool:
 	return PROPERTY_DEFAULT_MAP.has(prop_name) and typeof(value) == typeof(PROPERTY_DEFAULT_MAP[prop_name])
 
+# Check if all of the properties are default values.
+func is_default() -> bool:
+	for prop in PROPERTY_DEFAULT_MAP:
+		if(not property_equals_default(prop)):
+			return false
+	return true
+
 # Adds the prop value pair. Checks key value correctness.
 # If the property was added.
 func add_property(prop_name: StringName, value: Variant) -> bool:
@@ -87,10 +94,14 @@ func add_property(prop_name: StringName, value: Variant) -> bool:
 	return false
 	
 # Safely gets the property. 
-# Returns the property value, or 0 is property is missing.
+# Returns the property value if present in the properties.
+# Returns the default value if not in properties, but key is valid.
+# Returns 0 if key is invalid.
 func get_property(prop_name: StringName) -> Variant:
 	if(m_property_map.has(prop_name)):
 		return m_property_map[prop_name]
+	if(PROPERTY_DEFAULT_MAP.has(prop_name)):
+		return PROPERTY_DEFAULT_MAP[prop_name]
 	return 0
 
 # Checks if the property equals the given value.

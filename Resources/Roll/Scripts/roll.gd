@@ -64,4 +64,42 @@ func get_total_dice_in_roll() -> int:
 		func(accum,die_prop_pair): return die_prop_pair.m_roll_properties.get_property(RollProperties.NUM_DICE_IDENTIFIER), 
 		0)
 
+# Moves the die at the given position up in the order.
+# Returns if the die moved.
+func move_die_up(position: int) -> bool:
+	var array_size = m_die_prop_array.size()
+	# Can't move something up when its already at the top
+	# Or if there is nothing
+	# Or if there is only one thing
+	# Or if its past where we can access
+	if(position <= 0 or array_size == 0 or array_size == 1 or position >= array_size):
+		return false
+
+	var newMapStart = m_die_prop_array.slice(0, position-1);
+	var swappedElement = m_die_prop_array.slice(position-1, position);
+	var movedEntry = m_die_prop_array.slice(position, position+1);
+	var newMapEnd = m_die_prop_array.slice(position+1, array_size);
+	
+	m_die_prop_array = newMapStart + movedEntry + swappedElement + newMapEnd
+	return true
+
+# Moves the die at the given position down in the order.
+# Returns if the die moved.
+func move_die_down(position: int) -> bool:
+	var array_size = m_die_prop_array.size()
+	# Can't move something down when its already at the top
+	# Or if there is nothing
+	# Or if there is only one thing
+	# Or if its past where we can access
+	if(position < 0 or array_size == 0 or array_size == 1 or position >= array_size - 1):
+		return false
+
+	var newMapStart = m_die_prop_array.slice(0, position);
+	var movedEntry = m_die_prop_array.slice(position, position+1);
+	var swappedElement = m_die_prop_array.slice(position+1, position+2);
+	var newMapEnd = m_die_prop_array.slice(position+2, array_size);
+	
+	m_die_prop_array = newMapStart + movedEntry + swappedElement + newMapEnd
+	return true
+
 
