@@ -4,12 +4,13 @@ class_name MinMaxDie
 var min_bound : int
 var max_bound : int
 
-func configure(die_name: String, bound1: int, bound2: int, die_texture: Texture2D):
+func configure(die_name: String, bound1: int, bound2: int, die_texture: Texture2D) -> MinMaxDie:
 	m_name = die_name
 	min_bound = min(bound1, bound2)
 	max_bound = max(bound1, bound2)
 	m_info = str('Rolls a number between ', min_bound, ' and ', max_bound, '\nAverage of ', average())
 	m_texture = die_texture
+	return self
 
 func roll() -> int:
 	return randi_range(min_bound, max_bound)

@@ -29,9 +29,9 @@ func reconfigure():
 
 # Roll the die that was clicked and set the results
 func roll_die(die: AbstractDie):
-	var roll_props = RollProperties.new({
-		RollProperties.NUM_DICE : num_dice_buttons.get_value(), 
-		RollProperties.DICE_MODIFIER : modifier_buttons.get_value(),
+	var roll_props = RollProperties.new().configure({
+		RollProperties.NUM_DICE_IDENTIFIER : num_dice_buttons.get_value(), 
+		RollProperties.DICE_MODIFIER_IDENTIFIER : modifier_buttons.get_value(),
 		})
 	RollManager.simple_roll(die, roll_props)
 
