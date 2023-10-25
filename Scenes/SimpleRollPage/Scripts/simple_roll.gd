@@ -22,8 +22,8 @@ func reconfigure():
 	SettingsManager.remove_and_free_children(dice_grid)
 	for die in SettingsManager.get_dice():
 		var dice_node = preload("res://Scenes/Common/Buttons/clickable_die.tscn").instantiate()
-		dice_node.die_pressed.connect(roll_die)
 		dice_grid.add_child(dice_node)
+		dice_node.die_pressed.connect(roll_die)
 		dice_node.configure(die)
 	refresh_no_dice()
 

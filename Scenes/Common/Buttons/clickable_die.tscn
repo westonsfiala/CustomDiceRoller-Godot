@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctkbps8l4pw6u"]
+[gd_scene load_steps=5 format=3 uid="uid://ctkbps8l4pw6u"]
 
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/clickable_die.gd" id="1_3xkko"]
 [ext_resource type="Texture2D" uid="uid://o1xm76qu6h8h" path="res://DicePNGs/white/unknown-die.png" id="2_3b5f2"]
+[ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="2_apn0u"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="3_2t56e"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wugpb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sf4aa"]
 
 [node name="ClickableDie" type="Control"]
 layout_mode = 3
@@ -21,26 +18,15 @@ offset_right = 50.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 6
+size_flags_vertical = 6
 mouse_filter = 1
 script = ExtResource("1_3xkko")
 
-[node name="Button" type="Button" parent="."]
+[node name="LongPressButton" parent="." instance=ExtResource("2_apn0u")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxFlat_wugpb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_wugpb")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_wugpb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_sf4aa")
-flat = true
 
-[node name="VerticalContainer" type="VBoxContainer" parent="Button"]
+[node name="VerticalContainer" type="VBoxContainer" parent="LongPressButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,7 +36,7 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="DieImage" type="TextureRect" parent="Button/VerticalContainer"]
+[node name="DieImage" type="TextureRect" parent="LongPressButton/VerticalContainer"]
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 2
 size_flags_vertical = 3
@@ -58,9 +44,9 @@ texture = ExtResource("2_3b5f2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DieName" parent="Button/VerticalContainer" instance=ExtResource("3_2t56e")]
-custom_minimum_size = Vector2(0, 25)
+[node name="DieName" parent="LongPressButton/VerticalContainer" instance=ExtResource("3_2t56e")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 1
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="short_pressed" from="LongPressButton" to="." method="_on_long_press_button_short_pressed"]

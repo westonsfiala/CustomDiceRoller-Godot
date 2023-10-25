@@ -3,8 +3,8 @@ class_name ClickableDie
 
 var m_die : AbstractDie = SettingsManager.get_default_die()
 
-@onready var die_name : Label = $Button/VerticalContainer/DieName
-@onready var die_image : TextureRect = $Button/VerticalContainer/DieImage
+@onready var die_name : Label = $LongPressButton/VerticalContainer/DieName
+@onready var die_image : TextureRect = $LongPressButton/VerticalContainer/DieImage
 
 # Signal that is sent out when a die is pressed
 signal die_pressed(die: AbstractDie)
@@ -25,14 +25,15 @@ func deferred_reconfigure():
 # Reconfigures the scene according to the settings
 func reconfigure() -> void:
 	print("reconfiguring clickable die")
-	var new_width = SettingsManager.get_dice_size()
-	var new_size = Vector2(new_width, new_width * 1.25)
+	var dice_size = SettingsManager.get_dice_size()
+	var text_min_size = SettingsManager.get_text_size()
+	
+	var full_button_size = Vector2(dice_size, dice_size + text_min_size)
 	
 	# You need to change both of these values to make the flow container work
-	custom_minimum_size = new_size
-	size = new_size
+	custom_minimum_size = full_button_size
+	size = full_button_size
 
-# When the button is pressed, emit that we are pressing the die
-func _on_button_pressed():
+func _on_long_press_button_short_pressed():
 	print(str(m_die.name(), " pressed"))
 	emit_signal("die_pressed", m_die)

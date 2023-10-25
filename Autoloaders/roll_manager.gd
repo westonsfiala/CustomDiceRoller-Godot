@@ -3,8 +3,8 @@ extends Node
 var roll_history : Array[String] = []
 var cleared_roll_history : Array[String] = []
 
-signal new_roll_result(result : String)
 signal refresh_history()
+signal new_roll_result(result : String)
 
 func simple_roll(die : AbstractDie, props : RollProperties):
 	if(die.is_numbered()):

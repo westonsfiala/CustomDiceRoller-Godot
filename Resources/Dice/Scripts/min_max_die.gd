@@ -4,7 +4,7 @@ class_name MinMaxDie
 var min_bound : int
 var max_bound : int
 
-func _init(die_name: String, bound1: int, bound2: int, die_texture: Texture2D):
+func configure(die_name: String, bound1: int, bound2: int, die_texture: Texture2D):
 	m_name = die_name
 	min_bound = min(bound1, bound2)
 	max_bound = max(bound1, bound2)

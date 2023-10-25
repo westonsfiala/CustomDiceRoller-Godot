@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c7dvsk5b64ahh"]
+
+[ext_resource type="Script" path="res://Resources/Roll/Scripts/die_property_pair.gd" id="1_8jdf6"]
+
+[resource]
+script = ExtResource("1_8jdf6")

@@ -27,8 +27,6 @@ var default_label_settings : LabelSettings = preload("res://Resources/Styles/def
 var default_small_label_settings : LabelSettings = preload("res://Resources/Styles/default_small_label.tres")
 
 signal reconfigure()
-signal scene_scroll_value_changed(value: int)
-signal navigate_to_scene(scene: SCENE)
 
 func trigger_reconfigure():
 	print("triggering reconfigure")
@@ -52,9 +50,13 @@ func get_scene_name(scene_enum: SCENE) -> String:
 		_:
 			return "TEMP"
 	
+signal scene_scroll_value_changed(value: int)
+
 func set_scene_scroll_value(value: int):
 	emit_signal("scene_scroll_value_changed", value)
 	
+signal navigate_to_scene(scene: SCENE)
+
 func set_scrolled_scene(scene: SCENE):
 	emit_signal("navigate_to_scene", scene)
 	
