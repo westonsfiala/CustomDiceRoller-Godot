@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bqmfeofow1116"]
+[gd_resource type="Resource" script_class="NumberDie" load_steps=2 format=3 uid="uid://bqmfeofow1116"]
 
 [ext_resource type="Script" path="res://Resources/Dice/Scripts/number_die.gd" id="1_vqo54"]
 

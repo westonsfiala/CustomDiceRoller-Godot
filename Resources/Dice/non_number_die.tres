@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="NonNumberDie" load_steps=2 format=3 uid="uid://is2lkav35qj3"]
+
+[ext_resource type="Script" path="res://Resources/Dice/Scripts/non_number_die.gd" id="1_qstcy"]
+
+[resource]
+script = ExtResource("1_qstcy")

@@ -5,6 +5,10 @@ var m_roll_name : String = "TEMP"
 var m_roll_category : String = "TEMP"
 var m_die_prop_array : Array[DiePropertyPair] = []
 
+const KEEP_KEY : StringName = "Keep"
+const DROP_KEY : StringName = "Drop"
+const REROLL_KEY : StringName = "Reroll"
+
 # Sets the name and category and returns itself.
 func configure(roll_name: String, roll_category: String) -> Roll:
 	m_roll_name = roll_name
@@ -101,5 +105,196 @@ func move_die_down(position: int) -> bool:
 	
 	m_die_prop_array = newMapStart + movedEntry + swappedElement + newMapEnd
 	return true
+
+# Big boy method that goes through all of our dice and produces a roll result.
+func roll() -> RollResults:
+	var return_results = RollResults.new()
+	
+	for die_prop_pair in m_die_prop_array:
+		var original_die = die_prop_pair.m_die
+		var properties = die_prop_pair.m_roll_properties
+		var num_repeats = max(1, abs(properties.mRepeatRoll))
+		
+		for repeat_count in num_repeats:
+			var die = original_die
+
+			if(repeat_count != 0):
+				die = original_die.duplicate(true)
+				die.m_name = str(die.m_name, "_", repeat_count)
+				
+			var die_json = JSON.stringify(die);
+			
+			return_results.m_roll_properties.set(die_json, properties);
+			
+			if(die.is_numbered()):
+				var roll_lists = produce_number_roll_lists((die as NumberDie), properties)
+				var advantageState = properties.get_property(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER)
+				
+				# Normal case
+				if(advantageState == RollProperties.AdvantageDisadvantageState.NORMAL):
+					return_results.m_roll_results.set(die_json, roll_lists[KEEP_KEY]);
+					return_results.m_dropped_rolls.set(die_json, roll_lists[DROP_KEY]);
+					return_results.m_rerolled_rolls.set(die_json, roll_lists[REROLL_KEY]);
+					return_results.m_struck_roll_results.set(die_json, []);
+					return_results.m_struck_dropped_rolls.set(die_json, []);
+					return_results.m_struck_rerolled_rolls.set(die_json, []);
+					break;
+				# Advantage/Disadvantage cases
+				else:
+					var second_roll_lists = produce_number_roll_lists((die as NumberDie), properties);
+					var summer = func blah(a,b) -> int: return a+b
+					
+					var roll_lists_keep_sum = roll_lists[KEEP_KEY].reduce(summer, 0)
+					var second_roll_lists_keep_sum = second_roll_lists[KEEP_KEY].reduce(summer, 0)
+					
+					var high_lists = {}
+					var low_lists = {}
+					
+					if(roll_lists_keep_sum >= second_roll_lists_keep_sum):
+						high_lists = roll_lists
+						low_lists = second_roll_lists
+					else:
+						high_lists = second_roll_lists
+						low_lists = roll_lists
+					
+					# Advantage case
+					if(advantageState == RollProperties.AdvantageDisadvantageState.ADVANTAGE):
+						return_results.m_roll_results.set(die_json, high_lists[KEEP_KEY]);
+						return_results.m_dropped_rolls.set(die_json, high_lists[DROP_KEY]);
+						return_results.m_rerolled_rolls.set(die_json, high_lists[REROLL_KEY]);
+						return_results.m_struck_roll_results.set(die_json, low_lists[KEEP_KEY]);
+						return_results.m_struck_dropped_rolls.set(die_json, low_lists[DROP_KEY]);
+						return_results.m_struck_rerolled_rolls.set(die_json, low_lists[REROLL_KEY]);
+					# Disadvantage case
+					else:
+						return_results.m_roll_results.set(die_json, low_lists[KEEP_KEY]);
+						return_results.m_dropped_rolls.set(die_json, low_lists[DROP_KEY]);
+						return_results.m_rerolled_rolls.set(die_json, low_lists[REROLL_KEY]);
+						return_results.m_struck_roll_results.set(die_json, high_lists[KEEP_KEY]);
+						return_results.m_struck_dropped_rolls.set(die_json, high_lists[DROP_KEY]);
+						return_results.m_struck_rerolled_rolls.set(die_json, high_lists[REROLL_KEY]);
+						
+			# Non-Numbered Case
+			else:
+				var roll_list = produce_non_number_roll_list((die as NonNumberDie), properties)
+
+				return_results.m_roll_results.set(die_json, roll_list);
+				return_results.m_dropped_rolls.set(die_json, []);
+				return_results.m_rerolled_rolls.set(die_json, []);
+				return_results.m_struck_roll_results.set(die_json, []);
+				return_results.m_struck_dropped_rolls.set(die_json, []);
+				return_results.m_struck_rerolled_rolls.set(die_json, []);
+	
+	return return_results
+	
+
+# Produces a dictionary of 3 lists, a list of kept values, and a list of dropped values, and a list of rerolled values
+# The keys for these lists are KEEP_KEY, DROP_KEY, and REROLL_KEY
+func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Dictionary:
+	var keep_list = []
+	var drop_list =  []
+	var reroll_list = []
+	var return_dict = {KEEP_KEY:keep_list, DROP_KEY:drop_list, REROLL_KEY:reroll_list}
+	
+	var num_dice = properties.get_property(RollProperties.NUM_DICE_IDENTIFIER)
+	# No dice to roll, return empty lists.
+	if(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER) == 0):
+		return return_dict
+
+	# Roll all of the dice and add them to the return list.
+	var roll_num = 0;
+	while (roll_num < abs(num_dice)):
+		var die_roll = die.roll()
+		
+		# If we are set to explode, have the maximum value, and actually have a range, roll an extra die
+		var exploding_die = properties.get_property(RollProperties.EXPLODE_IDENTIFIER)
+		if(exploding_die and die_roll == die.maximum() and die.maximum() != die.minimum()):
+			roll_num -= 1
+			
+		# If we have a minimum value, drop anything less.
+		var minimum_die_roll_value = abs(properties.get_property(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER))
+		if(properties.property_not_equals_default(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER) and abs(die_roll) < minimum_die_roll_value):
+			reroll_list.push_back(die_roll);
+			die_roll = min(minimum_die_roll_value, die.maximum())
+			
+		# If we have a maximum value, drop anything more.
+		var maximum_die_roll_value = abs(properties.get_property(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER))
+		if(properties.property_not_equals_default(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER) and abs(die_roll) > maximum_die_roll_value):
+			reroll_list.push_back(die_roll);
+			die_roll = max(maximum_die_roll_value, die.min)
+
+		# If we use under rerolls, reroll under the threshold.
+		var reroll_under = abs(properties.get_property(RollProperties.REROLL_UNDER_IDENTIFIER))
+		if(properties.property_not_equals_default(RollProperties.REROLL_UNDER_IDENTIFIER) && abs(die_roll) <= reroll_under):
+			reroll_list.push_back(die_roll)
+			die_roll = die.roll()
+
+		# If we use over rerolls, reroll over the threshold.
+		var reroll_over = abs(properties.get_property(RollProperties.REROLL_OVER_IDENTIFIER))
+		if(properties.property_not_equals_default(RollProperties.REROLL_OVER_IDENTIFIER) && abs(die_roll) >= reroll_over):
+			reroll_list.push_back(die_roll)
+			die_roll = die.roll()
+
+		if(num_dice > 0):
+			keep_list.push_back(die_roll)
+		else:
+			keep_list.push_back(-die_roll)
+			
+		roll_num += 1;
+		
+	# Drop high values
+	var drop_highest = abs(properties.get_property(RollProperties.DROP_HIGHEST_IDENTIFIER))
+	if(keep_list.size() <= drop_highest):
+		drop_list.append_array(keep_list)
+		keep_list = []
+	else:
+		for i in drop_highest:
+			var ejected_value = keep_list.max()
+			keep_list.erase(ejected_value)
+			drop_list.push_back(ejected_value)
+
+	# Drop low values
+	var drop_lowest = abs(properties.get_property(RollProperties.DROP_LOWEST_IDENTIFIER))
+	if(keep_list.size() <= drop_lowest):
+		drop_list.append_array(keep_list)
+		keep_list = []
+	else:
+		for i in drop_lowest:
+			var ejected_value = keep_list.min()
+			keep_list.erase(ejected_value)
+			drop_list.push_back(ejected_value)
+
+	# Only do keep high/low when you have those properties
+	var keep_highest = abs(properties.get_property(RollProperties.KEEP_HIGHEST_IDENTIFIER))
+	var keep_lowest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
+	if(properties.property_not_equals_default(RollProperties.KEEP_HIGHEST_IDENTIFIER) or properties.property_not_equals_default(RollProperties.KEEP_LOWEST_IDENTIFIER)):
+		# Only keep going if we have more rolls than what we want to keep
+		if(keep_list.size() > (keep_highest + keep_lowest)):
+			var num_to_drop = keep_list.size() - (keep_highest + keep_lowest)
+			var index_to_drop = keep_lowest
+			var temp_sorted = keep_list.duplicate()
+			temp_sorted.sort()
+			for drop_index in num_to_drop:
+				var ejected_value = temp_sorted[index_to_drop + drop_index]
+				keep_list.erase(ejected_value)
+				drop_list.push_back(ejected_value)
+				
+	return return_dict
+
+# Produces a list of rolls from a NonNumberDie. All properties but number of dice are ignored.
+func produce_non_number_roll_list(die: NonNumberDie, properties: RollProperties) -> Array:
+	var roll_list = []
+
+	var num_dice = properties.get_property(RollProperties.NUM_DICE_IDENTIFIER)
+	# No dice to roll, return empty lists.
+	if(num_dice == 0):
+		return roll_list
+
+	# Roll all of the dice and add them to the return list.
+	for roll_num in abs(num_dice):
+		var die_roll = die.roll()
+		roll_list.push_back(die_roll)
+
+	return roll_list;
 
 

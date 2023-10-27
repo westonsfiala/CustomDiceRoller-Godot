@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ej85px8tpvpr"]
+
+[ext_resource type="Script" path="res://Resources/Roll/Scripts/roll_results.gd" id="1_5dafx"]
+
+[resource]
+script = ExtResource("1_5dafx")
