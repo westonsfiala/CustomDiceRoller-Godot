@@ -1,18 +1,18 @@
 extends Resource
 class_name Roll
 
-var m_roll_name : String = "TEMP"
-var m_roll_category : String = "TEMP"
-var m_die_prop_array : Array[DiePropertyPair] = []
+@export var m_roll_name : String = "TEMP"
+@export var m_roll_category : String = "TEMP"
+@export var m_die_prop_array : Array[DiePropertyPair] = []
 
 const KEEP_KEY : StringName = "Keep"
 const DROP_KEY : StringName = "Drop"
 const REROLL_KEY : StringName = "Reroll"
 
 # Sets the name and category and returns itself.
-func configure(roll_name: String, roll_category: String) -> Roll:
-	m_roll_name = roll_name
-	m_roll_category = roll_category
+func configure(name: String, category: String) -> Roll:
+	m_roll_name = name
+	m_roll_category = category
 	return self
 
 func roll_name() -> String:
@@ -131,7 +131,7 @@ func contains_die(die: AbstractDie) -> bool:
 func add_die_to_roll(die: AbstractDie, properties: RollProperties) -> bool:
 	if(contains_die(die)):
 		return false
-	var new_pair = DiePropertyPair.new().configure(die.duplicate(true), properties.duplicate(true))
+	var new_pair = DiePropertyPair.new().configure(die.duplicate(), properties.duplicate())
 	m_die_prop_array.push_back(new_pair)
 	return true
 	
@@ -158,7 +158,8 @@ func override_die_in_roll(old_die: AbstractDie, new_die: AbstractDie) -> bool:
 # Get the number of dice in the roll by accumulating all of the num_dice properties
 func get_total_dice_in_roll() -> int:
 	return m_die_prop_array.reduce(
-		func(accum,die_prop_pair): return die_prop_pair.m_roll_properties.get_property(RollProperties.NUM_DICE_IDENTIFIER), 
+		func(accum,die_prop_pair): 
+			return accum + die_prop_pair.m_roll_properties.get_property(RollProperties.NUM_DICE_IDENTIFIER), 
 		0)
 
 # Moves the die at the given position up in the order.
@@ -206,7 +207,8 @@ func roll() -> RollResults:
 	for die_prop_pair in m_die_prop_array:
 		var original_die = die_prop_pair.m_die
 		var properties = die_prop_pair.m_roll_properties
-		var num_repeats = max(1, abs(properties.mRepeatRoll))
+		
+		var num_repeats = max(1, abs(properties.get_property(RollProperties.REPEAT_ROLL_IDENTIFIER)))
 		
 		for repeat_count in num_repeats:
 			var die = original_die
@@ -217,7 +219,7 @@ func roll() -> RollResults:
 				
 			var die_json = JSON.stringify(die);
 			
-			return_results.m_roll_properties.set(die_json, properties);
+			return_results.m_roll_properties[die_json] = properties
 			
 			if(die.is_numbered()):
 				var roll_lists = produce_number_roll_lists((die as NumberDie), properties)
@@ -225,12 +227,12 @@ func roll() -> RollResults:
 				
 				# Normal case
 				if(advantageState == RollProperties.AdvantageDisadvantageState.NORMAL):
-					return_results.m_roll_results.set(die_json, roll_lists[KEEP_KEY]);
-					return_results.m_dropped_rolls.set(die_json, roll_lists[DROP_KEY]);
-					return_results.m_rerolled_rolls.set(die_json, roll_lists[REROLL_KEY]);
-					return_results.m_struck_roll_results.set(die_json, []);
-					return_results.m_struck_dropped_rolls.set(die_json, []);
-					return_results.m_struck_rerolled_rolls.set(die_json, []);
+					return_results.m_roll_results[die_json] = roll_lists[KEEP_KEY]
+					return_results.m_dropped_rolls[die_json] = roll_lists[DROP_KEY]
+					return_results.m_rerolled_rolls[die_json] = roll_lists[REROLL_KEY]
+					return_results.m_struck_roll_results[die_json] = []
+					return_results.m_struck_dropped_rolls[die_json] = []
+					return_results.m_struck_rerolled_rolls[die_json] = []
 					break;
 				# Advantage/Disadvantage cases
 				else:
@@ -252,31 +254,31 @@ func roll() -> RollResults:
 					
 					# Advantage case
 					if(advantageState == RollProperties.AdvantageDisadvantageState.ADVANTAGE):
-						return_results.m_roll_results.set(die_json, high_lists[KEEP_KEY]);
-						return_results.m_dropped_rolls.set(die_json, high_lists[DROP_KEY]);
-						return_results.m_rerolled_rolls.set(die_json, high_lists[REROLL_KEY]);
-						return_results.m_struck_roll_results.set(die_json, low_lists[KEEP_KEY]);
-						return_results.m_struck_dropped_rolls.set(die_json, low_lists[DROP_KEY]);
-						return_results.m_struck_rerolled_rolls.set(die_json, low_lists[REROLL_KEY]);
+						return_results.m_roll_results[die_json] = high_lists[KEEP_KEY]
+						return_results.m_dropped_rolls[die_json] = high_lists[DROP_KEY]
+						return_results.m_rerolled_rolls[die_json] = high_lists[REROLL_KEY]
+						return_results.m_struck_roll_results[die_json] = low_lists[KEEP_KEY]
+						return_results.m_struck_dropped_rolls[die_json] = low_lists[DROP_KEY]
+						return_results.m_struck_rerolled_rolls[die_json] = low_lists[REROLL_KEY]
 					# Disadvantage case
 					else:
-						return_results.m_roll_results.set(die_json, low_lists[KEEP_KEY]);
-						return_results.m_dropped_rolls.set(die_json, low_lists[DROP_KEY]);
-						return_results.m_rerolled_rolls.set(die_json, low_lists[REROLL_KEY]);
-						return_results.m_struck_roll_results.set(die_json, high_lists[KEEP_KEY]);
-						return_results.m_struck_dropped_rolls.set(die_json, high_lists[DROP_KEY]);
-						return_results.m_struck_rerolled_rolls.set(die_json, high_lists[REROLL_KEY]);
+						return_results.m_roll_results[die_json] = low_lists[KEEP_KEY]
+						return_results.m_dropped_rolls[die_json] = low_lists[DROP_KEY]
+						return_results.m_rerolled_rolls[die_json] = low_lists[REROLL_KEY]
+						return_results.m_struck_roll_results[die_json] = high_lists[KEEP_KEY]
+						return_results.m_struck_dropped_rolls[die_json] = high_lists[DROP_KEY]
+						return_results.m_struck_rerolled_rolls[die_json] = high_lists[REROLL_KEY]
 						
 			# Non-Numbered Case
 			else:
 				var roll_list = produce_non_number_roll_list((die as NonNumberDie), properties)
 				
-				return_results.m_roll_results.set(die_json, roll_list);
-				return_results.m_dropped_rolls.set(die_json, []);
-				return_results.m_rerolled_rolls.set(die_json, []);
-				return_results.m_struck_roll_results.set(die_json, []);
-				return_results.m_struck_dropped_rolls.set(die_json, []);
-				return_results.m_struck_rerolled_rolls.set(die_json, []);
+				return_results.m_roll_results[die_json] = roll_list
+				return_results.m_dropped_rolls[die_json] = []
+				return_results.m_rerolled_rolls[die_json] = []
+				return_results.m_struck_roll_results[die_json] = []
+				return_results.m_struck_dropped_rolls[die_json] = []
+				return_results.m_struck_rerolled_rolls[die_json] = []
 	
 	return return_results
 
@@ -482,9 +484,6 @@ func minimum() -> int:
 			num_dice -= drop_highest + drop_lowest;
 			num_dice = max(0, num_dice);
 			
-			var move_towards_high = drop_lowest
-			var move_towards_low = drop_highest
-			
 			var keep_num = keep_lowest + keep_highest
 			if(keep_num != 0 and keep_num < num_dice):
 				num_dice = keep_num;
@@ -527,9 +526,6 @@ func maximum() -> int:
 			
 			num_dice -= drop_highest + drop_lowest;
 			num_dice = max(0, num_dice);
-			
-			var move_towards_high = drop_lowest
-			var move_towards_low = drop_highest
 			
 			var keep_num = keep_lowest + keep_highest
 			if(keep_num != 0 and keep_num < num_dice):

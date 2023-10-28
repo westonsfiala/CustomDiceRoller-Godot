@@ -131,7 +131,7 @@ const PROPERTY_DEFAULT_MAP : Dictionary = {
 	EXPLODE_IDENTIFIER : EXPLODE_DEFAULT,
 }
 
-var m_property_map : Dictionary = {}
+@export var m_property_map : Dictionary = {}
 
 # Sets the property map to the values stored in the prop dict. 
 # Enforces correct key names and value types. Ignores incorrectly names or typed key:value pairs

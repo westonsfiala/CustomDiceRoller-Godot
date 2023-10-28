@@ -1,9 +1,9 @@
 extends Resource
 class_name AbstractDie
 	
-var m_name : String = ""
-var m_info : String = ""
-var m_texture : Texture2D = preload("res://DicePNGs/basic/white/unknown-die.png")
+@export var m_name : String = ""
+@export var m_info : String = ""
+@export var m_texture : Texture2D = preload("res://DicePNGs/basic/white/unknown-die.png")
 
 const DIE_DISPLAY_IN_HEX : StringName = '0x'
 

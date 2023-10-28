@@ -7,16 +7,10 @@ signal refresh_history()
 signal new_roll_result(result : String)
 
 func simple_roll(die : AbstractDie, props : RollProperties):
-	if(die.is_numbered()):
-		var roll_result = 0
-		roll_result += props.get_property(RollProperties.DICE_MODIFIER_IDENTIFIER)
-		var num_dice = props.get_property(RollProperties.NUM_DICE_IDENTIFIER)
-		for i in abs(props.get_property(RollProperties.NUM_DICE_IDENTIFIER)):
-			if(num_dice > 0):
-				roll_result += die.roll()
-			else:
-				roll_result -= die.roll()
-		add_to_history(str(roll_result))
+	var new_roll = Roll.new().configure("Simple Roll", "")
+	new_roll.add_die_to_roll(die, props)
+	var results = new_roll.roll()
+	add_to_history(JSON.stringify(results.m_roll_results[results.m_roll_results.keys()[0]]))
 
 func add_to_history(result : String):
 	if(not cleared_roll_history.is_empty()):

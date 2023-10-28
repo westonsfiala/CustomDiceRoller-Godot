@@ -1,8 +1,8 @@
 extends Resource
 class_name DiePropertyPair
 
-var m_die : AbstractDie
-var m_roll_properties : RollProperties
+@export var m_die : AbstractDie
+@export var m_roll_properties : RollProperties
 
 func configure(die: AbstractDie, roll_properties: RollProperties) -> DiePropertyPair:
 	m_die = die

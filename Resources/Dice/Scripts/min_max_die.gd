@@ -1,8 +1,8 @@
 extends NumberDie
 class_name MinMaxDie
 
-var min_bound : int
-var max_bound : int
+@export var min_bound : int
+@export var max_bound : int
 
 func configure(die_name: String, bound1: int, bound2: int, die_texture: Texture2D) -> MinMaxDie:
 	m_name = die_name

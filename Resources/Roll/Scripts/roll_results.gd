@@ -3,17 +3,17 @@ class_name RollResults
 
 # Each of these maps is of type <String, Array<Variant>>
 # The map string should be in the form: JSON.stringify(die)
-var m_roll_results : Dictionary = {}
-var m_dropped_rolls : Dictionary = {}
-var m_rerolled_rolls : Dictionary = {}
+@export var m_roll_results : Dictionary = {}
+@export var m_dropped_rolls : Dictionary = {}
+@export var m_rerolled_rolls : Dictionary = {}
 
-var m_struck_roll_results : Dictionary = {}
-var m_struck_dropped_rolls : Dictionary = {}
-var m_struck_rerolled_rolls : Dictionary = {}
+@export var m_struck_roll_results : Dictionary = {}
+@export var m_struck_dropped_rolls : Dictionary = {}
+@export var m_struck_rerolled_rolls : Dictionary = {}
 
 # The roll properties of each die in the form <String, RollProperties>
 # Use the same keys as above for access.
-var m_roll_properties : Dictionary = {}
+@export var m_roll_properties : Dictionary = {}
 
 func get_merged_keys() -> Array[String]:
 	var returnKeys = {}
