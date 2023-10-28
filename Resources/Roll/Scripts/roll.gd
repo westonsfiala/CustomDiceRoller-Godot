@@ -131,7 +131,7 @@ func contains_die(die: AbstractDie) -> bool:
 func add_die_to_roll(die: AbstractDie, properties: RollProperties) -> bool:
 	if(contains_die(die)):
 		return false
-	var new_pair = DiePropertyPair.new().configure(die.duplicate(), properties.duplicate())
+	var new_pair = DiePropertyPair.new().configure(die.duplicate(true), properties.duplicate(true))
 	m_die_prop_array.push_back(new_pair)
 	return true
 	
@@ -216,10 +216,8 @@ func roll() -> RollResults:
 			if(repeat_count != 0):
 				die = original_die.duplicate(true)
 				die.m_name = str(die.m_name, "_", repeat_count)
-				
-			var die_json = JSON.stringify(die);
 			
-			return_results.m_roll_properties[die_json] = properties
+			return_results.m_roll_properties[die] = properties
 			
 			if(die.is_numbered()):
 				var roll_lists = produce_number_roll_lists((die as NumberDie), properties)
@@ -227,12 +225,12 @@ func roll() -> RollResults:
 				
 				# Normal case
 				if(advantageState == RollProperties.AdvantageDisadvantageState.NORMAL):
-					return_results.m_roll_results[die_json] = roll_lists[KEEP_KEY]
-					return_results.m_dropped_rolls[die_json] = roll_lists[DROP_KEY]
-					return_results.m_rerolled_rolls[die_json] = roll_lists[REROLL_KEY]
-					return_results.m_struck_roll_results[die_json] = []
-					return_results.m_struck_dropped_rolls[die_json] = []
-					return_results.m_struck_rerolled_rolls[die_json] = []
+					return_results.m_roll_results[die] = roll_lists[KEEP_KEY]
+					return_results.m_dropped_rolls[die] = roll_lists[DROP_KEY]
+					return_results.m_rerolled_rolls[die] = roll_lists[REROLL_KEY]
+					return_results.m_struck_roll_results[die] = []
+					return_results.m_struck_dropped_rolls[die] = []
+					return_results.m_struck_rerolled_rolls[die] = []
 					break;
 				# Advantage/Disadvantage cases
 				else:
@@ -254,31 +252,31 @@ func roll() -> RollResults:
 					
 					# Advantage case
 					if(advantageState == RollProperties.AdvantageDisadvantageState.ADVANTAGE):
-						return_results.m_roll_results[die_json] = high_lists[KEEP_KEY]
-						return_results.m_dropped_rolls[die_json] = high_lists[DROP_KEY]
-						return_results.m_rerolled_rolls[die_json] = high_lists[REROLL_KEY]
-						return_results.m_struck_roll_results[die_json] = low_lists[KEEP_KEY]
-						return_results.m_struck_dropped_rolls[die_json] = low_lists[DROP_KEY]
-						return_results.m_struck_rerolled_rolls[die_json] = low_lists[REROLL_KEY]
+						return_results.m_roll_results[die] = high_lists[KEEP_KEY]
+						return_results.m_dropped_rolls[die] = high_lists[DROP_KEY]
+						return_results.m_rerolled_rolls[die] = high_lists[REROLL_KEY]
+						return_results.m_struck_roll_results[die] = low_lists[KEEP_KEY]
+						return_results.m_struck_dropped_rolls[die] = low_lists[DROP_KEY]
+						return_results.m_struck_rerolled_rolls[die] = low_lists[REROLL_KEY]
 					# Disadvantage case
 					else:
-						return_results.m_roll_results[die_json] = low_lists[KEEP_KEY]
-						return_results.m_dropped_rolls[die_json] = low_lists[DROP_KEY]
-						return_results.m_rerolled_rolls[die_json] = low_lists[REROLL_KEY]
-						return_results.m_struck_roll_results[die_json] = high_lists[KEEP_KEY]
-						return_results.m_struck_dropped_rolls[die_json] = high_lists[DROP_KEY]
-						return_results.m_struck_rerolled_rolls[die_json] = high_lists[REROLL_KEY]
+						return_results.m_roll_results[die] = low_lists[KEEP_KEY]
+						return_results.m_dropped_rolls[die] = low_lists[DROP_KEY]
+						return_results.m_rerolled_rolls[die] = low_lists[REROLL_KEY]
+						return_results.m_struck_roll_results[die] = high_lists[KEEP_KEY]
+						return_results.m_struck_dropped_rolls[die] = high_lists[DROP_KEY]
+						return_results.m_struck_rerolled_rolls[die] = high_lists[REROLL_KEY]
 						
 			# Non-Numbered Case
 			else:
 				var roll_list = produce_non_number_roll_list((die as NonNumberDie), properties)
 				
-				return_results.m_roll_results[die_json] = roll_list
-				return_results.m_dropped_rolls[die_json] = []
-				return_results.m_rerolled_rolls[die_json] = []
-				return_results.m_struck_roll_results[die_json] = []
-				return_results.m_struck_dropped_rolls[die_json] = []
-				return_results.m_struck_rerolled_rolls[die_json] = []
+				return_results.m_roll_results[die] = roll_list
+				return_results.m_dropped_rolls[die] = []
+				return_results.m_rerolled_rolls[die] = []
+				return_results.m_struck_roll_results[die] = []
+				return_results.m_struck_dropped_rolls[die] = []
+				return_results.m_struck_rerolled_rolls[die] = []
 	
 	return return_results
 

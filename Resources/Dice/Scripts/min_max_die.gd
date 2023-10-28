@@ -23,7 +23,6 @@ func maximum() -> int:
 
 func average() -> float:
 	return (min_bound + max_bound)/2.0
-	
+
 func get_faces() -> Array[int]:
 	return range(minimum(), maximum()+1)
-
