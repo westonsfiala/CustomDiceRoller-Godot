@@ -45,8 +45,16 @@ const MINIMUM_ROLL_VALUE_DEFAULT : int = 0
 const COUNT_ABOVE_EQUAL_IDENTIFIER : StringName = "COUNT_ABOVE_EQUAL"
 const COUNT_ABOVE_EQUAL_DEFAULT : int = 0
 
+const COUNT_BELOW_EQUAL_IDENTIFIER : StringName = "COUNT_BELOW_EQUAL"
+const COUNT_BELOW_EQUAL_DEFAULT : int = 0
+
 const EXPLODE_IDENTIFIER : StringName = "EXPLODE"
 const EXPLODE_DEFAULT : bool = false
+
+# Order of applying properties:
+# Dice props (REROLL_UNDER -> REROLL_OVER -> MINIMUM -> MAXIMUM -> EXPLODE)
+# Roll props (NUM_DICE -> DROP_LOW -> DROP_HIGH ->  KEEP_LOW -> KEEP_HIGH -> 
+# -> COUNT_BELOW -> COUNT_ABOVE -> DISADVANTAGE -> ADVANTAGE -> MODIFIER -> HALVE -> DOUBLE 
 
 const PROPERTY_DEFAULT_MAP : Dictionary = {
 	NUM_DICE_IDENTIFIER : NUM_DICE_DEFAULT,
@@ -63,6 +71,7 @@ const PROPERTY_DEFAULT_MAP : Dictionary = {
 	MAXIMUM_ROLL_VALUE_IDENTIFIER : MAXIMUM_ROLL_VALUE_DEFAULT,
 	MINIMUM_ROLL_VALUE_IDENTIFIER : MINIMUM_ROLL_VALUE_DEFAULT,
 	COUNT_ABOVE_EQUAL_IDENTIFIER : COUNT_ABOVE_EQUAL_DEFAULT,
+	COUNT_BELOW_EQUAL_IDENTIFIER : COUNT_BELOW_EQUAL_DEFAULT,
 	EXPLODE_IDENTIFIER : EXPLODE_DEFAULT,
 }
 
@@ -126,16 +135,3 @@ func property_equals_default(prop_name: StringName) -> bool:
 # A missing property counts as default.
 func property_not_equals_default(prop_name: StringName) -> bool:
 	return not property_equals_default(prop_name)
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -15,6 +15,118 @@ func configure(roll_name: String, roll_category: String) -> Roll:
 	m_roll_category = roll_category
 	return self
 
+func roll_name() -> String:
+	return m_roll_name
+
+func category_name() -> String:
+	return m_roll_category
+
+func get_detailed_roll_name() -> String:
+	var return_string = ""
+	
+	if(m_die_prop_array.size() == 0):
+		return return_string
+		
+	var first_die = true
+	
+	for die_prop_pair in m_die_prop_array:
+		var die = die_prop_pair.m_die
+		var props = die_prop_pair.m_roll_properties
+		
+		# Don't add the "+" to the first item. Only add "+" to positive count items.
+		var num_dice = props.get_property(RollProperties.NUM_DICE_IDENTIFIER)
+		if(first_die):
+			first_die = false
+		elif(num_dice > 0):
+			return_string += "+"
+			
+		if(die.name().begins_with("d")):
+			return_string += num_dice + die.name()
+		else:
+			return_string += num_dice + 'x' + die.name()
+		
+		if(die.is_numbered()):
+			if(props.property_equals_value(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER, RollProperties.AdvantageDisadvantageState.ADVANTAGE)):
+				var prop_string = StringHelper.get_advantage_title()
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_equals_value(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER, RollProperties.AdvantageDisadvantageState.DISADVANTAGE)):
+				var prop_string = StringHelper.get_disadvantage_title()
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.DROP_HIGHEST_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.DROP_HIGHEST_IDENTIFIER)
+				var prop_string = StringHelper.get_drop_highest_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.DROP_LOWEST_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.DROP_LOWEST_IDENTIFIER)
+				var prop_string = StringHelper.get_drop_lowest_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.KEEP_HIGHEST_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.KEEP_HIGHEST_IDENTIFIER)
+				var prop_string = StringHelper.get_keep_highest_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.KEEP_LOWEST_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER)
+				var prop_string = StringHelper.get_keep_lowest_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.REROLL_OVER_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.REROLL_OVER_IDENTIFIER)
+				var prop_string = StringHelper.get_reroll_over_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.REROLL_UNDER_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.REROLL_UNDER_IDENTIFIER)
+				var prop_string = StringHelper.get_reroll_under_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)
+				var prop_string = StringHelper.get_minimum_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)
+				var prop_string = StringHelper.get_maximum_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
+				var prop_string = StringHelper.get_count_above_equal_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
+				var prop_string = StringHelper.get_count_below_equal_string(prop_value)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.EXPLODE_IDENTIFIER)):
+				var prop_string = StringHelper.get_explode_title()
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_not_equals_default(RollProperties.DICE_MODIFIER_IDENTIFIER)):
+				var prop_value = props.get_property(RollProperties.DICE_MODIFIER_IDENTIFIER)
+				var prop_string = StringHelper.get_modifier_String(prop_value, true)
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.DOUBLE)):
+				var prop_string = StringHelper.get_double_title()
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+			if(props.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.HALVE)):
+				var prop_string = StringHelper.get_halve_title()
+				return_string += StringHelper.wrap_in_parens(prop_string)
+				
+		if(props.property_not_equals_default(RollProperties.REPEAT_ROLL_IDENTIFIER)):
+			var prop_value = props.get_property(RollProperties.REPEAT_ROLL_IDENTIFIER)
+			var prop_string = StringHelper.get_repeat_roll_string(prop_value)
+			return_string += StringHelper.wrap_in_parens(prop_string)
+	return return_string
+
 # Checks to see if all of the dice in the roll are numbered
 func is_numbers_only() -> bool:
 	return m_die_prop_array.all(func(pair:DiePropertyPair): return pair.m_die.is_numbered())
@@ -78,7 +190,7 @@ func move_die_up(position: int) -> bool:
 	# Or if its past where we can access
 	if(position <= 0 or array_size == 0 or array_size == 1 or position >= array_size):
 		return false
-
+		
 	var newMapStart = m_die_prop_array.slice(0, position-1);
 	var swappedElement = m_die_prop_array.slice(position-1, position);
 	var movedEntry = m_die_prop_array.slice(position, position+1);
@@ -97,7 +209,7 @@ func move_die_down(position: int) -> bool:
 	# Or if its past where we can access
 	if(position < 0 or array_size == 0 or array_size == 1 or position >= array_size - 1):
 		return false
-
+		
 	var newMapStart = m_die_prop_array.slice(0, position);
 	var movedEntry = m_die_prop_array.slice(position, position+1);
 	var swappedElement = m_die_prop_array.slice(position+1, position+2);
@@ -117,7 +229,7 @@ func roll() -> RollResults:
 		
 		for repeat_count in num_repeats:
 			var die = original_die
-
+			
 			if(repeat_count != 0):
 				die = original_die.duplicate(true)
 				die.m_name = str(die.m_name, "_", repeat_count)
@@ -177,7 +289,7 @@ func roll() -> RollResults:
 			# Non-Numbered Case
 			else:
 				var roll_list = produce_non_number_roll_list((die as NonNumberDie), properties)
-
+				
 				return_results.m_roll_results.set(die_json, roll_list);
 				return_results.m_dropped_rolls.set(die_json, []);
 				return_results.m_rerolled_rolls.set(die_json, []);
@@ -186,7 +298,6 @@ func roll() -> RollResults:
 				return_results.m_struck_rerolled_rolls.set(die_json, []);
 	
 	return return_results
-	
 
 # Produces a dictionary of 3 lists, a list of kept values, and a list of dropped values, and a list of rerolled values
 # The keys for these lists are KEEP_KEY, DROP_KEY, and REROLL_KEY
@@ -200,16 +311,23 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 	# No dice to roll, return empty lists.
 	if(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER) == 0):
 		return return_dict
-
+		
 	# Roll all of the dice and add them to the return list.
 	var roll_num = 0;
 	while (roll_num < abs(num_dice)):
 		var die_roll = die.roll()
 		
-		# If we are set to explode, have the maximum value, and actually have a range, roll an extra die
-		var exploding_die = properties.get_property(RollProperties.EXPLODE_IDENTIFIER)
-		if(exploding_die and die_roll == die.maximum() and die.maximum() != die.minimum()):
-			roll_num -= 1
+		# If we use under rerolls, reroll under the threshold.
+		var reroll_under = abs(properties.get_property(RollProperties.REROLL_UNDER_IDENTIFIER))
+		if(properties.property_not_equals_default(RollProperties.REROLL_UNDER_IDENTIFIER) && abs(die_roll) <= reroll_under):
+			reroll_list.push_back(die_roll)
+			die_roll = die.roll()
+			
+		# If we use over rerolls, reroll over the threshold.
+		var reroll_over = abs(properties.get_property(RollProperties.REROLL_OVER_IDENTIFIER))
+		if(properties.property_not_equals_default(RollProperties.REROLL_OVER_IDENTIFIER) && abs(die_roll) >= reroll_over):
+			reroll_list.push_back(die_roll)
+			die_roll = die.roll()
 			
 		# If we have a minimum value, drop anything less.
 		var minimum_die_roll_value = abs(properties.get_property(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER))
@@ -222,19 +340,12 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 		if(properties.property_not_equals_default(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER) and abs(die_roll) > maximum_die_roll_value):
 			reroll_list.push_back(die_roll);
 			die_roll = max(maximum_die_roll_value, die.min)
-
-		# If we use under rerolls, reroll under the threshold.
-		var reroll_under = abs(properties.get_property(RollProperties.REROLL_UNDER_IDENTIFIER))
-		if(properties.property_not_equals_default(RollProperties.REROLL_UNDER_IDENTIFIER) && abs(die_roll) <= reroll_under):
-			reroll_list.push_back(die_roll)
-			die_roll = die.roll()
-
-		# If we use over rerolls, reroll over the threshold.
-		var reroll_over = abs(properties.get_property(RollProperties.REROLL_OVER_IDENTIFIER))
-		if(properties.property_not_equals_default(RollProperties.REROLL_OVER_IDENTIFIER) && abs(die_roll) >= reroll_over):
-			reroll_list.push_back(die_roll)
-			die_roll = die.roll()
-
+		
+		# If we are set to explode, have the maximum value, have a range, and can roll within that range, roll an extra die
+		var exploding_die = properties.get_property(RollProperties.EXPLODE_IDENTIFIER)
+		if(exploding_die and die_roll == die.maximum() and die.minimum() != die.maximum() and minimum_die_roll_value != die.maximum()):
+			roll_num -= 1
+			
 		if(num_dice > 0):
 			keep_list.push_back(die_roll)
 		else:
@@ -252,7 +363,7 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 			var ejected_value = keep_list.max()
 			keep_list.erase(ejected_value)
 			drop_list.push_back(ejected_value)
-
+			
 	# Drop low values
 	var drop_lowest = abs(properties.get_property(RollProperties.DROP_LOWEST_IDENTIFIER))
 	if(keep_list.size() <= drop_lowest):
@@ -263,7 +374,7 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 			var ejected_value = keep_list.min()
 			keep_list.erase(ejected_value)
 			drop_list.push_back(ejected_value)
-
+			
 	# Only do keep high/low when you have those properties
 	var keep_highest = abs(properties.get_property(RollProperties.KEEP_HIGHEST_IDENTIFIER))
 	var keep_lowest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
@@ -289,12 +400,185 @@ func produce_non_number_roll_list(die: NonNumberDie, properties: RollProperties)
 	# No dice to roll, return empty lists.
 	if(num_dice == 0):
 		return roll_list
-
+		
 	# Roll all of the dice and add them to the return list.
 	for roll_num in abs(num_dice):
 		var die_roll = die.roll()
 		roll_list.push_back(die_roll)
-
+		
 	return roll_list;
+
+func average() -> float:
+	var roll_average = 0.0
+	for die_prop_pair in m_die_prop_array:
+		var die = die_prop_pair.m_die
+		var properties = die_prop_pair.m_roll_properties
+		if(die_prop_pair.m_die.is_numbered()):
+			var individual_average = die.expected_result(properties);
+			
+			# How many dice do we actually have.
+			var num_dice = abs(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER))
+			var drop_lowest = abs(properties.get_property(RollProperties.DROP_LOWEST_IDENTIFIER))
+			var drop_highest = abs(properties.get_property(RollProperties.DROP_HIGHEST_IDENTIFIER))
+			var keep_lowest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
+			var keep_highest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
+			
+			num_dice -= properties.get_property(RollProperties.DROP_HIGHEST_IDENTIFIER) + properties.get_property(RollProperties.DROP_LOWEST_IDENTIFIER)
+			
+			var move_towards_high = drop_lowest
+			var move_towards_low = drop_highest
+			
+			var keep_num = keep_lowest + keep_highest
+			if(keep_num != 0 and keep_num < num_dice):
+				if(keep_highest == 0):
+					move_towards_low += num_dice - keep_num
+				elif(keep_lowest == 0):
+					move_towards_high += num_dice - keep_num
+				elif(keep_highest > keep_lowest):
+					move_towards_high += keep_highest - keep_lowest
+				else:
+					move_towards_low += keep_lowest - keep_highest
+				num_dice = keep_num;
+				
+			num_dice = max(0, num_dice)
+			
+			# Are the drop / keep dice skewing the min/max
+			var move_total = abs(move_towards_high - move_towards_low)
+			
+			var upper_limit = die.maximum()
+			var lower_limit = die.minimum()
+			
+			var has_count_above = properties.property_not_equals_default(RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
+			var has_count_below = properties.property_not_equals_default(RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
+			if(has_count_above or has_count_below):
+				upper_limit = 1;
+				lower_limit = 0;
+				
+			# This will asymptotically approach either max/min as you move furthur towards high/low
+			# This is not the true average shift, but it is close enough for me 
+			if(move_towards_high > move_towards_low):
+				individual_average = (upper_limit * move_total + 2*individual_average) / (2 + move_total)
+			elif(move_towards_high < move_towards_low):
+				individual_average = (lower_limit * move_total + 2*individual_average) / (2 + move_total)
+				
+			# Same math as above, but the move_total is always 1.
+			if(properties.property_equals_value(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER, RollProperties.AdvantageDisadvantageState.ADVANTAGE)):
+				individual_average = (upper_limit + individual_average*2) / 3
+				
+			if(properties.property_equals_value(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER, RollProperties.AdvantageDisadvantageState.DISADVANTAGE)):
+				individual_average = (lower_limit + individual_average*2) / 3
+			
+			var expected_result = individual_average * num_dice;
+			
+			if(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER) < 0):
+				expected_result = -expected_result;
+				
+			expected_result += properties.get_property(RollProperties.DICE_MODIFIER_IDENTIFIER)
+			
+			if(properties.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.DOUBLE)):
+				expected_result *= 2
+			if(properties.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.HALVE)):
+				expected_result /= 2
+				
+			roll_average += expected_result * max(1, properties.get_property(RollProperties.REPEAT_ROLL_IDENTIFIER))
+		# Don't do anything for the non-numbered case.
+	return roll_average;
+
+func minimum() -> int:
+	var roll_min = 0.0
+	
+	for die_prop_pair in m_die_prop_array:
+		var die = die_prop_pair.m_die
+		var properties = die_prop_pair.m_roll_properties
+		if(die_prop_pair.m_die.is_numbered()):
+			var individual_minimum = die.minimum()
+			var num_dice = abs(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER))
+			var drop_lowest = abs(properties.get_property(RollProperties.DROP_LOWEST_IDENTIFIER))
+			var drop_highest = abs(properties.get_property(RollProperties.DROP_HIGHEST_IDENTIFIER))
+			var keep_lowest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
+			var keep_highest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
+			
+			num_dice -= drop_highest + drop_lowest;
+			num_dice = max(0, num_dice);
+			
+			var move_towards_high = drop_lowest
+			var move_towards_low = drop_highest
+			
+			var keep_num = keep_lowest + keep_highest
+			if(keep_num != 0 and keep_num < num_dice):
+				num_dice = keep_num;
+				
+			num_dice = max(0, num_dice)
+			
+			var has_count_above = properties.property_not_equals_default(RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
+			var has_count_below = properties.property_not_equals_default(RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
+			if(has_count_above or has_count_below):
+				individual_minimum = 0
+				
+			individual_minimum *= num_dice;
+			
+			individual_minimum += properties.get_property(RollProperties.DICE_MODIFIER_IDENTIFIER)
+			
+			if(properties.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.DOUBLE)):
+				individual_minimum *= 2
+			if(properties.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.HALVE)):
+				individual_minimum /= 2
+				
+			if(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER) < 0):
+				individual_minimum = -individual_minimum;
+				
+			roll_min += individual_minimum;
+	return roll_min
+
+func maximum() -> int:
+	var roll_max = 0.0
+	
+	for die_prop_pair in m_die_prop_array:
+		var die = die_prop_pair.m_die
+		var properties = die_prop_pair.m_roll_properties
+		if(die_prop_pair.m_die.is_numbered()):
+			var individual_maximum = die.maximum()
+			var num_dice = abs(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER))
+			var drop_lowest = abs(properties.get_property(RollProperties.DROP_LOWEST_IDENTIFIER))
+			var drop_highest = abs(properties.get_property(RollProperties.DROP_HIGHEST_IDENTIFIER))
+			var keep_lowest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
+			var keep_highest = abs(properties.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER))
+			
+			num_dice -= drop_highest + drop_lowest;
+			num_dice = max(0, num_dice);
+			
+			var move_towards_high = drop_lowest
+			var move_towards_low = drop_highest
+			
+			var keep_num = keep_lowest + keep_highest
+			if(keep_num != 0 and keep_num < num_dice):
+				num_dice = keep_num;
+				
+			num_dice = max(0, num_dice)
+			
+			var has_count_above = properties.property_not_equals_default(RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
+			var has_count_below = properties.property_not_equals_default(RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
+			if(has_count_above or has_count_below):
+				individual_maximum = 1
+				
+			individual_maximum *= num_dice;
+			
+			individual_maximum += properties.get_property(RollProperties.DICE_MODIFIER_IDENTIFIER)
+			
+			if(properties.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.DOUBLE)):
+				individual_maximum *= 2
+			if(properties.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.HALVE)):
+				individual_maximum /= 2
+				
+			if(properties.get_property(RollProperties.NUM_DICE_IDENTIFIER) < 0):
+				individual_maximum = -individual_maximum;
+				
+			roll_max += individual_maximum;
+	return roll_max
+	
+
+# Only display hex when you start with "0x" and have more characters after that.
+func display_in_hex() -> bool:
+	return m_roll_name.length() > (AbstractDie.DIE_DISPLAY_IN_HEX.length()) && m_roll_name.begins_with(AbstractDie.DIE_DISPLAY_IN_HEX)
 
 

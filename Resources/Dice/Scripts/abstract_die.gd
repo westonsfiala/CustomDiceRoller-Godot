@@ -5,6 +5,8 @@ var m_name : String = ""
 var m_info : String = ""
 var m_texture : Texture2D = preload("res://DicePNGs/basic/white/unknown-die.png")
 
+const DIE_DISPLAY_IN_HEX : StringName = '0x'
+
 func name() -> String:
 	return m_name
 	
