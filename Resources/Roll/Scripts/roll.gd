@@ -46,66 +46,52 @@ func get_detailed_roll_name() -> String:
 			return_string += num_dice + 'x' + die.name()
 		
 		if(die.is_numbered()):
-			if(props.property_equals_value(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER, RollProperties.AdvantageDisadvantageState.ADVANTAGE)):
-				var prop_string = StringHelper.get_advantage_title()
-				return_string += StringHelper.wrap_in_parens(prop_string)
-				
-			if(props.property_equals_value(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER, RollProperties.AdvantageDisadvantageState.DISADVANTAGE)):
-				var prop_string = StringHelper.get_disadvantage_title()
+			if(props.property_not_equals_default(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER)):
+				var prop_string = props.get_advantage_disadvantage_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.DROP_HIGHEST_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.DROP_HIGHEST_IDENTIFIER)
-				var prop_string = StringHelper.get_drop_highest_string(prop_value)
+				var prop_string = props.get_drop_highest_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.DROP_LOWEST_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.DROP_LOWEST_IDENTIFIER)
-				var prop_string = StringHelper.get_drop_lowest_string(prop_value)
+				var prop_string = props.get_drop_lowest_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.KEEP_HIGHEST_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.KEEP_HIGHEST_IDENTIFIER)
-				var prop_string = StringHelper.get_keep_highest_string(prop_value)
+				var prop_string = props.get_keep_highest_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.KEEP_LOWEST_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.KEEP_LOWEST_IDENTIFIER)
-				var prop_string = StringHelper.get_keep_lowest_string(prop_value)
+				var prop_string = props.get_keep_lowest_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.REROLL_OVER_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.REROLL_OVER_IDENTIFIER)
-				var prop_string = StringHelper.get_reroll_over_string(prop_value)
+				var prop_string = props.get_reroll_over_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.REROLL_UNDER_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.REROLL_UNDER_IDENTIFIER)
-				var prop_string = StringHelper.get_reroll_under_string(prop_value)
+				var prop_string = props.get_reroll_under_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)
-				var prop_string = StringHelper.get_minimum_string(prop_value)
+				var prop_string = props.get_minimum_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)
-				var prop_string = StringHelper.get_maximum_string(prop_value)
+				var prop_string = props.get_maximum_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
-				var prop_string = StringHelper.get_count_above_equal_string(prop_value)
+				var prop_string = props.get_count_above_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)):
-				var prop_value = props.get_property(RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
-				var prop_string = StringHelper.get_count_below_equal_string(prop_value)
+				var prop_string = props.get_count_below_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.EXPLODE_IDENTIFIER)):
-				var prop_string = StringHelper.get_explode_title()
+				var prop_string = props.get_explode_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.DICE_MODIFIER_IDENTIFIER)):
@@ -113,17 +99,12 @@ func get_detailed_roll_name() -> String:
 				var prop_string = StringHelper.get_modifier_String(prop_value, true)
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
-			if(props.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.DOUBLE)):
-				var prop_string = StringHelper.get_double_title()
-				return_string += StringHelper.wrap_in_parens(prop_string)
-				
-			if(props.property_equals_value(RollProperties.DOUBLE_HALVE_IDENTIFIER, RollProperties.DoubleHalveState.HALVE)):
-				var prop_string = StringHelper.get_halve_title()
+			if(props.property_not_equals_default(RollProperties.DOUBLE_HALVE_IDENTIFIER)):
+				var prop_string = props.get_double_halve_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 		if(props.property_not_equals_default(RollProperties.REPEAT_ROLL_IDENTIFIER)):
-			var prop_value = props.get_property(RollProperties.REPEAT_ROLL_IDENTIFIER)
-			var prop_string = StringHelper.get_repeat_roll_string(prop_value)
+			var prop_string = props.get_repeat_roll_string()
 			return_string += StringHelper.wrap_in_parens(prop_string)
 	return return_string
 

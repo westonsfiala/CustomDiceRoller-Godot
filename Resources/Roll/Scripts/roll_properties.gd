@@ -2,54 +2,110 @@ extends Resource
 class_name RollProperties
 
 const NUM_DICE_IDENTIFIER : StringName = "NUM_DICE"
+const NUM_DICE_TITLE : StringName = "Xd"
 const NUM_DICE_DEFAULT : int = 1
+func get_num_dice_string() -> String:
+	return str(get_property(NUM_DICE_IDENTIFIER), 'd')
 
 const DICE_MODIFIER_IDENTIFIER : StringName = "DICE_MODIFIER"
+const DICE_MODIFIER_TITLE : StringName = "Dice Modifier"
 const DICE_MODIFIER_DEFAULT : int = 0
 
 enum AdvantageDisadvantageState {DISADVANTAGE, NORMAL, ADVANTAGE}
 const ADVANTAGE_DISADVANTAGE_IDENTIFIER : StringName = "ADVANTAGE_DISADVANTAGE"
+const ADVANTAGE_TITLE : StringName = "Advantage"
+const DISADVANTAGE_TITLE : StringName = "Disadvantage"
 const ADVANTAGE_DISADVANTAGE_DEFAULT : AdvantageDisadvantageState = AdvantageDisadvantageState.NORMAL
+func get_advantage_disadvantage_string() -> String:
+	if(property_equals_value(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.ADVANTAGE)):
+		return ADVANTAGE_TITLE
+	elif(property_equals_value(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.DISADVANTAGE)):
+		return DISADVANTAGE_TITLE
+	return ''
 
 enum DoubleHalveState {HALVE, NORMAL, DOUBLE}
 const DOUBLE_HALVE_IDENTIFIER : StringName = "DOUBLE_HALVE"
+const DOUBLE_TITLE : StringName = "Double"
+const HALVE_TITLE : StringName = "Halve"
 const DOUBLE_HALVE_DEFAULT : DoubleHalveState = DoubleHalveState.NORMAL
+func get_double_halve_string() -> String:
+	if(property_equals_value(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.DOUBLE)):
+		return DOUBLE_TITLE
+	elif(property_equals_value(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.HALVE)):
+		return HALVE_TITLE
+	return ''
 
 const REPEAT_ROLL_IDENTIFIER : StringName = "REPEAT_ROLL"
+const REPEAT_ROLL_TITLE : StringName = "Repeat |X| Times"
 const REPEAT_ROLL_DEFAULT : int = 0
+func get_repeat_roll_string() -> String:
+	return str('Repeat |', get_property(REPEAT_ROLL_IDENTIFIER), '| Times')
 
 const DROP_HIGHEST_IDENTIFIER : StringName = "DROP_HIGHEST"
+const DROP_HIGHEST_TITLE : StringName = "Drop |X| Highest"
 const DROP_HIGHEST_DEFAULT : int = 0
+func get_drop_highest_string() -> String:
+	return str('Drop |', get_property(DROP_HIGHEST_IDENTIFIER), '| Highest')
 
 const DROP_LOWEST_IDENTIFIER : StringName = "DROP_LOWEST"
+const DROP_LOWEST_TITLE : StringName = "Drop |X| Lowest"
 const DROP_LOWEST_DEFAULT : int = 0
+func get_drop_lowest_string() -> String:
+	return str('Drop |', get_property(DROP_LOWEST_IDENTIFIER), '| Lowest')
 
 const KEEP_HIGHEST_IDENTIFIER : StringName = "KEEP_HIGHEST"
+const KEEP_HIGHEST_TITILE : StringName = "Keep |X| Highest"
 const KEEP_HIGHEST_DEFAULT : int = 0
+func get_keep_highest_string() -> String:
+	return str('Keep |', get_property(KEEP_HIGHEST_IDENTIFIER), '| Highest')
 
 const KEEP_LOWEST_IDENTIFIER : StringName = "KEEP_LOWEST"
+const KEEP_LOWEST_TITLE : StringName = "Keep |X| Lowest"
 const KEEP_LOWEST_DEFAULT : int = 0
+func get_keep_lowest_string() -> String:
+	return str('Keep |', get_property(KEEP_HIGHEST_IDENTIFIER), '| Lowest')
 
 const REROLL_OVER_IDENTIFIER : StringName = "REROLL_OVER"
+const REROLL_OVER_TITLE : StringName = "Reroll Die >= |X|"
 const REROLL_OVER_DEFAULT : int = 0
+func get_reroll_over_string() -> String:
+	return str('Reroll Die >= |', get_property(REROLL_OVER_IDENTIFIER), '|')
 
 const REROLL_UNDER_IDENTIFIER : StringName = "REROLL_UNDER"
+const REROLL_UNDER_TITLE : StringName = "Reroll Die <= |X|"
 const REROLL_UNDER_DEFAULT : int = 0
+func get_reroll_under_string() -> String:
+	return str('Reroll Die <= |', get_property(REROLL_UNDER_IDENTIFIER), '|')
 
 const MAXIMUM_ROLL_VALUE_IDENTIFIER : StringName = "MAXIMUM_ROLL_VALUE"
+const MAXIMUM_ROLL_VALUE_TITLE : StringName = "Maximum = |X|"
 const MAXIMUM_ROLL_VALUE_DEFAULT : int = 0
+func get_maximum_string() -> String:
+	return str('Maximum = |', get_property(REROLL_UNDER_IDENTIFIER), '|')
 
 const MINIMUM_ROLL_VALUE_IDENTIFIER : StringName = "MINIMUM_ROLL_VALUE"
+const MINIMUM_ROLL_VALUE_TITLE : StringName = "Minimum = |X|"
 const MINIMUM_ROLL_VALUE_DEFAULT : int = 0
+func get_minimum_string() -> String:
+	return str('Minimum = |', get_property(MINIMUM_ROLL_VALUE_IDENTIFIER), '|')
 
 const COUNT_ABOVE_EQUAL_IDENTIFIER : StringName = "COUNT_ABOVE_EQUAL"
+const COUNT_ABOVE_EQUAL_TITLE : StringName = "Count >= |X|"
 const COUNT_ABOVE_EQUAL_DEFAULT : int = 0
+func get_count_above_string() -> String:
+	return str('Count >= |', get_property(COUNT_ABOVE_EQUAL_IDENTIFIER), '|')
 
 const COUNT_BELOW_EQUAL_IDENTIFIER : StringName = "COUNT_BELOW_EQUAL"
+const COUNT_BELOW_EQUAL_TITLE : StringName = "Count <= |X|"
 const COUNT_BELOW_EQUAL_DEFAULT : int = 0
+func get_count_below_string() -> String:
+	return str('Count <= |', get_property(COUNT_BELOW_EQUAL_IDENTIFIER), '|')
 
 const EXPLODE_IDENTIFIER : StringName = "EXPLODE"
+const EXPLODE_TITLE : StringName = "Explode"
 const EXPLODE_DEFAULT : bool = false
+func get_explode_string() -> String:
+	return EXPLODE_TITLE
 
 # Order of applying properties:
 # Dice props (REROLL_UNDER -> REROLL_OVER -> MINIMUM -> MAXIMUM -> EXPLODE)
