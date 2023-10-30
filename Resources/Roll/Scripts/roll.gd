@@ -30,8 +30,8 @@ func get_detailed_roll_name() -> String:
 	var first_die = true
 	
 	for die_prop_pair in m_die_prop_array:
-		var die = die_prop_pair.m_die
-		var props = die_prop_pair.m_roll_properties
+		var die : AbstractDie = die_prop_pair.m_die
+		var props : RollProperties = die_prop_pair.m_roll_properties
 		
 		# Don't add the "+" to the first item. Only add "+" to positive count items.
 		var num_dice = props.get_property(RollProperties.NUM_DICE_IDENTIFIER)
@@ -41,11 +41,11 @@ func get_detailed_roll_name() -> String:
 			return_string += "+"
 			
 		if(die.name().begins_with("d")):
-			return_string += num_dice + die.name()
+			return_string += str(num_dice, die.name())
 		else:
-			return_string += num_dice + 'x' + die.name()
-		
-		if(die.is_numbered()):
+			return_string += str(num_dice, 'x', die.name())
+			
+		if (die.is_numbered()):
 			if(props.property_not_equals_default(RollProperties.ADVANTAGE_DISADVANTAGE_IDENTIFIER)):
 				var prop_string = props.get_advantage_disadvantage_string()
 				return_string += StringHelper.wrap_in_parens(prop_string)
@@ -96,7 +96,7 @@ func get_detailed_roll_name() -> String:
 				
 			if(props.property_not_equals_default(RollProperties.DICE_MODIFIER_IDENTIFIER)):
 				var prop_value = props.get_property(RollProperties.DICE_MODIFIER_IDENTIFIER)
-				var prop_string = StringHelper.get_modifier_String(prop_value, true)
+				var prop_string = StringHelper.get_modifier_string(prop_value, true)
 				return_string += StringHelper.wrap_in_parens(prop_string)
 				
 			if(props.property_not_equals_default(RollProperties.DOUBLE_HALVE_IDENTIFIER)):
@@ -235,7 +235,7 @@ func roll() -> RollResults:
 				# Advantage/Disadvantage cases
 				else:
 					var second_roll_lists = produce_number_roll_lists((die as NumberDie), properties);
-					var summer = func blah(a,b) -> int: return a+b
+					var summer = func method(a,b) -> int: return a+b
 					
 					var roll_lists_keep_sum = roll_lists[KEEP_KEY].reduce(summer, 0)
 					var second_roll_lists_keep_sum = second_roll_lists[KEEP_KEY].reduce(summer, 0)
@@ -278,6 +278,7 @@ func roll() -> RollResults:
 				return_results.m_struck_dropped_rolls[die] = []
 				return_results.m_struck_rerolled_rolls[die] = []
 	
+	return_results.process_roll(self)
 	return return_results
 
 # Produces a dictionary of 3 lists, a list of kept values, and a list of dropped values, and a list of rerolled values

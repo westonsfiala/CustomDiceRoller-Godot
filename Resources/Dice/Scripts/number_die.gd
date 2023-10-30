@@ -10,27 +10,11 @@ func is_text() -> bool:
 func is_image() -> bool:
 	return false
 
-func minimum() -> int:
-	assert(false, "minimum - not implemented in NumberDie")
-	return -1
-
-func maximum() -> int:
-	assert(false, "maximum - not implemented in NumberDie")
-	return -1
-
-func average() -> float:
-	assert(false, "average - not implemented in NumberDie")
-	return -1.0
-	
-func get_faces() -> Array[int]:
-	assert(false, "get_faces - not implemented in NumberDie")
-	return []
-
 func expected_result(properties : RollProperties) -> float:
 	var expected : float = 0
 	
 	# Need to go from min to max+1 so that we do an inclusive range
-	var faces : Array[int] = get_faces()
+	var faces = get_faces()
 	for face in faces:
 		var value = face
 		

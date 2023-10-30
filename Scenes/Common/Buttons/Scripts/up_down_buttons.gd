@@ -27,7 +27,7 @@ func reconfigure():
 	m_value = enforce_good_value(m_value, 0)
 	var new_text = str(m_value)
 	if(show_plus_minus):
-		new_text = StringHelper.get_modifier_String(m_value, false)
+		new_text = StringHelper.get_modifier_string(m_value, false)
 		
 	label.text = new_text + postfix
 	

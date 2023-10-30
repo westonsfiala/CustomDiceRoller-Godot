@@ -16,6 +16,22 @@ func info() -> String:
 func texture() -> Texture2D:
 	return m_texture
 	
+func minimum() -> int:
+	assert(false, "minimum - not implemented in AbstractDie")
+	return 0
+	
+func maximum() -> int:
+	assert(false, "maximum - not implemented in AbstractDie")
+	return 0
+	
+func average() -> float:
+	assert(false, "average - not implemented in AbstractDie")
+	return -1.0
+	
+func get_faces() -> Array:
+	assert(false, "get_faces - not implemented in AbstractDie")
+	return []
+	
 func roll():
 	assert(false, "roll - not implemented in AbstractDie")
 	return
