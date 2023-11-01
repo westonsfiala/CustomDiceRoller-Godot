@@ -25,7 +25,8 @@ var m_struck_rerolled_rolls : Dictionary = {}
 var m_roll_properties : Dictionary = {}
 
 # Tiny function used to help the reduce method
-func summer(a,b) -> int: return a+b
+func simple_summer(accum, value): return accum + value
+func die_summer(accum, die_result: DieResult): return accum + die_result.value()
 
 func process_roll(roll: Roll) -> void:
 	stored_roll = roll
@@ -33,7 +34,6 @@ func process_roll(roll: Roll) -> void:
 	time_string = Time.get_time_string_from_system()
 	
 	roll_name_text = roll.get_detailed_roll_name()
-	roll_results_array
 	
 	var sum_results : Array[int] = []
 	var non_number_results : Array = []
@@ -88,7 +88,7 @@ func process_roll(roll: Roll) -> void:
 
 	var sum_append_text = '';
 	
-	var sum_total = sum_results.reduce(summer,0)
+	var sum_total = sum_results.reduce(simple_summer,0)
 	var combined_results : Array = []
 
 	if(sum_results.size() != 0):
@@ -121,7 +121,7 @@ func process_roll(roll: Roll) -> void:
 	roll_sum = return_color_results
 
 # Lambda method for turning the roll numbers into a displayable string.
-static func process_roll_pair(die: AbstractDie, die_display_name: String, main_list: Array, strike_list: Array, sum_array: Array, non_number_array: Array, properties : RollProperties, show_prop_info : bool) -> ColoredDieResults:
+func process_roll_pair(die: AbstractDie, die_display_name: String, main_list: Array, strike_list: Array, sum_array: Array, non_number_array: Array, properties : RollProperties, show_prop_info : bool) -> ColoredDieResults:
 	var main_list_check = main_list != null and main_list.size() != 0
 	var strike_list_check = strike_list != null and strike_list.size() != 0
 	var property_check = show_prop_info and properties.has_modifier()
@@ -147,7 +147,7 @@ static func process_roll_pair(die: AbstractDie, die_display_name: String, main_l
 							if(item <= properties.get_count_below()):
 								sub_total += 1
 				else:
-					sub_total += main_list.reduce(summer,0)
+					sub_total += main_list.reduce(die_summer,0)
 				if(properties.is_double()):
 					append_string += ' (x2)'
 					sub_total *= 2

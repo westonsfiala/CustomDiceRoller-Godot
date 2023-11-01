@@ -12,8 +12,9 @@ func configure(die_name: String, bound1: int, bound2: int, die_texture: Texture2
 	m_texture = die_texture
 	return self
 
-func roll() -> int:
-	return randi_range(min_bound, max_bound)
+func roll() -> DieResult:
+	var result = randi_range(min_bound, max_bound)
+	return DieResult.new().configure(DieResult.DieResultType.INTEGER, result, minimum(), maximum())
 
 func minimum() -> int:
 	return min_bound

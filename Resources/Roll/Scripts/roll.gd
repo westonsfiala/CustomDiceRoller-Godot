@@ -280,6 +280,26 @@ func roll() -> RollResults:
 	
 	return_results.process_roll(self)
 	return return_results
+	
+# Tiny functions used to help the reduce method
+func find_max(current: DieResult, tester: DieResult) -> DieResult:
+	if current == null:
+		return tester
+	elif tester.value() > current.value():
+		return tester
+	else:
+		return current
+		
+func find_min(current: DieResult, tester: DieResult) -> DieResult: 
+	if current == null:
+		return tester
+	elif tester.value() < current.value():
+		return tester
+	else:
+		return current
+		
+func sort_ascending(left: DieResult, right: DieResult) -> DieResult: 
+	return left.value() > right.value()
 
 # Produces a dictionary of 3 lists, a list of kept values, and a list of dropped values, and a list of rerolled values
 # The keys for these lists are KEEP_KEY, DROP_KEY, and REROLL_KEY
@@ -301,37 +321,38 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 		
 		# If we use under rerolls, reroll under the threshold.
 		var reroll_under = abs(properties.get_property(RollProperties.REROLL_UNDER_IDENTIFIER))
-		if(properties.property_not_equals_default(RollProperties.REROLL_UNDER_IDENTIFIER) && abs(die_roll) <= reroll_under):
+		if(properties.property_not_equals_default(RollProperties.REROLL_UNDER_IDENTIFIER) && abs(die_roll.value()) <= reroll_under):
 			reroll_list.push_back(die_roll)
 			die_roll = die.roll()
 			
 		# If we use over rerolls, reroll over the threshold.
 		var reroll_over = abs(properties.get_property(RollProperties.REROLL_OVER_IDENTIFIER))
-		if(properties.property_not_equals_default(RollProperties.REROLL_OVER_IDENTIFIER) && abs(die_roll) >= reroll_over):
+		if(properties.property_not_equals_default(RollProperties.REROLL_OVER_IDENTIFIER) && abs(die_roll.value()) >= reroll_over):
 			reroll_list.push_back(die_roll)
 			die_roll = die.roll()
 			
 		# If we have a minimum value, drop anything less.
 		var minimum_die_roll_value = abs(properties.get_property(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER))
-		if(properties.property_not_equals_default(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER) and abs(die_roll) < minimum_die_roll_value):
+		if(properties.property_not_equals_default(RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER) and abs(die_roll.value()) < minimum_die_roll_value):
 			reroll_list.push_back(die_roll);
 			die_roll = min(minimum_die_roll_value, die.maximum())
 			
 		# If we have a maximum value, drop anything more.
 		var maximum_die_roll_value = abs(properties.get_property(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER))
-		if(properties.property_not_equals_default(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER) and abs(die_roll) > maximum_die_roll_value):
+		if(properties.property_not_equals_default(RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER) and abs(die_roll.value()) > maximum_die_roll_value):
 			reroll_list.push_back(die_roll);
-			die_roll = max(maximum_die_roll_value, die.min)
+			die_roll = max(maximum_die_roll_value, die.minimum())
 		
 		# If we are set to explode, have the maximum value, have a range, and can roll within that range, roll an extra die
 		var exploding_die = properties.get_property(RollProperties.EXPLODE_IDENTIFIER)
-		if(exploding_die and die_roll == die.maximum() and die.minimum() != die.maximum() and minimum_die_roll_value != die.maximum()):
+		if(exploding_die and die_roll.value() == die.maximum() and die.minimum() != die.maximum() and minimum_die_roll_value != die.maximum()):
 			roll_num -= 1
 			
 		if(num_dice > 0):
 			keep_list.push_back(die_roll)
 		else:
-			keep_list.push_back(-die_roll)
+			die_roll.negate_value()
+			keep_list.push_back(die_roll)
 			
 		roll_num += 1;
 		
@@ -342,7 +363,7 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 		keep_list = []
 	else:
 		for i in drop_highest:
-			var ejected_value = keep_list.max()
+			var ejected_value = keep_list.reduce(find_max)
 			keep_list.erase(ejected_value)
 			drop_list.push_back(ejected_value)
 			
@@ -353,7 +374,7 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 		keep_list = []
 	else:
 		for i in drop_lowest:
-			var ejected_value = keep_list.min()
+			var ejected_value = keep_list.reduce(find_min)
 			keep_list.erase(ejected_value)
 			drop_list.push_back(ejected_value)
 			
@@ -366,7 +387,7 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 			var num_to_drop = keep_list.size() - (keep_highest + keep_lowest)
 			var index_to_drop = keep_lowest
 			var temp_sorted = keep_list.duplicate()
-			temp_sorted.sort()
+			temp_sorted.sort_custom(sort_ascending)
 			for drop_index in num_to_drop:
 				var ejected_value = temp_sorted[index_to_drop + drop_index]
 				keep_list.erase(ejected_value)

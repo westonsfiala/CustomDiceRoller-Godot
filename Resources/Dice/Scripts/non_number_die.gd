@@ -1,10 +1,6 @@
 extends AbstractDie
 class_name NonNumberDie
 	
-func roll():
-	assert(false, "roll - not implemented in NonNumberDie")
-	return
-	
 func is_numbered() -> bool:
 	return false
 

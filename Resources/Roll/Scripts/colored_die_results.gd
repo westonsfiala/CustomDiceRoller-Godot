@@ -9,11 +9,11 @@ class_name ColoredDieResults
 @export var struck_rolls : Array
 @export var id : String
 
-func configure(prepend: String, append: String, min: int, max: int, regular: Array, struck: Array, key: String) -> ColoredDieResults:
+func configure(prepend: String, append: String, minimum: int, maximum: int, regular: Array, struck: Array, key: String) -> ColoredDieResults:
 	prepend_text = prepend
 	append_text = append
-	roll_min = min
-	roll_max = max
+	roll_min = minimum
+	roll_max = maximum
 	regular_rolls = regular
 	struck_rolls = struck
 	id = key

@@ -32,9 +32,9 @@ func get_faces() -> Array:
 	assert(false, "get_faces - not implemented in AbstractDie")
 	return []
 	
-func roll():
+func roll() -> DieResult:
 	assert(false, "roll - not implemented in AbstractDie")
-	return
+	return DieResult.new().configure(DieResult.DieResultType.INVALID,'','','')
 	
 func is_numbered() -> bool:
 	assert(false, "is_numbered - not implemented in AbstractDie")
