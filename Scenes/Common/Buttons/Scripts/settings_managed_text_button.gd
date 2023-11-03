@@ -4,7 +4,7 @@ class_name SettingsManagedTextButton
 @export var button_text : String = "TEMP"
 @export var is_small_text : bool = false
 
-@onready var label : SettingsManagedLabel = $SettingsManagedLabel
+@onready var label : Label = $SettingsManagedLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

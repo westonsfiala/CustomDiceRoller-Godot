@@ -85,38 +85,34 @@ func process_roll(roll: Roll) -> void:
 		expected_color_results.prepend_text = average_text
 		expected_color_results.id = 'expected'
 		roll_results_array.push_back(expected_color_results)
-
+		
 	var sum_append_text = '';
 	
 	var sum_total = sum_results.reduce(simple_summer,0)
-	var combined_results : Array = []
+	var combined_results : Array[DieResult] = []
 
-	if(sum_results.size() != 0):
-		if(show_split_sums):
-			for die_sum in sum_results: 
-				combined_results.push_back(die_sum);
-			sum_append_text = str(', [', sum_total, ']')
-		else:
-			combined_results.push_back(sum_total);
-			
-	for non_number_result in non_number_results:
-		combined_results.push_back(non_number_result)
-		
 	# Sometimes things get wonky.
 	var roll_min = roll.minimum();
 	var roll_max = roll.maximum();
-	
 	if(roll_min > roll_max):
 		var temp = roll_min
 		roll_min = roll_max
 		roll_max = temp
+	
+	if(sum_results.size() != 0):
+		if(show_split_sums):
+			for die_sum in sum_results: 
+				var individual_result = DieResult.new().configure(DieResult.DieResultType.INTEGER, die_sum, roll_min, roll_max)
+				combined_results.push_back(individual_result);
+			sum_append_text = str(', [', sum_total, ']')
+		else:
+			var combined_result = DieResult.new().configure(DieResult.DieResultType.INTEGER, sum_total, roll_min, roll_max)
+			combined_results.push_back(combined_result);
+			
+	for non_number_result in non_number_results:
+		combined_results.push_back(non_number_result)
 		
-	var return_color_results = ColoredDieResults.new()
-	return_color_results.append_text = sum_append_text
-	return_color_results.roll_min = roll_min
-	return_color_results.roll_max = roll_max
-	return_color_results.regular_rolls = combined_results
-	return_color_results.id = 'sum'
+	var return_color_results = ColoredDieResults.new().configure("",sum_append_text, roll_min, roll_max, combined_results, [], "sum")
 	
 	roll_sum = return_color_results
 

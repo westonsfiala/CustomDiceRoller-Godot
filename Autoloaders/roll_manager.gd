@@ -10,7 +10,7 @@ func simple_roll(die : AbstractDie, props : RollProperties):
 	var new_roll = Roll.new().configure("Simple Roll", "")
 	new_roll.add_die_to_roll(die, props)
 	var results = new_roll.roll()
-	add_to_history(JSON.stringify(results.m_roll_results[results.m_roll_results.keys()[0]]))
+	add_to_history(results.roll_sum.rich_text())
 
 func add_to_history(result : String):
 	if(not cleared_roll_history.is_empty()):

@@ -23,10 +23,10 @@ func reconfigure():
 	refresh_no_history()
 		
 func add_history_item(result: String):
-	var history_item = preload("res://Scenes/Common/Labels/settings_managed_label.tscn").instantiate()
+	var history_item = preload("res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn").instantiate()
 	history_list.add_child(history_item)
 	history_list.move_child(history_item, 0)
-	history_item.text = result
+	history_item.set_bbcode_text(result)
 	refresh_no_history()
 	
 func refresh_no_history():

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://2jcpfncolph"]
 
-[ext_resource type="LabelSettings" uid="uid://b6vgp8o1pg4rg" path="res://Resources/Styles/default_normal_label.tres" id="1_n5p5g"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_0rdxt"]
 [ext_resource type="Script" path="res://Scenes/Common/Labels/Scripts/settings_managed_label.gd" id="2_aymga"]
 
 [node name="SettingsManagedLabel" type="Label"]
@@ -14,8 +14,8 @@ offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+theme = ExtResource("1_0rdxt")
 text = "TEMP"
-label_settings = ExtResource("1_n5p5g")
 horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 3
