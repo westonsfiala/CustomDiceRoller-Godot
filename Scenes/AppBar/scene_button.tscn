@@ -1,10 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://cnb44mjrsn3rh"]
+[gd_scene load_steps=8 format=3 uid="uid://cnb44mjrsn3rh"]
 
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="1_ft43c"]
 [ext_resource type="Script" path="res://Scenes/AppBar/Scripts/scene_button.gd" id="2_hiens"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3kpd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qx1bq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vc7qd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a1qrc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q2bs8"]
+
 [node name="SceneButton" instance=ExtResource("1_ft43c")]
 custom_minimum_size = Vector2(150, 50)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_t3kpd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qx1bq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vc7qd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_a1qrc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_q2bs8")
 script = ExtResource("2_hiens")
 scene_enum = 0
 

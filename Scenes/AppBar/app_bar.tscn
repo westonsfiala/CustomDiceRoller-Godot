@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqur83d6dqocf"]
+[gd_scene load_steps=5 format=3 uid="uid://cqur83d6dqocf"]
 
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_grtwt"]
 [ext_resource type="Script" path="res://Scenes/AppBar/Scripts/app_bar.gd" id="1_lm3o7"]
 [ext_resource type="PackedScene" uid="uid://dsds4ja55fu4e" path="res://Scenes/AppBar/title_bar.tscn" id="2_kqjy6"]
 [ext_resource type="PackedScene" uid="uid://bch2undeeqhje" path="res://Scenes/AppBar/scene_scroll_button_bar.tscn" id="4_eob71"]
@@ -15,6 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme = ExtResource("1_grtwt")
 script = ExtResource("1_lm3o7")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -24,6 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_grtwt")
 color = Color(0, 0, 0, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
@@ -33,12 +36,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
+theme = ExtResource("1_grtwt")
 
 [node name="TitleBar" parent="ColorRect/VBoxContainer" instance=ExtResource("2_kqjy6")]
 layout_mode = 2
+theme = ExtResource("1_grtwt")
 
 [node name="SceneScrollButtonBar" parent="ColorRect/VBoxContainer" instance=ExtResource("4_eob71")]
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
+theme = ExtResource("1_grtwt")

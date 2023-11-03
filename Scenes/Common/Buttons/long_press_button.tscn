@@ -1,16 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cvvyt7shl1nu3"]
+[gd_scene load_steps=3 format=3 uid="uid://cvvyt7shl1nu3"]
 
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_2x6cf"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/long_press_button.gd" id="1_aj1xq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3kpd"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qx1bq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vc7qd"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a1qrc"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q2bs8"]
 
 [node name="LongPressButton" type="Button"]
 anchors_preset = 15
@@ -21,11 +12,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxEmpty_t3kpd")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_qx1bq")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_vc7qd")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_a1qrc")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_q2bs8")
+theme = ExtResource("1_2x6cf")
 flat = true
 script = ExtResource("1_aj1xq")
 

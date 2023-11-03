@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bch2undeeqhje"]
+[gd_scene load_steps=4 format=3 uid="uid://bch2undeeqhje"]
 
 [ext_resource type="Script" path="res://Scenes/AppBar/Scripts/scene_scroll_button_bar.gd" id="1_tdv3l"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_yhki2"]
 [ext_resource type="PackedScene" uid="uid://cnb44mjrsn3rh" path="res://Scenes/AppBar/scene_button.tscn" id="3_b3p5b"]
-[ext_resource type="StyleBox" uid="uid://ciqb75q22o8hi" path="res://Resources/Styles/scroll_bar_style.tres" id="3_d7x6w"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8pfy"]
-bg_color = Color(0, 0, 0, 0)
 
 [node name="SceneScrollButtonBar" type="Control"]
 custom_minimum_size = Vector2(0, 50)
@@ -19,6 +16,7 @@ grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 mouse_filter = 1
+theme = ExtResource("1_yhki2")
 script = ExtResource("1_tdv3l")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -29,6 +27,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme = ExtResource("1_yhki2")
 color = Color(0, 0, 0, 1)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ColorRect"]
@@ -39,6 +38,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+theme = ExtResource("1_yhki2")
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
@@ -46,12 +46,12 @@ vertical_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 0
+theme = ExtResource("1_yhki2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 0
+theme = ExtResource("1_yhki2")
 
 [node name="HistoryButton" parent="ColorRect/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_b3p5b")]
 layout_mode = 2
@@ -69,7 +69,4 @@ custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
-theme_override_styles/scroll = SubResource("StyleBoxFlat_v8pfy")
-theme_override_styles/grabber = ExtResource("3_d7x6w")
-theme_override_styles/grabber_highlight = ExtResource("3_d7x6w")
-theme_override_styles/grabber_pressed = ExtResource("3_d7x6w")
+theme = ExtResource("1_yhki2")

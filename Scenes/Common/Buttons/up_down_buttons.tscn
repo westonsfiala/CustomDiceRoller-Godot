@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6j8433ge4v87"]
+[gd_scene load_steps=7 format=3 uid="uid://c6j8433ge4v87"]
 
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_045hk"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/up_down_buttons.gd" id="1_o2tqo"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_52mnr"]
 [ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/DownArrow.svg" id="3_48qfq"]
@@ -17,6 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
 mouse_filter = 1
+theme = ExtResource("1_045hk")
 script = ExtResource("1_o2tqo")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -29,7 +31,7 @@ offset_top = -24.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
+theme = ExtResource("1_045hk")
 
 [node name="DownButton" parent="HBoxContainer" instance=ExtResource("2_52mnr")]
 layout_mode = 2
