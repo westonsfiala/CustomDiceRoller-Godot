@@ -1,7 +1,5 @@
 extends RichTextLabel
-class_name SettingsManagedLabel
-
-@onready var label : RichTextLabel = $"."
+class_name SettingsManagedRichTextLabel
 
 func _ready():
 	SettingsManager.reconfigure.connect(reconfigure)
@@ -13,4 +11,4 @@ func reconfigure():
 	custom_minimum_size.y = SettingsManager.get_text_size()
 
 func set_bbcode_text(formatted_text: String):
-	label.parse_bbcode("[center]" + formatted_text + "[/center]")
+	parse_bbcode("[center]" + formatted_text + "[/center]")

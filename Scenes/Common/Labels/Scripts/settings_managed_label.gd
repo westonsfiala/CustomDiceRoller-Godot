@@ -1,5 +1,5 @@
 extends Label
-class_name SettingsManagedRichTextLabel
+class_name SettingsManagedLabel
 
 @export var is_small_text : bool = false
 

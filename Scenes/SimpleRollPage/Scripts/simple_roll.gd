@@ -1,6 +1,6 @@
 extends Control
 
-@onready var dice_result : Label = $VerticalLayout/DiceResult
+@onready var dice_result : SettingsManagedRichTextLabel = $VerticalLayout/RichTextDiceResult
 @onready var dice_grid : HFlowContainer = $VerticalLayout/ScrollContainer/DiceGrid
 @onready var no_dice_label : Label = $NoDiceLabel
 @onready var num_dice_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown
@@ -37,7 +37,7 @@ func roll_die(die: AbstractDie):
 
 # Displays the dice results
 func set_dice_result(result):
-	dice_result.text = str(result)
+	dice_result.set_bbcode_text(result)
 	
 func refresh_no_dice():
 	var dice = SettingsManager.get_dice()
