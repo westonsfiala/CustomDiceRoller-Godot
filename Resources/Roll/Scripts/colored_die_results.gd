@@ -1,22 +1,17 @@
 extends Resource
 class_name ColoredDieResults
 
-@export var prepend_text : String
-@export var append_text : String
-@export var roll_min : int
-@export var roll_max : int
-@export var regular_rolls : Array #[DieResult]
-@export var struck_rolls : Array #[DieResult]
-@export var id : String
+@export var formatted_text : String = ""
 
-func configure(prepend: String, append: String, minimum: int, maximum: int, regular: Array, struck: Array, key: String) -> ColoredDieResults:
-	prepend_text = prepend
-	append_text = append
-	roll_min = minimum
-	roll_max = maximum
-	regular_rolls = regular
-	struck_rolls = struck
-	id = key
+func configure(prepend: String, append: String, regular: Array, struck: Array) -> ColoredDieResults:
+	formatted_text = prepend
+	formatted_text += produce_list_text(regular)
+	
+	if(struck.size() != 0):
+		formatted_text += " "
+		formatted_text += strike_string(produce_list_text(struck))
+	
+	formatted_text += append
 	return self
 
 func bold_string(text: String) -> String:
@@ -34,6 +29,7 @@ func produce_list_text(list: Array) -> String:
 	for result in list:
 		if(not first):
 			list_text += ", "
+		first = false
 		var result_value_string = str(result.value())
 		if(result.is_maximum()):
 			list_text += color_string(result_value_string, "GREEN")
@@ -42,16 +38,4 @@ func produce_list_text(list: Array) -> String:
 		else:
 			list_text += result_value_string
 	return list_text
-
-func rich_text() -> String:
-	var formatted_text : String = prepend_text
-	
-	formatted_text += produce_list_text(regular_rolls)
-	
-	if(struck_rolls.size() != 0):
-		formatted_text += " "
-		formatted_text += strike_string(produce_list_text(struck_rolls))
-	
-	formatted_text += append_text
-	return formatted_text
 	

@@ -6,6 +6,7 @@ class_name RollResults
 @export var date_string : String = ""
 @export var stored_roll : Roll = Roll.new()
 @export var roll_name_text : String = ""
+@export var roll_detailed_name_text : String = ""
 @export var roll_sum : ColoredDieResults = ColoredDieResults.new()
 @export var roll_results_array : Array[ColoredDieResults] = []
 
@@ -33,7 +34,8 @@ func process_roll(roll: Roll) -> void:
 	date_string = Time.get_date_string_from_system()
 	time_string = Time.get_time_string_from_system()
 	
-	roll_name_text = roll.get_detailed_roll_name()
+	roll_name_text = roll.roll_name()
+	roll_detailed_name_text = roll.get_detailed_roll_name()
 	
 	var sum_results : Array[int] = []
 	var non_number_results : Array = []
@@ -81,9 +83,7 @@ func process_roll(roll: Roll) -> void:
 		var average_text = str('Expected Result - [', roll_average_string, ']')
 		
 		# This isn't the best way to do this, but its good enough.
-		var expected_color_results = ColoredDieResults.new()
-		expected_color_results.prepend_text = average_text
-		expected_color_results.id = 'expected'
+		var expected_color_results = ColoredDieResults.new().configure(average_text,"", [], [])
 		roll_results_array.push_back(expected_color_results)
 		
 	var sum_append_text = '';
@@ -112,7 +112,7 @@ func process_roll(roll: Roll) -> void:
 	for non_number_result in non_number_results:
 		combined_results.push_back(non_number_result)
 		
-	var return_color_results = ColoredDieResults.new().configure("",sum_append_text, roll_min, roll_max, combined_results, [], "sum")
+	var return_color_results = ColoredDieResults.new().configure("",sum_append_text, combined_results, [])
 	
 	roll_sum = return_color_results
 
@@ -166,7 +166,7 @@ func process_roll_pair(die: AbstractDie, die_display_name: String, main_list: Ar
 			die_minimum = -die_minimum
 			die_maximum = -die_maximum
 		
-		return ColoredDieResults.new().configure(prepend_string, append_string, die_minimum, die_maximum, main_list, strike_list, die_display_name)
+		return ColoredDieResults.new().configure(prepend_string, append_string, main_list, strike_list)
 	return null
 
 func get_merged_keys() -> Array:

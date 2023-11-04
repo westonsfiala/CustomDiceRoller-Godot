@@ -80,12 +80,6 @@ func get_text_size_small() -> int:
 	
 func get_margin_padding() -> int:
 	return margin_padding
-	
-func get_label_settings() -> LabelSettings:
-	return default_label_settings
-	
-func get_small_label_settings() -> LabelSettings:
-	return default_small_label_settings
 
 # Removes all the children nodes of a given node and frees them
 func remove_and_free_children(node: Node):

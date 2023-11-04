@@ -7,8 +7,4 @@ func _ready():
 	
 # Reconfigures the scene according to the settings
 func reconfigure():
-	print("reconfiguring richtextlabel")
 	custom_minimum_size.y = SettingsManager.get_text_size()
-
-func set_bbcode_text(formatted_text: String):
-	parse_bbcode("[center]" + formatted_text + "[/center]")

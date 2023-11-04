@@ -36,8 +36,11 @@ func roll_die(die: AbstractDie):
 	RollManager.simple_roll(die, roll_props)
 
 # Displays the dice results
-func set_dice_result(result):
-	dice_result.set_bbcode_text(result)
+func set_dice_result(roll_result: RollResults):
+	dice_result.clear()
+	dice_result.push_paragraph(HORIZONTAL_ALIGNMENT_CENTER)
+	dice_result.append_text(roll_result.roll_sum.formatted_text)
+	dice_result.pop()
 	
 func refresh_no_dice():
 	var dice = SettingsManager.get_dice()

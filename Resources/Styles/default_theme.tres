@@ -31,6 +31,7 @@ HScrollBar/styles/grabber = ExtResource("1_vlu4t")
 HScrollBar/styles/grabber_highlight = ExtResource("1_vlu4t")
 HScrollBar/styles/grabber_pressed = ExtResource("1_vlu4t")
 HScrollBar/styles/scroll = SubResource("StyleBoxEmpty_1l5wb")
+HSeparator/constants/separation = 8
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 3
 Label/fonts/font = ExtResource("1_dh1c7")

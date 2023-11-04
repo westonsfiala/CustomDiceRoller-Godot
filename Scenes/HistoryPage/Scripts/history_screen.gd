@@ -1,6 +1,6 @@
 extends Control
 
-@onready var history_list : VBoxContainer = $ScrollContainer/HistoryList
+@onready var history_list : VBoxContainer = $ScrollContainer/MarginContainer/HistoryList
 @onready var no_history_label : Label = $EmptyHistoryLabel
 
 # Called when the node enters the scene tree for the first time.
@@ -21,12 +21,16 @@ func reconfigure():
 	for roll in roll_history:
 		add_history_item(roll)
 	refresh_no_history()
-		
-func add_history_item(result: String):
-	var history_item = preload("res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn").instantiate()
+
+# Add a roll result to the history. If any history items already exist, add a speparator as well.
+func add_history_item(roll_result: RollResults):
+	if(history_list.get_child_count() != 0):
+		var separator = HSeparator.new()
+		history_list.add_child(separator)
+		history_list.move_child(separator, 0)
+	var history_item = preload("res://Scenes/HistoryPage/history_item.tscn").instantiate().configure(roll_result)
 	history_list.add_child(history_item)
 	history_list.move_child(history_item, 0)
-	history_item.set_bbcode_text(result)
 	refresh_no_history()
 	
 func refresh_no_history():

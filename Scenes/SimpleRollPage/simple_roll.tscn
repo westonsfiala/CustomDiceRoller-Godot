@@ -43,7 +43,6 @@ theme = ExtResource("1_dvlt6")
 
 [node name="RichTextDiceResult" parent="VerticalLayout" instance=ExtResource("3_3r18e")]
 layout_mode = 2
-text = "TEMP"
 
 [node name="PropBar" type="VBoxContainer" parent="VerticalLayout"]
 layout_mode = 2
