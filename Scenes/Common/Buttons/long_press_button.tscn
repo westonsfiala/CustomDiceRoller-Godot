@@ -13,7 +13,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
 theme = ExtResource("1_2x6cf")
-flat = true
 script = ExtResource("1_aj1xq")
 
 [node name="LongPressTimer" type="Timer" parent="."]

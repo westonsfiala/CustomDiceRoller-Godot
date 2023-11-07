@@ -18,7 +18,6 @@ func _ready():
 	
 func configure(result: RollResults) -> HistoryItem:
 	m_result = result
-	deferred_reconfigure()
 	return self
 	
 func deferred_reconfigure():

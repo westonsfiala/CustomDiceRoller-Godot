@@ -27,6 +27,7 @@ script = ExtResource("1_3xkko")
 
 [node name="LongPressButton" parent="." instance=ExtResource("2_apn0u")]
 layout_mode = 1
+flat = true
 
 [node name="VerticalContainer" type="VBoxContainer" parent="LongPressButton"]
 layout_mode = 1

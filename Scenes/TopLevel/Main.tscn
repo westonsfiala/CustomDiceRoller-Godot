@@ -42,5 +42,4 @@ mouse_filter = 1
 
 [node name="SceneScroller" parent="ColorRect/VBoxContainer" instance=ExtResource("3_wlitc")]
 layout_mode = 2
-theme = ExtResource("1_dlix8")
 scroll_deadzone = 5

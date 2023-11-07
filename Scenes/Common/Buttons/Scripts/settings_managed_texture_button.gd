@@ -16,10 +16,4 @@ func _ready():
 func reconfigure():
 	print("reconfiguring texture button")
 	var button_size = SettingsManager.get_button_size()
-	var margin_padding = SettingsManager.get_margin_padding()
 	custom_minimum_size = Vector2.ONE * button_size
-	
-	add_theme_constant_override("margin_top", margin_padding)
-	add_theme_constant_override("margin_left", margin_padding)
-	add_theme_constant_override("margin_bottom", margin_padding)
-	add_theme_constant_override("margin_right", margin_padding)

@@ -40,10 +40,8 @@ theme = ExtResource("1_grtwt")
 
 [node name="TitleBar" parent="ColorRect/VBoxContainer" instance=ExtResource("2_kqjy6")]
 layout_mode = 2
-theme = ExtResource("1_grtwt")
 
 [node name="SceneScrollButtonBar" parent="ColorRect/VBoxContainer" instance=ExtResource("4_eob71")]
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme = ExtResource("1_grtwt")

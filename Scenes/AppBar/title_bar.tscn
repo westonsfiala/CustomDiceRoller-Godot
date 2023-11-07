@@ -35,4 +35,7 @@ horizontal_alignment = 0
 [node name="ClearHistoryButton" parent="MarginContainer" instance=ExtResource("2_0p24n")]
 layout_mode = 2
 size_flags_horizontal = 8
+flat = true
 texture_2d = ExtResource("3_g17ps")
+
+[connection signal="short_pressed" from="MarginContainer/ClearHistoryButton" to="." method="_on_clear_history_button_short_pressed"]

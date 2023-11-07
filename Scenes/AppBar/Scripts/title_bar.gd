@@ -1,16 +1,14 @@
 extends Control
 
-@onready var margin_container : MarginContainer = $MarginContainer
+@onready var clear_history_button : LongPressButton = $MarginContainer/ClearHistoryButton
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
-	call_deferred("reconfigure")
+func _on_clear_history_button_short_pressed():
+	var popup_menu = PopupMenu.new()
+	popup_menu.theme = preload("res://Resources/Styles/default_theme.tres")
+	popup_menu.add_item("Clear History")
+	popup_menu.connect("id_pressed", clear_history)
+	popup_menu.popup_exclusive(clear_history_button, clear_history_button.get_rect())
 	
-# Reconfigures the scene according to the settings
-func reconfigure():
-	print("reconfiguring texture button")
-	var margin_padding = SettingsManager.get_margin_padding()
-	
-	margin_container.add_theme_constant_override("margin_left", margin_padding)
-	margin_container.add_theme_constant_override("margin_right", margin_padding)
+func clear_history(_id):
+	RollManager.clear_roll_history()
+
