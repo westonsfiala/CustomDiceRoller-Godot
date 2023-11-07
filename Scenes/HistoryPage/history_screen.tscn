@@ -45,12 +45,16 @@ layout_mode = 1
 text = "No History
 Get Rolling!"
 
-[node name="RestoreHistoryButton" parent="." instance=ExtResource("4_c5jvf")]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
-anchor_top = 0.0
-anchor_bottom = 0.0
-grow_vertical = 1
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="RestoreHistoryButton" parent="MarginContainer" instance=ExtResource("4_c5jvf")]
+layout_mode = 2
+size_flags_horizontal = 1
 button_text = "Restore History"
 
-[connection signal="short_pressed" from="RestoreHistoryButton" to="." method="_on_restore_history_button_short_pressed"]
+[connection signal="short_pressed" from="MarginContainer/RestoreHistoryButton" to="." method="_on_restore_history_button_short_pressed"]

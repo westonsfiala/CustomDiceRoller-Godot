@@ -2,7 +2,7 @@ extends Control
 
 @onready var history_list : VBoxContainer = $ScrollContainer/MarginContainer/HistoryList
 @onready var no_history_label : Label = $EmptyHistoryLabel
-@onready var restore_history_button : LongPressButton = $RestoreHistoryButton
+@onready var restore_history_button : LongPressButton = $MarginContainer/RestoreHistoryButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

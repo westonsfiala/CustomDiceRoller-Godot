@@ -5,15 +5,19 @@ class_name UpDownButtons
 @export var show_plus_minus : bool
 @export var disallow_zero : bool
 
-@onready var down_button : LongPressButton = $HBoxContainer/DownButton
-@onready var label : Label = $HBoxContainer/ValueLabel
-@onready var up_button : LongPressButton = $HBoxContainer/UpButton
+@onready var margin_container : MarginContainer = $MarginContainer
+@onready var down_button : LongPressButton = $MarginContainer/HBoxContainer/DownButton
+@onready var label : Label = $MarginContainer/HBoxContainer/ValueLabel
+@onready var up_button : LongPressButton = $MarginContainer/HBoxContainer/UpButton
 
 var m_value : int = 0
+
+signal value_changed(value: int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	set_value(m_value)
 	deferred_reconfigure()
 	
 func deferred_reconfigure():
@@ -22,26 +26,24 @@ func deferred_reconfigure():
 func reconfigure():
 	print("reconfiguring up down buttons")
 	var button_size = SettingsManager.get_button_size()
-	custom_minimum_size = Vector2(0, button_size)
+	var margin_size = margin_container.get_theme_constant("margin_top") + margin_container.get_theme_constant("margin_bottom")
+	custom_minimum_size = Vector2(0, button_size + margin_size)
 	
-	m_value = enforce_good_value(m_value, 0)
+func get_value() -> int:
+	return m_value
+	
+func set_value(value : int):
+	m_value = enforce_good_value(value, 0)
 	var new_text = str(m_value)
 	if(show_plus_minus):
 		new_text = StringHelper.get_modifier_string(m_value, false)
 		
 	label.text = new_text + postfix
 	
-func get_value() -> int:
-	return m_value
-	
-func set_value(value : int):
-	m_value = value
-	reconfigure()
-	
 func handle_change(change: int):
 	var snapped_change = snap_to_next_increment(m_value, change)
 	var new_value = enforce_good_value(m_value, snapped_change)
-	set_value(new_value)
+	emit_signal("value_changed", new_value)
 	
 # Sometimes we do not want to allow for the value to be 0.
 func enforce_good_value(value: int, change: int):

@@ -220,6 +220,13 @@ func is_default() -> bool:
 		if(not property_equals_default(prop)):
 			return false
 	return true
+	
+func get_num_non_default() -> int:
+	var num_non_default = 0
+	for prop in PROPERTY_DEFAULT_MAP:
+		if(not property_equals_default(prop)):
+			num_non_default += 1
+	return num_non_default
 
 # Adds the prop value pair. Checks key value correctness.
 # If the property was added.

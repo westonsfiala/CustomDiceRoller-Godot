@@ -5,13 +5,21 @@ extends Control
 @onready var no_dice_label : Label = $NoDiceLabel
 @onready var num_dice_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown
 @onready var modifier_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown
+@onready var property_button : PropertyButton = $VerticalLayout/PropBar/PropertyButtonBar/PropertyButton
 
 # Connect to the settings manager and setup the scene with all of our dice
 func _ready():
 	RollManager.new_roll_result.connect(set_dice_result)
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	SimpleRollManager.roll_properties_updated.connect(properties_updated)
+	num_dice_buttons.value_changed.connect(num_dice_changed)
+	modifier_buttons.value_changed.connect(modifier_changed)
+	property_button.properties_updated.connect(SimpleRollManager.set_roll_properties)
+	property_button.reset_properties.connect(SimpleRollManager.reset_properties)
+	dice_updated()
+	properties_updated()
 	deferred_reconfigure()
-	
+
 func deferred_reconfigure():
 	call_deferred("reconfigure")
 
@@ -19,6 +27,8 @@ func deferred_reconfigure():
 func reconfigure():
 	print("reconfiguring simple roll")
 	custom_minimum_size.x = SettingsManager.get_window_size().x
+	
+func dice_updated() -> void:
 	SettingsManager.remove_and_free_children(dice_grid)
 	for die in SettingsManager.get_dice():
 		var dice_node = preload("res://Scenes/Common/Buttons/clickable_die.tscn").instantiate()
@@ -27,16 +37,29 @@ func reconfigure():
 		dice_node.configure(die)
 	refresh_no_dice()
 
+func properties_updated() -> void:
+	var roll_properties = SimpleRollManager.get_roll_properties()
+	num_dice_buttons.set_value(roll_properties.get_num_dice())
+	modifier_buttons.set_value(roll_properties.get_modifier())
+	property_button.set_properties(roll_properties)
+
+func num_dice_changed(value: int) -> void:
+	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
+	roll_properties.add_property(RollProperties.NUM_DICE_IDENTIFIER, value)
+	SimpleRollManager.set_roll_properties(roll_properties)
+
+func modifier_changed(value: int) -> void:
+	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
+	roll_properties.add_property(RollProperties.DICE_MODIFIER_IDENTIFIER, value)
+	SimpleRollManager.set_roll_properties(roll_properties)
+
 # Roll the die that was clicked and set the results
 func roll_die(die: AbstractDie):
-	var roll_props = RollProperties.new().configure({
-		RollProperties.NUM_DICE_IDENTIFIER : num_dice_buttons.get_value(), 
-		RollProperties.DICE_MODIFIER_IDENTIFIER : modifier_buttons.get_value(),
-		})
-	RollManager.simple_roll(die, roll_props)
+	RollManager.simple_roll(die, SimpleRollManager.get_roll_properties())
 
 # Displays the dice results
 func set_dice_result(roll_result: RollResults):
+	dice_result.visible = true
 	dice_result.clear()
 	dice_result.push_paragraph(HORIZONTAL_ALIGNMENT_CENTER)
 	dice_result.append_text(roll_result.roll_sum.formatted_text)
