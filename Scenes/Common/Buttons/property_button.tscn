@@ -48,4 +48,9 @@ theme = ExtResource("1_4iyvt")
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="PropertiesSelectorPopup" type="PopupMenu" parent="."]
+size = Vector2i(28, 50)
+theme = ExtResource("1_4iyvt")
+
 [connection signal="pressed" from="HBoxContainer/ResetMargins/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/PropertyMargins/PropertyButton" to="." method="_on_property_button_pressed"]

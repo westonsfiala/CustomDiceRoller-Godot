@@ -6,6 +6,8 @@ const NUM_DICE_TITLE : StringName = "Xd"
 const NUM_DICE_DEFAULT : int = 1
 func get_num_dice_string() -> String:
 	return str(get_property(NUM_DICE_IDENTIFIER), 'd')
+func get_num_dice_long_string() -> String:
+	return str('Num Dice = ', get_property(NUM_DICE_IDENTIFIER))
 func has_num_dice() -> bool:
 	return has_property(NUM_DICE_IDENTIFIER)
 func get_num_dice() -> int:
@@ -14,10 +16,22 @@ func get_num_dice() -> int:
 const DICE_MODIFIER_IDENTIFIER : StringName = "DICE_MODIFIER"
 const DICE_MODIFIER_TITLE : StringName = "Dice Modifier"
 const DICE_MODIFIER_DEFAULT : int = 0
+func get_modifier_string() -> String:
+	return str('Modifier = ', get_modifier())
 func has_modifier() -> bool:
 	return has_property(DICE_MODIFIER_IDENTIFIER)
 func get_modifier() -> int:
 	return get_property(DICE_MODIFIER_IDENTIFIER)
+
+const REPEAT_ROLL_IDENTIFIER : StringName = "REPEAT_ROLL"
+const REPEAT_ROLL_TITLE : StringName = "Repeat |X| Times"
+const REPEAT_ROLL_DEFAULT : int = 0
+func get_repeat_roll_string() -> String:
+	return str('Repeat |', get_property(REPEAT_ROLL_IDENTIFIER), '| Times')
+func has_repeat_roll() -> bool:
+	return has_property(REPEAT_ROLL_IDENTIFIER)
+func get_repeat_roll() -> int:
+	return get_property(REPEAT_ROLL_IDENTIFIER)
 
 enum AdvantageDisadvantageState {DISADVANTAGE, NORMAL, ADVANTAGE}
 const ADVANTAGE_DISADVANTAGE_IDENTIFIER : StringName = "ADVANTAGE_DISADVANTAGE"
@@ -54,16 +68,6 @@ func is_double() -> bool:
 	return property_equals_value(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.DOUBLE)
 func is_halve() -> bool:
 	return property_equals_value(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.HALVE)
-
-const REPEAT_ROLL_IDENTIFIER : StringName = "REPEAT_ROLL"
-const REPEAT_ROLL_TITLE : StringName = "Repeat |X| Times"
-const REPEAT_ROLL_DEFAULT : int = 0
-func get_repeat_roll_string() -> String:
-	return str('Repeat |', get_property(REPEAT_ROLL_IDENTIFIER), '| Times')
-func has_repeat_roll() -> bool:
-	return has_property(REPEAT_ROLL_IDENTIFIER)
-func get_repeat_roll() -> int:
-	return get_property(REPEAT_ROLL_IDENTIFIER)
 
 const DROP_HIGHEST_IDENTIFIER : StringName = "DROP_HIGHEST"
 const DROP_HIGHEST_TITLE : StringName = "Drop |X| Highest"
@@ -183,9 +187,9 @@ func get_explode() -> int:
 const PROPERTY_DEFAULT_MAP : Dictionary = {
 	NUM_DICE_IDENTIFIER : NUM_DICE_DEFAULT,
 	DICE_MODIFIER_IDENTIFIER : DICE_MODIFIER_DEFAULT,
+	REPEAT_ROLL_IDENTIFIER : REPEAT_ROLL_DEFAULT,
 	ADVANTAGE_DISADVANTAGE_IDENTIFIER : ADVANTAGE_DISADVANTAGE_DEFAULT,
 	DOUBLE_HALVE_IDENTIFIER : DOUBLE_HALVE_DEFAULT,
-	REPEAT_ROLL_IDENTIFIER : REPEAT_ROLL_DEFAULT,
 	DROP_HIGHEST_IDENTIFIER : DROP_HIGHEST_DEFAULT,
 	DROP_LOWEST_IDENTIFIER : DROP_LOWEST_DEFAULT,
 	KEEP_HIGHEST_IDENTIFIER : KEEP_HIGHEST_DEFAULT,
