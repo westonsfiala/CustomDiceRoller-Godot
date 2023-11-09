@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4nvrn4hpsjtu"]
+[gd_scene load_steps=6 format=3 uid="uid://d4nvrn4hpsjtu"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dlix8"]
 [ext_resource type="Script" path="res://Scenes/TopLevel/Scripts/main.gd" id="1_jwssx"]
 [ext_resource type="PackedScene" uid="uid://cqur83d6dqocf" path="res://Scenes/AppBar/app_bar.tscn" id="1_t0okv"]
 [ext_resource type="PackedScene" uid="uid://wgiuyjr6bltu" path="res://Scenes/TopLevel/scene_scroller.tscn" id="3_wlitc"]
+[ext_resource type="Texture2D" uid="uid://b2xwvheni4p15" path="res://DicePNGs/white/d20.png" id="5_x2lqq"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -24,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_dlix8")
 color = Color(0.294118, 0.294118, 0.294118, 1)
 
@@ -38,8 +40,21 @@ theme = ExtResource("1_dlix8")
 
 [node name="AppBar" parent="ColorRect/VBoxContainer" instance=ExtResource("1_t0okv")]
 layout_mode = 2
-mouse_filter = 1
 
 [node name="SceneScroller" parent="ColorRect/VBoxContainer" instance=ExtResource("3_wlitc")]
 layout_mode = 2
 scroll_deadzone = 5
+
+[node name="PressResponseImage" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.172549)
+top_level = true
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+rotation = -6.28319
+pivot_offset = Vector2(20, 20)
+mouse_filter = 2
+texture = ExtResource("5_x2lqq")
+expand_mode = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

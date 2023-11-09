@@ -12,6 +12,6 @@ func _ready():
 	super()
 	scene_name_label.text = SettingsManager.get_scene_name(scene_enum)
 
-func _on_short_pressed():
+func _on_pressed():
 	print("Navigating to ", scene_name_label.text)
 	emit_signal("scene_navigation_pressed", scene_enum)

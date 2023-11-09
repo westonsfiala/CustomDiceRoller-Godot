@@ -30,4 +30,4 @@ anchor_bottom = 0.5
 offset_top = -24.0
 offset_bottom = 24.0
 
-[connection signal="short_pressed" from="." to="." method="_on_short_pressed"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
