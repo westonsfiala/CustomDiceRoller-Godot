@@ -208,9 +208,9 @@ func roll() -> RollResults:
 		var original_die = die_prop_pair.m_die
 		var properties = die_prop_pair.m_roll_properties
 		
-		var num_repeats = max(1, abs(properties.get_property(RollProperties.REPEAT_ROLL_IDENTIFIER)))
+		var num_repeats = max(1, abs(properties.get_repeat_roll()))
 		
-		for repeat_count in num_repeats:
+		for repeat_count in range(num_repeats):
 			var die = original_die
 			
 			if(repeat_count != 0):
@@ -231,7 +231,6 @@ func roll() -> RollResults:
 					return_results.m_struck_roll_results[die] = []
 					return_results.m_struck_dropped_rolls[die] = []
 					return_results.m_struck_rerolled_rolls[die] = []
-					break;
 				# Advantage/Disadvantage cases
 				else:
 					var second_roll_lists = produce_number_roll_lists((die as NumberDie), properties);
@@ -298,8 +297,8 @@ func find_min(current: DieResult, tester: DieResult) -> DieResult:
 	else:
 		return current
 		
-func sort_ascending(left: DieResult, right: DieResult) -> DieResult: 
-	return left.value() > right.value()
+func sort_ascending(left: DieResult, right: DieResult) -> bool: 
+	return left.value() < right.value()
 
 # Produces a dictionary of 3 lists, a list of kept values, and a list of dropped values, and a list of rerolled values
 # The keys for these lists are KEEP_KEY, DROP_KEY, and REROLL_KEY
