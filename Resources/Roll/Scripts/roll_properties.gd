@@ -1,39 +1,55 @@
 extends Resource
 class_name RollProperties
 
+const UNKNOWN_NUMBER_X : StringName = "X"
+
 const NUM_DICE_IDENTIFIER : StringName = "NUM_DICE"
-const NUM_DICE_TITLE : StringName = "Xd"
+const NUM_DICE_TITLE_PREFIX : StringName = "Num Dice = "
+const NUM_DICE_TITLE_POSTFIX : StringName = "d"
+const NUM_DICE_TITLE : StringName = NUM_DICE_TITLE_PREFIX + UNKNOWN_NUMBER_X + NUM_DICE_TITLE_POSTFIX
 const NUM_DICE_DEFAULT : int = 1
 func get_num_dice_string() -> String:
-	return str(get_property(NUM_DICE_IDENTIFIER), 'd')
+	return str(get_property(NUM_DICE_IDENTIFIER), NUM_DICE_TITLE_POSTFIX)
 func get_num_dice_long_string() -> String:
-	return str('Num Dice = ', get_property(NUM_DICE_IDENTIFIER))
+	return str(NUM_DICE_TITLE_PREFIX, get_property(NUM_DICE_IDENTIFIER))
 func has_num_dice() -> bool:
 	return has_property(NUM_DICE_IDENTIFIER)
+func set_num_dice(num_dice : int) -> void:
+	add_property(NUM_DICE_IDENTIFIER, num_dice)
 func get_num_dice() -> int:
 	return get_property(NUM_DICE_IDENTIFIER)
 
 const DICE_MODIFIER_IDENTIFIER : StringName = "DICE_MODIFIER"
-const DICE_MODIFIER_TITLE : StringName = "Dice Modifier"
+const DICE_MODIFIER_TITLE_PREFIX : StringName = "Modifier = "
+const DICE_MODIFIER_TITLE_POSTFIX : StringName = ""
+const DICE_MODIFIER_TITLE : StringName = DICE_MODIFIER_TITLE_PREFIX + UNKNOWN_NUMBER_X + DICE_MODIFIER_TITLE_POSTFIX
 const DICE_MODIFIER_DEFAULT : int = 0
 func get_modifier_string() -> String:
-	return str('Modifier = ', get_modifier())
+	return str(DICE_MODIFIER_TITLE_PREFIX, get_modifier())
 func has_modifier() -> bool:
 	return has_property(DICE_MODIFIER_IDENTIFIER)
+func set_modifier(modifier : int) -> void:
+	add_property(DICE_MODIFIER_IDENTIFIER, modifier)
 func get_modifier() -> int:
 	return get_property(DICE_MODIFIER_IDENTIFIER)
 
 const REPEAT_ROLL_IDENTIFIER : StringName = "REPEAT_ROLL"
-const REPEAT_ROLL_TITLE : StringName = "Repeat |X| Times"
+const REPEAT_ROLL_TITLE_PREFIX : StringName = "Repeat |"
+const REPEAT_ROLL_TITLE_POSTFIX : StringName = "| Times"
+const REPEAT_ROLL_TITLE : StringName = REPEAT_ROLL_TITLE_PREFIX + UNKNOWN_NUMBER_X + REPEAT_ROLL_TITLE_POSTFIX
 const REPEAT_ROLL_DEFAULT : int = 0
 func get_repeat_roll_string() -> String:
-	return str('Repeat |', get_property(REPEAT_ROLL_IDENTIFIER), '| Times')
+	return str(REPEAT_ROLL_TITLE_PREFIX, get_property(REPEAT_ROLL_IDENTIFIER), REPEAT_ROLL_TITLE_POSTFIX)
 func has_repeat_roll() -> bool:
 	return has_property(REPEAT_ROLL_IDENTIFIER)
+func set_repeat_roll(repeat : int) -> void:
+	add_property(REPEAT_ROLL_IDENTIFIER, repeat)
 func get_repeat_roll() -> int:
 	return get_property(REPEAT_ROLL_IDENTIFIER)
 
 enum AdvantageDisadvantageState {DISADVANTAGE, NORMAL, ADVANTAGE}
+const ADVANTAGE_IDENTIFIER : StringName = "ADVANTAGE"
+const DISADVANTAGE_IDENTIFIER : StringName = "DISADVANTAGE"
 const ADVANTAGE_DISADVANTAGE_IDENTIFIER : StringName = "ADVANTAGE_DISADVANTAGE"
 const ADVANTAGE_TITLE : StringName = "Advantage"
 const DISADVANTAGE_TITLE : StringName = "Disadvantage"
@@ -46,12 +62,26 @@ func get_advantage_disadvantage_string() -> String:
 	return ''
 func has_advantage_disadvantage() -> bool:
 	return has_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER)
+func set_advantage_disadvantage(advantage_disadvantage_state: AdvantageDisadvantageState):
+	add_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER, advantage_disadvantage_state)
+func toggle_advantage() -> void:
+	if(is_advantage()):
+		add_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.NORMAL)
+	else:
+		add_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.ADVANTAGE)
+func toggle_disadvantage() -> void:
+	if(is_disadvantage()):
+		add_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.NORMAL)
+	else:
+		add_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.DISADVANTAGE)
 func is_advantage() -> bool:
 	return property_equals_value(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.ADVANTAGE)
 func is_disadvantage() -> bool:
 	return property_equals_value(ADVANTAGE_DISADVANTAGE_IDENTIFIER, AdvantageDisadvantageState.DISADVANTAGE)
 
 enum DoubleHalveState {HALVE, NORMAL, DOUBLE}
+const DOUBLE_IDENTIFIER : StringName = "DOUBLE"
+const HALVE_IDENTIFIER : StringName = "HALVE"
 const DOUBLE_HALVE_IDENTIFIER : StringName = "DOUBLE_HALVE"
 const DOUBLE_TITLE : StringName = "Double"
 const HALVE_TITLE : StringName = "Halve"
@@ -64,108 +94,160 @@ func get_double_halve_string() -> String:
 	return ''
 func has_double_halve() -> bool:
 	return has_property(DOUBLE_HALVE_IDENTIFIER)
+func set_double_halve(doube_halve_state: DoubleHalveState):
+	add_property(DOUBLE_HALVE_IDENTIFIER, doube_halve_state)
+func toggle_double() -> void:
+	if(is_double()):
+		add_property(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.NORMAL)
+	else:
+		add_property(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.DOUBLE)
+func toggle_halve() -> void:
+	if(is_halve()):
+		add_property(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.NORMAL)
+	else:
+		add_property(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.HALVE)
 func is_double() -> bool:
 	return property_equals_value(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.DOUBLE)
 func is_halve() -> bool:
 	return property_equals_value(DOUBLE_HALVE_IDENTIFIER, DoubleHalveState.HALVE)
 
 const DROP_HIGHEST_IDENTIFIER : StringName = "DROP_HIGHEST"
-const DROP_HIGHEST_TITLE : StringName = "Drop |X| Highest"
+const DROP_HIGHEST_TITLE_PREFIX : StringName = "Drop |"
+const DROP_HIGHEST_TITLE_POSTFIX : StringName = "| Highest"
+const DROP_HIGHEST_TITLE : StringName = DROP_HIGHEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + DROP_HIGHEST_TITLE_POSTFIX
 const DROP_HIGHEST_DEFAULT : int = 0
 func get_drop_highest_string() -> String:
-	return str('Drop |', get_property(DROP_HIGHEST_IDENTIFIER), '| Highest')
+	return str(DROP_HIGHEST_TITLE_PREFIX, get_property(DROP_HIGHEST_IDENTIFIER), DROP_HIGHEST_TITLE_POSTFIX)
 func has_drop_highest() -> bool:
 	return has_property(DROP_HIGHEST_IDENTIFIER)
+func set_drop_highest(drop_highest : int) -> void:
+	add_property(DROP_HIGHEST_IDENTIFIER, drop_highest)
 func get_drop_highest() -> int:
 	return get_property(DROP_HIGHEST_IDENTIFIER)
 
 const DROP_LOWEST_IDENTIFIER : StringName = "DROP_LOWEST"
-const DROP_LOWEST_TITLE : StringName = "Drop |X| Lowest"
+const DROP_LOWEST_TITLE_PREFIX : StringName = "Drop |"
+const DROP_LOWEST_TITLE_POSTFIX : StringName = "| Lowest"
+const DROP_LOWEST_TITLE : StringName = DROP_LOWEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + DROP_LOWEST_TITLE_POSTFIX
 const DROP_LOWEST_DEFAULT : int = 0
 func get_drop_lowest_string() -> String:
-	return str('Drop |', get_property(DROP_LOWEST_IDENTIFIER), '| Lowest')
+	return str(DROP_LOWEST_TITLE_PREFIX, get_property(DROP_LOWEST_IDENTIFIER), DROP_LOWEST_TITLE_POSTFIX)
 func has_drop_lowest() -> bool:
 	return has_property(DROP_LOWEST_IDENTIFIER)
+func set_drop_lowest(drop_lowest : int) -> void:
+	add_property(DROP_LOWEST_IDENTIFIER, drop_lowest)
 func get_drop_lowest() -> int:
 	return get_property(DROP_LOWEST_IDENTIFIER)
 
 const KEEP_HIGHEST_IDENTIFIER : StringName = "KEEP_HIGHEST"
-const KEEP_HIGHEST_TITILE : StringName = "Keep |X| Highest"
+const KEEP_HIGHEST_TITLE_PREFIX : StringName = "Keep |"
+const KEEP_HIGHEST_TITLE_POSTFIX : StringName = "| Highest"
+const KEEP_HIGHEST_TITLE : StringName = KEEP_HIGHEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + KEEP_HIGHEST_TITLE_POSTFIX
 const KEEP_HIGHEST_DEFAULT : int = 0
 func get_keep_highest_string() -> String:
-	return str('Keep |', get_property(KEEP_HIGHEST_IDENTIFIER), '| Highest')
+	return str(KEEP_HIGHEST_TITLE_PREFIX, get_property(KEEP_HIGHEST_IDENTIFIER), KEEP_HIGHEST_TITLE_POSTFIX)
 func has_keep_highest() -> bool:
 	return has_property(KEEP_HIGHEST_IDENTIFIER)
+func set_keep_highest(keep_highest : int) -> void:
+	add_property(KEEP_HIGHEST_IDENTIFIER, keep_highest)
 func get_keep_highest() -> int:
 	return get_property(KEEP_HIGHEST_IDENTIFIER)
 
 const KEEP_LOWEST_IDENTIFIER : StringName = "KEEP_LOWEST"
-const KEEP_LOWEST_TITLE : StringName = "Keep |X| Lowest"
+const KEEP_LOWEST_TITLE_PREFIX : StringName = "Keep |"
+const KEEP_LOWEST_TITLE_POSTFIX : StringName = "| Lowest"
+const KEEP_LOWEST_TITLE : StringName = KEEP_LOWEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + KEEP_LOWEST_TITLE_POSTFIX
 const KEEP_LOWEST_DEFAULT : int = 0
 func get_keep_lowest_string() -> String:
-	return str('Keep |', get_property(KEEP_LOWEST_IDENTIFIER), '| Lowest')
+	return str(KEEP_LOWEST_TITLE_PREFIX, get_property(KEEP_LOWEST_IDENTIFIER), KEEP_LOWEST_TITLE_POSTFIX)
 func has_keep_lowest() -> bool:
 	return has_property(KEEP_LOWEST_IDENTIFIER)
+func set_keep_lowest(keep_lowest : int) -> void:
+	add_property(KEEP_LOWEST_IDENTIFIER, keep_lowest)
 func get_keep_lowest() -> int:
 	return get_property(KEEP_LOWEST_IDENTIFIER)
 
 const REROLL_OVER_IDENTIFIER : StringName = "REROLL_OVER"
-const REROLL_OVER_TITLE : StringName = "Reroll Die >= |X|"
+const REROLL_OVER_TITLE_PREFIX : StringName = "Reroll Die >= |"
+const REROLL_OVER_TITLE_POSTFIX : StringName = "|"
+const REROLL_OVER_TITLE : StringName = REROLL_OVER_TITLE_PREFIX + UNKNOWN_NUMBER_X + REROLL_OVER_TITLE_POSTFIX
 const REROLL_OVER_DEFAULT : int = 0
 func get_reroll_over_string() -> String:
-	return str('Reroll Die >= |', get_property(REROLL_OVER_IDENTIFIER), '|')
+	return str(REROLL_OVER_TITLE_PREFIX, get_property(REROLL_OVER_IDENTIFIER), REROLL_OVER_TITLE_POSTFIX)
 func has_reroll_over() -> bool:
 	return has_property(REROLL_OVER_IDENTIFIER)
+func set_reroll_over(reroll_over : int) -> void:
+	add_property(REROLL_OVER_IDENTIFIER, reroll_over)
 func get_reroll_over() -> int:
 	return get_property(REROLL_OVER_IDENTIFIER)
 
 const REROLL_UNDER_IDENTIFIER : StringName = "REROLL_UNDER"
-const REROLL_UNDER_TITLE : StringName = "Reroll Die <= |X|"
+const REROLL_UNDER_TITLE_PREFIX : StringName = "Reroll Die <= |"
+const REROLL_UNDER_TITLE_POSTFIX : StringName = "|"
+const REROLL_UNDER_TITLE : StringName = REROLL_UNDER_TITLE_PREFIX + UNKNOWN_NUMBER_X + REROLL_UNDER_TITLE_POSTFIX
 const REROLL_UNDER_DEFAULT : int = 0
 func get_reroll_under_string() -> String:
-	return str('Reroll Die <= |', get_property(REROLL_UNDER_IDENTIFIER), '|')
+	return str(REROLL_UNDER_TITLE_PREFIX, get_property(REROLL_UNDER_IDENTIFIER), REROLL_UNDER_TITLE_POSTFIX)
 func has_reroll_under() -> bool:
 	return has_property(REROLL_UNDER_IDENTIFIER)
+func set_reroll_under(reroll_under : int) -> void:
+	add_property(REROLL_UNDER_IDENTIFIER, reroll_under)
 func get_reroll_under() -> int:
 	return get_property(REROLL_UNDER_IDENTIFIER)
 
 const MAXIMUM_ROLL_VALUE_IDENTIFIER : StringName = "MAXIMUM_ROLL_VALUE"
-const MAXIMUM_ROLL_VALUE_TITLE : StringName = "Maximum = |X|"
+const MAXIMUM_ROLL_VALUE_TITLE_PREFIX : StringName = "Maximum = |"
+const MAXIMUM_ROLL_VALUE_TITLE_POSTFIX : StringName = "|"
+const MAXIMUM_ROLL_VALUE_TITLE : StringName = MAXIMUM_ROLL_VALUE_TITLE_PREFIX + UNKNOWN_NUMBER_X + MAXIMUM_ROLL_VALUE_TITLE_POSTFIX
 const MAXIMUM_ROLL_VALUE_DEFAULT : int = 0
 func get_maximum_string() -> String:
-	return str('Maximum = |', get_property(MAXIMUM_ROLL_VALUE_IDENTIFIER), '|')
+	return str(MAXIMUM_ROLL_VALUE_TITLE_PREFIX, get_property(MAXIMUM_ROLL_VALUE_IDENTIFIER), MAXIMUM_ROLL_VALUE_TITLE_POSTFIX)
 func has_maximum() -> bool:
 	return has_property(MAXIMUM_ROLL_VALUE_IDENTIFIER)
+func set_maximum(maximum : int) -> void:
+	add_property(MAXIMUM_ROLL_VALUE_IDENTIFIER, maximum)
 func get_maximum() -> int:
 	return get_property(MAXIMUM_ROLL_VALUE_IDENTIFIER)
 
 const MINIMUM_ROLL_VALUE_IDENTIFIER : StringName = "MINIMUM_ROLL_VALUE"
-const MINIMUM_ROLL_VALUE_TITLE : StringName = "Minimum = |X|"
+const MINIMUM_ROLL_VALUE_TITLE_PREFIX : StringName = "Minimum = |"
+const MINIMUM_ROLL_VALUE_TITLE_POSTFIX : StringName = "|"
+const MINIMUM_ROLL_VALUE_TITLE : StringName = MINIMUM_ROLL_VALUE_TITLE_PREFIX + UNKNOWN_NUMBER_X + MINIMUM_ROLL_VALUE_TITLE_POSTFIX
 const MINIMUM_ROLL_VALUE_DEFAULT : int = 0
 func get_minimum_string() -> String:
-	return str('Minimum = |', get_property(MINIMUM_ROLL_VALUE_IDENTIFIER), '|')
+	return str(MINIMUM_ROLL_VALUE_TITLE_PREFIX, get_property(MINIMUM_ROLL_VALUE_IDENTIFIER), MINIMUM_ROLL_VALUE_TITLE_POSTFIX)
 func has_minimum() -> bool:
 	return has_property(MINIMUM_ROLL_VALUE_IDENTIFIER)
+func set_minimum(minimum : int) -> void:
+	add_property(MINIMUM_ROLL_VALUE_IDENTIFIER, minimum)
 func get_minimum() -> int:
 	return get_property(MINIMUM_ROLL_VALUE_IDENTIFIER)
 
 const COUNT_ABOVE_EQUAL_IDENTIFIER : StringName = "COUNT_ABOVE_EQUAL"
-const COUNT_ABOVE_EQUAL_TITLE : StringName = "Count >= |X|"
+const COUNT_ABOVE_EQUAL_TITLE_PREFIX : StringName = "Count >= |"
+const COUNT_ABOVE_EQUAL_TITLE_POSTFIX : StringName = "|"
+const COUNT_ABOVE_EQUAL_TITLE : StringName = COUNT_ABOVE_EQUAL_TITLE_PREFIX + UNKNOWN_NUMBER_X + COUNT_ABOVE_EQUAL_TITLE_POSTFIX
 const COUNT_ABOVE_EQUAL_DEFAULT : int = 0
 func get_count_above_string() -> String:
-	return str('Count >= |', get_property(COUNT_ABOVE_EQUAL_IDENTIFIER), '|')
+	return str(COUNT_ABOVE_EQUAL_TITLE_PREFIX, get_property(COUNT_ABOVE_EQUAL_IDENTIFIER), COUNT_ABOVE_EQUAL_TITLE_POSTFIX)
 func has_count_above() -> bool:
 	return has_property(COUNT_ABOVE_EQUAL_IDENTIFIER)
+func set_count_above(count_above : int) -> void:
+	add_property(COUNT_ABOVE_EQUAL_IDENTIFIER, count_above)
 func get_count_above() -> int:
 	return get_property(COUNT_ABOVE_EQUAL_IDENTIFIER)
 
 const COUNT_BELOW_EQUAL_IDENTIFIER : StringName = "COUNT_BELOW_EQUAL"
-const COUNT_BELOW_EQUAL_TITLE : StringName = "Count <= |X|"
+const COUNT_BELOW_EQUAL_TITLE_PREFIX : StringName = "Count <= |"
+const COUNT_BELOW_EQUAL_TITLE_POSTFIX : StringName = "|"
+const COUNT_BELOW_EQUAL_TITLE : StringName = COUNT_BELOW_EQUAL_TITLE_PREFIX + UNKNOWN_NUMBER_X + COUNT_BELOW_EQUAL_TITLE_POSTFIX
 const COUNT_BELOW_EQUAL_DEFAULT : int = 0
 func get_count_below_string() -> String:
-	return str('Count <= |', get_property(COUNT_BELOW_EQUAL_IDENTIFIER), '|')
+	return str(COUNT_BELOW_EQUAL_TITLE_PREFIX, get_property(COUNT_BELOW_EQUAL_IDENTIFIER), COUNT_BELOW_EQUAL_TITLE_POSTFIX)
 func has_count_below() -> bool:
 	return has_property(COUNT_BELOW_EQUAL_IDENTIFIER)
+func set_count_below(count_below : int) -> void:
+	add_property(COUNT_BELOW_EQUAL_IDENTIFIER, count_below)
 func get_count_below() -> int:
 	return get_property(COUNT_BELOW_EQUAL_IDENTIFIER)
 
@@ -176,7 +258,11 @@ func get_explode_string() -> String:
 	return EXPLODE_TITLE
 func has_explode() -> bool:
 	return has_property(EXPLODE_IDENTIFIER)
-func get_explode() -> int:
+func set_explode(explode: bool) -> void:
+	add_property(EXPLODE_IDENTIFIER, explode)
+func toggle_explode() -> void:
+	add_property(EXPLODE_IDENTIFIER, !get_explode())
+func get_explode() -> bool:
 	return get_property(EXPLODE_IDENTIFIER)
 
 # Order of applying properties:

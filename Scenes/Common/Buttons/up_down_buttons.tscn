@@ -3,9 +3,9 @@
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_045hk"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/up_down_buttons.gd" id="1_o2tqo"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_52mnr"]
-[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/DownArrow.svg" id="3_48qfq"]
-[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="3_c7vqn"]
-[ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/UpArrow.svg" id="5_4rc5u"]
+[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_48qfq"]
+[ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="5_4rc5u"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="5_n3c68"]
 
 [node name="UpDownButtons" type="Control"]
 custom_minimum_size = Vector2(0, 75)
@@ -41,8 +41,10 @@ theme = ExtResource("1_045hk")
 layout_mode = 2
 texture_2d = ExtResource("3_48qfq")
 
-[node name="ValueLabel" parent="MarginContainer/HBoxContainer" instance=ExtResource("3_c7vqn")]
+[node name="ValueTextButton" parent="MarginContainer/HBoxContainer" instance=ExtResource("5_n3c68")]
 layout_mode = 2
+size_flags_horizontal = 3
+flat = true
 
 [node name="UpButton" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_52mnr")]
 layout_mode = 2
@@ -50,5 +52,6 @@ texture_2d = ExtResource("5_4rc5u")
 
 [connection signal="long_pressed" from="MarginContainer/HBoxContainer/DownButton" to="." method="_on_down_button_long_pressed"]
 [connection signal="short_pressed" from="MarginContainer/HBoxContainer/DownButton" to="." method="_on_down_button_short_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ValueTextButton" to="." method="_on_value_text_button_pressed"]
 [connection signal="long_pressed" from="MarginContainer/HBoxContainer/UpButton" to="." method="_on_up_button_long_pressed"]
 [connection signal="short_pressed" from="MarginContainer/HBoxContainer/UpButton" to="." method="_on_up_button_short_pressed"]

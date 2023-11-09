@@ -1,17 +1,19 @@
 extends Control
 class_name UpDownButtons
 
-@export var postfix : String
-@export var show_plus_minus : bool
-@export var disallow_zero : bool
+@export var m_prefix : String
+@export var m_postfix : String
+@export var m_show_plus_minus : bool
+@export var m_disallow_zero : bool
 
 @onready var margin_container : MarginContainer = $MarginContainer
 @onready var down_button : LongPressButton = $MarginContainer/HBoxContainer/DownButton
-@onready var label : Label = $MarginContainer/HBoxContainer/ValueLabel
+@onready var value_text_button : SettingsManagedTextButton = $MarginContainer/HBoxContainer/ValueTextButton
 @onready var up_button : LongPressButton = $MarginContainer/HBoxContainer/UpButton
 
 var m_value : int = 0
 
+signal value_pressed()
 signal value_changed(value: int)
 
 # Called when the node enters the scene tree for the first time.
@@ -22,6 +24,13 @@ func _ready():
 	
 func deferred_reconfigure():
 	call_deferred("reconfigure")
+	
+func setup(prefix: String, postfix: String, show_plus_minus: bool, disallow_zero: bool):
+	m_prefix = prefix
+	m_postfix = postfix
+	m_show_plus_minus = show_plus_minus
+	m_disallow_zero = disallow_zero
+	set_value(m_value)
 
 func reconfigure():
 	print("reconfiguring up down buttons")
@@ -35,10 +44,10 @@ func get_value() -> int:
 func set_value(value : int):
 	m_value = enforce_good_value(value, 0)
 	var new_text = str(m_value)
-	if(show_plus_minus):
+	if(m_show_plus_minus):
 		new_text = StringHelper.get_modifier_string(m_value, false)
 		
-	label.text = new_text + postfix
+	value_text_button.change_text(m_prefix + new_text + m_postfix)
 	
 func handle_change(change: int):
 	var snapped_change = snap_to_next_increment(m_value, change)
@@ -50,7 +59,7 @@ func enforce_good_value(value: int, change: int):
 	var new_value = value + change;
 	
 	# If we aren't zero or care about not being zero, your good!
-	if(new_value != 0 or not disallow_zero):
+	if(new_value != 0 or not m_disallow_zero):
 		return new_value
 	
 	# Skip over 0 when we are incrememting
@@ -92,3 +101,6 @@ func _on_up_button_short_pressed():
 
 func _on_up_button_long_pressed():
 	handle_change(100)
+
+func _on_value_text_button_pressed():
+	emit_signal("value_pressed")

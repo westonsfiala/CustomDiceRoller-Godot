@@ -235,7 +235,7 @@ func roll() -> RollResults:
 				# Advantage/Disadvantage cases
 				else:
 					var second_roll_lists = produce_number_roll_lists((die as NumberDie), properties);
-					var summer = func method(a,b) -> int: return a+b
+					var summer = func method(accum, die_results: DieResult) -> int: return accum+die_results.value()
 					
 					var roll_lists_keep_sum = roll_lists[KEEP_KEY].reduce(summer, 0)
 					var second_roll_lists_keep_sum = second_roll_lists[KEEP_KEY].reduce(summer, 0)

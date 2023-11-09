@@ -25,6 +25,9 @@ class_name PropertiesPopup
 
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 
+signal reset_pressed()
+signal property_pressed(property_identifier : StringName)
+
 var roll_properties : RollProperties = RollProperties.new()
 
 func _ready():
@@ -163,7 +166,83 @@ func refresh_text() -> void:
 	# Explode
 	var explode_string : String = roll_properties.EXPLODE_TITLE
 	explode_button.icon = null
-	if(roll_properties.has_explode()):
+	if(roll_properties.get_explode()):
 		explode_string += "*"
 		explode_button.icon = preload("res://Icons/check-mark.svg")
 	explode_button.change_text(explode_string)
+
+func _on_reset_prop_pressed():
+	emit_signal("reset_pressed")
+	animation_player.play_backwards("popup")
+
+func _on_repeat_prop_pressed():
+	emit_signal("property_pressed", RollProperties.REPEAT_ROLL_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_advantage_prop_pressed():
+	emit_signal("property_pressed", RollProperties.ADVANTAGE_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_disadvantage_prop_pressed():
+	emit_signal("property_pressed", RollProperties.DISADVANTAGE_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_double_prop_pressed():
+	emit_signal("property_pressed", RollProperties.DOUBLE_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_halve_prop_pressed():
+	emit_signal("property_pressed", RollProperties.HALVE_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_num_dice_prop_pressed():
+	emit_signal("property_pressed", RollProperties.NUM_DICE_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_modifier_prop_pressed():
+	emit_signal("property_pressed", RollProperties.DICE_MODIFIER_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_drop_high_prop_pressed():
+	emit_signal("property_pressed", RollProperties.DROP_HIGHEST_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_drop_low_prop_pressed():
+	emit_signal("property_pressed", RollProperties.DROP_LOWEST_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_keep_high_prop_pressed():
+	emit_signal("property_pressed", RollProperties.KEEP_HIGHEST_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_keep_low_prop_pressed():
+	emit_signal("property_pressed", RollProperties.KEEP_LOWEST_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_reroll_over_prop_pressed():
+	emit_signal("property_pressed", RollProperties.REROLL_OVER_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_reroll_under_prop_pressed():
+	emit_signal("property_pressed", RollProperties.REROLL_UNDER_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_maximum_prop_pressed():
+	emit_signal("property_pressed", RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_minimum_prop_pressed():
+	emit_signal("property_pressed", RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_count_above_prop_pressed():
+	emit_signal("property_pressed", RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_count_below_prop_pressed():
+	emit_signal("property_pressed", RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
+	animation_player.play_backwards("popup")
+
+func _on_explode_prop_pressed():
+	emit_signal("property_pressed", RollProperties.EXPLODE_IDENTIFIER)
+	animation_player.play_backwards("popup")

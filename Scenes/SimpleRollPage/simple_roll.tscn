@@ -57,13 +57,13 @@ theme = ExtResource("1_dvlt6")
 [node name="NumDiceUpDown" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("3_6vjsp")]
 layout_mode = 2
 size_flags_horizontal = 3
-postfix = "d"
-disallow_zero = true
+m_postfix = "d"
+m_disallow_zero = true
 
 [node name="ModifierUpDown" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("3_6vjsp")]
 layout_mode = 2
 size_flags_horizontal = 3
-show_plus_minus = true
+m_show_plus_minus = true
 
 [node name="PropertyButtonBar" type="HBoxContainer" parent="VerticalLayout/PropBar"]
 layout_mode = 2

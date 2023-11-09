@@ -40,6 +40,8 @@ signal reset_properties()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	properties_popup.reset_pressed.connect(_on_reset_button_pressed)
+	properties_popup.property_pressed.connect(popup_property_pressed)
 	
 	deferred_reconfigure()
 	
@@ -66,7 +68,52 @@ func set_properties(props: RollProperties) -> void:
 			property_button.change_text(str(num_non_default, SINGLE_PROP_STRING))
 		else:
 			property_button.change_text(str(num_non_default, MULTIPLE_PROP_STRING))
-
+			
+func popup_property_pressed(property_identifier: StringName):
+	print(property_identifier)
+	match property_identifier:
+		RollProperties.REPEAT_ROLL_IDENTIFIER:
+			pass
+		RollProperties.ADVANTAGE_IDENTIFIER:
+			roll_properties.toggle_advantage()
+			emit_signal("properties_updated", roll_properties)
+		RollProperties.DISADVANTAGE_IDENTIFIER:
+			roll_properties.toggle_disadvantage()
+			emit_signal("properties_updated", roll_properties)
+		RollProperties.DOUBLE_IDENTIFIER:
+			roll_properties.toggle_double()
+			emit_signal("properties_updated", roll_properties)
+		RollProperties.HALVE_IDENTIFIER:
+			roll_properties.toggle_halve()
+			emit_signal("properties_updated", roll_properties)
+		RollProperties.NUM_DICE_IDENTIFIER:
+			pass
+		RollProperties.DICE_MODIFIER_IDENTIFIER:
+			pass
+		RollProperties.DROP_HIGHEST_IDENTIFIER:
+			pass
+		RollProperties.DROP_LOWEST_IDENTIFIER:
+			pass
+		RollProperties.KEEP_HIGHEST_IDENTIFIER:
+			pass
+		RollProperties.KEEP_LOWEST_IDENTIFIER:
+			pass
+		RollProperties.REROLL_OVER_IDENTIFIER:
+			pass
+		RollProperties.REROLL_UNDER_IDENTIFIER:
+			pass
+		RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER:
+			pass
+		RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER:
+			pass
+		RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER:
+			pass
+		RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER:
+			pass
+		RollProperties.EXPLODE_IDENTIFIER:
+			roll_properties.toggle_explode()
+			emit_signal("properties_updated", roll_properties)
+	
 func _on_reset_button_pressed():
 	emit_signal("reset_properties")
 
