@@ -13,6 +13,7 @@ anchor_top = 0.5
 anchor_bottom = 0.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
+expand_icon = true
 script = ExtResource("2_sq4qn")
 button_text = "TEMP"
 is_small_text = false

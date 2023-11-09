@@ -1,7 +1,7 @@
 extends LongPressButton
 class_name SettingsManagedTextureButton
 
-@export var texture_2d : Texture2D = preload("res://Icons/CircleCancel.svg")
+@export var texture_2d : Texture2D = preload("res://Icons/circle-cancel.svg")
 
 @onready var margin_container : MarginContainer = $MarginContainer
 @onready var texture_rect : TextureRect = $MarginContainer/TextureRect

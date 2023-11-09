@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb1rdbn37n0gc"
-path="res://.godot/imported/DownArrow.svg-a31a4409f17bfdfde1b3b425b37b85b3.ctex"
+uid="uid://d3gg6mfx5rcg7"
+path="res://.godot/imported/check-mark.svg-1ad2fed597ff83a0f8f203c0f5badb06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Icons/DownArrow.svg"
-dest_files=["res://.godot/imported/DownArrow.svg-a31a4409f17bfdfde1b3b425b37b85b3.ctex"]
+source_file="res://Icons/check-mark.svg"
+dest_files=["res://.godot/imported/check-mark.svg-1ad2fed597ff83a0f8f203c0f5badb06.ctex"]
 
 [params]
 

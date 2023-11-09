@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://caj222uwxllqe"
-path="res://.godot/imported/UpArrow.svg-76e45eb5deea0142a3fac63ca6f6fc67.ctex"
+uid="uid://beflagctk5v4y"
+path="res://.godot/imported/anticlockwise-rotation.svg-c3637c18f3568ca7ef81e58f4f74d94d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Icons/UpArrow.svg"
-dest_files=["res://.godot/imported/UpArrow.svg-76e45eb5deea0142a3fac63ca6f6fc67.ctex"]
+source_file="res://Icons/anticlockwise-rotation.svg"
+dest_files=["res://.godot/imported/anticlockwise-rotation.svg-c3637c18f3568ca7ef81e58f4f74d94d.ctex"]
 
 [params]
 

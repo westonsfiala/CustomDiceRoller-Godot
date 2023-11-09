@@ -36,6 +36,5 @@ mouse_filter = 1
 custom_minimum_size = Vector2(750, 0)
 layout_mode = 2
 size_flags_vertical = 1
-theme = ExtResource("1_ifnbb")
 
 [connection signal="scroll_ended" from="." to="." method="_on_scroll_ended"]

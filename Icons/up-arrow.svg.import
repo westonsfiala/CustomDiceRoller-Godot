@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqubwal71vuw3"
-path="res://.godot/imported/BurningBook.svg-0288652bd028f81ec65e4e65a1c4979e.ctex"
+uid="uid://caj222uwxllqe"
+path="res://.godot/imported/up-arrow.svg-f1cfe4ca41d925978028ee9de6a7db10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Icons/BurningBook.svg"
-dest_files=["res://.godot/imported/BurningBook.svg-0288652bd028f81ec65e4e65a1c4979e.ctex"]
+source_file="res://Icons/up-arrow.svg"
+dest_files=["res://.godot/imported/up-arrow.svg-f1cfe4ca41d925978028ee9de6a7db10.ctex"]
 
 [params]
 

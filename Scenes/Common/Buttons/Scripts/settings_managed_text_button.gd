@@ -8,8 +8,11 @@ class_name SettingsManagedTextButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
+	SettingsManager.reconfigure.connect(deferred_reconfigure)
 	change_text(button_text)
+	deferred_reconfigure()
+	
+func deferred_reconfigure():
 	call_deferred("reconfigure")
 
 # Reconfigures the scene according to the settings

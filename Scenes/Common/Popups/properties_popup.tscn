@@ -1,0 +1,192 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5ac36hhgo7yw"]
+
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_odm7s"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/properties_popup.gd" id="2_076ba"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="2_c2kv3"]
+
+[sub_resource type="Animation" id="Animation_qsued"]
+resource_name = "popup"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tja4r"]
+_data = {
+"popup": SubResource("Animation_qsued")
+}
+
+[node name="PropertiesPopup" type="Popup"]
+transparent_bg = true
+size = Vector2i(350, 750)
+visible = true
+theme = ExtResource("1_odm7s")
+script = ExtResource("2_076ba")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tja4r")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(350, 750)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(175, 375)
+theme = ExtResource("1_odm7s")
+color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[node name="PropertiesScroller" type="ScrollContainer" parent="ColorRect"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_odm7s")
+
+[node name="PropertiesLayout" type="VBoxContainer" parent="ColorRect/PropertiesScroller"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_odm7s")
+
+[node name="ResetProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="RepeatProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator1" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="AdvantageProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="DisadvantageProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator2" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="DoubleProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HalveProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator3" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="NumDiceProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="ModifierProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator4" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="DropHighProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="DropLowProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator5" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="KeepHighProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="KeepLowProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator6" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="RerollOverProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="RerollUnderProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator7" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="MaximumProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="MinimumProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator8" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="CountAboveProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="CountBelowProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator9" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="ExplodeProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
