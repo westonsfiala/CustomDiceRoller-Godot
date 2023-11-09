@@ -37,7 +37,7 @@ const REPEAT_ROLL_IDENTIFIER : StringName = "REPEAT_ROLL"
 const REPEAT_ROLL_TITLE_PREFIX : StringName = "Repeat |"
 const REPEAT_ROLL_TITLE_POSTFIX : StringName = "| Times"
 const REPEAT_ROLL_TITLE : StringName = REPEAT_ROLL_TITLE_PREFIX + UNKNOWN_NUMBER_X + REPEAT_ROLL_TITLE_POSTFIX
-const REPEAT_ROLL_DEFAULT : int = 0
+const REPEAT_ROLL_DEFAULT : int = 1
 func get_repeat_roll_string() -> String:
 	return str(REPEAT_ROLL_TITLE_PREFIX, get_property(REPEAT_ROLL_IDENTIFIER), REPEAT_ROLL_TITLE_POSTFIX)
 func has_repeat_roll() -> bool:
@@ -323,6 +323,8 @@ func get_num_non_default() -> int:
 func add_property(prop_name: StringName, value: Variant) -> bool:
 	if(check_key_value_correctness(prop_name, value)):
 		m_property_map[prop_name] = value
+		if(property_equals_default(prop_name)):
+			m_property_map.erase(prop_name)
 		return true
 		
 	return false

@@ -4,29 +4,32 @@ class_name PropertiesPopup
 @onready var color_rect : ColorRect = $ColorRect
 
 @onready var reset_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/ResetProp
-@onready var repeat_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/RepeatProp
+@onready var repeat_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown
 @onready var advantage_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/AdvantageProp
 @onready var disadvantage_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DisadvantageProp
 @onready var double_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DoubleProp
 @onready var halve_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/HalveProp
-@onready var num_dice_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/NumDiceProp
-@onready var modifier_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/ModifierProp
-@onready var drop_highest_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DropHighProp
-@onready var drop_lowest_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DropLowProp
-@onready var keep_highest_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/KeepHighProp
-@onready var keep_lowest_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/KeepLowProp
-@onready var reroll_over_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/RerollOverProp
-@onready var reroll_under_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderProp
-@onready var count_above_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/CountAboveProp
-@onready var count_below_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/CountBelowProp
-@onready var maximum_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/MaximumProp
-@onready var minimum_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/MinimumProp
+@onready var num_dice_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown
+@onready var modifier_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown
+@onready var drop_highest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown
+@onready var drop_lowest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown
+@onready var keep_highest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/KeepHighUpDown
+@onready var keep_lowest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/KeepLowUpDown
+@onready var reroll_over_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/RerollOverUpDown
+@onready var reroll_under_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderUpDown
+@onready var count_above_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/CountAboveUpDown
+@onready var count_below_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/CountBelowUpDown
+@onready var maximum_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/MaximumUpDown
+@onready var minimum_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/MinimumUpDown
 @onready var explode_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/ExplodeProp
 
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 
 signal reset_pressed()
 signal property_pressed(property_identifier : StringName)
+signal properties_updated(roll_properties: RollProperties)
+
+const APPEND_ASTERISK : StringName = " *"
 
 var roll_properties : RollProperties = RollProperties.new()
 
@@ -44,7 +47,7 @@ func reconfigure():
 	var property_heights = RollProperties.PROPERTY_DEFAULT_MAP.size() * SettingsManager.get_button_size()
 	var min_height = min(three_fourths_window_height, property_heights)
 	
-	var popup_size = Vector2i(350, min_height)
+	var popup_size = Vector2i(size.x, min_height)
 	size = popup_size
 	color_rect.custom_minimum_size = popup_size
 	color_rect.pivot_offset = popup_size / 2
@@ -62,23 +65,25 @@ func refresh_text() -> void:
 	reset_button.change_text("Reset Properties")
 	
 	# Repeat
-	var repeat_string = roll_properties.get_repeat_roll_string()
+	var repeat_postfix = RollProperties.REPEAT_ROLL_TITLE_POSTFIX
 	if(roll_properties.has_repeat_roll()):
-		repeat_string += "*"
-	repeat_button.change_text(repeat_string)
+		repeat_postfix += APPEND_ASTERISK
+	
+	repeat_updown.setup_exports(RollProperties.REPEAT_ROLL_TITLE_PREFIX, repeat_postfix, false, true)
+	repeat_updown.set_value(roll_properties.get_repeat_roll())
 	
 	# Advantage/Disadvantage
 	var advantage_string : String = roll_properties.ADVANTAGE_TITLE
 	advantage_button.icon = null
 	if(roll_properties.is_advantage()):
-		advantage_string += "*"
+		advantage_string += APPEND_ASTERISK
 		advantage_button.icon = preload("res://Icons/check-mark.svg")
 	advantage_button.change_text(advantage_string)
 	
 	var disadvantage_string : String = roll_properties.DISADVANTAGE_TITLE
 	disadvantage_button.icon = null
 	if(roll_properties.is_disadvantage()):
-		disadvantage_string += "*"
+		disadvantage_string += APPEND_ASTERISK
 		disadvantage_button.icon = preload("res://Icons/check-mark.svg")
 	disadvantage_button.change_text(disadvantage_string)
 	
@@ -86,82 +91,106 @@ func refresh_text() -> void:
 	var double_string : String = roll_properties.DOUBLE_TITLE
 	double_button.icon = null
 	if(roll_properties.is_double()):
-		double_string += "*"
+		double_string += APPEND_ASTERISK
 		double_button.icon = preload("res://Icons/check-mark.svg")
 	double_button.change_text(double_string)
 	
 	var halve_string : String = roll_properties.HALVE_TITLE
 	halve_button.icon = null
 	if(roll_properties.is_halve()):
-		halve_string += "*"
+		halve_string += APPEND_ASTERISK
 		halve_button.icon = preload("res://Icons/check-mark.svg")
 	halve_button.change_text(halve_string)
 	
 	# Num Dice/Modifier
-	var num_dice_string : String = roll_properties.get_num_dice_long_string()
+	var num_dice_postfix = RollProperties.NUM_DICE_TITLE_POSTFIX
 	if(roll_properties.has_num_dice()):
-		num_dice_string += "*"
-	num_dice_button.change_text(num_dice_string)
+		num_dice_postfix += APPEND_ASTERISK
 	
-	var modifier_string : String = roll_properties.get_modifier_string()
+	num_dice_updown.setup_exports(RollProperties.NUM_DICE_TITLE_PREFIX, num_dice_postfix, false, true)
+	num_dice_updown.set_value(roll_properties.get_num_dice())
+	
+	var modifier_postfix = RollProperties.DICE_MODIFIER_TITLE_POSTFIX
 	if(roll_properties.has_modifier()):
-		modifier_string += "*"
-	modifier_button.change_text(modifier_string)
+		modifier_postfix += APPEND_ASTERISK
+	
+	modifier_updown.setup_exports(RollProperties.DICE_MODIFIER_TITLE_PREFIX, modifier_postfix, true, false)
+	modifier_updown.set_value(roll_properties.get_modifier())
 	
 	# Drop High/Low
-	var drop_highest_string : String = roll_properties.get_drop_highest_string()
+	var drop_highest_postfix = RollProperties.DROP_HIGHEST_TITLE_POSTFIX
 	if(roll_properties.has_drop_highest()):
-		drop_highest_string += "*"
-	drop_highest_button.change_text(drop_highest_string)
+		drop_highest_postfix += APPEND_ASTERISK
 	
-	var drop_lowest_string : String = roll_properties.get_drop_lowest_string()
+	drop_highest_updown.setup_exports(RollProperties.DROP_HIGHEST_TITLE_PREFIX, drop_highest_postfix, false, false)
+	drop_highest_updown.set_value(roll_properties.get_drop_highest())
+	
+	var drop_lowest_postfix = RollProperties.DROP_LOWEST_TITLE_POSTFIX
 	if(roll_properties.has_drop_lowest()):
-		drop_lowest_string += "*"
-	drop_lowest_button.change_text(drop_lowest_string)
+		drop_lowest_postfix += APPEND_ASTERISK
+	
+	drop_lowest_updown.setup_exports(RollProperties.DROP_LOWEST_TITLE_PREFIX, drop_lowest_postfix, false, false)
+	drop_lowest_updown.set_value(roll_properties.get_drop_lowest())
 	
 	# Keep High/Low
-	var keep_highest_string : String = roll_properties.get_keep_highest_string()
+	var keep_highest_postfix = RollProperties.KEEP_HIGHEST_TITLE_POSTFIX
 	if(roll_properties.has_keep_highest()):
-		keep_highest_string += "*"
-	keep_highest_button.change_text(keep_highest_string)
+		keep_highest_postfix += APPEND_ASTERISK
 	
-	var keep_lowest_string : String = roll_properties.get_keep_lowest_string()
+	keep_highest_updown.setup_exports(RollProperties.KEEP_HIGHEST_TITLE_PREFIX, keep_highest_postfix, false, false)
+	keep_highest_updown.set_value(roll_properties.get_keep_highest())
+	
+	var keep_lowest_postfix = RollProperties.KEEP_LOWEST_TITLE_POSTFIX
 	if(roll_properties.has_keep_lowest()):
-		keep_lowest_string += "*"
-	keep_lowest_button.change_text(keep_lowest_string)
+		keep_lowest_postfix += APPEND_ASTERISK
+	
+	keep_lowest_updown.setup_exports(RollProperties.KEEP_LOWEST_TITLE_PREFIX, keep_lowest_postfix, false, false)
+	keep_lowest_updown.set_value(roll_properties.get_keep_lowest())
 	
 	# Reroll Over/Under
-	var reroll_over_string : String = roll_properties.get_reroll_over_string()
-	if(roll_properties.has_keep_highest()):
-		reroll_over_string += "*"
-	reroll_over_button.change_text(reroll_over_string)
+	var reroll_over_postfix = RollProperties.REROLL_OVER_TITLE_POSTFIX
+	if(roll_properties.has_reroll_over()):
+		reroll_over_postfix += APPEND_ASTERISK
 	
-	var reroll_under_string : String = roll_properties.get_reroll_under_string()
+	reroll_over_updown.setup_exports(RollProperties.REROLL_OVER_TITLE_PREFIX, reroll_over_postfix, false, false)
+	reroll_over_updown.set_value(roll_properties.get_reroll_over())
+	
+	var reroll_under_postfix = RollProperties.REROLL_UNDER_TITLE_POSTFIX
 	if(roll_properties.has_reroll_under()):
-		reroll_under_string += "*"
-	reroll_under_button.change_text(reroll_under_string)
+		reroll_under_postfix += APPEND_ASTERISK
+	
+	reroll_under_updown.setup_exports(RollProperties.REROLL_UNDER_TITLE_PREFIX, reroll_under_postfix, false, false)
+	reroll_under_updown.set_value(roll_properties.get_reroll_under())
 	
 	# Maximum/Minimum
-	var maximum_string : String = roll_properties.get_maximum_string()
+	var maximum_postfix = RollProperties.MAXIMUM_ROLL_VALUE_TITLE_POSTFIX
 	if(roll_properties.has_maximum()):
-		maximum_string += "*"
-	maximum_button.change_text(maximum_string)
+		maximum_postfix += APPEND_ASTERISK
 	
-	var minimum_string : String = roll_properties.get_minimum_string()
+	maximum_updown.setup_exports(RollProperties.MAXIMUM_ROLL_VALUE_TITLE_PREFIX, maximum_postfix, false, false)
+	maximum_updown.set_value(roll_properties.get_maximum())
+	
+	var minimum_postfix = RollProperties.MINIMUM_ROLL_VALUE_TITLE_POSTFIX
 	if(roll_properties.has_minimum()):
-		minimum_string += "*"
-	minimum_button.change_text(minimum_string)
+		minimum_postfix += APPEND_ASTERISK
 	
-	# Count Above/Below
-	var count_above_string : String = roll_properties.get_count_above_string()
+	minimum_updown.setup_exports(RollProperties.MINIMUM_ROLL_VALUE_TITLE_PREFIX, minimum_postfix, false, false)
+	minimum_updown.set_value(roll_properties.get_minimum())
+	
+	# Count Above/Below	
+	var count_above_postfix = RollProperties.COUNT_ABOVE_EQUAL_TITLE_POSTFIX
 	if(roll_properties.has_count_above()):
-		count_above_string += "*"
-	count_above_button.change_text(count_above_string)
+		count_above_postfix += APPEND_ASTERISK
 	
-	var count_below_string : String = roll_properties.get_count_below_string()
-	if(roll_properties.has_minimum()):
-		count_below_string += "*"
-	count_below_button.change_text(count_below_string)
+	count_above_updown.setup_exports(RollProperties.COUNT_ABOVE_EQUAL_TITLE_PREFIX, count_above_postfix, false, false)
+	count_above_updown.set_value(roll_properties.get_count_above())
+	
+	var count_below_postfix = RollProperties.COUNT_BELOW_EQUAL_TITLE_POSTFIX
+	if(roll_properties.has_count_below()):
+		count_below_postfix += APPEND_ASTERISK
+	
+	count_below_updown.setup_exports(RollProperties.COUNT_BELOW_EQUAL_TITLE_PREFIX, count_below_postfix, false, false)
+	count_below_updown.set_value(roll_properties.get_count_below())
 	
 	# Explode
 	var explode_string : String = roll_properties.EXPLODE_TITLE
@@ -175,74 +204,122 @@ func _on_reset_prop_pressed():
 	emit_signal("reset_pressed")
 	animation_player.play_backwards("popup")
 
-func _on_repeat_prop_pressed():
+func _on_repeat_up_down_value_changed(value):
+	roll_properties.set_repeat_roll(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_repeat_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REPEAT_ROLL_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
 func _on_advantage_prop_pressed():
 	emit_signal("property_pressed", RollProperties.ADVANTAGE_IDENTIFIER)
-	animation_player.play_backwards("popup")
 
 func _on_disadvantage_prop_pressed():
 	emit_signal("property_pressed", RollProperties.DISADVANTAGE_IDENTIFIER)
-	animation_player.play_backwards("popup")
 
 func _on_double_prop_pressed():
 	emit_signal("property_pressed", RollProperties.DOUBLE_IDENTIFIER)
-	animation_player.play_backwards("popup")
 
 func _on_halve_prop_pressed():
 	emit_signal("property_pressed", RollProperties.HALVE_IDENTIFIER)
-	animation_player.play_backwards("popup")
 
-func _on_num_dice_prop_pressed():
+func _on_num_dice_up_down_value_changed(value):
+	roll_properties.set_num_dice(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_num_dice_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.NUM_DICE_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_modifier_prop_pressed():
+func _on_modifier_up_down_value_changed(value):
+	roll_properties.set_modifier(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_modifier_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DICE_MODIFIER_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_drop_high_prop_pressed():
+func _on_drop_high_up_down_value_changed(value):
+	roll_properties.set_drop_highest(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_drop_high_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DROP_HIGHEST_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_drop_low_prop_pressed():
+func _on_drop_low_up_down_value_changed(value):
+	roll_properties.set_drop_lowest(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_drop_low_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DROP_LOWEST_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_keep_high_prop_pressed():
+func _on_keep_high_up_down_value_changed(value):
+	roll_properties.set_keep_highest(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_keep_high_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.KEEP_HIGHEST_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_keep_low_prop_pressed():
+func _on_keep_low_up_down_value_changed(value):
+	roll_properties.set_keep_lowest(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_keep_low_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.KEEP_LOWEST_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_reroll_over_prop_pressed():
+func _on_reroll_over_up_down_value_changed(value):
+	roll_properties.set_reroll_over(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_reroll_over_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REROLL_OVER_IDENTIFIER)
 	animation_player.play_backwards("popup")
+	
+func _on_reroll_under_up_down_value_changed(value):
+	roll_properties.set_reroll_under(value)
+	emit_signal("properties_updated", roll_properties)
 
-func _on_reroll_under_prop_pressed():
+func _on_reroll_under_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REROLL_UNDER_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_maximum_prop_pressed():
+func _on_maximum_up_down_value_changed(value):
+	roll_properties.set_maximum(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_maximum_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_minimum_prop_pressed():
+func _on_minimum_up_down_value_changed(value):
+	roll_properties.set_minimum(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_minimum_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_count_above_prop_pressed():
+func _on_count_above_up_down_value_changed(value):
+	roll_properties.set_count_above(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_count_above_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
-func _on_count_below_prop_pressed():
+func _on_count_below_up_down_value_changed(value):
+	roll_properties.set_count_below(value)
+	emit_signal("properties_updated", roll_properties)
+
+func _on_count_below_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
 	animation_player.play_backwards("popup")
 
 func _on_explode_prop_pressed():
 	emit_signal("property_pressed", RollProperties.EXPLODE_IDENTIFIER)
-	animation_player.play_backwards("popup")
+

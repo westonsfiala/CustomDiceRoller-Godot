@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5ac36hhgo7yw"]
+[gd_scene load_steps=7 format=3 uid="uid://b5ac36hhgo7yw"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_odm7s"]
 [ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/properties_popup.gd" id="2_076ba"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="2_c2kv3"]
+[ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="4_a8g54"]
 
 [sub_resource type="Animation" id="Animation_qsued"]
 resource_name = "popup"
@@ -39,7 +40,7 @@ _data = {
 
 [node name="PropertiesPopup" type="Popup"]
 transparent_bg = true
-size = Vector2i(350, 750)
+size = Vector2i(500, 750)
 visible = true
 theme = ExtResource("1_odm7s")
 script = ExtResource("2_076ba")
@@ -56,7 +57,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(175, 375)
 theme = ExtResource("1_odm7s")
 color = Color(0.223529, 0.223529, 0.223529, 1)
@@ -85,10 +85,8 @@ flat = true
 [node name="HSeparator" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="RepeatProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="RepeatUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
 [node name="HSeparator1" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
@@ -119,80 +117,56 @@ flat = true
 [node name="HSeparator3" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="NumDiceProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="NumDiceUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
-[node name="ModifierProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="ModifierUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
 [node name="HSeparator4" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="DropHighProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="DropHighUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
-[node name="DropLowProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="DropLowUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
 [node name="HSeparator5" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="KeepHighProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="KeepHighUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
-[node name="KeepLowProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="KeepLowUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
 [node name="HSeparator6" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="RerollOverProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="RerollOverUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
-[node name="RerollUnderProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="RerollUnderUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
 [node name="HSeparator7" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="MaximumProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="MaximumUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
-[node name="MinimumProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="MinimumUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
 [node name="HSeparator8" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="CountAboveProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="CountAboveUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
-[node name="CountBelowProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="CountBelowUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
-size_flags_horizontal = 1
-flat = true
 
 [node name="HSeparator9" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
@@ -204,21 +178,34 @@ flat = true
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ResetProp" to="." method="_on_reset_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RepeatProp" to="." method="_on_repeat_prop_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/AdvantageProp" to="." method="_on_advantage_prop_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DisadvantageProp" to="." method="_on_disadvantage_prop_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DoubleProp" to="." method="_on_double_prop_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/HalveProp" to="." method="_on_halve_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceProp" to="." method="_on_num_dice_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierProp" to="." method="_on_modifier_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropHighProp" to="." method="_on_drop_high_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropLowProp" to="." method="_on_drop_low_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepHighProp" to="." method="_on_keep_high_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepLowProp" to="." method="_on_keep_low_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollOverProp" to="." method="_on_reroll_over_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderProp" to="." method="_on_reroll_under_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/MaximumProp" to="." method="_on_maximum_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/MinimumProp" to="." method="_on_minimum_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountAboveProp" to="." method="_on_count_above_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountBelowProp" to="." method="_on_count_below_prop_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown" to="." method="_on_drop_low_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown" to="." method="_on_drop_low_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepHighUpDown" to="." method="_on_keep_high_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepHighUpDown" to="." method="_on_keep_high_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepLowUpDown" to="." method="_on_keep_low_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepLowUpDown" to="." method="_on_keep_low_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollOverUpDown" to="." method="_on_reroll_over_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollOverUpDown" to="." method="_on_reroll_over_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderUpDown" to="." method="_on_reroll_under_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderUpDown" to="." method="_on_reroll_under_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/MaximumUpDown" to="." method="_on_maximum_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/MaximumUpDown" to="." method="_on_maximum_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/MinimumUpDown" to="." method="_on_minimum_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/MinimumUpDown" to="." method="_on_minimum_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountAboveUpDown" to="." method="_on_count_above_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountAboveUpDown" to="." method="_on_count_above_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountBelowUpDown" to="." method="_on_count_below_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountBelowUpDown" to="." method="_on_count_below_up_down_value_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ExplodeProp" to="." method="_on_explode_prop_pressed"]

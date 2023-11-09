@@ -25,7 +25,7 @@ func _ready():
 func deferred_reconfigure():
 	call_deferred("reconfigure")
 	
-func setup(prefix: String, postfix: String, show_plus_minus: bool, disallow_zero: bool):
+func setup_exports(prefix: String, postfix: String, show_plus_minus: bool, disallow_zero: bool):
 	m_prefix = prefix
 	m_postfix = postfix
 	m_show_plus_minus = show_plus_minus

@@ -42,6 +42,7 @@ func _ready():
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
 	properties_popup.reset_pressed.connect(_on_reset_button_pressed)
 	properties_popup.property_pressed.connect(popup_property_pressed)
+	properties_popup.properties_updated.connect(popup_properties_updated)
 	
 	deferred_reconfigure()
 	
@@ -113,6 +114,10 @@ func popup_property_pressed(property_identifier: StringName):
 		RollProperties.EXPLODE_IDENTIFIER:
 			roll_properties.toggle_explode()
 			emit_signal("properties_updated", roll_properties)
+			
+func popup_properties_updated(properties: RollProperties) -> void:
+	roll_properties = properties
+	emit_signal("properties_updated", roll_properties)
 	
 func _on_reset_button_pressed():
 	emit_signal("reset_properties")
