@@ -85,6 +85,15 @@ flat = true
 [node name="HSeparator" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
+[node name="NumDiceUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+layout_mode = 2
+
+[node name="ModifierUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+layout_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
 [node name="RepeatUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
@@ -115,15 +124,6 @@ size_flags_horizontal = 1
 flat = true
 
 [node name="HSeparator3" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="NumDiceUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="ModifierUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="HSeparator4" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
 [node name="DropHighUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
@@ -178,16 +178,16 @@ flat = true
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ResetProp" to="." method="_on_reset_prop_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
+[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
+[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
 [connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_changed"]
 [connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/AdvantageProp" to="." method="_on_advantage_prop_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DisadvantageProp" to="." method="_on_disadvantage_prop_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DoubleProp" to="." method="_on_double_prop_pressed"]
 [connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/HalveProp" to="." method="_on_halve_prop_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
 [connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_changed"]
 [connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_pressed"]
 [connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown" to="." method="_on_drop_low_up_down_value_changed"]

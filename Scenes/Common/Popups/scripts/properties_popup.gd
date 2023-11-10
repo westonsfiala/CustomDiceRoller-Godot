@@ -4,13 +4,13 @@ class_name PropertiesPopup
 @onready var color_rect : ColorRect = $ColorRect
 
 @onready var reset_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/ResetProp
+@onready var num_dice_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown
+@onready var modifier_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown
 @onready var repeat_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown
 @onready var advantage_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/AdvantageProp
 @onready var disadvantage_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DisadvantageProp
 @onready var double_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DoubleProp
 @onready var halve_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/HalveProp
-@onready var num_dice_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown
-@onready var modifier_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown
 @onready var drop_highest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown
 @onready var drop_lowest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown
 @onready var keep_highest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/KeepHighUpDown
@@ -64,6 +64,21 @@ func refresh_text() -> void:
 	# Reset at the top
 	reset_button.change_text("Reset Properties")
 	
+	# Num Dice/Modifier
+	var num_dice_postfix = RollProperties.NUM_DICE_TITLE_POSTFIX
+	if(roll_properties.has_num_dice()):
+		num_dice_postfix += APPEND_ASTERISK
+	
+	num_dice_updown.setup_exports(RollProperties.NUM_DICE_TITLE_PREFIX, num_dice_postfix, false, true)
+	num_dice_updown.set_value(roll_properties.get_num_dice())
+	
+	var modifier_postfix = RollProperties.DICE_MODIFIER_TITLE_POSTFIX
+	if(roll_properties.has_modifier()):
+		modifier_postfix += APPEND_ASTERISK
+	
+	modifier_updown.setup_exports(RollProperties.DICE_MODIFIER_TITLE_PREFIX, modifier_postfix, true, false)
+	modifier_updown.set_value(roll_properties.get_modifier())
+	
 	# Repeat
 	var repeat_postfix = RollProperties.REPEAT_ROLL_TITLE_POSTFIX
 	if(roll_properties.has_repeat_roll()):
@@ -101,21 +116,6 @@ func refresh_text() -> void:
 		halve_string += APPEND_ASTERISK
 		halve_button.icon = preload("res://Icons/check-mark.svg")
 	halve_button.change_text(halve_string)
-	
-	# Num Dice/Modifier
-	var num_dice_postfix = RollProperties.NUM_DICE_TITLE_POSTFIX
-	if(roll_properties.has_num_dice()):
-		num_dice_postfix += APPEND_ASTERISK
-	
-	num_dice_updown.setup_exports(RollProperties.NUM_DICE_TITLE_PREFIX, num_dice_postfix, false, true)
-	num_dice_updown.set_value(roll_properties.get_num_dice())
-	
-	var modifier_postfix = RollProperties.DICE_MODIFIER_TITLE_POSTFIX
-	if(roll_properties.has_modifier()):
-		modifier_postfix += APPEND_ASTERISK
-	
-	modifier_updown.setup_exports(RollProperties.DICE_MODIFIER_TITLE_PREFIX, modifier_postfix, true, false)
-	modifier_updown.set_value(roll_properties.get_modifier())
 	
 	# Drop High/Low
 	var drop_highest_postfix = RollProperties.DROP_HIGHEST_TITLE_POSTFIX

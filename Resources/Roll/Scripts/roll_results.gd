@@ -132,15 +132,15 @@ func process_roll_pair(die: AbstractDie, die_display_name: String, main_list: Ar
 				if(sub_total != 0):
 					append_string += ' (' + StringHelper.get_modifier_string(sub_total,true) + ')';
 				if(properties.has_count_above() or properties.has_count_below()):
-					for item in main_list:
+					for die_result in main_list:
 						if(properties.has_count_above() and properties.has_count_below()):
-							if(item >= properties.get_count_above() or item <= properties.get_count_below()):
+							if(die_result.value() >= properties.get_count_above() or die_result.value() <= properties.get_count_below()):
 								sub_total += 1
 						elif(properties.has_count_above()):
-							if(item >= properties.get_count_above()):
+							if(die_result.value() >= properties.get_count_above()):
 								sub_total += 1
 						else:
-							if(item <= properties.get_count_below()):
+							if(die_result.value() <= properties.get_count_below()):
 								sub_total += 1
 				else:
 					sub_total += main_list.reduce(die_summer,0)

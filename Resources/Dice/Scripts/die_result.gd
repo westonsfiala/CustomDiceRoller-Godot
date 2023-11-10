@@ -27,6 +27,10 @@ func type() -> DieResultType:
 func value() -> Variant:
 	return result_dict[VALUE_KEY]
 
+# Overrides the value stored in the result
+func override_value(override: Variant) -> void:
+	result_dict[VALUE_KEY] = override
+
 # Negates the value stored so long as it is an Integer or a Decimal.
 func negate_value() -> void:
 	if(type() == DieResultType.INTEGER or type() == DieResultType.DECIMAL):

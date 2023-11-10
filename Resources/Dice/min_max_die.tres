@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="MinMaxDie" load_steps=2 format=3 uid="uid://dy0b360v6oihg"]
+[gd_resource type="Resource" script_class="MinMaxDie" load_steps=3 format=3 uid="uid://dy0b360v6oihg"]
 
 [ext_resource type="Script" path="res://Resources/Dice/Scripts/min_max_die.gd" id="1_8c6hr"]
+[ext_resource type="Texture2D" uid="uid://be2p64g34ua5e" path="res://DicePNGs/basic/white/unknown-die.png" id="1_12rhs"]
 
 [resource]
 script = ExtResource("1_8c6hr")
-name = ""
-type = ""
-info = ""
+min_bound = 0
+max_bound = 0
+m_name = ""
+m_info = ""
+m_texture = ExtResource("1_12rhs")
