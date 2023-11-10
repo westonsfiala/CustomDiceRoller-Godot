@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://5vm2iatgmrxs"]
+[gd_scene load_steps=8 format=3 uid="uid://5vm2iatgmrxs"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dvlt6"]
 [ext_resource type="Script" path="res://Scenes/SimpleRollPage/Scripts/simple_roll.gd" id="1_tqmuk"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="3_3r18e"]
 [ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="3_6vjsp"]
 [ext_resource type="PackedScene" uid="uid://cdqd62tcyenpp" path="res://Scenes/Common/Buttons/property_button.tscn" id="5_uf67h"]
+[ext_resource type="PackedScene" uid="uid://c7p477xqke0go" path="res://Scenes/Common/Popups/set_value_popup.tscn" id="7_suwo0"]
 
 [node name="SimpleRoll" type="Control"]
 layout_mode = 3
@@ -74,3 +75,12 @@ layout_mode = 2
 [node name="NoDiceLabel" parent="." instance=ExtResource("2_gwd73")]
 layout_mode = 1
 text = "No Dice Added"
+
+[node name="SetValueExactPopup" parent="." instance=ExtResource("7_suwo0")]
+
+[connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
+[connection signal="value_pressed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
+[connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
+[connection signal="value_pressed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
+[connection signal="properties_updated" from="VerticalLayout/PropBar/PropertyButtonBar/PropertyButton" to="." method="_on_property_button_properties_updated"]
+[connection signal="reset_properties" from="VerticalLayout/PropBar/PropertyButtonBar/PropertyButton" to="." method="_on_property_button_reset_properties"]

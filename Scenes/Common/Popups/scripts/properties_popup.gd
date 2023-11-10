@@ -43,11 +43,13 @@ func deferred_reconfigure():
 # Reconfigures the scene according to the settings
 func reconfigure():
 	print("reconfiguring properties popup")
-	var three_fourths_window_height = SettingsManager.get_window_size().y * 3 / 4
+	var three_fourths_window_size = SettingsManager.get_window_size() * 3 / 4
 	var property_heights = RollProperties.PROPERTY_DEFAULT_MAP.size() * SettingsManager.get_button_size()
-	var min_height = min(three_fourths_window_height, property_heights)
+	var property_widths = SettingsManager.get_button_size() * 9 # Its a rough estimate of how big stuff is.
+	var min_height = min(three_fourths_window_size.y, property_heights)
+	var min_width = min(three_fourths_window_size.x, property_widths)
 	
-	var popup_size = Vector2i(size.x, min_height)
+	var popup_size = Vector2i(min_width, min_height)
 	size = popup_size
 	color_rect.custom_minimum_size = popup_size
 	color_rect.pivot_offset = popup_size / 2

@@ -12,10 +12,6 @@ func _ready():
 	RollManager.new_roll_result.connect(set_dice_result)
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
 	SimpleRollManager.roll_properties_updated.connect(properties_updated)
-	num_dice_buttons.value_changed.connect(num_dice_changed)
-	modifier_buttons.value_changed.connect(modifier_changed)
-	property_button.properties_updated.connect(SimpleRollManager.set_roll_properties)
-	property_button.reset_properties.connect(SimpleRollManager.reset_properties)
 	dice_updated()
 	properties_updated()
 	deferred_reconfigure()
@@ -43,16 +39,6 @@ func properties_updated() -> void:
 	modifier_buttons.set_value(roll_properties.get_modifier())
 	property_button.set_properties(roll_properties)
 
-func num_dice_changed(value: int) -> void:
-	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
-	roll_properties.add_property(RollProperties.NUM_DICE_IDENTIFIER, value)
-	SimpleRollManager.set_roll_properties(roll_properties)
-
-func modifier_changed(value: int) -> void:
-	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
-	roll_properties.add_property(RollProperties.DICE_MODIFIER_IDENTIFIER, value)
-	SimpleRollManager.set_roll_properties(roll_properties)
-
 # Roll the die that was clicked and set the results
 func roll_die(die: AbstractDie):
 	RollManager.simple_roll(die, SimpleRollManager.get_roll_properties())
@@ -71,3 +57,25 @@ func refresh_no_dice():
 		no_dice_label.visible = true
 	else:
 		no_dice_label.visible = false
+
+func _on_property_button_properties_updated(roll_properties):
+	SimpleRollManager.set_roll_properties(roll_properties)
+
+func _on_property_button_reset_properties():
+	SimpleRollManager.reset_properties()
+
+func _on_num_dice_up_down_value_changed(value):
+	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
+	roll_properties.add_property(RollProperties.NUM_DICE_IDENTIFIER, value)
+	SimpleRollManager.set_roll_properties(roll_properties)
+
+func _on_num_dice_up_down_value_pressed():
+	pass # Replace with function body.
+
+func _on_modifier_up_down_value_changed(value):
+	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
+	roll_properties.add_property(RollProperties.DICE_MODIFIER_IDENTIFIER, value)
+	SimpleRollManager.set_roll_properties(roll_properties)
+
+func _on_modifier_up_down_value_pressed():
+	pass # Replace with function body.

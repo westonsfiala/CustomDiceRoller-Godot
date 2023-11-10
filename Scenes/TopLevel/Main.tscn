@@ -46,6 +46,7 @@ layout_mode = 2
 scroll_deadzone = 5
 
 [node name="PressResponseImage" type="TextureRect" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.172549)
 top_level = true
 layout_mode = 0

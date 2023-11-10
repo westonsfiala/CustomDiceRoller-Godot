@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://cfefgu8jbb3xm"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://cfefgu8jbb3xm"]
 
 [ext_resource type="FontFile" uid="uid://dp6a4xtygsyyh" path="res://Resources/Fonts/Roboto/Roboto-Regular.ttf" id="1_dh1c7"]
 [ext_resource type="StyleBox" uid="uid://lgdpfw2i0fod" path="res://Resources/Styles/default_button_background.tres" id="1_ixfta"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://coq4117yen0bj" path="res://Resources/Fonts/Roboto/Roboto-Bold.ttf" id="2_24e56"]
 [ext_resource type="FontFile" uid="uid://bdu1o0yy6tnql" path="res://Resources/Fonts/Roboto/Roboto-Italic.ttf" id="3_77j75"]
 [ext_resource type="FontFile" uid="uid://dg0thpcypiig3" path="res://Resources/Fonts/Roboto/Roboto-BoldItalic.ttf" id="4_0fve0"]
+[ext_resource type="StyleBox" uid="uid://081aqpqtgsiq" path="res://Resources/Styles/default_popup_background.tres" id="5_g863v"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dl7hw"]
 
@@ -35,9 +36,11 @@ MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
 MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
+ModalPanel/styles/panel = ExtResource("5_g863v")
 PopupMenu/colors/font_outline_color = Color(0, 0, 0, 1)
 PopupMenu/constants/outline_size = 3
 PopupMenu/fonts/font = ExtResource("1_dh1c7")
+PopupPanel/styles/panel = ExtResource("5_g863v")
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 3
 RichTextLabel/fonts/bold_font = ExtResource("2_24e56")
