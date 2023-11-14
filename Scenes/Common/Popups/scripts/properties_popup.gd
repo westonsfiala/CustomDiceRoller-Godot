@@ -1,29 +1,28 @@
 extends Popup
 class_name PropertiesPopup
 
-@onready var color_rect : ColorRect = $ColorRect
+@onready var content_panel : Panel = $ContentPanel
+@onready var hide_popup_button : Button = $HidePopupButton
 
-@onready var reset_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/ResetProp
-@onready var num_dice_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown
-@onready var modifier_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown
-@onready var repeat_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown
-@onready var advantage_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/AdvantageProp
-@onready var disadvantage_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DisadvantageProp
-@onready var double_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/DoubleProp
-@onready var halve_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/HalveProp
-@onready var drop_highest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown
-@onready var drop_lowest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown
-@onready var keep_highest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/KeepHighUpDown
-@onready var keep_lowest_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/KeepLowUpDown
-@onready var reroll_over_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/RerollOverUpDown
-@onready var reroll_under_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderUpDown
-@onready var count_above_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/CountAboveUpDown
-@onready var count_below_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/CountBelowUpDown
-@onready var maximum_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/MaximumUpDown
-@onready var minimum_updown : UpDownButtons = $ColorRect/PropertiesScroller/PropertiesLayout/MinimumUpDown
-@onready var explode_button : SettingsManagedTextButton = $ColorRect/PropertiesScroller/PropertiesLayout/ExplodeProp
-
-@onready var animation_player : AnimationPlayer = $AnimationPlayer
+@onready var reset_button : SettingsManagedTextButton = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ResetProp
+@onready var num_dice_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/NumDiceUpDown
+@onready var modifier_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ModifierUpDown
+@onready var repeat_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RepeatUpDown
+@onready var advantage_button : SettingsManagedTextButton = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/AdvantageProp
+@onready var disadvantage_button : SettingsManagedTextButton = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DisadvantageProp
+@onready var double_button : SettingsManagedTextButton = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DoubleProp
+@onready var halve_button : SettingsManagedTextButton = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/HalveProp
+@onready var drop_highest_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DropHighUpDown
+@onready var drop_lowest_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DropLowUpDown
+@onready var keep_highest_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/KeepHighUpDown
+@onready var keep_lowest_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/KeepLowUpDown
+@onready var reroll_over_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RerollOverUpDown
+@onready var reroll_under_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RerollUnderUpDown
+@onready var count_above_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/CountAboveUpDown
+@onready var count_below_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/CountBelowUpDown
+@onready var maximum_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/MaximumUpDown
+@onready var minimum_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/MinimumUpDown
+@onready var explode_button : SettingsManagedTextButton = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ExplodeProp
 
 signal reset_pressed()
 signal property_pressed(property_identifier : StringName)
@@ -32,6 +31,7 @@ signal properties_updated(roll_properties: RollProperties)
 const APPEND_ASTERISK : StringName = " *"
 
 var roll_properties : RollProperties = RollProperties.new()
+var tween : Tween
 
 func _ready():
 	SettingsManager.reconfigure.connect(reconfigure)
@@ -50,17 +50,67 @@ func reconfigure():
 	var min_width = min(three_fourths_window_size.x, property_widths)
 	
 	var popup_size = Vector2i(min_width, min_height)
-	size = popup_size
-	color_rect.custom_minimum_size = popup_size
-	color_rect.pivot_offset = popup_size / 2
+	#size = popup_size
+	content_panel.custom_minimum_size = popup_size
+	content_panel.pivot_offset = popup_size / 2
 	
 # Set the properties and set button text accordingly
 func set_properties(props: RollProperties) -> void:
 	roll_properties = props
 	refresh_text()
+	
+func modular_popup(display_position: Vector2i):
+	size = SettingsManager.get_window_size()
+	enforce_content_panel_in_screen(display_position)
+	popup(Rect2i(Vector2.ZERO, size))
+	
+func enforce_content_panel_in_screen(content_position: Vector2i):
+	var valid_rect = Rect2i(Vector2i.ZERO, SettingsManager.get_window_size())
+	var content_rect = Rect2i(content_position, content_panel.custom_minimum_size)
+	
+	# Force size to always be within 10 of all edges
+	if(content_rect.size.x > valid_rect.size.x - 20):
+		content_rect.size.x = valid_rect.size.x - 20
+	if(content_rect.size.y > valid_rect.size.y - 20):
+		content_rect.size.y = valid_rect.size.y - 20
+		
+	# Force contents to be at least 10 pixels away from the edges
+	if(content_rect.position.x < 10):
+		content_rect.position.x = 10
+	if(content_rect.position.x + content_rect.size.x > valid_rect.size.x - 10):
+		content_rect.position.x = valid_rect.size.x - content_rect.size.x - 10
+	if(content_rect.position.y < 10):
+		content_rect.position.y = 10
+	if(content_rect.position.y + content_rect.size.y > valid_rect.size.y - 10):
+		content_rect.position.y = valid_rect.size.y - content_rect.size.y - 10
+	
+	# Set the panel size to our valid position
+	content_panel.position = content_rect.position
+	content_panel.custom_minimum_size = content_rect.size
 
 func _on_about_to_popup():
-	animation_player.play("popup")
+	tween_popup()
+
+func _on_hide_popup_button_pressed():
+	tween_reverse_popup()
+	
+func tween_popup():
+	if(tween):
+		tween.kill()
+	content_panel.scale = Vector2.ZERO
+	tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(content_panel, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY)
+	
+func tween_reverse_popup():
+	#visible = true
+	content_panel.scale = Vector2.ONE
+	tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property(content_panel, 'scale', Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY)
+	tween.tween_property(self, 'visible', false, 0)
 	
 func refresh_text() -> void:
 	# Reset at the top
@@ -204,7 +254,7 @@ func refresh_text() -> void:
 
 func _on_reset_prop_pressed():
 	emit_signal("reset_pressed")
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_repeat_up_down_value_changed(value):
 	roll_properties.set_repeat_roll(value)
@@ -212,7 +262,7 @@ func _on_repeat_up_down_value_changed(value):
 
 func _on_repeat_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REPEAT_ROLL_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_advantage_prop_pressed():
 	emit_signal("property_pressed", RollProperties.ADVANTAGE_IDENTIFIER)
@@ -232,7 +282,7 @@ func _on_num_dice_up_down_value_changed(value):
 
 func _on_num_dice_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.NUM_DICE_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_modifier_up_down_value_changed(value):
 	roll_properties.set_modifier(value)
@@ -240,7 +290,7 @@ func _on_modifier_up_down_value_changed(value):
 
 func _on_modifier_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DICE_MODIFIER_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_drop_high_up_down_value_changed(value):
 	roll_properties.set_drop_highest(value)
@@ -248,7 +298,7 @@ func _on_drop_high_up_down_value_changed(value):
 
 func _on_drop_high_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DROP_HIGHEST_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_drop_low_up_down_value_changed(value):
 	roll_properties.set_drop_lowest(value)
@@ -256,7 +306,7 @@ func _on_drop_low_up_down_value_changed(value):
 
 func _on_drop_low_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DROP_LOWEST_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_keep_high_up_down_value_changed(value):
 	roll_properties.set_keep_highest(value)
@@ -264,7 +314,7 @@ func _on_keep_high_up_down_value_changed(value):
 
 func _on_keep_high_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.KEEP_HIGHEST_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_keep_low_up_down_value_changed(value):
 	roll_properties.set_keep_lowest(value)
@@ -272,7 +322,7 @@ func _on_keep_low_up_down_value_changed(value):
 
 func _on_keep_low_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.KEEP_LOWEST_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_reroll_over_up_down_value_changed(value):
 	roll_properties.set_reroll_over(value)
@@ -280,7 +330,7 @@ func _on_reroll_over_up_down_value_changed(value):
 
 func _on_reroll_over_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REROLL_OVER_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 	
 func _on_reroll_under_up_down_value_changed(value):
 	roll_properties.set_reroll_under(value)
@@ -288,7 +338,7 @@ func _on_reroll_under_up_down_value_changed(value):
 
 func _on_reroll_under_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REROLL_UNDER_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_maximum_up_down_value_changed(value):
 	roll_properties.set_maximum(value)
@@ -296,7 +346,7 @@ func _on_maximum_up_down_value_changed(value):
 
 func _on_maximum_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_minimum_up_down_value_changed(value):
 	roll_properties.set_minimum(value)
@@ -304,7 +354,7 @@ func _on_minimum_up_down_value_changed(value):
 
 func _on_minimum_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_count_above_up_down_value_changed(value):
 	roll_properties.set_count_above(value)
@@ -312,7 +362,7 @@ func _on_count_above_up_down_value_changed(value):
 
 func _on_count_above_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_count_below_up_down_value_changed(value):
 	roll_properties.set_count_below(value)
@@ -320,8 +370,7 @@ func _on_count_below_up_down_value_changed(value):
 
 func _on_count_below_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
-	animation_player.play_backwards("popup")
+	tween_reverse_popup()
 
 func _on_explode_prop_pressed():
 	emit_signal("property_pressed", RollProperties.EXPLODE_IDENTIFIER)
-

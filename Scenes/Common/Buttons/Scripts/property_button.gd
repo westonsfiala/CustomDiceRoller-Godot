@@ -123,4 +123,5 @@ func _on_reset_button_pressed():
 	emit_signal("reset_properties")
 
 func _on_property_button_pressed():
-	properties_popup.popup(Rect2i(get_screen_position(),Vector2i.ZERO))
+	properties_popup.modular_popup(get_screen_position())
+	

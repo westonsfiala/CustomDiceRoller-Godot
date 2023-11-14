@@ -1,68 +1,36 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5ac36hhgo7yw"]
+[gd_scene load_steps=5 format=3 uid="uid://b5ac36hhgo7yw"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_odm7s"]
 [ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/properties_popup.gd" id="2_076ba"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="2_c2kv3"]
 [ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="4_a8g54"]
 
-[sub_resource type="Animation" id="Animation_qsued"]
-resource_name = "popup"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tja4r"]
-_data = {
-"popup": SubResource("Animation_qsued")
-}
-
 [node name="PropertiesPopup" type="Popup"]
 transparent_bg = true
-size = Vector2i(500, 750)
+size = Vector2i(500, 1000)
 visible = true
 theme = ExtResource("1_odm7s")
 script = ExtResource("2_076ba")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_tja4r")
-}
-
-[node name="ColorRect" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(350, 750)
+[node name="HidePopupButton" type="Button" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+flat = true
+
+[node name="ContentPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(400, 750)
+anchors_preset = -1
+offset_right = 400.0
+offset_bottom = 750.0
+scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(175, 375)
 theme = ExtResource("1_odm7s")
-color = Color(0.223529, 0.223529, 0.223529, 1)
+theme_type_variation = &"ModalPanel"
 
-[node name="PropertiesScroller" type="ScrollContainer" parent="ColorRect"]
-custom_minimum_size = Vector2(100, 100)
+[node name="Margins" type="MarginContainer" parent="ContentPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,141 +39,147 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_odm7s")
 
-[node name="PropertiesLayout" type="VBoxContainer" parent="ColorRect/PropertiesScroller"]
+[node name="PropertiesScroller" type="ScrollContainer" parent="ContentPanel/Margins"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("1_odm7s")
+
+[node name="PropertiesLayout" type="VBoxContainer" parent="ContentPanel/Margins/PropertiesScroller"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_odm7s")
 
-[node name="ResetProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="ResetProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HSeparator" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="NumDiceUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="NumDiceUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="ModifierUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="ModifierUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="HSeparator4" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator4" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="RepeatUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="RepeatUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="HSeparator1" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator1" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="AdvantageProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
-layout_mode = 2
-size_flags_horizontal = 1
-flat = true
-
-[node name="DisadvantageProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="AdvantageProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HSeparator2" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="DoubleProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="DisadvantageProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HalveProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="HSeparator2" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
+layout_mode = 2
+
+[node name="DoubleProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HSeparator3" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HalveProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
+[node name="HSeparator3" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="DropHighUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="DropHighUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="DropLowUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="DropLowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="HSeparator5" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator5" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="KeepHighUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="KeepHighUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="KeepLowUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="KeepLowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="HSeparator6" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator6" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="RerollOverUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="RerollOverUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="RerollUnderUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="RerollUnderUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="HSeparator7" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator7" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="MaximumUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="MaximumUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="MinimumUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="MinimumUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="HSeparator8" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator8" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="CountAboveUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="CountAboveUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="CountBelowUpDown" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="CountBelowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
 layout_mode = 2
 
-[node name="HSeparator9" type="HSeparator" parent="ColorRect/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator9" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
 layout_mode = 2
 
-[node name="ExplodeProp" parent="ColorRect/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="ExplodeProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ResetProp" to="." method="_on_reset_prop_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/AdvantageProp" to="." method="_on_advantage_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DisadvantageProp" to="." method="_on_disadvantage_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DoubleProp" to="." method="_on_double_prop_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/HalveProp" to="." method="_on_halve_prop_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown" to="." method="_on_drop_low_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/DropLowUpDown" to="." method="_on_drop_low_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepHighUpDown" to="." method="_on_keep_high_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepHighUpDown" to="." method="_on_keep_high_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepLowUpDown" to="." method="_on_keep_low_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/KeepLowUpDown" to="." method="_on_keep_low_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollOverUpDown" to="." method="_on_reroll_over_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollOverUpDown" to="." method="_on_reroll_over_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderUpDown" to="." method="_on_reroll_under_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/RerollUnderUpDown" to="." method="_on_reroll_under_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/MaximumUpDown" to="." method="_on_maximum_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/MaximumUpDown" to="." method="_on_maximum_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/MinimumUpDown" to="." method="_on_minimum_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/MinimumUpDown" to="." method="_on_minimum_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountAboveUpDown" to="." method="_on_count_above_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountAboveUpDown" to="." method="_on_count_above_up_down_value_pressed"]
-[connection signal="value_changed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountBelowUpDown" to="." method="_on_count_below_up_down_value_changed"]
-[connection signal="value_pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/CountBelowUpDown" to="." method="_on_count_below_up_down_value_pressed"]
-[connection signal="pressed" from="ColorRect/PropertiesScroller/PropertiesLayout/ExplodeProp" to="." method="_on_explode_prop_pressed"]
+[connection signal="pressed" from="HidePopupButton" to="." method="_on_hide_popup_button_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ResetProp" to="." method="_on_reset_prop_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RepeatUpDown" to="." method="_on_repeat_up_down_value_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/AdvantageProp" to="." method="_on_advantage_prop_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DisadvantageProp" to="." method="_on_disadvantage_prop_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DoubleProp" to="." method="_on_double_prop_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/HalveProp" to="." method="_on_halve_prop_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DropHighUpDown" to="." method="_on_drop_high_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DropLowUpDown" to="." method="_on_drop_low_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/DropLowUpDown" to="." method="_on_drop_low_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/KeepHighUpDown" to="." method="_on_keep_high_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/KeepHighUpDown" to="." method="_on_keep_high_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/KeepLowUpDown" to="." method="_on_keep_low_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/KeepLowUpDown" to="." method="_on_keep_low_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RerollOverUpDown" to="." method="_on_reroll_over_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RerollOverUpDown" to="." method="_on_reroll_over_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RerollUnderUpDown" to="." method="_on_reroll_under_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/RerollUnderUpDown" to="." method="_on_reroll_under_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/MaximumUpDown" to="." method="_on_maximum_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/MaximumUpDown" to="." method="_on_maximum_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/MinimumUpDown" to="." method="_on_minimum_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/MinimumUpDown" to="." method="_on_minimum_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/CountAboveUpDown" to="." method="_on_count_above_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/CountAboveUpDown" to="." method="_on_count_above_up_down_value_pressed"]
+[connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/CountBelowUpDown" to="." method="_on_count_below_up_down_value_changed"]
+[connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/CountBelowUpDown" to="." method="_on_count_below_up_down_value_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ExplodeProp" to="." method="_on_explode_prop_pressed"]
