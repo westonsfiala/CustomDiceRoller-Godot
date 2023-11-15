@@ -23,8 +23,7 @@ const LONG_PRESS_DELAY : float = 0.5
 
 enum SCENE {HISTORY, SIMPLE_ROLL, NUM_SCENES}
 
-var default_label_settings : LabelSettings = preload("res://Resources/Styles/default_normal_label.tres")
-var default_small_label_settings : LabelSettings = preload("res://Resources/Styles/default_small_label.tres")
+var default_label_settings : LabelSettings = preload("res://Resources/Styles/normal_label.tres")
 
 signal reconfigure()
 

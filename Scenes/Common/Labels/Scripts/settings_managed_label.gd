@@ -1,8 +1,6 @@
 extends Label
 class_name SettingsManagedLabel
 
-@export var is_small_text : bool = false
-
 func _ready():
 	SettingsManager.reconfigure.connect(reconfigure)
 	call_deferred("reconfigure")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/settings_managed_texture_button.gd" id="1_aj1xz"]
 [ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="1_peqgk"]
-[ext_resource type="Texture2D" uid="uid://vbdyx5j6rjpn" path="res://Icons/CircleCancel.svg" id="1_qrutp"]
+[ext_resource type="Texture2D" uid="uid://vbdyx5j6rjpn" path="res://Icons/circle-cancel.svg" id="1_qrutp"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="4_jm4b7"]
 
 [node name="SettingsManagedTextureButton" instance=ExtResource("1_peqgk")]

@@ -47,7 +47,7 @@ func set_value(value : int):
 	if(m_show_plus_minus):
 		new_text = StringHelper.get_modifier_string(m_value, false)
 		
-	value_text_button.change_text(m_prefix + new_text + m_postfix)
+	value_text_button.text = m_prefix + new_text + m_postfix
 	
 func handle_change(change: int):
 	var snapped_change = snap_to_next_increment(m_value, change)

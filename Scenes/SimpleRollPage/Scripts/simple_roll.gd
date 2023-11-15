@@ -6,6 +6,9 @@ extends Control
 @onready var num_dice_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown
 @onready var modifier_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown
 @onready var property_button : PropertyButton = $VerticalLayout/PropBar/PropertyButtonBar/PropertyButton
+@onready var set_value_exact_popup : SetValueExactPopup = $SetValueExactPopup
+
+var currently_edited_property_identifier : StringName = ""
 
 # Connect to the settings manager and setup the scene with all of our dice
 func _ready():
@@ -66,16 +69,37 @@ func _on_property_button_reset_properties():
 
 func _on_num_dice_up_down_value_changed(value):
 	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
-	roll_properties.add_property(RollProperties.NUM_DICE_IDENTIFIER, value)
+	roll_properties.set_num_dice(value)
 	SimpleRollManager.set_roll_properties(roll_properties)
 
 func _on_num_dice_up_down_value_pressed():
-	pass # Replace with function body.
+	up_down_pressed(RollProperties.NUM_DICE_IDENTIFIER)
 
 func _on_modifier_up_down_value_changed(value):
 	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
-	roll_properties.add_property(RollProperties.DICE_MODIFIER_IDENTIFIER, value)
+	roll_properties.set_modifier(value)
 	SimpleRollManager.set_roll_properties(roll_properties)
 
 func _on_modifier_up_down_value_pressed():
-	pass # Replace with function body.
+	up_down_pressed(RollProperties.DICE_MODIFIER_IDENTIFIER)
+
+func up_down_pressed(property_identifier: StringName):
+	currently_edited_property_identifier = property_identifier
+	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
+	match property_identifier:
+		RollProperties.NUM_DICE_IDENTIFIER:
+			set_value_exact_popup.set_initial_value(roll_properties.NUM_DICE_DISPLAY_TITLE, roll_properties.get_num_dice())
+			set_value_exact_popup.modular_popup_center()
+		RollProperties.DICE_MODIFIER_IDENTIFIER:
+			set_value_exact_popup.set_initial_value(roll_properties.DICE_MODIFIER_DISPLAY_TITLE, roll_properties.get_modifier())
+			set_value_exact_popup.modular_popup_center()
+
+func _on_set_value_exact_popup_value_changed(value: int):
+	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
+	match currently_edited_property_identifier:
+		RollProperties.NUM_DICE_IDENTIFIER:
+			roll_properties.set_num_dice(value)
+			SimpleRollManager.set_roll_properties(roll_properties)
+		RollProperties.DICE_MODIFIER_IDENTIFIER:
+			roll_properties.set_modifier(value)
+			SimpleRollManager.set_roll_properties(roll_properties)

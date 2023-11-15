@@ -55,6 +55,6 @@ grow_horizontal = 2
 [node name="RestoreHistoryButton" parent="MarginContainer" instance=ExtResource("4_c5jvf")]
 layout_mode = 2
 size_flags_horizontal = 1
-button_text = "Restore History"
+text = "Restore History"
 
 [connection signal="short_pressed" from="MarginContainer/RestoreHistoryButton" to="." method="_on_restore_history_button_short_pressed"]

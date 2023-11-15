@@ -31,7 +31,7 @@ alignment = 2
 [node name="CancelButton" parent="HBoxContainer" instance=ExtResource("2_fomqe")]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
-button_text = "Cancel"
+text = "Cancel"
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 modulate = Color(1, 1, 1, 0)
@@ -42,7 +42,7 @@ theme = ExtResource("1_w1fl3")
 [node name="AcceptButton" parent="HBoxContainer" instance=ExtResource("2_fomqe")]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
-button_text = "Accept"
+text = "Accept"
 
 [connection signal="pressed" from="HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/AcceptButton" to="." method="_on_accept_button_pressed"]

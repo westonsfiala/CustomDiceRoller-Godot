@@ -46,7 +46,7 @@ func set_content_panel_minimum_size():
 	
 func refresh_text() -> void:
 	# Reset at the top
-	reset_button.change_text("Reset Properties")
+	reset_button.text = "Reset Properties"
 	
 	# Num Dice/Modifier
 	var num_dice_postfix = RollProperties.NUM_DICE_TITLE_POSTFIX
@@ -77,14 +77,14 @@ func refresh_text() -> void:
 	if(roll_properties.is_advantage()):
 		advantage_string += APPEND_ASTERISK
 		advantage_button.icon = preload("res://Icons/check-mark.svg")
-	advantage_button.change_text(advantage_string)
+	advantage_button.text = advantage_string
 	
 	var disadvantage_string : String = roll_properties.DISADVANTAGE_TITLE
 	disadvantage_button.icon = null
 	if(roll_properties.is_disadvantage()):
 		disadvantage_string += APPEND_ASTERISK
 		disadvantage_button.icon = preload("res://Icons/check-mark.svg")
-	disadvantage_button.change_text(disadvantage_string)
+	disadvantage_button.text = disadvantage_string
 	
 	# Double/Halve
 	var double_string : String = roll_properties.DOUBLE_TITLE
@@ -92,14 +92,14 @@ func refresh_text() -> void:
 	if(roll_properties.is_double()):
 		double_string += APPEND_ASTERISK
 		double_button.icon = preload("res://Icons/check-mark.svg")
-	double_button.change_text(double_string)
+	double_button.text = double_string
 	
 	var halve_string : String = roll_properties.HALVE_TITLE
 	halve_button.icon = null
 	if(roll_properties.is_halve()):
 		halve_string += APPEND_ASTERISK
 		halve_button.icon = preload("res://Icons/check-mark.svg")
-	halve_button.change_text(halve_string)
+	halve_button.text = halve_string
 	
 	# Drop High/Low
 	var drop_highest_postfix = RollProperties.DROP_HIGHEST_TITLE_POSTFIX
@@ -182,7 +182,7 @@ func refresh_text() -> void:
 	if(roll_properties.get_explode()):
 		explode_string += "*"
 		explode_button.icon = preload("res://Icons/check-mark.svg")
-	explode_button.change_text(explode_string)
+	explode_button.text = explode_string
 
 func _on_reset_prop_pressed():
 	animate_reverse_popup()

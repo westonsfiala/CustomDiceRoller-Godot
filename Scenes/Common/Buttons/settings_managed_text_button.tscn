@@ -1,10 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://d34hkypk02kw1"]
+[gd_scene load_steps=3 format=3 uid="uid://d34hkypk02kw1"]
 
 [ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="1_4pysi"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/settings_managed_text_button.gd" id="2_sq4qn"]
-[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="3_gpy3k"]
-
-[sub_resource type="Theme" id="Theme_ykr6t"]
 
 [node name="SettingsManagedTextButton" instance=ExtResource("1_4pysi")]
 custom_minimum_size = Vector2(0, 50)
@@ -13,16 +10,6 @@ anchor_top = 0.5
 anchor_bottom = 0.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
+text = "TEMP"
 expand_icon = true
 script = ExtResource("2_sq4qn")
-button_text = "TEMP"
-is_small_text = false
-
-[node name="SettingsManagedLabel" parent="." index="1" instance=ExtResource("3_gpy3k")]
-layout_mode = 1
-anchors_preset = 15
-anchor_top = 0.0
-anchor_bottom = 1.0
-offset_top = 0.0
-offset_bottom = 0.0
-theme = SubResource("Theme_ykr6t")

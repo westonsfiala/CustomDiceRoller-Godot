@@ -1,27 +1,30 @@
 [gd_resource type="Theme" load_steps=12 format=3 uid="uid://cfefgu8jbb3xm"]
 
 [ext_resource type="FontFile" uid="uid://dp6a4xtygsyyh" path="res://Resources/Fonts/Roboto/Roboto-Regular.ttf" id="1_dh1c7"]
-[ext_resource type="StyleBox" uid="uid://lgdpfw2i0fod" path="res://Resources/Styles/default_button_background.tres" id="1_ixfta"]
-[ext_resource type="StyleBox" uid="uid://pm6vj5edw6od" path="res://Resources/Styles/default_button_disabled.tres" id="1_rhueu"]
 [ext_resource type="StyleBox" uid="uid://ciqb75q22o8hi" path="res://Resources/Styles/scroll_bar_style.tres" id="1_vlu4t"]
-[ext_resource type="StyleBox" uid="uid://bfyavmmil7vea" path="res://Resources/Styles/default_button_pressed.tres" id="2_3fcvw"]
 [ext_resource type="FontFile" uid="uid://coq4117yen0bj" path="res://Resources/Fonts/Roboto/Roboto-Bold.ttf" id="2_24e56"]
+[ext_resource type="StyleBox" uid="uid://pm6vj5edw6od" path="res://Resources/Styles/button_disabled.tres" id="2_agh58"]
 [ext_resource type="FontFile" uid="uid://bdu1o0yy6tnql" path="res://Resources/Fonts/Roboto/Roboto-Italic.ttf" id="3_77j75"]
+[ext_resource type="StyleBox" uid="uid://lgdpfw2i0fod" path="res://Resources/Styles/button_background.tres" id="3_ac0pq"]
 [ext_resource type="FontFile" uid="uid://dg0thpcypiig3" path="res://Resources/Fonts/Roboto/Roboto-BoldItalic.ttf" id="4_0fve0"]
-[ext_resource type="StyleBox" uid="uid://081aqpqtgsiq" path="res://Resources/Styles/default_popup_background.tres" id="5_g863v"]
+[ext_resource type="StyleBox" uid="uid://bfyavmmil7vea" path="res://Resources/Styles/button_pressed.tres" id="4_qd3f4"]
+[ext_resource type="StyleBox" uid="uid://081aqpqtgsiq" path="res://Resources/Styles/popup_background.tres" id="6_uhvgg"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7owtv"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cn40s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1l5wb"]
 
 [resource]
 default_font = ExtResource("1_dh1c7")
 default_font_size = 32
-Button/styles/disabled = ExtResource("1_rhueu")
-Button/styles/focus = SubResource("StyleBoxEmpty_7owtv")
-Button/styles/hover = ExtResource("1_ixfta")
-Button/styles/normal = ExtResource("1_ixfta")
-Button/styles/pressed = ExtResource("2_3fcvw")
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 3
+Button/fonts/font = ExtResource("1_dh1c7")
+Button/styles/disabled = ExtResource("2_agh58")
+Button/styles/focus = SubResource("StyleBoxEmpty_cn40s")
+Button/styles/hover = ExtResource("3_ac0pq")
+Button/styles/normal = ExtResource("3_ac0pq")
+Button/styles/pressed = ExtResource("4_qd3f4")
 HBoxContainer/constants/separation = 0
 HScrollBar/styles/grabber = ExtResource("1_vlu4t")
 HScrollBar/styles/grabber_highlight = ExtResource("1_vlu4t")
@@ -35,11 +38,11 @@ MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
 MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
-ModalPanel/styles/panel = ExtResource("5_g863v")
+ModalPanel/styles/panel = ExtResource("6_uhvgg")
 PopupMenu/colors/font_outline_color = Color(0, 0, 0, 1)
 PopupMenu/constants/outline_size = 3
 PopupMenu/fonts/font = ExtResource("1_dh1c7")
-PopupPanel/styles/panel = ExtResource("5_g863v")
+PopupPanel/styles/panel = ExtResource("6_uhvgg")
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 3
 RichTextLabel/fonts/bold_font = ExtResource("2_24e56")

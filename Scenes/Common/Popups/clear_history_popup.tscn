@@ -16,7 +16,7 @@ offset_bottom = 50.0
 custom_minimum_size = Vector2(250, 50)
 layout_mode = 2
 size_flags_horizontal = 3
+text = "Clear History"
 flat = true
-button_text = "Clear History"
 
 [connection signal="pressed" from="ContentPanel/Margins/ClearHistoryConfirmButton" to="." method="_on_clear_history_confirm_button_pressed"]

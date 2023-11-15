@@ -65,14 +65,14 @@ func set_properties(props: RollProperties) -> void:
 	
 	if(roll_properties.is_default()):
 		reset_button_margins.visible = false
-		property_button.change_text(NO_PROP_STRING)
+		property_button.text = NO_PROP_STRING
 	else:
 		reset_button_margins.visible = true
 		var num_non_default = roll_properties.get_num_non_default()
 		if(num_non_default == 1):
-			property_button.change_text(str(num_non_default, SINGLE_PROP_STRING))
+			property_button.text = str(num_non_default, SINGLE_PROP_STRING)
 		else:
-			property_button.change_text(str(num_non_default, MULTIPLE_PROP_STRING))
+			property_button.text = str(num_non_default, MULTIPLE_PROP_STRING)
 			
 func popup_property_pressed(property_identifier: StringName):
 	currently_edited_property_identifier = property_identifier

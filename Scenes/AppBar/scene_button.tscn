@@ -23,11 +23,4 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_q2bs8")
 script = ExtResource("2_hiens")
 scene_enum = 0
 
-[node name="SettingsManagedLabel" parent="." index="1"]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -24.0
-offset_bottom = 24.0
-
 [connection signal="pressed" from="." to="." method="_on_pressed"]

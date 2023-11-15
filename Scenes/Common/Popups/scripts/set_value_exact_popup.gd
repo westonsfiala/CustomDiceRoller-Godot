@@ -21,6 +21,7 @@ func set_content_panel_minimum_size():
 func set_initial_value(prop_name: String, value: int):
 	set_text_label.text = str(set_value_text, prop_name)
 	property_line_edit.text = str(value)
+	_on_property_line_edit_text_changed(property_line_edit.text)
 	property_line_edit.grab_focus()
 
 func _on_accept_cancel_buttons_accept_pressed():
