@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cybkvru5h3sxp"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_y65se"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/ClearHistoryPopup.gd" id="2_o5qxj"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="3_33df6"]
+
+[node name="ClearHistoryPopup" instance=ExtResource("1_y65se")]
+script = ExtResource("2_o5qxj")
+
+[node name="ContentPanel" parent="." index="1"]
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="ClearHistoryConfirmButton" parent="ContentPanel/Margins" index="0" instance=ExtResource("3_33df6")]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+flat = true
+button_text = "Clear History"
+
+[connection signal="pressed" from="ContentPanel/Margins/ClearHistoryConfirmButton" to="." method="_on_clear_history_confirm_button_pressed"]

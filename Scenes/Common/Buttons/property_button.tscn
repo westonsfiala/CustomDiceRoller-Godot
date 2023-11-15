@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="2_cc5bv"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="3_pl6br"]
 [ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="4_hiflb"]
-[ext_resource type="PackedScene" uid="uid://b5ac36hhgo7yw" path="res://Scenes/Common/Popups/properties_popup.tscn" id="5_i5ma4"]
+[ext_resource type="PackedScene" uid="uid://b3y31p8o0rflk" path="res://Scenes/Common/Popups/change_properties_popup.tscn" id="7_dmcq2"]
 
 [node name="PropertyButton" type="Control"]
 custom_minimum_size = Vector2(0, 60)
@@ -51,7 +51,7 @@ theme = ExtResource("1_4iyvt")
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PropertiesPopup" parent="." instance=ExtResource("5_i5ma4")]
+[node name="ChangePropertiesPopup" parent="." instance=ExtResource("7_dmcq2")]
 visible = false
 
 [connection signal="pressed" from="HBoxContainer/ResetMargins/ResetButton" to="." method="_on_reset_button_pressed"]

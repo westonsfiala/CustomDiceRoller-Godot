@@ -1,16 +1,10 @@
 extends Control
 
 @onready var clear_history_button : LongPressButton = $MarginContainer/ClearHistoryButton
-@onready var clear_history_popup : Popup = $ClearHistoryPopup
-@onready var animation_player : AnimationPlayer = $ClearHistoryPopup/AnimationPlayer
+@onready var clear_history_popup : ClearHistoryPopup = $ClearHistoryPopup
 
 func _on_clear_history_button_pressed():
-	clear_history_popup.popup(Rect2i(clear_history_button.get_screen_position(), Vector2i.ZERO))
+	clear_history_popup.modular_popup(clear_history_button.get_screen_position())
 
-func _on_settings_managed_text_button_pressed():
+func _on_clear_history_popup_clear_history_pressed():
 	RollManager.clear_roll_history()
-	animation_player.play_backwards("popup")
-
-func _on_clear_history_popup_about_to_popup():
-	animation_player.play("popup")
-

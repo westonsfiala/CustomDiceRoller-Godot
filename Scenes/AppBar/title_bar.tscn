@@ -1,44 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dsds4ja55fu4e"]
+[gd_scene load_steps=7 format=3 uid="uid://dsds4ja55fu4e"]
 
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="1_25e37"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_vrjft"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_0p24n"]
 [ext_resource type="Script" path="res://Scenes/AppBar/Scripts/title_bar.gd" id="2_61r6w"]
 [ext_resource type="Texture2D" uid="uid://bqubwal71vuw3" path="res://Icons/burning-book.svg" id="5_xt8os"]
-[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="6_l52mo"]
-
-[sub_resource type="Animation" id="Animation_ohvl3"]
-resource_name = "popup"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rq6k3"]
-_data = {
-"popup": SubResource("Animation_ohvl3")
-}
+[ext_resource type="PackedScene" uid="uid://cybkvru5h3sxp" path="res://Scenes/Common/Popups/clear_history_popup.tscn" id="6_3nxtv"]
 
 [node name="TitleBar" type="Control"]
 layout_mode = 3
@@ -73,41 +40,8 @@ size_flags_horizontal = 8
 flat = true
 texture_2d = ExtResource("5_xt8os")
 
-[node name="ClearHistoryPopup" type="Popup" parent="."]
-transparent_bg = true
-size = Vector2i(250, 50)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ClearHistoryPopup"]
-libraries = {
-"": SubResource("AnimationLibrary_rq6k3")
-}
-
-[node name="ColorRect" type="ColorRect" parent="ClearHistoryPopup"]
-custom_minimum_size = Vector2(250, 50)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(125, 25)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 1
-theme = ExtResource("1_vrjft")
-color = Color(0.223529, 0.223529, 0.223529, 1)
-
-[node name="ClearHistoryConfirmButton" parent="ClearHistoryPopup/ColorRect" instance=ExtResource("6_l52mo")]
-custom_minimum_size = Vector2(250, 50)
-layout_mode = 1
-anchors_preset = 15
-anchor_top = 0.0
-anchor_bottom = 1.0
-pivot_offset = Vector2(125, 25)
-size_flags_horizontal = 3
-flat = true
-button_text = "Clear History"
+[node name="ClearHistoryPopup" parent="." instance=ExtResource("6_3nxtv")]
+visible = false
 
 [connection signal="pressed" from="MarginContainer/ClearHistoryButton" to="." method="_on_clear_history_button_pressed"]
-[connection signal="about_to_popup" from="ClearHistoryPopup" to="." method="_on_clear_history_popup_about_to_popup"]
-[connection signal="pressed" from="ClearHistoryPopup/ColorRect/ClearHistoryConfirmButton" to="." method="_on_settings_managed_text_button_pressed"]
+[connection signal="clear_history_pressed" from="ClearHistoryPopup" to="." method="_on_clear_history_popup_clear_history_pressed"]

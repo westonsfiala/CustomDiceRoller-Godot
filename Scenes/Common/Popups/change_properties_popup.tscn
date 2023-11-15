@@ -1,156 +1,127 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5ac36hhgo7yw"]
+[gd_scene load_steps=6 format=3 uid="uid://b3y31p8o0rflk"]
 
-[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_odm7s"]
-[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/properties_popup.gd" id="2_076ba"]
-[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="2_c2kv3"]
-[ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="4_a8g54"]
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_sbhsk"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/change_properties_popup.gd" id="2_s872r"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_wgccd"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="4_cotgu"]
+[ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="5_yo4ap"]
 
-[node name="PropertiesPopup" type="Popup"]
-transparent_bg = true
-size = Vector2i(500, 1000)
-visible = true
-theme = ExtResource("1_odm7s")
-script = ExtResource("2_076ba")
+[node name="ChangePropertiesPopup" instance=ExtResource("1_sbhsk")]
+script = ExtResource("2_s872r")
 
-[node name="HidePopupButton" type="Button" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-flat = true
-
-[node name="ContentPanel" type="Panel" parent="."]
+[node name="ContentPanel" parent="." index="1"]
 custom_minimum_size = Vector2(400, 750)
-anchors_preset = -1
-offset_right = 400.0
-offset_bottom = 750.0
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(175, 375)
-theme = ExtResource("1_odm7s")
-theme_type_variation = &"ModalPanel"
 
-[node name="Margins" type="MarginContainer" parent="ContentPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_odm7s")
-
-[node name="PropertiesScroller" type="ScrollContainer" parent="ContentPanel/Margins"]
+[node name="PropertiesScroller" type="ScrollContainer" parent="ContentPanel/Margins" index="0"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-theme = ExtResource("1_odm7s")
+theme = ExtResource("3_wgccd")
 
-[node name="PropertiesLayout" type="VBoxContainer" parent="ContentPanel/Margins/PropertiesScroller"]
+[node name="PropertiesLayout" type="VBoxContainer" parent="ContentPanel/Margins/PropertiesScroller" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_odm7s")
+theme = ExtResource("3_wgccd")
 
-[node name="ResetProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="ResetProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="0" instance=ExtResource("4_cotgu")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="1"]
 layout_mode = 2
 
-[node name="NumDiceUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="NumDiceUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="2" instance=ExtResource("5_yo4ap")]
 layout_mode = 2
 
-[node name="ModifierUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="ModifierUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="3" instance=ExtResource("5_yo4ap")]
 layout_mode = 2
 
-[node name="HSeparator4" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator4" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="4"]
 layout_mode = 2
 
-[node name="RepeatUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
+[node name="RepeatUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="5" instance=ExtResource("5_yo4ap")]
 layout_mode = 2
 
-[node name="HSeparator1" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
+[node name="HSeparator1" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="6"]
 layout_mode = 2
 
-[node name="AdvantageProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
-layout_mode = 2
-size_flags_horizontal = 1
-flat = true
-
-[node name="DisadvantageProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="AdvantageProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="7" instance=ExtResource("4_cotgu")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HSeparator2" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="DoubleProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="DisadvantageProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="8" instance=ExtResource("4_cotgu")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HalveProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="HSeparator2" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="9"]
+layout_mode = 2
+
+[node name="DoubleProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="10" instance=ExtResource("4_cotgu")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[node name="HSeparator3" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="DropHighUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="DropLowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="HSeparator5" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="KeepHighUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="KeepLowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="HSeparator6" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="RerollOverUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="RerollUnderUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="HSeparator7" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="MaximumUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="MinimumUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="HSeparator8" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="CountAboveUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="CountBelowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("4_a8g54")]
-layout_mode = 2
-
-[node name="HSeparator9" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout"]
-layout_mode = 2
-
-[node name="ExplodeProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" instance=ExtResource("2_c2kv3")]
+[node name="HalveProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="11" instance=ExtResource("4_cotgu")]
 layout_mode = 2
 size_flags_horizontal = 1
 flat = true
 
-[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
-[connection signal="pressed" from="HidePopupButton" to="." method="_on_hide_popup_button_pressed"]
+[node name="HSeparator3" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="12"]
+layout_mode = 2
+
+[node name="DropHighUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="13" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="DropLowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="14" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="HSeparator5" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="15"]
+layout_mode = 2
+
+[node name="KeepHighUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="16" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="KeepLowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="17" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="HSeparator6" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="18"]
+layout_mode = 2
+
+[node name="RerollOverUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="19" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="RerollUnderUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="20" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="HSeparator7" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="21"]
+layout_mode = 2
+
+[node name="MaximumUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="22" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="MinimumUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="23" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="HSeparator8" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="24"]
+layout_mode = 2
+
+[node name="CountAboveUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="25" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="CountBelowUpDown" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="26" instance=ExtResource("5_yo4ap")]
+layout_mode = 2
+
+[node name="HSeparator9" type="HSeparator" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="27"]
+layout_mode = 2
+
+[node name="ExplodeProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="28" instance=ExtResource("4_cotgu")]
+layout_mode = 2
+size_flags_horizontal = 1
+flat = true
+
 [connection signal="pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ResetProp" to="." method="_on_reset_prop_pressed"]
 [connection signal="value_changed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
 [connection signal="value_pressed" from="ContentPanel/Margins/PropertiesScroller/PropertiesLayout/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]

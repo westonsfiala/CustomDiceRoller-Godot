@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcryfkqxdni45"]
+
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/popup_base.gd" id="1_mboll"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="2_kqfwo"]
+
+[node name="PopupBase" type="Popup"]
+transparent_bg = true
+size = Vector2i(400, 750)
+visible = true
+script = ExtResource("1_mboll")
+
+[node name="HidePopupButton" type="Button" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="ContentPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(100, 100)
+theme = ExtResource("2_kqfwo")
+theme_type_variation = &"ModalPanel"
+
+[node name="Margins" type="MarginContainer" parent="ContentPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_kqfwo")
+
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
+[connection signal="pressed" from="HidePopupButton" to="." method="_on_hide_popup_button_pressed"]

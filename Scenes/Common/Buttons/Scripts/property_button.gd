@@ -4,7 +4,7 @@ class_name PropertyButton
 @onready var reset_button_margins : MarginContainer = $HBoxContainer/ResetMargins
 @onready var reset_button : LongPressButton = $HBoxContainer/ResetMargins/ResetButton
 @onready var property_button : SettingsManagedTextButton = $HBoxContainer/PropertyMargins/PropertyButton
-@onready var properties_popup : PropertiesPopup = $PropertiesPopup
+@onready var change_properties_popup : ChangePropertiesPopup = $ChangePropertiesPopup
 
 var roll_properties : RollProperties = RollProperties.new()
 
@@ -40,9 +40,9 @@ signal reset_properties()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
-	properties_popup.reset_pressed.connect(_on_reset_button_pressed)
-	properties_popup.property_pressed.connect(popup_property_pressed)
-	properties_popup.properties_updated.connect(popup_properties_updated)
+	change_properties_popup.reset_pressed.connect(_on_reset_button_pressed)
+	change_properties_popup.property_pressed.connect(popup_property_pressed)
+	change_properties_popup.properties_updated.connect(popup_properties_updated)
 	
 	deferred_reconfigure()
 	
@@ -57,7 +57,7 @@ func reconfigure():
 	
 func set_properties(props: RollProperties) -> void:
 	roll_properties = props
-	properties_popup.set_properties(roll_properties)
+	change_properties_popup.set_properties(roll_properties)
 	
 	if(roll_properties.is_default()):
 		reset_button_margins.visible = false
@@ -71,7 +71,6 @@ func set_properties(props: RollProperties) -> void:
 			property_button.change_text(str(num_non_default, MULTIPLE_PROP_STRING))
 			
 func popup_property_pressed(property_identifier: StringName):
-	print(property_identifier)
 	match property_identifier:
 		RollProperties.REPEAT_ROLL_IDENTIFIER:
 			pass
@@ -123,5 +122,5 @@ func _on_reset_button_pressed():
 	emit_signal("reset_properties")
 
 func _on_property_button_pressed():
-	properties_popup.modular_popup(get_screen_position())
+	change_properties_popup.modular_popup(get_screen_position())
 	

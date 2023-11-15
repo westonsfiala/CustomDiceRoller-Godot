@@ -1,8 +1,5 @@
-extends Popup
-class_name PropertiesPopup
-
-@onready var content_panel : Panel = $ContentPanel
-@onready var hide_popup_button : Button = $HidePopupButton
+extends PopupBase
+class_name ChangePropertiesPopup
 
 @onready var reset_button : SettingsManagedTextButton = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/ResetProp
 @onready var num_dice_updown : UpDownButtons = $ContentPanel/Margins/PropertiesScroller/PropertiesLayout/NumDiceUpDown
@@ -31,18 +28,13 @@ signal properties_updated(roll_properties: RollProperties)
 const APPEND_ASTERISK : StringName = " *"
 
 var roll_properties : RollProperties = RollProperties.new()
-var tween : Tween
-
-func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
-	deferred_reconfigure()
 	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
-
-# Reconfigures the scene according to the settings
-func reconfigure():
-	print("reconfiguring properties popup")
+# Set the properties and set button text accordingly
+func set_properties(props: RollProperties) -> void:
+	roll_properties = props
+	refresh_text()
+	
+func set_content_panel_minimum_size():
 	var three_fourths_window_size = SettingsManager.get_window_size() * 3 / 4
 	var property_heights = RollProperties.PROPERTY_DEFAULT_MAP.size() * SettingsManager.get_button_size()
 	var property_widths = SettingsManager.get_button_size() * 9 # Its a rough estimate of how big stuff is.
@@ -50,67 +42,7 @@ func reconfigure():
 	var min_width = min(three_fourths_window_size.x, property_widths)
 	
 	var popup_size = Vector2i(min_width, min_height)
-	#size = popup_size
 	content_panel.custom_minimum_size = popup_size
-	content_panel.pivot_offset = popup_size / 2
-	
-# Set the properties and set button text accordingly
-func set_properties(props: RollProperties) -> void:
-	roll_properties = props
-	refresh_text()
-	
-func modular_popup(display_position: Vector2i):
-	size = SettingsManager.get_window_size()
-	enforce_content_panel_in_screen(display_position)
-	popup(Rect2i(Vector2.ZERO, size))
-	
-func enforce_content_panel_in_screen(content_position: Vector2i):
-	var valid_rect = Rect2i(Vector2i.ZERO, SettingsManager.get_window_size())
-	var content_rect = Rect2i(content_position, content_panel.custom_minimum_size)
-	
-	# Force size to always be within 10 of all edges
-	if(content_rect.size.x > valid_rect.size.x - 20):
-		content_rect.size.x = valid_rect.size.x - 20
-	if(content_rect.size.y > valid_rect.size.y - 20):
-		content_rect.size.y = valid_rect.size.y - 20
-		
-	# Force contents to be at least 10 pixels away from the edges
-	if(content_rect.position.x < 10):
-		content_rect.position.x = 10
-	if(content_rect.position.x + content_rect.size.x > valid_rect.size.x - 10):
-		content_rect.position.x = valid_rect.size.x - content_rect.size.x - 10
-	if(content_rect.position.y < 10):
-		content_rect.position.y = 10
-	if(content_rect.position.y + content_rect.size.y > valid_rect.size.y - 10):
-		content_rect.position.y = valid_rect.size.y - content_rect.size.y - 10
-	
-	# Set the panel size to our valid position
-	content_panel.position = content_rect.position
-	content_panel.custom_minimum_size = content_rect.size
-
-func _on_about_to_popup():
-	tween_popup()
-
-func _on_hide_popup_button_pressed():
-	tween_reverse_popup()
-	
-func tween_popup():
-	if(tween):
-		tween.kill()
-	content_panel.scale = Vector2.ZERO
-	tween = get_tree().create_tween()
-	tween.set_trans(Tween.TRANS_BACK)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(content_panel, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY)
-	
-func tween_reverse_popup():
-	#visible = true
-	content_panel.scale = Vector2.ONE
-	tween = get_tree().create_tween()
-	tween.set_trans(Tween.TRANS_BACK)
-	tween.set_ease(Tween.EASE_IN)
-	tween.tween_property(content_panel, 'scale', Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY)
-	tween.tween_property(self, 'visible', false, 0)
 	
 func refresh_text() -> void:
 	# Reset at the top
@@ -254,7 +186,7 @@ func refresh_text() -> void:
 
 func _on_reset_prop_pressed():
 	emit_signal("reset_pressed")
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_repeat_up_down_value_changed(value):
 	roll_properties.set_repeat_roll(value)
@@ -262,7 +194,7 @@ func _on_repeat_up_down_value_changed(value):
 
 func _on_repeat_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REPEAT_ROLL_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_advantage_prop_pressed():
 	emit_signal("property_pressed", RollProperties.ADVANTAGE_IDENTIFIER)
@@ -282,7 +214,7 @@ func _on_num_dice_up_down_value_changed(value):
 
 func _on_num_dice_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.NUM_DICE_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_modifier_up_down_value_changed(value):
 	roll_properties.set_modifier(value)
@@ -290,7 +222,7 @@ func _on_modifier_up_down_value_changed(value):
 
 func _on_modifier_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DICE_MODIFIER_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_drop_high_up_down_value_changed(value):
 	roll_properties.set_drop_highest(value)
@@ -298,7 +230,7 @@ func _on_drop_high_up_down_value_changed(value):
 
 func _on_drop_high_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DROP_HIGHEST_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_drop_low_up_down_value_changed(value):
 	roll_properties.set_drop_lowest(value)
@@ -306,7 +238,7 @@ func _on_drop_low_up_down_value_changed(value):
 
 func _on_drop_low_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.DROP_LOWEST_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_keep_high_up_down_value_changed(value):
 	roll_properties.set_keep_highest(value)
@@ -314,7 +246,7 @@ func _on_keep_high_up_down_value_changed(value):
 
 func _on_keep_high_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.KEEP_HIGHEST_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_keep_low_up_down_value_changed(value):
 	roll_properties.set_keep_lowest(value)
@@ -322,7 +254,7 @@ func _on_keep_low_up_down_value_changed(value):
 
 func _on_keep_low_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.KEEP_LOWEST_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_reroll_over_up_down_value_changed(value):
 	roll_properties.set_reroll_over(value)
@@ -330,7 +262,7 @@ func _on_reroll_over_up_down_value_changed(value):
 
 func _on_reroll_over_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REROLL_OVER_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 	
 func _on_reroll_under_up_down_value_changed(value):
 	roll_properties.set_reroll_under(value)
@@ -338,7 +270,7 @@ func _on_reroll_under_up_down_value_changed(value):
 
 func _on_reroll_under_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.REROLL_UNDER_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_maximum_up_down_value_changed(value):
 	roll_properties.set_maximum(value)
@@ -346,7 +278,7 @@ func _on_maximum_up_down_value_changed(value):
 
 func _on_maximum_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_minimum_up_down_value_changed(value):
 	roll_properties.set_minimum(value)
@@ -354,7 +286,7 @@ func _on_minimum_up_down_value_changed(value):
 
 func _on_minimum_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_count_above_up_down_value_changed(value):
 	roll_properties.set_count_above(value)
@@ -362,7 +294,7 @@ func _on_count_above_up_down_value_changed(value):
 
 func _on_count_above_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_count_below_up_down_value_changed(value):
 	roll_properties.set_count_below(value)
@@ -370,7 +302,7 @@ func _on_count_below_up_down_value_changed(value):
 
 func _on_count_below_up_down_value_pressed():
 	emit_signal("property_pressed", RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
-	tween_reverse_popup()
+	animate_reverse_popup()
 
 func _on_explode_prop_pressed():
 	emit_signal("property_pressed", RollProperties.EXPLODE_IDENTIFIER)
