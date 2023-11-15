@@ -21,15 +21,24 @@ func reconfigure():
 func modular_popup(display_position: Vector2i):
 	size = SettingsManager.get_window_size()
 	set_content_panel_minimum_size()
-	enforce_content_panel_in_screen(display_position)
+	enforce_content_panel_in_screen(display_position, false)
+	popup(Rect2i(Vector2.ZERO, size))
+
+func modular_popup_center():
+	size = SettingsManager.get_window_size()
+	set_content_panel_minimum_size()
+	enforce_content_panel_in_screen(size/2, true)
 	popup(Rect2i(Vector2.ZERO, size))
 	
 func set_content_panel_minimum_size():
 	assert(false, "This must be set by consumers of PopupBase")
 	
-func enforce_content_panel_in_screen(content_position: Vector2i):
+func enforce_content_panel_in_screen(content_position: Vector2i, center_contents: bool):
 	var valid_rect = Rect2i(Vector2i.ZERO, SettingsManager.get_window_size())
 	var content_rect = Rect2i(content_position, content_panel.custom_minimum_size)
+	
+	if(center_contents):
+		content_rect.position -= content_rect.size / 2
 	
 	# Force size to always be within 10 of all edges
 	if(content_rect.size.x > valid_rect.size.x - 20):

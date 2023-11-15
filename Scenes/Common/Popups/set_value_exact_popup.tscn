@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://gvqbnabor6pt"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_8lens"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/set_value_exact_popup.gd" id="2_hm1em"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="3_hecq3"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="4_d3v4y"]
+[ext_resource type="PackedScene" uid="uid://duvmnbujl5for" path="res://Scenes/Common/Buttons/accept_cancel_buttons.tscn" id="5_ybv56"]
+
+[node name="SetValueExactPopup" instance=ExtResource("1_8lens")]
+size = Vector2i(500, 750)
+script = ExtResource("2_hm1em")
+
+[node name="ContentPanel" parent="." index="1"]
+custom_minimum_size = Vector2(500, 200)
+
+[node name="VerticalLayout" type="VBoxContainer" parent="ContentPanel/Margins" index="0"]
+layout_mode = 2
+alignment = 1
+
+[node name="SetTextExactLabel" parent="ContentPanel/Margins/VerticalLayout" index="0" instance=ExtResource("3_hecq3")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 6
+text = "Set Value Exact"
+horizontal_alignment = 0
+
+[node name="LineEditLayout" type="HBoxContainer" parent="ContentPanel/Margins/VerticalLayout" index="1"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_d3v4y")
+
+[node name="PropertyNameLabel" parent="ContentPanel/Margins/VerticalLayout/LineEditLayout" index="0" instance=ExtResource("3_hecq3")]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Number"
+horizontal_alignment = 0
+
+[node name="PropertyLineEdit" type="LineEdit" parent="ContentPanel/Margins/VerticalLayout/LineEditLayout" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "TEMP"
+virtual_keyboard_type = 2
+select_all_on_focus = true
+
+[node name="AcceptCancelButtons" parent="ContentPanel/Margins/VerticalLayout" index="2" instance=ExtResource("5_ybv56")]
+layout_mode = 2
+
+[connection signal="text_changed" from="ContentPanel/Margins/VerticalLayout/LineEditLayout/PropertyLineEdit" to="." method="_on_property_line_edit_text_changed"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VerticalLayout/LineEditLayout/PropertyLineEdit" to="." method="_on_property_line_edit_text_submitted"]
+[connection signal="accept_pressed" from="ContentPanel/Margins/VerticalLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_accept_pressed"]
+[connection signal="cancel_pressed" from="ContentPanel/Margins/VerticalLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_cancel_pressed"]

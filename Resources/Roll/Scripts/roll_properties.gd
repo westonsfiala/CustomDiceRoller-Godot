@@ -7,6 +7,7 @@ const NUM_DICE_IDENTIFIER : StringName = "NUM_DICE"
 const NUM_DICE_TITLE_PREFIX : StringName = "Num Dice = "
 const NUM_DICE_TITLE_POSTFIX : StringName = "d"
 const NUM_DICE_TITLE : StringName = NUM_DICE_TITLE_PREFIX + UNKNOWN_NUMBER_X + NUM_DICE_TITLE_POSTFIX
+const NUM_DICE_DISPLAY_TITLE : StringName = "Num Dice"
 const NUM_DICE_DEFAULT : int = 1
 func get_num_dice_string() -> String:
 	return str(get_property(NUM_DICE_IDENTIFIER), NUM_DICE_TITLE_POSTFIX)
@@ -15,7 +16,8 @@ func get_num_dice_long_string() -> String:
 func has_num_dice() -> bool:
 	return has_property(NUM_DICE_IDENTIFIER)
 func set_num_dice(num_dice : int) -> void:
-	add_property(NUM_DICE_IDENTIFIER, num_dice)
+	if(num_dice != 0):
+		add_property(NUM_DICE_IDENTIFIER, num_dice)
 func get_num_dice() -> int:
 	return get_property(NUM_DICE_IDENTIFIER)
 
@@ -23,6 +25,7 @@ const DICE_MODIFIER_IDENTIFIER : StringName = "DICE_MODIFIER"
 const DICE_MODIFIER_TITLE_PREFIX : StringName = "Modifier = "
 const DICE_MODIFIER_TITLE_POSTFIX : StringName = ""
 const DICE_MODIFIER_TITLE : StringName = DICE_MODIFIER_TITLE_PREFIX + UNKNOWN_NUMBER_X + DICE_MODIFIER_TITLE_POSTFIX
+const DICE_MODIFIER_DISPLAY_TITLE : StringName = "Modifier"
 const DICE_MODIFIER_DEFAULT : int = 0
 func get_modifier_string() -> String:
 	return str(DICE_MODIFIER_TITLE_PREFIX, get_modifier())
@@ -37,6 +40,7 @@ const REPEAT_ROLL_IDENTIFIER : StringName = "REPEAT_ROLL"
 const REPEAT_ROLL_TITLE_PREFIX : StringName = "Repeat |"
 const REPEAT_ROLL_TITLE_POSTFIX : StringName = "| Times"
 const REPEAT_ROLL_TITLE : StringName = REPEAT_ROLL_TITLE_PREFIX + UNKNOWN_NUMBER_X + REPEAT_ROLL_TITLE_POSTFIX
+const REPEAT_ROLL_DISPLAY_TITLE : StringName = "Repeat Roll"
 const REPEAT_ROLL_DEFAULT : int = 1
 func get_repeat_roll_string() -> String:
 	return str(REPEAT_ROLL_TITLE_PREFIX, get_property(REPEAT_ROLL_IDENTIFIER), REPEAT_ROLL_TITLE_POSTFIX)
@@ -115,6 +119,7 @@ const DROP_HIGHEST_IDENTIFIER : StringName = "DROP_HIGHEST"
 const DROP_HIGHEST_TITLE_PREFIX : StringName = "Drop |"
 const DROP_HIGHEST_TITLE_POSTFIX : StringName = "| Highest"
 const DROP_HIGHEST_TITLE : StringName = DROP_HIGHEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + DROP_HIGHEST_TITLE_POSTFIX
+const DROP_HIGHEST_DISPLAY_TITLE : StringName = "Drop Highest"
 const DROP_HIGHEST_DEFAULT : int = 0
 func get_drop_highest_string() -> String:
 	return str(DROP_HIGHEST_TITLE_PREFIX, get_property(DROP_HIGHEST_IDENTIFIER), DROP_HIGHEST_TITLE_POSTFIX)
@@ -129,6 +134,7 @@ const DROP_LOWEST_IDENTIFIER : StringName = "DROP_LOWEST"
 const DROP_LOWEST_TITLE_PREFIX : StringName = "Drop |"
 const DROP_LOWEST_TITLE_POSTFIX : StringName = "| Lowest"
 const DROP_LOWEST_TITLE : StringName = DROP_LOWEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + DROP_LOWEST_TITLE_POSTFIX
+const DROP_LOWEST_DISPLAY_TITLE : StringName = "Drop Lowest"
 const DROP_LOWEST_DEFAULT : int = 0
 func get_drop_lowest_string() -> String:
 	return str(DROP_LOWEST_TITLE_PREFIX, get_property(DROP_LOWEST_IDENTIFIER), DROP_LOWEST_TITLE_POSTFIX)
@@ -143,6 +149,7 @@ const KEEP_HIGHEST_IDENTIFIER : StringName = "KEEP_HIGHEST"
 const KEEP_HIGHEST_TITLE_PREFIX : StringName = "Keep |"
 const KEEP_HIGHEST_TITLE_POSTFIX : StringName = "| Highest"
 const KEEP_HIGHEST_TITLE : StringName = KEEP_HIGHEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + KEEP_HIGHEST_TITLE_POSTFIX
+const KEEP_HIGHEST_DISPLAY_TITLE : StringName = "Keep Highest"
 const KEEP_HIGHEST_DEFAULT : int = 0
 func get_keep_highest_string() -> String:
 	return str(KEEP_HIGHEST_TITLE_PREFIX, get_property(KEEP_HIGHEST_IDENTIFIER), KEEP_HIGHEST_TITLE_POSTFIX)
@@ -157,6 +164,7 @@ const KEEP_LOWEST_IDENTIFIER : StringName = "KEEP_LOWEST"
 const KEEP_LOWEST_TITLE_PREFIX : StringName = "Keep |"
 const KEEP_LOWEST_TITLE_POSTFIX : StringName = "| Lowest"
 const KEEP_LOWEST_TITLE : StringName = KEEP_LOWEST_TITLE_PREFIX + UNKNOWN_NUMBER_X + KEEP_LOWEST_TITLE_POSTFIX
+const KEEP_LOWEST_DISPLAY_TITLE : StringName = "Keep Lowest"
 const KEEP_LOWEST_DEFAULT : int = 0
 func get_keep_lowest_string() -> String:
 	return str(KEEP_LOWEST_TITLE_PREFIX, get_property(KEEP_LOWEST_IDENTIFIER), KEEP_LOWEST_TITLE_POSTFIX)
@@ -171,6 +179,7 @@ const REROLL_OVER_IDENTIFIER : StringName = "REROLL_OVER"
 const REROLL_OVER_TITLE_PREFIX : StringName = "Reroll Die >= |"
 const REROLL_OVER_TITLE_POSTFIX : StringName = "|"
 const REROLL_OVER_TITLE : StringName = REROLL_OVER_TITLE_PREFIX + UNKNOWN_NUMBER_X + REROLL_OVER_TITLE_POSTFIX
+const REROLL_OVER_DISPLAY_TITLE : StringName = "Reroll Over"
 const REROLL_OVER_DEFAULT : int = 0
 func get_reroll_over_string() -> String:
 	return str(REROLL_OVER_TITLE_PREFIX, get_property(REROLL_OVER_IDENTIFIER), REROLL_OVER_TITLE_POSTFIX)
@@ -185,6 +194,7 @@ const REROLL_UNDER_IDENTIFIER : StringName = "REROLL_UNDER"
 const REROLL_UNDER_TITLE_PREFIX : StringName = "Reroll Die <= |"
 const REROLL_UNDER_TITLE_POSTFIX : StringName = "|"
 const REROLL_UNDER_TITLE : StringName = REROLL_UNDER_TITLE_PREFIX + UNKNOWN_NUMBER_X + REROLL_UNDER_TITLE_POSTFIX
+const REROLL_UNDER_DISPLAY_TITLE : StringName = "Reroll Under"
 const REROLL_UNDER_DEFAULT : int = 0
 func get_reroll_under_string() -> String:
 	return str(REROLL_UNDER_TITLE_PREFIX, get_property(REROLL_UNDER_IDENTIFIER), REROLL_UNDER_TITLE_POSTFIX)
@@ -199,6 +209,7 @@ const MAXIMUM_ROLL_VALUE_IDENTIFIER : StringName = "MAXIMUM_ROLL_VALUE"
 const MAXIMUM_ROLL_VALUE_TITLE_PREFIX : StringName = "Maximum = |"
 const MAXIMUM_ROLL_VALUE_TITLE_POSTFIX : StringName = "|"
 const MAXIMUM_ROLL_VALUE_TITLE : StringName = MAXIMUM_ROLL_VALUE_TITLE_PREFIX + UNKNOWN_NUMBER_X + MAXIMUM_ROLL_VALUE_TITLE_POSTFIX
+const MAXIMUM_ROLL_VALUE_DISPLAY_TITLE : StringName = "Maximum"
 const MAXIMUM_ROLL_VALUE_DEFAULT : int = 0
 func get_maximum_string() -> String:
 	return str(MAXIMUM_ROLL_VALUE_TITLE_PREFIX, get_property(MAXIMUM_ROLL_VALUE_IDENTIFIER), MAXIMUM_ROLL_VALUE_TITLE_POSTFIX)
@@ -213,6 +224,7 @@ const MINIMUM_ROLL_VALUE_IDENTIFIER : StringName = "MINIMUM_ROLL_VALUE"
 const MINIMUM_ROLL_VALUE_TITLE_PREFIX : StringName = "Minimum = |"
 const MINIMUM_ROLL_VALUE_TITLE_POSTFIX : StringName = "|"
 const MINIMUM_ROLL_VALUE_TITLE : StringName = MINIMUM_ROLL_VALUE_TITLE_PREFIX + UNKNOWN_NUMBER_X + MINIMUM_ROLL_VALUE_TITLE_POSTFIX
+const MINIMUM_ROLL_VALUE_DISPLAY_TITLE : StringName = "Minimum"
 const MINIMUM_ROLL_VALUE_DEFAULT : int = 0
 func get_minimum_string() -> String:
 	return str(MINIMUM_ROLL_VALUE_TITLE_PREFIX, get_property(MINIMUM_ROLL_VALUE_IDENTIFIER), MINIMUM_ROLL_VALUE_TITLE_POSTFIX)
@@ -227,6 +239,7 @@ const COUNT_ABOVE_EQUAL_IDENTIFIER : StringName = "COUNT_ABOVE_EQUAL"
 const COUNT_ABOVE_EQUAL_TITLE_PREFIX : StringName = "Count >= |"
 const COUNT_ABOVE_EQUAL_TITLE_POSTFIX : StringName = "|"
 const COUNT_ABOVE_EQUAL_TITLE : StringName = COUNT_ABOVE_EQUAL_TITLE_PREFIX + UNKNOWN_NUMBER_X + COUNT_ABOVE_EQUAL_TITLE_POSTFIX
+const COUNT_ABOVE_EQUAL_DISPLAY_TITLE : StringName = "Count Above Equal"
 const COUNT_ABOVE_EQUAL_DEFAULT : int = 0
 func get_count_above_string() -> String:
 	return str(COUNT_ABOVE_EQUAL_TITLE_PREFIX, get_property(COUNT_ABOVE_EQUAL_IDENTIFIER), COUNT_ABOVE_EQUAL_TITLE_POSTFIX)
@@ -241,6 +254,7 @@ const COUNT_BELOW_EQUAL_IDENTIFIER : StringName = "COUNT_BELOW_EQUAL"
 const COUNT_BELOW_EQUAL_TITLE_PREFIX : StringName = "Count <= |"
 const COUNT_BELOW_EQUAL_TITLE_POSTFIX : StringName = "|"
 const COUNT_BELOW_EQUAL_TITLE : StringName = COUNT_BELOW_EQUAL_TITLE_PREFIX + UNKNOWN_NUMBER_X + COUNT_BELOW_EQUAL_TITLE_POSTFIX
+const COUNT_BELOW_EQUAL_DISPLAY_TITLE : StringName = "Count Below Equal"
 const COUNT_BELOW_EQUAL_DEFAULT : int = 0
 func get_count_below_string() -> String:
 	return str(COUNT_BELOW_EQUAL_TITLE_PREFIX, get_property(COUNT_BELOW_EQUAL_IDENTIFIER), COUNT_BELOW_EQUAL_TITLE_POSTFIX)

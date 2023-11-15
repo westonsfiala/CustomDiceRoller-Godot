@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdqd62tcyenpp"]
+[gd_scene load_steps=8 format=3 uid="uid://cdqd62tcyenpp"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_4iyvt"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/property_button.gd" id="2_02ubf"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="3_pl6br"]
 [ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="4_hiflb"]
 [ext_resource type="PackedScene" uid="uid://b3y31p8o0rflk" path="res://Scenes/Common/Popups/change_properties_popup.tscn" id="7_dmcq2"]
+[ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_olfs5"]
 
 [node name="PropertyButton" type="Control"]
 custom_minimum_size = Vector2(0, 60)
@@ -52,6 +53,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="ChangePropertiesPopup" parent="." instance=ExtResource("7_dmcq2")]
+visible = false
+
+[node name="SetValueExactPopup" parent="." instance=ExtResource("7_olfs5")]
 visible = false
 
 [connection signal="pressed" from="HBoxContainer/ResetMargins/ResetButton" to="." method="_on_reset_button_pressed"]

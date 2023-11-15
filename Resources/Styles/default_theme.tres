@@ -2,14 +2,13 @@
 
 [ext_resource type="FontFile" uid="uid://dp6a4xtygsyyh" path="res://Resources/Fonts/Roboto/Roboto-Regular.ttf" id="1_dh1c7"]
 [ext_resource type="StyleBox" uid="uid://lgdpfw2i0fod" path="res://Resources/Styles/default_button_background.tres" id="1_ixfta"]
+[ext_resource type="StyleBox" uid="uid://pm6vj5edw6od" path="res://Resources/Styles/default_button_disabled.tres" id="1_rhueu"]
 [ext_resource type="StyleBox" uid="uid://ciqb75q22o8hi" path="res://Resources/Styles/scroll_bar_style.tres" id="1_vlu4t"]
 [ext_resource type="StyleBox" uid="uid://bfyavmmil7vea" path="res://Resources/Styles/default_button_pressed.tres" id="2_3fcvw"]
 [ext_resource type="FontFile" uid="uid://coq4117yen0bj" path="res://Resources/Fonts/Roboto/Roboto-Bold.ttf" id="2_24e56"]
 [ext_resource type="FontFile" uid="uid://bdu1o0yy6tnql" path="res://Resources/Fonts/Roboto/Roboto-Italic.ttf" id="3_77j75"]
 [ext_resource type="FontFile" uid="uid://dg0thpcypiig3" path="res://Resources/Fonts/Roboto/Roboto-BoldItalic.ttf" id="4_0fve0"]
 [ext_resource type="StyleBox" uid="uid://081aqpqtgsiq" path="res://Resources/Styles/default_popup_background.tres" id="5_g863v"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dl7hw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7owtv"]
 
@@ -18,7 +17,7 @@
 [resource]
 default_font = ExtResource("1_dh1c7")
 default_font_size = 32
-Button/styles/disabled = SubResource("StyleBoxEmpty_dl7hw")
+Button/styles/disabled = ExtResource("1_rhueu")
 Button/styles/focus = SubResource("StyleBoxEmpty_7owtv")
 Button/styles/hover = ExtResource("1_ixfta")
 Button/styles/normal = ExtResource("1_ixfta")
