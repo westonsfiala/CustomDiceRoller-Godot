@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://5vm2iatgmrxs"]
+[gd_scene load_steps=9 format=3 uid="uid://5vm2iatgmrxs"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dvlt6"]
 [ext_resource type="Script" path="res://Scenes/SimpleRollPage/Scripts/simple_roll.gd" id="1_tqmuk"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="3_3r18e"]
 [ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="3_6vjsp"]
 [ext_resource type="PackedScene" uid="uid://cdqd62tcyenpp" path="res://Scenes/Common/Buttons/property_button.tscn" id="5_uf67h"]
+[ext_resource type="PackedScene" uid="uid://bjqaot0p6s5sg" path="res://Scenes/Common/Buttons/add_dice_button.tscn" id="6_c6xd2"]
 [ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_dbqdo"]
 
 [node name="SimpleRoll" type="Control"]
@@ -70,6 +71,9 @@ m_show_plus_minus = true
 layout_mode = 2
 
 [node name="PropertyButton" parent="VerticalLayout/PropBar/PropertyButtonBar" instance=ExtResource("5_uf67h")]
+layout_mode = 2
+
+[node name="AddDiceButton" parent="VerticalLayout/PropBar/PropertyButtonBar" instance=ExtResource("6_c6xd2")]
 layout_mode = 2
 
 [node name="NoDiceLabel" parent="." instance=ExtResource("2_gwd73")]

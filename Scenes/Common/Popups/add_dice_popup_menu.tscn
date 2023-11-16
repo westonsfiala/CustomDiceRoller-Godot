@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh4v1127nlkuw"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_q5l2q"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/add_dice_popup_menu.gd" id="2_30kir"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_0gtyl"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="4_56rfq"]
+
+[node name="AddDicePopupMenu" instance=ExtResource("1_q5l2q")]
+script = ExtResource("2_30kir")
+
+[node name="ContentPanel" parent="." index="1"]
+custom_minimum_size = Vector2(300, 200)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentPanel/Margins" index="0"]
+layout_mode = 2
+theme = ExtResource("3_0gtyl")
+alignment = 1
+
+[node name="ResetDiceButton" parent="ContentPanel/Margins/VBoxContainer" index="0" instance=ExtResource("4_56rfq")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Reset Dice
+"
+flat = true
+
+[node name="MinMaxDieButton" parent="ContentPanel/Margins/VBoxContainer" index="1" instance=ExtResource("4_56rfq")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Min Max Die"
+flat = true
+
+[node name="ImbalancedDieButton" parent="ContentPanel/Margins/VBoxContainer" index="2" instance=ExtResource("4_56rfq")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Imbalanced Die"
+flat = true
+
+[node name="NonNumberDieButton" parent="ContentPanel/Margins/VBoxContainer" index="3" instance=ExtResource("4_56rfq")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Non Number Die
+"
+flat = true
+
+[connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/ResetDiceButton" to="." method="_on_reset_dice_button_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/MinMaxDieButton" to="." method="_on_min_max_die_button_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/ImbalancedDieButton" to="." method="_on_imbalanced_die_button_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/NonNumberDieButton" to="." method="_on_non_number_die_button_pressed"]

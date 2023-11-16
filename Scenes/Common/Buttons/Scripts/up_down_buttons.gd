@@ -42,11 +42,17 @@ func get_value() -> int:
 	return m_value
 	
 func set_value(value : int):
+	var current_value = m_value
 	m_value = enforce_good_value(value, 0)
-	var new_text = str(m_value)
+	var tween = get_tree().create_tween()
+	
+	var tween_duration = min(SettingsManager.LONG_PRESS_DELAY, 0.01 * abs(current_value - m_value))
+	tween.tween_method(set_value_text, current_value, m_value, tween_duration)
+	
+func set_value_text(value: int):
+	var new_text = str(value)
 	if(m_show_plus_minus):
-		new_text = StringHelper.get_modifier_string(m_value, false)
-		
+		new_text = StringHelper.get_modifier_string(value, false)
 	value_text_button.text = m_prefix + new_text + m_postfix
 	
 func handle_change(change: int):

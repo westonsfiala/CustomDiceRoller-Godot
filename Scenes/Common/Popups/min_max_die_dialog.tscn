@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=3 uid="uid://biumolcfuvbmg"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_xolfn"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/min_max_die_dialog.gd" id="2_ap00y"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_46qsf"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="4_cae5t"]
+
+[node name="MinMaxDieDialog" instance=ExtResource("1_xolfn")]
+size = Vector2i(500, 750)
+script = ExtResource("2_ap00y")
+
+[node name="ContentPanel" parent="." index="1"]
+custom_minimum_size = Vector2(500, 350)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentPanel/Margins" index="0"]
+layout_mode = 2
+theme = ExtResource("3_46qsf")
+
+[node name="NameMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="DieNameLabel" parent="ContentPanel/Margins/VBoxContainer/NameMargins" index="0" instance=ExtResource("4_cae5t")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Die Name"
+horizontal_alignment = 0
+
+[node name="InfoMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="DieInfoLabel" parent="ContentPanel/Margins/VBoxContainer/InfoMargins" index="0" instance=ExtResource("4_cae5t")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Die Info"
+horizontal_alignment = 0
+
+[node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/VBoxContainer" index="2"]
+layout_mode = 2
+
+[node name="MinMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="3"]
+layout_mode = 2
+
+[node name="MinLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer/MinMargins" index="0"]
+layout_mode = 2
+
+[node name="MinLabel" parent="ContentPanel/Margins/VBoxContainer/MinMargins/MinLayout" index="0" instance=ExtResource("4_cae5t")]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Min"
+horizontal_alignment = 0
+
+[node name="MinLineEdit" type="LineEdit" parent="ContentPanel/Margins/VBoxContainer/MinMargins/MinLayout" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MaxMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="4"]
+layout_mode = 2
+
+[node name="MaxLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer/MaxMargins" index="0"]
+layout_mode = 2
+
+[node name="MaxLabel" parent="ContentPanel/Margins/VBoxContainer/MaxMargins/MaxLayout" index="0" instance=ExtResource("4_cae5t")]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Max"
+horizontal_alignment = 0
+
+[node name="MaxLineEdit" type="LineEdit" parent="ContentPanel/Margins/VBoxContainer/MaxMargins/MaxLayout" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameEditMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="5"]
+layout_mode = 2
+
+[node name="NameLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins" index="0"]
+layout_mode = 2
+
+[node name="NameLabel" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout" index="0" instance=ExtResource("4_cae5t")]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Name"
+horizontal_alignment = 0
+
+[node name="NameLineEdit" type="LineEdit" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3

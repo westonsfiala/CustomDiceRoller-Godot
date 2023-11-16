@@ -10,6 +10,10 @@ const DIE_DISPLAY_IN_HEX : StringName = '0x'
 func name() -> String:
 	return m_name
 	
+func default_name() -> String:
+	assert(false, "default_name - not implemented in AbstractDie")
+	return ""
+	
 func info() -> String:
 	return m_info
 	

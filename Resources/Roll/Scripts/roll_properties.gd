@@ -16,8 +16,9 @@ func get_num_dice_long_string() -> String:
 func has_num_dice() -> bool:
 	return has_property(NUM_DICE_IDENTIFIER)
 func set_num_dice(num_dice : int) -> void:
-	if(num_dice != 0):
-		add_property(NUM_DICE_IDENTIFIER, num_dice)
+	if(num_dice == 0):
+		num_dice = 1
+	add_property(NUM_DICE_IDENTIFIER, num_dice)
 func get_num_dice() -> int:
 	return get_property(NUM_DICE_IDENTIFIER)
 

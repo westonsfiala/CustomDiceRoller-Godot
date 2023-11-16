@@ -30,6 +30,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_kqfwo")
+theme_type_variation = &"MarginContainerPopup"
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
 [connection signal="pressed" from="HidePopupButton" to="." method="_on_hide_popup_button_pressed"]

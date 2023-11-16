@@ -1,5 +1,7 @@
 extends Node
 
+var default_min_max_die : MinMaxDie = MinMaxDie.new().configure("", 1, 20, preload("res://DicePNGs/white/d20.png"))
+
 var default_die : MinMaxDie = MinMaxDie.new().configure("TEMP", 1, 1, preload("res://DicePNGs/white/unknown-die.png"))
 var fate : MinMaxDie = MinMaxDie.new().configure("fate", -1, 1, preload("res://DicePNGs/white/fate.png"))
 var d2 : MinMaxDie = MinMaxDie.new().configure("d2", 1, 2, preload("res://DicePNGs/white/d2.png"))

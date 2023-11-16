@@ -5,12 +5,23 @@ class_name MinMaxDie
 @export var max_bound : int
 
 func configure(die_name: String, bound1: int, bound2: int, die_texture: Texture2D) -> MinMaxDie:
-	m_name = die_name
 	min_bound = min(bound1, bound2)
 	max_bound = max(bound1, bound2)
+	if(die_name.is_empty()):
+		m_name = default_name()
+	else:
+		m_name = die_name
 	m_info = str('Rolls a number between ', min_bound, ' and ', max_bound, '\nAverage of ', average())
 	m_texture = die_texture
 	return self
+	
+func default_name() -> String:
+	var placeholder_name : String = 'd'
+	if(minimum() == 1):
+		placeholder_name += str(maximum())
+	else:
+		placeholder_name += str(minimum(), ":", maximum())
+	return placeholder_name
 
 func roll() -> DieResult:
 	var result = randi_range(min_bound, max_bound)

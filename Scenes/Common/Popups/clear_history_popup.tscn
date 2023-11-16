@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cybkvru5h3sxp"]
 
 [ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_y65se"]
-[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/ClearHistoryPopup.gd" id="2_o5qxj"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/clear_history_popup.gd" id="2_o5qxj"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="3_33df6"]
 
 [node name="ClearHistoryPopup" instance=ExtResource("1_y65se")]
