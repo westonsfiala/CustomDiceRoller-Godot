@@ -12,6 +12,9 @@ func _on_cancel_button_pressed():
 
 func _on_accept_button_pressed():
 	emit_signal("accept_pressed")
+	
+func can_accept() -> bool:
+	return accept_button.disabled == false
 
 func disable_accept():
 	accept_button.disabled = true

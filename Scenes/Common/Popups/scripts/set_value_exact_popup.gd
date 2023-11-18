@@ -25,13 +25,12 @@ func set_initial_value(prop_name: String, value: int):
 	property_line_edit.grab_focus()
 
 func _on_accept_cancel_buttons_accept_pressed():
-	var line_value_string = property_line_edit.text
-	if(line_value_string.is_valid_int()):
-		emit_signal("value_changed", line_value_string.to_int())
-		animate_reverse_popup()
+	if(accept_cancel_buttons.can_accept()):
+		emit_signal("value_changed", property_line_edit.text.to_int())
+		animate_close_popup()
 
 func _on_accept_cancel_buttons_cancel_pressed():
-	animate_reverse_popup()
+	animate_close_popup()
 
 func _on_property_line_edit_text_submitted(_new_text):
 	_on_accept_cancel_buttons_accept_pressed()

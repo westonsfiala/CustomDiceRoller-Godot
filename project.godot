@@ -21,6 +21,7 @@ SettingsManager="*res://Autoloaders/settings_manager.gd"
 RollManager="*res://Autoloaders/roll_manager.gd"
 StringHelper="*res://Autoloaders/string_helper.gd"
 SimpleRollManager="*res://Autoloaders/simple_roll_manager.gd"
+DieImageManager="*res://Autoloaders/die_image_manager.gd"
 
 [display]
 

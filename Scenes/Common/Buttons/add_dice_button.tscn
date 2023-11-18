@@ -34,6 +34,7 @@ size_flags_vertical = 1
 text = "Add Die"
 
 [node name="AddDicePopupMenu" parent="." instance=ExtResource("4_qkus1")]
+visible = false
 
 [node name="MinMaxDieDialog" parent="." instance=ExtResource("5_2e1bf")]
 visible = false
@@ -43,3 +44,4 @@ visible = false
 [connection signal="new_min_max_die" from="AddDicePopupMenu" to="." method="_on_add_dice_popup_menu_new_min_max_die"]
 [connection signal="new_non_number_die" from="AddDicePopupMenu" to="." method="_on_add_dice_popup_menu_new_non_number_die"]
 [connection signal="reset_dice" from="AddDicePopupMenu" to="." method="_on_add_dice_popup_menu_reset_dice"]
+[connection signal="die_accepted" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_accepted"]

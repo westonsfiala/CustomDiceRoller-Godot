@@ -66,7 +66,7 @@ func _on_about_to_popup():
 	animate_popup()
 
 func _on_hide_popup_button_pressed():
-	animate_reverse_popup()
+	animate_close_popup()
 	
 func animate_popup():
 	if(tween):
@@ -77,7 +77,7 @@ func animate_popup():
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(content_panel, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY)
 	
-func animate_reverse_popup():
+func animate_close_popup():
 	if(tween):
 		tween.kill()
 	visible = true

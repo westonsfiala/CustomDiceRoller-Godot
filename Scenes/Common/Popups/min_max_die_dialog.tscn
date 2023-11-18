@@ -1,16 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://biumolcfuvbmg"]
+[gd_scene load_steps=6 format=3 uid="uid://biumolcfuvbmg"]
 
 [ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_xolfn"]
 [ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/min_max_die_dialog.gd" id="2_ap00y"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_46qsf"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="4_cae5t"]
+[ext_resource type="PackedScene" uid="uid://duvmnbujl5for" path="res://Scenes/Common/Buttons/accept_cancel_buttons.tscn" id="5_0jfgt"]
 
 [node name="MinMaxDieDialog" instance=ExtResource("1_xolfn")]
 size = Vector2i(500, 750)
 script = ExtResource("2_ap00y")
 
 [node name="ContentPanel" parent="." index="1"]
-custom_minimum_size = Vector2(500, 350)
+custom_minimum_size = Vector2(500, 400)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ContentPanel/Margins" index="0"]
 layout_mode = 2
@@ -31,8 +32,11 @@ layout_mode = 2
 [node name="DieInfoLabel" parent="ContentPanel/Margins/VBoxContainer/InfoMargins" index="0" instance=ExtResource("4_cae5t")]
 layout_mode = 2
 size_flags_horizontal = 1
+theme_type_variation = &"SmallTextLabel"
 text = "Die Info"
 horizontal_alignment = 0
+autowrap_mode = 2
+text_overrun_behavior = 0
 
 [node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/VBoxContainer" index="2"]
 layout_mode = 2
@@ -87,3 +91,15 @@ horizontal_alignment = 0
 [node name="NameLineEdit" type="LineEdit" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="AcceptCancelButtons" parent="ContentPanel/Margins/VBoxContainer" index="6" instance=ExtResource("5_0jfgt")]
+layout_mode = 2
+
+[connection signal="text_changed" from="ContentPanel/Margins/VBoxContainer/MinMargins/MinLayout/MinLineEdit" to="." method="_line_edit_text_changed"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VBoxContainer/MinMargins/MinLayout/MinLineEdit" to="." method="_line_edit_text_submitted"]
+[connection signal="text_changed" from="ContentPanel/Margins/VBoxContainer/MaxMargins/MaxLayout/MaxLineEdit" to="." method="_line_edit_text_changed"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VBoxContainer/MaxMargins/MaxLayout/MaxLineEdit" to="." method="_line_edit_text_submitted"]
+[connection signal="text_changed" from="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout/NameLineEdit" to="." method="_line_edit_text_changed"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout/NameLineEdit" to="." method="_line_edit_text_submitted"]
+[connection signal="accept_pressed" from="ContentPanel/Margins/VBoxContainer/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_accept_pressed"]
+[connection signal="cancel_pressed" from="ContentPanel/Margins/VBoxContainer/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_cancel_pressed"]

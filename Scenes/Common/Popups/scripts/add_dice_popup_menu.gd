@@ -13,16 +13,16 @@ func set_content_panel_minimum_size():
 
 func _on_reset_dice_button_pressed():
 	emit_signal("reset_dice")
-	animate_reverse_popup()
+	animate_close_popup()
 
 func _on_min_max_die_button_pressed():
 	emit_signal("new_min_max_die")
-	animate_reverse_popup()
+	animate_close_popup()
 
 func _on_imbalanced_die_button_pressed():
 	emit_signal("new_imbalanced_die")
-	animate_reverse_popup()
+	animate_close_popup()
 
 func _on_non_number_die_button_pressed():
 	emit_signal("new_non_number_die")
-	animate_reverse_popup()
+	animate_close_popup()

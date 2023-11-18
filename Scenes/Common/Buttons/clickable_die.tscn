@@ -36,12 +36,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = -6.28319
 theme = ExtResource("1_3owrk")
 alignment = 1
 
-[node name="DieImage" type="TextureRect" parent="LongPressButton/VerticalContainer"]
-custom_minimum_size = Vector2(75, 75)
+[node name="Control" type="Control" parent="LongPressButton/VerticalContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="DieImage" type="TextureRect" parent="LongPressButton/VerticalContainer/Control"]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_3owrk")
 texture = ExtResource("2_3b5f2")

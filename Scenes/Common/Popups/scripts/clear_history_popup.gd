@@ -10,4 +10,4 @@ func set_content_panel_minimum_size():
 
 func _on_clear_history_confirm_button_pressed():
 	emit_signal("clear_history_pressed")
-	animate_reverse_popup()
+	animate_close_popup()

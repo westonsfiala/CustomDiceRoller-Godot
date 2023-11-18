@@ -1,10 +1,12 @@
 extends Control
 class_name ClickableDie
 
-var m_die : AbstractDie = SettingsManager.get_default_die()
+var m_die : AbstractDie = SimpleRollManager.get_default_die()
 
 @onready var die_name : Label = $LongPressButton/VerticalContainer/DieName
-@onready var die_image : TextureRect = $LongPressButton/VerticalContainer/DieImage
+@onready var die_image : TextureRect = $LongPressButton/VerticalContainer/Control/DieImage
+
+var tween : Tween
 
 # Signal that is sent out when a die is pressed
 signal die_pressed(die: AbstractDie)
@@ -33,6 +35,16 @@ func reconfigure() -> void:
 	# You need to change both of these values to make the flow container work
 	custom_minimum_size = full_button_size
 	size = full_button_size
+	
+	var start_position = Vector2(randi_range(-dice_size, dice_size), randi_range(-dice_size, dice_size))
+	die_image.pivot_offset = Vector2.ONE * dice_size / 2
+	
+	if(tween):
+		tween.kill()
+	tween = get_tree().create_tween().set_parallel()
+	tween.tween_property(die_image, 'position', Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY).from(start_position)
+	tween.tween_property(die_image, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY).from(Vector2.ZERO)
+	tween.tween_property(die_image, 'rotation_degrees', 0, SettingsManager.LONG_PRESS_DELAY).from(-360)
 
 func _on_long_press_button_short_pressed():
 	print(str(m_die.name(), " pressed"))

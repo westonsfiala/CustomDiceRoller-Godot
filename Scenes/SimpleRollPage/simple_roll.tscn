@@ -89,4 +89,6 @@ visible = false
 [connection signal="value_pressed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
 [connection signal="properties_updated" from="VerticalLayout/PropBar/PropertyButtonBar/PropertyButton" to="." method="_on_property_button_properties_updated"]
 [connection signal="reset_properties" from="VerticalLayout/PropBar/PropertyButtonBar/PropertyButton" to="." method="_on_property_button_reset_properties"]
+[connection signal="die_accepted" from="VerticalLayout/PropBar/PropertyButtonBar/AddDiceButton" to="." method="_on_add_dice_button_die_accepted"]
+[connection signal="reset_dice" from="VerticalLayout/PropBar/PropertyButtonBar/AddDiceButton" to="." method="_on_add_dice_button_reset_dice"]
 [connection signal="value_changed" from="SetValueExactPopup" to="." method="_on_set_value_exact_popup_value_changed"]

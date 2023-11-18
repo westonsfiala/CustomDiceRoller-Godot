@@ -15,6 +15,7 @@ func _ready():
 	RollManager.new_roll_result.connect(set_dice_result)
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
 	SimpleRollManager.roll_properties_updated.connect(properties_updated)
+	SimpleRollManager.simple_dice_updated.connect(dice_updated)
 	dice_updated()
 	properties_updated()
 	deferred_reconfigure()
@@ -29,7 +30,7 @@ func reconfigure():
 	
 func dice_updated() -> void:
 	SettingsManager.remove_and_free_children(dice_grid)
-	for die in SettingsManager.get_dice():
+	for die in SimpleRollManager.get_dice():
 		var dice_node = preload("res://Scenes/Common/Buttons/clickable_die.tscn").instantiate()
 		dice_grid.add_child(dice_node)
 		dice_node.die_pressed.connect(roll_die)
@@ -55,7 +56,7 @@ func set_dice_result(roll_result: RollResults):
 	dice_result.pop()
 	
 func refresh_no_dice():
-	var dice = SettingsManager.get_dice()
+	var dice = SimpleRollManager.get_dice()
 	if dice.is_empty():
 		no_dice_label.visible = true
 	else:
@@ -103,3 +104,9 @@ func _on_set_value_exact_popup_value_changed(value: int):
 		RollProperties.DICE_MODIFIER_IDENTIFIER:
 			roll_properties.set_modifier(value)
 			SimpleRollManager.set_roll_properties(roll_properties)
+
+func _on_add_dice_button_die_accepted(die):
+	SimpleRollManager.add_die(die)
+
+func _on_add_dice_button_reset_dice():
+	SimpleRollManager.reset_dice()

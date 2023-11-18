@@ -19,6 +19,9 @@ func default_name() -> String:
 	placeholder_name += m_faces.reduce(func(a,b): return str(a, b, ':'), "")
 	placeholder_name.trim_suffix(':')
 	return placeholder_name
+	
+func image_id() -> int:
+	return DieImageManager.DIE_UNKNOWN
 
 func roll() -> DieResult:
 	var result = m_faces.pick_random()
