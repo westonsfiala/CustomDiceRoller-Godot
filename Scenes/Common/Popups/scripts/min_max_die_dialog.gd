@@ -19,15 +19,16 @@ func set_content_panel_minimum_size():
 	max_line_edit.select_all()
 
 # Set the dice to the given die, update text lines, and highlight issues.
-func set_min_max_die(die: MinMaxDie):
+# if first_set is true, will forcefully update the text lines.
+func set_min_max_die(die: MinMaxDie, first_set : bool = true):
 	m_min_max_die = die
 	
 	die_name_label.text = m_min_max_die.name()
 	die_info_label.text = m_min_max_die.info()
 	# Don't mess with text they can change if something is there.
-	if(min_line_edit.text.is_empty()):
+	if(min_line_edit.text.is_empty() or first_set):
 		min_line_edit.text = str(m_min_max_die.minimum())
-	if(max_line_edit.text.is_empty()):
+	if(max_line_edit.text.is_empty() or first_set):
 		max_line_edit.text = str(m_min_max_die.maximum())
 	name_line_edit.placeholder_text = m_min_max_die.default_name()
 
@@ -55,7 +56,7 @@ func _line_edit_text_changed(_new_text: String):
 	if update_die:
 		m_min_max_die.configure(die_name, die_min_value.to_int(), die_max_value.to_int())
 		accept_cancel_buttons.enable_accept()
-		set_min_max_die(m_min_max_die)
+		set_min_max_die(m_min_max_die, false)
 	else:
 		accept_cancel_buttons.disable_accept()
 

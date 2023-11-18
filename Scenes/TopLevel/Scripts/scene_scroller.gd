@@ -65,3 +65,7 @@ func snap_scroll_to_scene():
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(h_scroll_bar, "value", destination_position, tween_duration * duration_modifier)
 
+func _on_gui_input(event):
+	if event is InputEventScreenDrag or event is InputEventMouseMotion:
+		print("scrolling")
+

@@ -50,5 +50,6 @@ func respond_to_unpress():
 	tween = get_tree().create_tween()
 	tween.tween_property(press_response_image, "scale", Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY / 2)
 	tween.tween_property(press_response_image, "visible", false, 0)
+	last_click_position = Vector2.ZERO
 
 

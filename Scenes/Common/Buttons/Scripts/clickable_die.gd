@@ -10,6 +10,7 @@ var tween : Tween
 
 # Signal that is sent out when a die is pressed
 signal die_pressed(die: AbstractDie)
+signal die_long_pressed(die: AbstractDie)
 
 func _ready():
 	SettingsManager.reconfigure.connect(deferred_reconfigure)
@@ -49,3 +50,6 @@ func reconfigure() -> void:
 func _on_long_press_button_short_pressed():
 	print(str(m_die.name(), " pressed"))
 	emit_signal("die_pressed", m_die)
+
+func _on_long_press_button_long_pressed():
+	emit_signal("die_long_pressed", m_die)

@@ -7,6 +7,7 @@ extends Control
 @onready var modifier_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown
 @onready var property_button : PropertyButton = $VerticalLayout/PropBar/PropertyButtonBar/PropertyButton
 @onready var set_value_exact_popup : SetValueExactPopup = $SetValueExactPopup
+@onready var edit_die_popup : MinMaxDieDialog = $MinMaxDieDialog
 
 var currently_edited_property_identifier : StringName = ""
 
@@ -34,6 +35,7 @@ func dice_updated() -> void:
 		var dice_node = preload("res://Scenes/Common/Buttons/clickable_die.tscn").instantiate()
 		dice_grid.add_child(dice_node)
 		dice_node.die_pressed.connect(roll_die)
+		dice_node.die_long_pressed.connect(edit_die)
 		dice_node.configure(die)
 	refresh_no_dice()
 
@@ -46,6 +48,11 @@ func properties_updated() -> void:
 # Roll the die that was clicked and set the results
 func roll_die(die: AbstractDie):
 	RollManager.simple_roll(die, SimpleRollManager.get_roll_properties())
+	
+# Opens a dialog to edit the die
+func edit_die(die: AbstractDie):
+	edit_die_popup.set_min_max_die(die.duplicate())
+	edit_die_popup.modular_popup_center()
 
 # Displays the dice results
 func set_dice_result(roll_result: RollResults):

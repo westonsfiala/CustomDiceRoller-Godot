@@ -64,4 +64,5 @@ custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 1
 
+[connection signal="long_pressed" from="LongPressButton" to="." method="_on_long_press_button_long_pressed"]
 [connection signal="short_pressed" from="LongPressButton" to="." method="_on_long_press_button_short_pressed"]
