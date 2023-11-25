@@ -10,7 +10,18 @@ var last_click_position : Vector2
 func _ready():
 	get_tree().get_root().size_changed.connect(SettingsManager.trigger_reconfigure)
 	SettingsManager.reconfigure.connect(reconfigure)
+	SettingsManager.mouse_unpress.connect(fake_unpress)
 	reconfigure()
+	
+# Special method used to trigger a mouse unpress event.
+# The game state can get weird when you do popups and it can get
+# locked in a state of thinking its pressed.
+func fake_unpress():
+	var unpress_event = InputEventMouseButton.new()
+	unpress_event.position = get_global_mouse_position()
+	unpress_event.button_index = MOUSE_BUTTON_LEFT
+	unpress_event.pressed = false
+	get_viewport().push_input(unpress_event)
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton:

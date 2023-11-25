@@ -63,6 +63,7 @@ func enforce_content_panel_in_screen(content_position: Vector2i, center_contents
 	content_panel.pivot_offset = content_rect.size / 2
 
 func _on_about_to_popup():
+	SettingsManager.fake_mouse_unpress()
 	animate_popup()
 
 func _on_hide_popup_button_pressed():

@@ -60,6 +60,11 @@ func get_text_size_small() -> int:
 	
 func get_margin_padding() -> int:
 	return margin_padding
+	
+signal mouse_unpress()
+
+func fake_mouse_unpress() -> void:
+	emit_signal("mouse_unpress")
 
 # Removes all the children nodes of a given node and frees them
 func remove_and_free_children(node: Node):
