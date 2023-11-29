@@ -52,6 +52,7 @@ func roll_die(die: AbstractDie):
 # Opens a dialog to edit the die
 func edit_die(die: AbstractDie):
 	edit_die_popup.set_min_max_die(die.duplicate())
+	edit_die_popup.set_remove_visibility(true)
 	edit_die_popup.modular_popup_center()
 
 # Displays the dice results
@@ -112,8 +113,14 @@ func _on_set_value_exact_popup_value_changed(value: int):
 			roll_properties.set_modifier(value)
 			SimpleRollManager.set_roll_properties(roll_properties)
 
-func _on_add_dice_button_die_accepted(die):
+func _on_add_dice_button_die_accepted(die: AbstractDie):
 	SimpleRollManager.add_die(die)
 
 func _on_add_dice_button_reset_dice():
 	SimpleRollManager.reset_dice()
+
+func _on_min_max_die_dialog_die_accepted(original_die: MinMaxDie, accepted_die: MinMaxDie):
+	SimpleRollManager.edit_die(original_die, accepted_die)
+
+func _on_min_max_die_dialog_die_removed(removed_die: MinMaxDie):
+	SimpleRollManager.remove_die(removed_die)

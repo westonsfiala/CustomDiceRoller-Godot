@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://cfefgu8jbb3xm"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cfefgu8jbb3xm"]
 
 [ext_resource type="FontFile" uid="uid://dp6a4xtygsyyh" path="res://Resources/Fonts/Roboto/Roboto-Regular.ttf" id="1_dh1c7"]
 [ext_resource type="StyleBox" uid="uid://ciqb75q22o8hi" path="res://Resources/Styles/scroll_bar_style.tres" id="1_vlu4t"]
@@ -9,10 +9,13 @@
 [ext_resource type="FontFile" uid="uid://dg0thpcypiig3" path="res://Resources/Fonts/Roboto/Roboto-BoldItalic.ttf" id="4_0fve0"]
 [ext_resource type="StyleBox" uid="uid://bfyavmmil7vea" path="res://Resources/Styles/button_pressed.tres" id="4_qd3f4"]
 [ext_resource type="StyleBox" uid="uid://081aqpqtgsiq" path="res://Resources/Styles/popup_background.tres" id="6_uhvgg"]
+[ext_resource type="StyleBox" uid="uid://c2f5v3edh1dg7" path="res://Resources/Styles/progress_bar_style.tres" id="7_aw88j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cn40s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1l5wb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uwjs4"]
 
 [resource]
 default_font = ExtResource("1_dh1c7")
@@ -47,6 +50,8 @@ PopupMenu/colors/font_outline_color = Color(0, 0, 0, 1)
 PopupMenu/constants/outline_size = 3
 PopupMenu/fonts/font = ExtResource("1_dh1c7")
 PopupPanel/styles/panel = ExtResource("6_uhvgg")
+ProgressBar/styles/background = SubResource("StyleBoxEmpty_uwjs4")
+ProgressBar/styles/fill = ExtResource("7_aw88j")
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 3
 RichTextLabel/fonts/bold_font = ExtResource("2_24e56")

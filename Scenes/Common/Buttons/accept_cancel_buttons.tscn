@@ -29,8 +29,8 @@ theme = ExtResource("1_w1fl3")
 alignment = 2
 
 [node name="CancelButton" parent="HBoxContainer" instance=ExtResource("2_fomqe")]
-custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
+size_flags_horizontal = 10
 text = "Cancel"
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
@@ -40,7 +40,6 @@ layout_mode = 2
 theme = ExtResource("1_w1fl3")
 
 [node name="AcceptButton" parent="HBoxContainer" instance=ExtResource("2_fomqe")]
-custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Accept"
 

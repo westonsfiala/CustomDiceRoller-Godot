@@ -37,12 +37,19 @@ func set_dice(dice: Array[AbstractDie]) -> void:
 	simple_roll_dice.sort_custom(func(left: AbstractDie, right: AbstractDie): return left.average() < right.average())
 	emit_signal("simple_dice_updated")
 	
-# Checks if the given die already exists by checking its name.
-func has_die_by_name(check_die : AbstractDie) -> bool:
+# Gets the index of the die given by name.
+# If not found, returns -1.
+func get_die_index_by_name(check_die : AbstractDie) -> int:
+	var index = 0
 	for die in simple_roll_dice:
 		if check_die.name() == die.name():
-			return true
-	return false
+			return index
+		index += 1
+	return -1
+	
+# Checks if the given die already exists by checking its name.
+func has_die_by_name(check_die : AbstractDie) -> bool:
+	return get_die_index_by_name(check_die) != -1
 
 # Adds the given die to the managed dice. 
 # If a die with the same name already exists, returns false.
@@ -60,7 +67,7 @@ func add_die(die: AbstractDie, supress_update: bool = false) -> bool:
 # If suppress_update is set, will not trigger signals.
 func remove_die(die: AbstractDie, supress_update: bool = false) -> bool:
 	if(has_die_by_name(die)):
-		var die_index = simple_roll_dice.find(die)
+		var die_index = get_die_index_by_name(die)
 		simple_roll_dice.remove_at(die_index)
 		if(not supress_update):
 			set_dice(simple_roll_dice)

@@ -15,6 +15,7 @@ func _on_add_dice_popup_menu_reset_dice():
 
 func _on_add_dice_popup_menu_new_min_max_die():
 	min_max_die_dialog.set_min_max_die(SimpleRollManager.default_min_max_die)
+	min_max_die_dialog.set_remove_visibility(false)
 	min_max_die_dialog.modular_popup_center()
 
 func _on_add_dice_popup_menu_new_imbalanced_die():
@@ -23,5 +24,5 @@ func _on_add_dice_popup_menu_new_imbalanced_die():
 func _on_add_dice_popup_menu_new_non_number_die():
 	pass # Replace with function body.
 
-func _on_min_max_die_dialog_die_accepted(accepted_die):
+func _on_min_max_die_dialog_die_accepted(_original_die: MinMaxDie, accepted_die: MinMaxDie):
 	emit_signal("die_accepted", accepted_die)

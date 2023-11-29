@@ -6,11 +6,14 @@ class_name MinMaxDieDialog
 @onready var min_line_edit : LineEdit = $ContentPanel/Margins/VBoxContainer/MinMargins/MinLayout/MinLineEdit
 @onready var max_line_edit : LineEdit = $ContentPanel/Margins/VBoxContainer/MaxMargins/MaxLayout/MaxLineEdit
 @onready var name_line_edit : LineEdit = $ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout/NameLineEdit
-@onready var accept_cancel_buttons : AcceptCancelButtons = $ContentPanel/Margins/VBoxContainer/AcceptCancelButtons
+@onready var accept_cancel_buttons : AcceptCancelButtons = $ContentPanel/Margins/VBoxContainer/ButtonRowLayout/AcceptCancelButtons
+@onready var remove_confirm_button : RemoveConfirmButton = $ContentPanel/Margins/VBoxContainer/ButtonRowLayout/RemoveConfirmButton
 
+var first_set_die : MinMaxDie = SimpleRollManager.default_min_max_die
 var m_min_max_die : MinMaxDie = SimpleRollManager.default_min_max_die
 
-signal die_accepted(accepted_die: MinMaxDie)
+signal die_accepted(original_die: MinMaxDie, accepted_die: MinMaxDie)
+signal die_removed(removed_die: MinMaxDie)
 
 # Use the default size that is setup in the editor. Use this to grab focus to the most edited line.
 func set_content_panel_minimum_size():
@@ -18,9 +21,17 @@ func set_content_panel_minimum_size():
 	max_line_edit.grab_focus()
 	max_line_edit.select_all()
 
+# Sets the visibility of the remove button.
+# When you are first creating a die, remove doesn't make sense.
+func set_remove_visibility(show_hide: bool):
+	remove_confirm_button.visible = show_hide
+
 # Set the dice to the given die, update text lines, and highlight issues.
 # if first_set is true, will forcefully update the text lines.
 func set_min_max_die(die: MinMaxDie, first_set : bool = true):
+	if(first_set):
+		first_set_die = die.duplicate()
+	
 	m_min_max_die = die
 	
 	die_name_label.text = m_min_max_die.name()
@@ -30,6 +41,8 @@ func set_min_max_die(die: MinMaxDie, first_set : bool = true):
 		min_line_edit.text = str(m_min_max_die.minimum())
 	if(max_line_edit.text.is_empty() or first_set):
 		max_line_edit.text = str(m_min_max_die.maximum())
+	if((die.name() == m_min_max_die.default_name()) and first_set):
+		name_line_edit.text = ""
 	name_line_edit.placeholder_text = m_min_max_die.default_name()
 
 # Any time a line edit is changed, update text highlighting and enable/disable the accept button
@@ -71,5 +84,9 @@ func _on_accept_cancel_buttons_cancel_pressed():
 # If we are in a good state to accept, let it accept and close. Otherwise nothing.
 func _on_accept_cancel_buttons_accept_pressed():
 	if(accept_cancel_buttons.can_accept()):
-		emit_signal("die_accepted", m_min_max_die.duplicate())
+		emit_signal("die_accepted", first_set_die.duplicate(), m_min_max_die.duplicate())
 		animate_close_popup()
+
+func _on_remove_confirm_button_remove_confirmed():
+	emit_signal("die_removed", m_min_max_die.duplicate())
+	animate_close_popup()

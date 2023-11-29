@@ -96,3 +96,5 @@ visible = false
 [connection signal="die_accepted" from="VerticalLayout/PropBar/PropertyButtonBar/AddDiceButton" to="." method="_on_add_dice_button_die_accepted"]
 [connection signal="reset_dice" from="VerticalLayout/PropBar/PropertyButtonBar/AddDiceButton" to="." method="_on_add_dice_button_reset_dice"]
 [connection signal="value_changed" from="SetValueExactPopup" to="." method="_on_set_value_exact_popup_value_changed"]
+[connection signal="die_accepted" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_accepted"]
+[connection signal="die_removed" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_removed"]

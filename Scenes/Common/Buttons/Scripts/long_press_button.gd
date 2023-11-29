@@ -19,16 +19,18 @@ func _on_button_down():
 # Stop the timer if we don't time out before the button comes up
 func _on_button_up():
 	if(state == PRESSED):
+		state = SENT
 		long_press_timer.stop()
 		print("short press detected")
 		emit_signal("short_pressed")
-	state = WAITING
-	
+	else:
+		state = WAITING
+		
 func _on_long_press_timer_timeout():
 	if(state == PRESSED):
+		state = SENT
 		print("long press detected")
 		emit_signal("long_pressed")
-		state = SENT
 
 # Cancel any possible press if we are dragging the screen or moving the mouse
 func _on_gui_input(event):
