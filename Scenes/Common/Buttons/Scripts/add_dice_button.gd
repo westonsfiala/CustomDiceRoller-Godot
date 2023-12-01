@@ -15,7 +15,7 @@ func _on_add_dice_popup_menu_reset_dice():
 
 func _on_add_dice_popup_menu_new_min_max_die():
 	min_max_die_dialog.set_min_max_die(SimpleRollManager.default_min_max_die)
-	min_max_die_dialog.set_remove_visibility(false)
+	min_max_die_dialog.set_remove_button_visibility(false)
 	min_max_die_dialog.modular_popup_center()
 
 func _on_add_dice_popup_menu_new_imbalanced_die():

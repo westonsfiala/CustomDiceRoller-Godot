@@ -3,7 +3,7 @@ class_name ImbalancedDie
 
 @export var m_faces : Array[int]
 
-func configure(die_name: String, faces: Array[int], die_texture: Texture2D) -> ImbalancedDie:
+func configure(die_name: String, faces: Array[int]) -> ImbalancedDie:
 	if(die_name.is_empty()):
 		m_name = default_name()
 	else:
@@ -11,7 +11,6 @@ func configure(die_name: String, faces: Array[int], die_texture: Texture2D) -> I
 	m_faces = faces
 	
 	m_info = str('Rolls one of the following: ', m_faces, '\nAverage of ', average())
-	m_texture = die_texture
 	return self
 	
 func default_name() -> String:

@@ -2,7 +2,7 @@ extends Node
 
 var dice_size : int = 150
 var button_size : int = 50
-var text_size : int = 50
+var text_size : int = 40
 var text_size_small : int = 35
 var margin_padding : int = 5
 

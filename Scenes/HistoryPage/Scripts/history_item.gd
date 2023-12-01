@@ -7,7 +7,7 @@ class_name HistoryItem
 @onready var roll_detailed_name_label : Label = $MarginContainer/TopLayout/TopLineLayout/NameDetailLayout/RollDetailsLabel
 @onready var date_label : Label = $MarginContainer/TopLayout/TopLineLayout/DateTimeLayout/DateLabel
 @onready var time_label : Label = $MarginContainer/TopLayout/TopLineLayout/DateTimeLayout/TimeLabel
-@onready var roll_results_label : RichTextLabel = $MarginContainer/TopLayout/RollResultsRichTextLabel
+@onready var roll_results_label : SettingsManagedRichTextLabel = $MarginContainer/TopLayout/RollResultsRichTextLabel
 
 var m_result : RollResults = RollResults.new()
 
@@ -30,12 +30,14 @@ func reconfigure():
 	
 	# Parse though the top line items.
 	# First up is the box with the sum.
-	var top_line_minimum_height = min_text_height * 2
 	sum_label.clear()
 	sum_label.push_paragraph(HORIZONTAL_ALIGNMENT_CENTER)
 	sum_label.append_text(m_result.roll_sum.formatted_text)
 	sum_label.pop()
-	var sum_label_height = max(sum_label.get_content_width(), sum_label.get_content_height(), top_line_minimum_height)
+	var sum_label_width = sum_label.get_content_width()
+	var sum_label_height = sum_label.get_content_height()
+	var sum_label_size = max(sum_label_width, sum_label_height)
+	sum_label.custom_minimum_size = Vector2(sum_label_height, sum_label.get_content_height())
 	color_rect.custom_minimum_size = Vector2.ONE * sum_label_height
 	
 	# Next up is the Name, Details, and by default the datetime
@@ -49,7 +51,7 @@ func reconfigure():
 	time_label.text = m_result.time_string
 	
 	# Set the minimum height to the maximum of the box and the text lines
-	minimum_height = max(sum_label_height, min_text_height * name_lines)
+	minimum_height = max(sum_label_size, min_text_height * name_lines)
 	
 	# Go through all of the different lists that can be generated
 	var first = true

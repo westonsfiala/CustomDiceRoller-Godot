@@ -52,7 +52,7 @@ func roll_die(die: AbstractDie):
 # Opens a dialog to edit the die
 func edit_die(die: AbstractDie):
 	edit_die_popup.set_min_max_die(die.duplicate())
-	edit_die_popup.set_remove_visibility(true)
+	edit_die_popup.set_remove_button_visibility(true)
 	edit_die_popup.modular_popup_center()
 
 # Displays the dice results

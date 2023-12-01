@@ -4,17 +4,17 @@
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_f0p4r"]
 
 [node name="SettingsManagedRichTextLabel" type="RichTextLabel"]
-custom_minimum_size = Vector2(0, 50)
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -24.0
-offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme = ExtResource("1_f0p4r")
-text = "TEMP"
+bbcode_enabled = true
+text = "[center]TEMP[/center]"
 script = ExtResource("1_eevtr")

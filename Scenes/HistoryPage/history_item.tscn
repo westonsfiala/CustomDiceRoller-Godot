@@ -46,11 +46,8 @@ color = Color(0, 0, 0, 1)
 
 [node name="SumRichTextLabel" parent="MarginContainer/TopLayout/TopLineLayout/ColorRect" instance=ExtResource("5_mqthe")]
 layout_mode = 1
-offset_top = 0.0
-offset_bottom = 0.0
 size_flags_vertical = 4
-bbcode_enabled = true
-text = "[center]TEMP[/center]"
+enforce_all_lines_shown = true
 
 [node name="NameDetailLayout" type="VBoxContainer" parent="MarginContainer/TopLayout/TopLineLayout"]
 layout_mode = 2

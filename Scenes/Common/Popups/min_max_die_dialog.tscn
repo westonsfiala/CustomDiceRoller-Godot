@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://biumolcfuvbmg"]
+[gd_scene load_steps=8 format=3 uid="uid://biumolcfuvbmg"]
 
 [ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_xolfn"]
 [ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/min_max_die_dialog.gd" id="2_ap00y"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="4_cae5t"]
 [ext_resource type="PackedScene" uid="uid://duvmnbujl5for" path="res://Scenes/Common/Buttons/accept_cancel_buttons.tscn" id="5_0jfgt"]
 [ext_resource type="PackedScene" uid="uid://ccxtnp20kp8qk" path="res://Scenes/Common/Buttons/remove_confirm_button.tscn" id="5_bqplo"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_j2rm6"]
 
 [node name="MinMaxDieDialog" instance=ExtResource("1_xolfn")]
 size = Vector2i(500, 750)
@@ -22,6 +23,7 @@ theme = ExtResource("3_46qsf")
 layout_mode = 2
 
 [node name="DieNameLabel" parent="ContentPanel/Margins/VBoxContainer/NameMargins" index="0" instance=ExtResource("4_cae5t")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 1
 text = "Die Name"
@@ -30,14 +32,12 @@ horizontal_alignment = 0
 [node name="InfoMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="1"]
 layout_mode = 2
 
-[node name="DieInfoLabel" parent="ContentPanel/Margins/VBoxContainer/InfoMargins" index="0" instance=ExtResource("4_cae5t")]
+[node name="DieInfoLabel" parent="ContentPanel/Margins/VBoxContainer/InfoMargins" index="0" instance=ExtResource("5_j2rm6")]
 layout_mode = 2
 size_flags_horizontal = 1
+size_flags_vertical = 4
 theme_type_variation = &"SmallTextLabel"
-text = "Die Info"
-horizontal_alignment = 0
-autowrap_mode = 2
-text_overrun_behavior = 0
+max_lines_shown = 2
 
 [node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/VBoxContainer" index="2"]
 layout_mode = 2
@@ -49,7 +49,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="MinLabel" parent="ContentPanel/Margins/VBoxContainer/MinMargins/MinLayout" index="0" instance=ExtResource("4_cae5t")]
-custom_minimum_size = Vector2(100, 50)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Min"
@@ -66,7 +66,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="MaxLabel" parent="ContentPanel/Margins/VBoxContainer/MaxMargins/MaxLayout" index="0" instance=ExtResource("4_cae5t")]
-custom_minimum_size = Vector2(100, 50)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Max"
@@ -83,7 +83,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="NameLabel" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout" index="0" instance=ExtResource("4_cae5t")]
-custom_minimum_size = Vector2(100, 50)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Name"
@@ -93,14 +93,17 @@ horizontal_alignment = 0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ButtonRowLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer" index="6"]
+[node name="ButtonRowMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="6"]
+layout_mode = 2
+
+[node name="ButtonRowLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer/ButtonRowMargins" index="0"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RemoveConfirmButton" parent="ContentPanel/Margins/VBoxContainer/ButtonRowLayout" index="0" instance=ExtResource("5_bqplo")]
+[node name="RemoveConfirmButton" parent="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout" index="0" instance=ExtResource("5_bqplo")]
 layout_mode = 2
 
-[node name="AcceptCancelButtons" parent="ContentPanel/Margins/VBoxContainer/ButtonRowLayout" index="1" instance=ExtResource("5_0jfgt")]
+[node name="AcceptCancelButtons" parent="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout" index="1" instance=ExtResource("5_0jfgt")]
 layout_mode = 2
 
 [connection signal="text_changed" from="ContentPanel/Margins/VBoxContainer/MinMargins/MinLayout/MinLineEdit" to="." method="_line_edit_text_changed"]
@@ -109,6 +112,6 @@ layout_mode = 2
 [connection signal="text_submitted" from="ContentPanel/Margins/VBoxContainer/MaxMargins/MaxLayout/MaxLineEdit" to="." method="_line_edit_text_submitted"]
 [connection signal="text_changed" from="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout/NameLineEdit" to="." method="_line_edit_text_changed"]
 [connection signal="text_submitted" from="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout/NameLineEdit" to="." method="_line_edit_text_submitted"]
-[connection signal="remove_confirmed" from="ContentPanel/Margins/VBoxContainer/ButtonRowLayout/RemoveConfirmButton" to="." method="_on_remove_confirm_button_remove_confirmed"]
-[connection signal="accept_pressed" from="ContentPanel/Margins/VBoxContainer/ButtonRowLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_accept_pressed"]
-[connection signal="cancel_pressed" from="ContentPanel/Margins/VBoxContainer/ButtonRowLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_cancel_pressed"]
+[connection signal="remove_confirmed" from="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/RemoveConfirmButton" to="." method="_on_remove_confirm_button_remove_confirmed"]
+[connection signal="accept_pressed" from="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_accept_pressed"]
+[connection signal="cancel_pressed" from="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_cancel_pressed"]
