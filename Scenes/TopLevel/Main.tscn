@@ -58,4 +58,7 @@ mouse_filter = 2
 texture = ExtResource("5_x2lqq")
 expand_mode = 1
 
+[node name="ResizeTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

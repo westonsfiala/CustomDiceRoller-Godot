@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://csjc42qu0xt7j"]
+[gd_scene load_steps=4 format=3 uid="uid://csjc42qu0xt7j"]
 
 [ext_resource type="Script" path="res://Scenes/HistoryPage/Scripts/history_item.gd" id="1_jmi85"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_si6k0"]
-[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="4_0nsvk"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_mqthe"]
 
 [node name="HistoryItem" type="Control"]
@@ -26,55 +25,71 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_si6k0")
 
 [node name="TopLayout" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("1_si6k0")
 
 [node name="TopLineLayout" type="HBoxContainer" parent="MarginContainer/TopLayout"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme = ExtResource("1_si6k0")
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/TopLayout/TopLineLayout"]
-custom_minimum_size = Vector2(75, 75)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 3
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="SumRichTextLabel" parent="MarginContainer/TopLayout/TopLineLayout/ColorRect" instance=ExtResource("5_mqthe")]
 layout_mode = 1
+size_flags_horizontal = 1
 size_flags_vertical = 4
 enforce_all_lines_shown = true
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/TopLayout/TopLineLayout"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
 
 [node name="NameDetailLayout" type="VBoxContainer" parent="MarginContainer/TopLayout/TopLineLayout"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 3.0
+mouse_filter = 2
 theme = ExtResource("1_si6k0")
 
-[node name="RollNameLabel" parent="MarginContainer/TopLayout/TopLineLayout/NameDetailLayout" instance=ExtResource("4_0nsvk")]
+[node name="RollNameRichText" parent="MarginContainer/TopLayout/TopLineLayout/NameDetailLayout" instance=ExtResource("5_mqthe")]
 layout_mode = 2
-horizontal_alignment = 0
+text = "TEMP"
+enforce_all_lines_shown = true
 
-[node name="RollDetailsLabel" parent="MarginContainer/TopLayout/TopLineLayout/NameDetailLayout" instance=ExtResource("4_0nsvk")]
+[node name="RollDetailsRichText" parent="MarginContainer/TopLayout/TopLineLayout/NameDetailLayout" instance=ExtResource("5_mqthe")]
 layout_mode = 2
-horizontal_alignment = 0
+text = "TEMP"
+enforce_all_lines_shown = true
 
 [node name="DateTimeLayout" type="VBoxContainer" parent="MarginContainer/TopLayout/TopLineLayout"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 theme = ExtResource("1_si6k0")
 
-[node name="DateLabel" parent="MarginContainer/TopLayout/TopLineLayout/DateTimeLayout" instance=ExtResource("4_0nsvk")]
+[node name="DateRichText" parent="MarginContainer/TopLayout/TopLineLayout/DateTimeLayout" instance=ExtResource("5_mqthe")]
 layout_mode = 2
-horizontal_alignment = 2
+theme_type_variation = &"SmallRichTextLabel"
+text = "[right]1970-01-01[/right]"
+max_lines_shown = 1
 
-[node name="TimeLabel" parent="MarginContainer/TopLayout/TopLineLayout/DateTimeLayout" instance=ExtResource("4_0nsvk")]
+[node name="TimeRichText" parent="MarginContainer/TopLayout/TopLineLayout/DateTimeLayout" instance=ExtResource("5_mqthe")]
 layout_mode = 2
-horizontal_alignment = 2
+theme_type_variation = &"SmallRichTextLabel"
+text = "[right]00:00:00[/right]"
+max_lines_shown = 1
 
 [node name="RollResultsRichTextLabel" parent="MarginContainer/TopLayout" instance=ExtResource("5_mqthe")]
 layout_mode = 2
+enforce_all_lines_shown = true

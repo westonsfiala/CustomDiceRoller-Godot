@@ -1,6 +1,7 @@
 extends Control
 
 @onready var press_response_image : TextureRect = $PressResponseImage
+@onready var resize_timer : Timer = $ResizeTimer
 
 var tween : Tween
 
@@ -8,10 +9,18 @@ var last_click_position : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_tree().get_root().size_changed.connect(SettingsManager.trigger_reconfigure)
+	get_tree().get_root().size_changed.connect(start_resize_timer)
+	resize_timer.timeout.connect(SettingsManager.trigger_reconfigure)
 	SettingsManager.reconfigure.connect(reconfigure)
 	SettingsManager.mouse_unpress.connect(fake_unpress)
 	reconfigure()
+
+func reconfigure():
+	press_response_image.size = Vector2.ONE * SettingsManager.get_button_size()
+	press_response_image.pivot_offset = press_response_image.size / 2
+	
+func start_resize_timer() -> void:
+	resize_timer.start(SettingsManager.LONG_PRESS_DELAY)
 	
 # Special method used to trigger a mouse unpress event.
 # The game state can get weird when you do popups and it can get
@@ -36,10 +45,6 @@ func _on_gui_input(event):
 			var move_length = (last_click_position - get_global_mouse_position()).length()
 			if move_length > 5:
 				respond_to_unpress()
-				
-func reconfigure():
-	press_response_image.size = Vector2.ONE * SettingsManager.get_button_size()
-	press_response_image.pivot_offset = press_response_image.size / 2
 			
 func respond_to_press():
 	if tween:
@@ -54,7 +59,7 @@ func respond_to_press():
 	tween.tween_property(press_response_image, "rotation_degrees", 360, SettingsManager.LONG_PRESS_DELAY)
 	tween.tween_property(press_response_image, "scale", Vector2.ONE, SettingsManager.LONG_PRESS_DELAY)
 	
-func respond_to_unpress():
+func respond_to_unpress() -> void:
 	if press_response_image.scale == Vector2.ZERO:
 		return
 	if tween:

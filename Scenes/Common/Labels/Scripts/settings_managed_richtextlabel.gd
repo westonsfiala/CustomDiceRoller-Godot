@@ -28,5 +28,5 @@ func reconfigure():
 	custom_minimum_size.y = needed_pixel_height
 
 func set_text_and_resize_y(bbcode: String) -> void:
-	parse_bbcode(bbcode)
+	text = bbcode
 	reconfigure()
