@@ -14,6 +14,5 @@ func _ready():
 	
 # Reconfigures the scene according to the settings
 func reconfigure():
-	print("reconfiguring texture button")
 	var button_size = SettingsManager.get_button_size()
 	custom_minimum_size = Vector2.ONE * button_size

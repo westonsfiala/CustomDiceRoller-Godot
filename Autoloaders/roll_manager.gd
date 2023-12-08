@@ -3,9 +3,12 @@ extends Node
 var roll_history : Array[RollResults] = []
 var cleared_roll_history : Array[RollResults] = []
 
+const MAX_SAVED_HISTORY_ITEMS = 100
+
 signal refresh_history()
 signal new_roll_result(roll_result : RollResults)
 
+# Add a simple roll to the history.
 func simple_roll(die : AbstractDie, props : RollProperties):
 	var new_roll = Roll.new().configure("Simple Roll", "")
 	new_roll.add_die_to_roll(die, props)

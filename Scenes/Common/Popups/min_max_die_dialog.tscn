@@ -36,7 +36,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme_type_variation = &"SmallTextLabel"
+theme_type_variation = &"SmallRichTextLabel"
 max_lines_shown = 2
 
 [node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/VBoxContainer" index="2"]

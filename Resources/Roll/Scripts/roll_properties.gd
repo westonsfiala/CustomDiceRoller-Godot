@@ -2,6 +2,7 @@ extends Resource
 class_name RollProperties
 
 const UNKNOWN_NUMBER_X : StringName = "X"
+const CLASS_NAME: StringName = "RollProperties"
 
 const NUM_DICE_IDENTIFIER : StringName = "NUM_DICE"
 const NUM_DICE_TITLE_PREFIX : StringName = "Num Dice = "
@@ -314,6 +315,46 @@ func configure(props : Dictionary) -> RollProperties:
 	for prop in props:
 		add_property(prop, props[prop])
 	return self
+
+# Generates a save dict that can be used by JSON.
+func save_dict() -> Dictionary:
+	var save_state: Dictionary = {}
+	
+	save_state['schema_version'] = '1.0.0'
+	save_state['class_name'] = CLASS_NAME
+	save_state['properties'] = m_property_map
+	
+	return save_state
+
+# Creates a new roll properties object from the given save_state.
+# If any errors occur, returns a blank roll properties.
+static func load_from_save_dict(save_state: Dictionary) -> RollProperties:
+	# Do some checking to make sure we have all our bits.
+	if not save_state.has('schema_version'):
+		print("Missing schema_version during roll_properties loader")
+		return RollProperties.new()
+	if not save_state.has('class_name'):
+		print("Missing class_name during roll_properties loader")
+		return RollProperties.new()
+	if not save_state.has('properties'):
+		print("Missing properties during roll_properties loader")
+		return RollProperties.new()
+	
+	# Make sure we have the correct schema version, name, and a dictionary of stuff.
+	if save_state['schema_version'] != '1.0.0':
+		print("Unknown schema_version during roll_properties loader: ", save_state['schema_version'])
+		return RollProperties.new()
+	if save_state['class_name'] != CLASS_NAME:
+		print("Unknown class_name during roll_properties loader: ", save_state['class_name'])
+		return RollProperties.new()
+	if not save_state['properties'] is Dictionary:
+		print("properties not a dictionary during roll_properties loader")
+		return RollProperties.new()
+	
+	# Load the propterties, set them and get out.
+	var loaded_properties = RollProperties.new()
+	loaded_properties.m_property_map = save_state['properties']
+	return loaded_properties
 
 # Checks if the property name exists in our map and if the value matches the type of the default of that property.
 func check_key_value_correctness(prop_name: StringName, value: Variant) -> bool:

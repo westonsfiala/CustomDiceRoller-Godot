@@ -2,10 +2,13 @@ extends Resource
 class_name AbstractDie
 	
 @export var m_name : String = ""
-@export var m_info : String = ""
 @export var override_image_path : String = ""
 
-const DIE_DISPLAY_IN_HEX : StringName = '0x'
+const DIE_DISPLAY_IN_HEX : StringName = "0x"
+
+func save_dict() -> Dictionary:
+	assert(false, "save_dict - not implemented in AbstractDie")
+	return {}
 
 func name() -> String:
 	return m_name
@@ -15,7 +18,8 @@ func default_name() -> String:
 	return ""
 	
 func info() -> String:
-	return m_info
+	assert(false, "info - not implemented in AbstractDie")
+	return ""
 	
 func texture() -> Texture2D:
 	if(override_image_path.is_empty()):

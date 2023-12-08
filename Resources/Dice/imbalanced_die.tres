@@ -1,11 +1,9 @@
-[gd_resource type="Resource" script_class="ImbalancedDie" load_steps=3 format=3 uid="uid://fddtniewgmsx"]
+[gd_resource type="Resource" script_class="ImbalancedDie" load_steps=2 format=3 uid="uid://fddtniewgmsx"]
 
-[ext_resource type="Texture2D" uid="uid://be2p64g34ua5e" path="res://DicePNGs/basic/white/unknown-die.png" id="1_qyuix"]
 [ext_resource type="Script" path="res://Resources/Dice/Scripts/imbalanced_die.gd" id="2_lj6v5"]
 
 [resource]
 script = ExtResource("2_lj6v5")
 m_faces = Array[int]([])
 m_name = ""
-m_info = ""
-m_texture = ExtResource("1_qyuix")
+override_image_path = ""

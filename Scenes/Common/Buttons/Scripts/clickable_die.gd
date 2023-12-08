@@ -27,7 +27,6 @@ func deferred_reconfigure():
 	
 # Reconfigures the scene according to the settings
 func reconfigure() -> void:
-	print("reconfiguring clickable die")
 	var dice_size = SettingsManager.get_dice_size()
 	var text_min_size = SettingsManager.get_text_size()
 	

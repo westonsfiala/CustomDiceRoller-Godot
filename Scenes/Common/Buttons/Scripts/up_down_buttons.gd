@@ -33,7 +33,6 @@ func setup_exports(prefix: String, postfix: String, show_plus_minus: bool, disal
 	set_value(m_value)
 
 func reconfigure():
-	print("reconfiguring up down buttons")
 	var button_size = SettingsManager.get_button_size()
 	var margin_size = margin_container.get_theme_constant("margin_top") + margin_container.get_theme_constant("margin_bottom")
 	custom_minimum_size = Vector2(0, button_size + margin_size)

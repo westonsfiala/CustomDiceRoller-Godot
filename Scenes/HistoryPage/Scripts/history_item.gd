@@ -24,7 +24,6 @@ func deferred_reconfigure():
 	call_deferred("reconfigure")
 	
 func reconfigure():
-	print("reconfigure history item")
 	var minimum_height = 0
 	
 	# First up is the name, details, and datetime

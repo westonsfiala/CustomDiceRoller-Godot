@@ -54,7 +54,6 @@ func deferred_reconfigure():
 	call_deferred("reconfigure")
 
 func reconfigure():
-	print("reconfiguring property buttons")
 	var button_size = SettingsManager.get_button_size()
 	var margin_size = reset_button_margins.get_theme_constant("margin_top") + reset_button_margins.get_theme_constant("margin_bottom")
 	custom_minimum_size = Vector2(0, button_size + margin_size)

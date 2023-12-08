@@ -3,6 +3,61 @@ class_name ImbalancedDie
 
 @export var m_faces : Array[int]
 
+const CLASS_NAME: StringName = "ImbalancedDie"
+
+# Generate the save state for our dice
+func save_dict() -> Dictionary:
+	var save_state: Dictionary = {}
+
+	save_state['schema_version'] = "1.0.0"
+	save_state['class_name'] = CLASS_NAME
+	save_state['name'] = m_name
+	save_state['override_image_path'] = override_image_path
+	save_state['faces'] = m_faces
+
+	return save_state
+
+# Creates a imbalanced die from the save state.
+# If any errors occur, returns a null object.
+static func load_from_save_dict(save_state: Dictionary) -> ImbalancedDie:
+	# Make sure we have all the necessary parts
+	if not save_state.has('schema_version'):
+		print("Missing schema_version during imbalanced_die loader")
+		return null
+	if not save_state.has('class_name'):
+		print("Missing class_name during imbalanced_die loader")
+		return null
+	if not save_state.has('name'):
+		print("Missing name during imbalanced_die loader")
+		return null
+	if not save_state.has('override_image_path'):
+		print("Missing override_image_path during imbalanced_die loader")
+		return null
+	if not save_state.has('faces'):
+		print("Missing faces during imbalanced_die loader")
+		return null
+		
+	# Make sure we have the correct schema version, class_name, and other properties.
+	if save_state['schema_version'] != '1.0.0':
+		print("Unknown schema_version during imbalanced_die loader: ", save_state['schema_version'])
+		return null
+	if save_state['class_name'] != CLASS_NAME:
+		print("Unknown class_name during imbalanced_die loader: ", save_state['class_name'])
+		return null
+	if not save_state['name'] is String:
+		print("name not a string during imbalanced_die loader")
+		return null
+	if not save_state['override_image_path'] is String:
+		print("override_image_path not a string during imbalanced_die loader")
+		return null
+	if not save_state['faces'] is String:
+		print("faces not an array during imbalanced_die loader")
+		return null
+		
+	var new_die = ImbalancedDie.new().configure(save_state['name'], save_state['faces'])
+	new_die.override_image_path = save_state['override_image_path']
+	return new_die
+
 func configure(die_name: String, faces: Array[int]) -> ImbalancedDie:
 	if(die_name.is_empty()):
 		m_name = default_name()
@@ -10,7 +65,6 @@ func configure(die_name: String, faces: Array[int]) -> ImbalancedDie:
 		m_name = die_name
 	m_faces = faces
 	
-	m_info = str('Rolls one of the following: ', m_faces, '\nAverage of ', average())
 	return self
 	
 func default_name() -> String:
@@ -18,6 +72,9 @@ func default_name() -> String:
 	placeholder_name += m_faces.reduce(func(a,b): return str(a, b, ':'), "")
 	placeholder_name.trim_suffix(':')
 	return placeholder_name
+
+func info() -> String:
+	return str('Rolls one of the following: ', m_faces, '\nAverage of ', average())
 	
 func image_id() -> int:
 	return DieImageManager.DIE_UNKNOWN

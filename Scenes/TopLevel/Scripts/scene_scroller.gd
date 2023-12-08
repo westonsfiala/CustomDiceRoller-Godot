@@ -23,7 +23,6 @@ func deferred_reconfigure():
 	call_deferred("reconfigure")
 
 func reconfigure():
-	print("reconfiguring scene scroll window")
 	var scene_size = SettingsManager.get_window_size().x
 	h_scroll_bar.max_value = scene_size * SettingsManager.get_num_scrollable_scenes()
 	h_scroll_bar.page = scene_size

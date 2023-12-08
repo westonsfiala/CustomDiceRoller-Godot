@@ -12,7 +12,6 @@ func deferred_reconfigure():
 	call_deferred("reconfigure")
 	
 func reconfigure():
-	print("reconfiguring app bar")
 	var app_bar_height = SettingsManager.get_button_size()
 	var screen_size = SettingsManager.get_window_size()
 	

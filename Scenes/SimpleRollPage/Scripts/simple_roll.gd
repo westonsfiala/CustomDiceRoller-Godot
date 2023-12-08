@@ -26,7 +26,6 @@ func deferred_reconfigure():
 
 # Remove all of our currently set diced and place new ones
 func reconfigure():
-	print("reconfiguring simple roll")
 	custom_minimum_size.x = SettingsManager.get_window_size().x
 	
 func dice_updated() -> void:

@@ -7,5 +7,4 @@ script = ExtResource("1_8c6hr")
 min_bound = 0
 max_bound = 0
 m_name = ""
-m_info = ""
 override_image_path = ""

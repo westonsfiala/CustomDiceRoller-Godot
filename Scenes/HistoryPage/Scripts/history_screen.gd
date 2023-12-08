@@ -15,7 +15,6 @@ func deferred_reconfigure():
 	call_deferred("reconfigure")
 
 func reconfigure():
-	print("reconfiguring history screen")
 	custom_minimum_size.x = SettingsManager.get_window_size().x
 	SettingsManager.remove_and_free_children(history_list)
 	var roll_history = RollManager.get_roll_history()

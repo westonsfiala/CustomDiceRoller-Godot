@@ -25,7 +25,7 @@ var m_min_max_die : MinMaxDie = SimpleRollManager.default_min_max_die
 signal die_accepted(original_die: MinMaxDie, accepted_die: MinMaxDie)
 signal die_removed(removed_die: MinMaxDie)
 
-# Use the default size that is setup in the editor. Use this to grab focus to the most edited line.
+# Set the y size the heights of all the margins.
 func set_content_panel_minimum_size():
 	
 	var content_height = 0
@@ -66,8 +66,11 @@ func set_min_max_die(die: MinMaxDie, first_set : bool = true):
 		min_line_edit.text = str(m_min_max_die.minimum())
 	if(max_line_edit.text.is_empty() or first_set):
 		max_line_edit.text = str(m_min_max_die.maximum())
-	if((die.name() == m_min_max_die.default_name()) and first_set):
-		name_line_edit.text = ""
+	if(first_set):
+		if(die.name() == m_min_max_die.default_name()):
+			name_line_edit.text = ""
+		else:
+			name_line_edit.text = die.name()
 	name_line_edit.placeholder_text = m_min_max_die.default_name()
 
 # Any time a line edit is changed, update text highlighting and enable/disable the accept button

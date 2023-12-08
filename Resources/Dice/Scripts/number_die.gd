@@ -1,6 +1,6 @@
 extends AbstractDie
 class_name NumberDie
-
+	
 func is_numbered() -> bool:
 	return true
 
@@ -65,7 +65,7 @@ func expected_result(properties : RollProperties) -> float:
 					value += 1; 
 			else:
 				value = 0
-		else:
+		elif(properties.has_count_below()):
 			if(value <= count_below):
 				value = 1
 			else:

@@ -11,7 +11,5 @@ func deferred_reconfigure():
 
 # Reconfigures the scene according to the settings
 func reconfigure():
-	print("reconfiguring text button")
-	
 	var button_size = SettingsManager.get_button_size()
 	custom_minimum_size.y = button_size

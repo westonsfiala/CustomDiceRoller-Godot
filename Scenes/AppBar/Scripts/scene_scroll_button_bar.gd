@@ -18,7 +18,6 @@ func deferred_reconfigure():
 
 # Match our synced scroll bar to the size of the pages so that they line up with the buttons
 func reconfigure():
-	print("reconfiguring scene scroll bar")
 	var page_size = SettingsManager.get_window_size().x
 	var margin_size = SettingsManager.get_margin_padding()
 	synced_scroll_bar.max_value = page_size * SettingsManager.get_num_scrollable_scenes()
