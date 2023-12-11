@@ -43,7 +43,6 @@ func scroll_to_scene(page: int, duration: float):
 	tween.tween_property(h_scroll_bar, "value", page * SettingsManager.get_window_size().x, duration)
 	
 func snap_scroll_to_scene():
-	print("starting screen snap")
 	scroll_snap_timer.stop()
 	var current_position = int(h_scroll_bar.value)
 	var step_size = int(SettingsManager.get_window_size().x)
@@ -63,8 +62,4 @@ func snap_scroll_to_scene():
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(h_scroll_bar, "value", destination_position, tween_duration * duration_modifier)
-
-func _on_gui_input(event):
-	if event is InputEventScreenDrag or event is InputEventMouseMotion:
-		print("scrolling")
 

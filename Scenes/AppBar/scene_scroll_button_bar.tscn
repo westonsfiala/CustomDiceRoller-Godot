@@ -56,13 +56,11 @@ theme = ExtResource("1_yhki2")
 [node name="HistoryButton" parent="ColorRect/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_b3p5b")]
 layout_mode = 2
 size_flags_horizontal = 3
-is_small_text = true
 
 [node name="SimpleRollButton" parent="ColorRect/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_b3p5b")]
 layout_mode = 2
 size_flags_horizontal = 3
 scene_enum = 1
-is_small_text = true
 
 [node name="SyncedScrollBar" type="HScrollBar" parent="ColorRect/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)

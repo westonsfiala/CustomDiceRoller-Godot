@@ -2,7 +2,7 @@ extends Control
 
 @onready var history_list : VBoxContainer = $ScrollContainer/MarginContainer/HistoryList
 @onready var no_history_label : Label = $EmptyHistoryLabel
-@onready var restore_history_button : LongPressButton = $MarginContainer/RestoreHistoryButton
+@onready var restore_history_container : MarginContainer = $MarginContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,9 +43,9 @@ func refresh_no_history():
 		no_history_label.visible = false
 		
 	if RollManager.has_cleared_history():
-		restore_history_button.visible = true
+		restore_history_container.visible = true
 	else:
-		restore_history_button.visible = false
+		restore_history_container.visible = false
 		
 func _on_restore_history_button_short_pressed():
 	RollManager.restore_roll_history()
