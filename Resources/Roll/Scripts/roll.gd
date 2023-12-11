@@ -9,6 +9,70 @@ const KEEP_KEY : StringName = "Keep"
 const DROP_KEY : StringName = "Drop"
 const REROLL_KEY : StringName = "Reroll"
 
+# Generate the save state for our dice
+func save_dict() -> Dictionary:
+	var save_state: Dictionary = {}
+
+	save_state['schema_version'] = "1.0.0"
+	save_state['class_name'] = "Roll"
+	save_state['name'] = m_roll_name
+	save_state['category'] = m_roll_category
+	
+	var die_prop_array: Array = []
+	for die_prop_pair in m_die_prop_array:
+		var new_prop_pair = die_prop_pair.save_dict() 
+		die_prop_array.push_back(new_prop_pair)
+			
+	save_state['die_prop_array'] = die_prop_array
+
+	return save_state
+
+# Creates a Roll from the save state.
+# If any errors occur, returns a null object.
+static func load_from_save_dict(save_state: Dictionary) -> Roll:
+	# Make sure we have all the necessary parts
+	if not save_state.has('schema_version'):
+		print("Missing schema_version during roll loader")
+		return null
+	if not save_state.has('class_name'):
+		print("Missing class_name during roll loader")
+		return null
+	if not save_state.has('name'):
+		print("Missing name during roll loader")
+		return null
+	if not save_state.has('category'):
+		print("Missing category during roll loader")
+		return null
+	if not save_state.has('die_prop_array'):
+		print("Missing die_prop_array during roll loader")
+		return null
+		
+	# Make sure we have the correct schema version, class_name, and other properties.
+	if save_state['schema_version'] != '1.0.0':
+		print("Unknown schema_version during roll loader: ", save_state['schema_version'])
+		return null
+	if save_state['class_name'] != "Roll":
+		print("Unknown class_name during roll loader: ", save_state['class_name'])
+		return null
+	if not save_state['name'] is String:
+		print("name not a string during roll loader")
+		return null
+	if not save_state['category'] is String:
+		print("category not a string during roll loader")
+		return null
+	if not save_state['die_prop_array'] is Array:
+		print("die_prop_array not an array during roll loader")
+		return null
+		
+	var new_roll = Roll.new()
+	new_roll.m_roll_name = save_state['name']
+	new_roll.m_roll_category = save_state['category']
+	
+	var new_die_prop_array = DiePropertyPair.load_from_save_dict_array(save_state['die_prop_array'])
+	new_roll.m_die_prop_array = new_die_prop_array
+	
+	return new_roll
+
 # Sets the name and category and returns itself.
 func configure(name: String, category: String) -> Roll:
 	m_roll_name = name

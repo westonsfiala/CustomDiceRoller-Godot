@@ -17,7 +17,9 @@ func deferred_reconfigure():
 func reconfigure():
 	custom_minimum_size.x = SettingsManager.get_window_size().x
 	SettingsManager.remove_and_free_children(history_list)
-	var roll_history = RollManager.get_roll_history()
+	# Need to reverse the history otherwise it will put everything in bad order.
+	var roll_history = RollManager.get_roll_history().duplicate(true)
+	roll_history.reverse()
 	for roll in roll_history:
 		add_history_item(roll)
 	refresh_no_history()

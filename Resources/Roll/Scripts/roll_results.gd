@@ -25,6 +25,124 @@ var m_struck_rerolled_rolls : Dictionary = {}
 # Use the same keys as above for access.
 var m_roll_properties : Dictionary = {}
 
+# Generate the save state for our roll result
+func save_dict() -> Dictionary:
+	var save_state: Dictionary = {}
+
+	save_state['schema_version'] = "1.0.0"
+	save_state['class_name'] = 'RollResults'
+	save_state['time_string'] = time_string
+	save_state['date_string'] = date_string
+	save_state['stored_roll'] = stored_roll.save_dict()
+	save_state['roll_name_text'] = roll_name_text
+	save_state['roll_detailed_name_text'] = roll_detailed_name_text
+	save_state['roll_sum'] = roll_sum.formatted_text
+	
+	var roll_results_save_array: Array = []
+	for roll_result in roll_results_array:
+		roll_results_save_array.push_back(roll_result.formatted_text)
+	save_state['roll_results_array'] = roll_results_save_array
+
+	return save_state
+
+# Load an array of dice from an array of dice save dicts.
+# If no dice can be created returns an empty list.
+static func load_from_array_of_save_dict(array_of_roll_results_save_dicts: Array) -> Array[RollResults]:
+	var loaded_results: Array[RollResults] = []
+	
+	# Go through all of the save dicts and try loading them
+	for save_state in array_of_roll_results_save_dicts:
+		var new_history = load_from_save_dict(save_state)
+		
+		# If a die was actually created, add it.
+		if new_history != null:
+			loaded_results.push_back(new_history)
+
+	return loaded_results
+
+# Creates a RollResults from the save state.
+# If any errors occur, returns a null object.
+static func load_from_save_dict(save_state: Dictionary) -> RollResults:
+	# Make sure we have all the necessary parts
+	if not save_state.has('schema_version'):
+		print("Missing schema_version during roll_results loader")
+		return null
+	if not save_state.has('class_name'):
+		print("Missing class_name during roll_results loader")
+		return null
+	if not save_state.has('time_string'):
+		print("Missing time_string during roll_results loader")
+		return null
+	if not save_state.has('date_string'):
+		print("Missing date_string during roll_results loader")
+		return null
+	if not save_state.has('stored_roll'):
+		print("Missing stored_roll during roll_results loader")
+		return null
+	if not save_state.has('roll_name_text'):
+		print("Missing roll_name_text during roll_results loader")
+		return null
+	if not save_state.has('roll_detailed_name_text'):
+		print("Missing roll_detailed_name_text during roll_results loader")
+		return null
+	if not save_state.has('roll_sum'):
+		print("Missing roll_sum during roll_results loader")
+		return null
+	if not save_state.has('roll_results_array'):
+		print("Missing roll_results_array during roll_results loader")
+		return null
+		
+	# Make sure we have the correct schema version, class_name, and other properties.
+	if save_state['schema_version'] != '1.0.0':
+		print("Unknown schema_version during roll_results loader: ", save_state['schema_version'])
+		return null
+	if save_state['class_name'] != 'RollResults':
+		print("Unknown class_name during roll_results loader: ", save_state['class_name'])
+		return null
+	if not save_state['time_string'] is String:
+		print("time_string not a string during roll_results loader")
+		return null
+	if not save_state['date_string'] is String:
+		print("date_string not a string during roll_results loader")
+		return null
+	if not save_state['stored_roll'] is Dictionary:
+		print("stored_roll not a dictionary during roll_results loader")
+		return null
+	if not save_state['roll_name_text'] is String:
+		print("roll_name_text not a string during roll_results loader")
+		return null
+	if not save_state['roll_detailed_name_text'] is String:
+		print("roll_detailed_name_text not a string during roll_results loader")
+		return null
+	if not save_state['roll_sum'] is String:
+		print("roll_sum not a string during roll_results loader")
+		return null
+	if not save_state['roll_results_array'] is Array:
+		print("roll_results_array not an array during roll_results loader")
+		return null
+		
+	var new_roll_results = RollResults.new()
+	new_roll_results.time_string = save_state['time_string']
+	new_roll_results.date_string = save_state['date_string']
+	var new_roll = Roll.load_from_save_dict(save_state['stored_roll'])
+	if new_roll == null:
+		print("Could not load roll during roll_results loader")
+		return null
+	new_roll_results.stored_roll = new_roll
+	new_roll_results.roll_name_text = save_state['roll_name_text']
+	new_roll_results.roll_detailed_name_text = save_state['roll_detailed_name_text']
+	var new_roll_sum = ColoredDieResults.new()
+	new_roll_sum.formatted_text = save_state['roll_sum']
+	new_roll_results.roll_sum = new_roll_sum
+	var new_roll_results_array: Array[ColoredDieResults] = []
+	for result_line in save_state['roll_results_array']:
+		var new_result = ColoredDieResults.new()
+		new_result.formatted_text = result_line
+		new_roll_results_array.push_back(new_result)
+	new_roll_results.roll_results_array = new_roll_results_array
+		
+	return new_roll_results
+
 # Tiny function used to help the reduce method
 func simple_summer(accum, value): return accum + value
 func die_summer(accum, die_result: DieResult): return accum + die_result.value()
