@@ -7,7 +7,8 @@ extends Control
 @onready var modifier_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown
 @onready var property_button : PropertyButton = $VerticalLayout/PropBar/PropertyButtonBar/PropertyButton
 @onready var set_value_exact_popup : SetValueExactPopup = $SetValueExactPopup
-@onready var edit_die_popup : MinMaxDieDialog = $MinMaxDieDialog
+@onready var min_max_edit_die_popup : MinMaxDieDialog = $MinMaxDieDialog
+@onready var imbalanced_edit_die_popup : ImbalancedDieDialog = $ImbalancedDieDialog
 
 var currently_edited_property_identifier : StringName = ""
 
@@ -50,9 +51,15 @@ func roll_die(die: AbstractDie):
 	
 # Opens a dialog to edit the die
 func edit_die(die: AbstractDie):
-	edit_die_popup.set_min_max_die(die.duplicate())
-	edit_die_popup.set_remove_button_visibility(true)
-	edit_die_popup.modular_popup_center()
+	match die.get_class_name():
+		MinMaxDie.CLASS_NAME:
+			min_max_edit_die_popup.set_min_max_die(die.duplicate())
+			min_max_edit_die_popup.set_remove_button_visibility(true)
+			min_max_edit_die_popup.modular_popup_center()
+		ImbalancedDie.CLASS_NAME:
+			imbalanced_edit_die_popup.set_imbalanced_die(die.duplicate())
+			imbalanced_edit_die_popup.set_remove_button_visibility(true)
+			imbalanced_edit_die_popup.modular_popup_center()
 
 # Displays the dice results
 func set_dice_result(roll_result: RollResults):
@@ -122,4 +129,10 @@ func _on_min_max_die_dialog_die_accepted(original_die: MinMaxDie, accepted_die: 
 	SimpleRollManager.edit_die(original_die, accepted_die)
 
 func _on_min_max_die_dialog_die_removed(removed_die: MinMaxDie):
+	SimpleRollManager.remove_die(removed_die)
+
+func _on_imbalanced_die_dialog_die_accepted(original_die: ImbalancedDie, accepted_die: ImbalancedDie):
+	SimpleRollManager.edit_die(original_die, accepted_die)
+
+func _on_imbalanced_die_dialog_die_removed(removed_die: ImbalancedDie):
 	SimpleRollManager.remove_die(removed_die)

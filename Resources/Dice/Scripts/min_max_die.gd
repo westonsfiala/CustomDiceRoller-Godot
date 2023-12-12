@@ -74,6 +74,9 @@ func configure(die_name: String, bound1: int, bound2: int) -> MinMaxDie:
 	else:
 		m_name = die_name
 	return self
+	
+func get_class_name() -> StringName:
+	return CLASS_NAME
 
 func default_name() -> String:
 	var placeholder_name : String = 'd'

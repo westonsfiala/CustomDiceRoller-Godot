@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://5vm2iatgmrxs"]
+[gd_scene load_steps=11 format=3 uid="uid://5vm2iatgmrxs"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dvlt6"]
 [ext_resource type="Script" path="res://Scenes/SimpleRollPage/Scripts/simple_roll.gd" id="1_tqmuk"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bjqaot0p6s5sg" path="res://Scenes/Common/Buttons/add_dice_button.tscn" id="6_c6xd2"]
 [ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_dbqdo"]
 [ext_resource type="PackedScene" uid="uid://biumolcfuvbmg" path="res://Scenes/Common/Popups/min_max_die_dialog.tscn" id="9_m3l4u"]
+[ext_resource type="PackedScene" uid="uid://8fqktuj4ct18" path="res://Scenes/Common/Popups/imbalanced_die_dialog.tscn" id="10_gns2o"]
 
 [node name="SimpleRoll" type="Control"]
 layout_mode = 3
@@ -87,6 +88,9 @@ visible = false
 [node name="MinMaxDieDialog" parent="." instance=ExtResource("9_m3l4u")]
 visible = false
 
+[node name="ImbalancedDieDialog" parent="." instance=ExtResource("10_gns2o")]
+visible = false
+
 [connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
 [connection signal="value_pressed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
 [connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
@@ -98,3 +102,5 @@ visible = false
 [connection signal="value_changed" from="SetValueExactPopup" to="." method="_on_set_value_exact_popup_value_changed"]
 [connection signal="die_accepted" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_accepted"]
 [connection signal="die_removed" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_removed"]
+[connection signal="die_accepted" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_accepted"]
+[connection signal="die_removed" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_removed"]

@@ -1,0 +1,100 @@
+[gd_scene load_steps=8 format=3 uid="uid://8fqktuj4ct18"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_l0gbd"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/imbalanced_die_dialog.gd" id="2_p5ghc"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_6i4jt"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="4_sysq1"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_7my13"]
+[ext_resource type="PackedScene" uid="uid://ccxtnp20kp8qk" path="res://Scenes/Common/Buttons/remove_confirm_button.tscn" id="6_0kof7"]
+[ext_resource type="PackedScene" uid="uid://duvmnbujl5for" path="res://Scenes/Common/Buttons/accept_cancel_buttons.tscn" id="7_ctbvj"]
+
+[node name="ImbalancedDieDialog" instance=ExtResource("1_l0gbd")]
+size = Vector2i(500, 750)
+script = ExtResource("2_p5ghc")
+
+[node name="ContentPanel" parent="." index="1"]
+custom_minimum_size = Vector2(500, 400)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentPanel/Margins" index="0"]
+layout_mode = 2
+theme = ExtResource("3_6i4jt")
+
+[node name="NameMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="DieNameLabel" parent="ContentPanel/Margins/VBoxContainer/NameMargins" index="0" instance=ExtResource("4_sysq1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 1
+text = "Die Name"
+horizontal_alignment = 0
+
+[node name="InfoMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="DieInfoLabel" parent="ContentPanel/Margins/VBoxContainer/InfoMargins" index="0" instance=ExtResource("5_7my13")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme_type_variation = &"SmallRichTextLabel"
+max_lines_shown = 2
+
+[node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/VBoxContainer" index="2"]
+layout_mode = 2
+
+[node name="FacesMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="3"]
+layout_mode = 2
+
+[node name="FacesLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer/FacesMargins" index="0"]
+layout_mode = 2
+
+[node name="FacesLabel" parent="ContentPanel/Margins/VBoxContainer/FacesMargins/FacesLayout" index="0" instance=ExtResource("4_sysq1")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Faces"
+horizontal_alignment = 0
+
+[node name="FacesLineEdit" type="LineEdit" parent="ContentPanel/Margins/VBoxContainer/FacesMargins/FacesLayout" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1,2,3,4,5"
+
+[node name="NameEditMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="4"]
+layout_mode = 2
+
+[node name="NameLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins" index="0"]
+layout_mode = 2
+
+[node name="NameLabel" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout" index="0" instance=ExtResource("4_sysq1")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Name"
+horizontal_alignment = 0
+
+[node name="NameLineEdit" type="LineEdit" parent="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout" index="1"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonRowMargins" type="MarginContainer" parent="ContentPanel/Margins/VBoxContainer" index="5"]
+layout_mode = 2
+
+[node name="ButtonRowLayout" type="HBoxContainer" parent="ContentPanel/Margins/VBoxContainer/ButtonRowMargins" index="0"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RemoveConfirmButton" parent="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout" index="0" instance=ExtResource("6_0kof7")]
+layout_mode = 2
+
+[node name="AcceptCancelButtons" parent="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout" index="1" instance=ExtResource("7_ctbvj")]
+layout_mode = 2
+
+[connection signal="text_changed" from="ContentPanel/Margins/VBoxContainer/FacesMargins/FacesLayout/FacesLineEdit" to="." method="_line_edit_text_changed"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VBoxContainer/FacesMargins/FacesLayout/FacesLineEdit" to="." method="_line_edit_text_submitted"]
+[connection signal="text_changed" from="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout/NameLineEdit" to="." method="_line_edit_text_changed"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VBoxContainer/NameEditMargins/NameLayout/NameLineEdit" to="." method="_line_edit_text_submitted"]
+[connection signal="remove_confirmed" from="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/RemoveConfirmButton" to="." method="_on_remove_confirm_button_remove_confirmed"]
+[connection signal="accept_pressed" from="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_accept_pressed"]
+[connection signal="cancel_pressed" from="ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_cancel_pressed"]

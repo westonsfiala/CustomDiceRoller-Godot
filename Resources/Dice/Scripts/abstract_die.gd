@@ -9,6 +9,10 @@ const DIE_DISPLAY_IN_HEX : StringName = "0x"
 func save_dict() -> Dictionary:
 	assert(false, "save_dict - not implemented in AbstractDie")
 	return {}
+	
+func get_class_name() -> StringName:
+	assert(false, "get_class_name - not implemented in AbstractDie")
+	return ""
 
 func name() -> String:
 	return m_name

@@ -1,6 +1,7 @@
 extends Node
 
 var default_min_max_die : MinMaxDie = MinMaxDie.new().configure("", 1, 20)
+var default_imbalanced_die : ImbalancedDie = ImbalancedDie.new().configure("", [1,1,2,3,5])
 
 var default_die : MinMaxDie = MinMaxDie.new().configure("TEMP", 1, 1)
 var fate : MinMaxDie = MinMaxDie.new().configure("fate", -1, 1)

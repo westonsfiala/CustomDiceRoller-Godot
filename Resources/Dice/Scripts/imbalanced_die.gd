@@ -50,27 +50,33 @@ static func load_from_save_dict(save_state: Dictionary) -> ImbalancedDie:
 	if not save_state['override_image_path'] is String:
 		print("override_image_path not a string during imbalanced_die loader")
 		return null
-	if not save_state['faces'] is String:
+	if not save_state['faces'] is Array:
 		print("faces not an array during imbalanced_die loader")
 		return null
 		
-	var new_die = ImbalancedDie.new().configure(save_state['name'], save_state['faces'])
+	var face_int_array: Array[int] = []
+	for face_value in save_state['faces']:
+		face_int_array.push_back(int(face_value))
+	var new_die = ImbalancedDie.new().configure(save_state['name'], face_int_array)
 	new_die.override_image_path = save_state['override_image_path']
 	return new_die
 
 func configure(die_name: String, faces: Array[int]) -> ImbalancedDie:
+	m_faces = faces
 	if(die_name.is_empty()):
 		m_name = default_name()
 	else:
 		m_name = die_name
-	m_faces = faces
 	
 	return self
+	
+func get_class_name() -> StringName:
+	return CLASS_NAME
 	
 func default_name() -> String:
 	var placeholder_name = 'd'
 	placeholder_name += m_faces.reduce(func(a,b): return str(a, b, ':'), "")
-	placeholder_name.trim_suffix(':')
+	placeholder_name = placeholder_name.trim_suffix(':')
 	return placeholder_name
 
 func info() -> String:
