@@ -381,35 +381,41 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 		var die_roll = die.roll()
 		
 		# If we use under rerolls, reroll under the threshold.
-		var reroll_under = abs(properties.get_reroll_under())
-		if(properties.has_reroll_under() && abs(die_roll.value()) <= reroll_under):
-			reroll_list.push_back(die_roll)
-			die_roll = die.roll()
+		if(properties.has_reroll_under()):
+			var reroll_under = abs(properties.get_reroll_under())
+			if(abs(die_roll.value()) <= reroll_under):
+				reroll_list.push_back(die_roll)
+				die_roll = die.roll()
 			
 		# If we use over rerolls, reroll over the threshold.
-		var reroll_over = abs(properties.get_reroll_over())
-		if(properties.has_reroll_over() && abs(die_roll.value()) >= reroll_over):
-			reroll_list.push_back(die_roll)
-			die_roll = die.roll()
+		if(properties.has_reroll_over()):
+			var reroll_over = abs(properties.get_reroll_over())
+			if(abs(die_roll.value()) >= reroll_over):
+				reroll_list.push_back(die_roll)
+				die_roll = die.roll()
 			
 		# If we have a minimum value, drop anything less.
-		var minimum_die_roll_value = abs(properties.get_minimum())
-		if(properties.has_minimum() and abs(die_roll.value()) < minimum_die_roll_value):
-			reroll_list.push_back(die_roll);
-			die_roll = die_roll.duplicate()
-			die_roll.override_value(min(minimum_die_roll_value, die.maximum()))
+		if(properties.has_minimum()):
+			var minimum_die_roll_value = abs(properties.get_minimum())
+			if(abs(die_roll.value()) < minimum_die_roll_value):
+				reroll_list.push_back(die_roll);
+				die_roll = die_roll.duplicate()
+				die_roll.override_value(min(minimum_die_roll_value, die.maximum()))
 			
 		# If we have a maximum value, drop anything more.
-		var maximum_die_roll_value = abs(properties.get_maximum())
-		if(properties.has_maximum() and abs(die_roll.value()) > maximum_die_roll_value):
-			reroll_list.push_back(die_roll);
-			die_roll = die_roll.duplicate()
-			die_roll.override_value(max(maximum_die_roll_value, die.minimum()))
+		if(properties.has_maximum()):
+			var maximum_die_roll_value = abs(properties.get_maximum())
+			if(abs(die_roll.value()) > maximum_die_roll_value):
+				reroll_list.push_back(die_roll);
+				die_roll = die_roll.duplicate()
+				die_roll.override_value(max(maximum_die_roll_value, die.minimum()))
 		
 		# If we are set to explode, have the maximum value, have a range, and can roll within that range, roll an extra die
 		var exploding_die = properties.get_explode()
-		if(exploding_die and die_roll.value() == die.maximum() and die.minimum() != die.maximum() and minimum_die_roll_value != die.maximum()):
-			roll_num -= 1
+		if(exploding_die):
+			var minimum_die_roll_value = abs(properties.get_minimum())
+			if(die_roll.value() == die.maximum() and die.minimum() != die.maximum() and minimum_die_roll_value != die.maximum()):
+				roll_num -= 1
 			
 		if(num_dice > 0):
 			keep_list.push_back(die_roll)
@@ -420,32 +426,34 @@ func produce_number_roll_lists(die: NumberDie, properties: RollProperties) -> Di
 		roll_num += 1;
 		
 	# Drop high values
-	var drop_highest = abs(properties.get_drop_highest())
-	if(keep_list.size() <= drop_highest):
-		drop_list.append_array(keep_list)
-		keep_list = []
-	else:
-		for i in drop_highest:
-			var ejected_value = keep_list.reduce(find_max)
-			keep_list.erase(ejected_value)
-			drop_list.push_back(ejected_value)
+	if(properties.has_drop_highest()):
+		var drop_highest = abs(properties.get_drop_highest())
+		if(keep_list.size() <= drop_highest):
+			drop_list.append_array(keep_list)
+			keep_list = []
+		else:
+			for i in drop_highest:
+				var ejected_value = keep_list.reduce(find_max)
+				keep_list.erase(ejected_value)
+				drop_list.push_back(ejected_value)
 			
 	# Drop low values
-	var drop_lowest = abs(properties.get_drop_lowest())
-	if(keep_list.size() <= drop_lowest):
-		drop_list.append_array(keep_list)
-		keep_list = []
-	else:
-		for i in drop_lowest:
-			var ejected_value = keep_list.reduce(find_min)
-			keep_list.erase(ejected_value)
-			drop_list.push_back(ejected_value)
+	if(properties.has_drop_lowest()):
+		var drop_lowest = abs(properties.get_drop_lowest())
+		if(keep_list.size() <= drop_lowest):
+			drop_list.append_array(keep_list)
+			keep_list = []
+		else:
+			for i in drop_lowest:
+				var ejected_value = keep_list.reduce(find_min)
+				keep_list.erase(ejected_value)
+				drop_list.push_back(ejected_value)
 			
 	# Only do keep high/low when you have those properties
-	var keep_highest = abs(properties.get_keep_highest())
-	var keep_lowest = abs(properties.get_keep_lowest())
 	if(properties.has_keep_highest() or properties.has_keep_lowest()):
 		# Only keep going if we have more rolls than what we want to keep
+		var keep_highest = abs(properties.get_keep_highest())
+		var keep_lowest = abs(properties.get_keep_lowest())
 		if(keep_list.size() > (keep_highest + keep_lowest)):
 			var num_to_drop = keep_list.size() - (keep_highest + keep_lowest)
 			var index_to_drop = keep_lowest

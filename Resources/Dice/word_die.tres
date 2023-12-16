@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WordDie" load_steps=2 format=3 uid="uid://d1s326kvaq7jf"]
+
+[ext_resource type="Script" path="res://Resources/Dice/Scripts/word_die.gd" id="1_hrdyg"]
+
+[resource]
+script = ExtResource("1_hrdyg")
+m_faces = Array[String]([])
+m_name = ""
+override_image_path = ""

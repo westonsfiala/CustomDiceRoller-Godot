@@ -35,14 +35,14 @@ size_flags_horizontal = 1
 text = "Imbalanced Die"
 flat = true
 
-[node name="NonNumberDieButton" parent="ContentPanel/Margins/VBoxContainer" index="3" instance=ExtResource("4_56rfq")]
+[node name="WordDieButton" parent="ContentPanel/Margins/VBoxContainer" index="3" instance=ExtResource("4_56rfq")]
 layout_mode = 2
 size_flags_horizontal = 1
-text = "Non Number Die
+text = "Word Die
 "
 flat = true
 
 [connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/ResetDiceButton" to="." method="_on_reset_dice_button_pressed"]
 [connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/MinMaxDieButton" to="." method="_on_min_max_die_button_pressed"]
 [connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/ImbalancedDieButton" to="." method="_on_imbalanced_die_button_pressed"]
-[connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/NonNumberDieButton" to="." method="_on_non_number_die_button_pressed"]
+[connection signal="pressed" from="ContentPanel/Margins/VBoxContainer/WordDieButton" to="." method="_on_non_number_die_button_pressed"]

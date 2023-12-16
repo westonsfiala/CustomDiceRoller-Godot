@@ -5,8 +5,8 @@ class_name AddDicePopupMenu
 
 signal reset_dice()
 signal new_min_max_die()
-signal new_non_number_die()
 signal new_imbalanced_die()
+signal new_word_die()
 
 func set_content_panel_minimum_size():
 	content_panel.custom_minimum_size.y = layout.get_child_count() * SettingsManager.get_button_size()
@@ -24,5 +24,5 @@ func _on_imbalanced_die_button_pressed():
 	animate_close_popup()
 
 func _on_non_number_die_button_pressed():
-	emit_signal("new_non_number_die")
+	emit_signal("new_word_die")
 	animate_close_popup()

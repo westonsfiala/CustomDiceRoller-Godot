@@ -38,8 +38,12 @@ func negate_value() -> void:
 
 # Returns if the value is equal to the minimum.
 func is_minimum() -> bool:
-	return result_dict[MIN_KEY] == value()
+	if(type() == DieResultType.INTEGER or type() == DieResultType.DECIMAL):
+		return result_dict[MIN_KEY] == value()
+	return false
 	
 # Returns if the value is equal to the maximum.
 func is_maximum() -> bool:
-	return result_dict[MAX_KEY] == value()
+	if(type() == DieResultType.INTEGER or type() == DieResultType.DECIMAL):
+		return result_dict[MAX_KEY] == value()
+	return false

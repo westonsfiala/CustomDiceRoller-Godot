@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_vqo54")
-name = ""
-type = ""
+m_name = ""
+override_image_path = ""

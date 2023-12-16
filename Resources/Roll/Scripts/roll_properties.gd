@@ -10,15 +10,28 @@ const NUM_DICE_TITLE_POSTFIX : StringName = "d"
 const NUM_DICE_TITLE : StringName = NUM_DICE_TITLE_PREFIX + UNKNOWN_NUMBER_X + NUM_DICE_TITLE_POSTFIX
 const NUM_DICE_DISPLAY_TITLE : StringName = "Num Dice"
 const NUM_DICE_DEFAULT : int = 1
+const NUM_DICE_MAXIMUM : int = 1000
 func get_num_dice_string() -> String:
 	return str(get_property(NUM_DICE_IDENTIFIER), NUM_DICE_TITLE_POSTFIX)
 func get_num_dice_long_string() -> String:
 	return str(NUM_DICE_TITLE_PREFIX, get_property(NUM_DICE_IDENTIFIER))
 func has_num_dice() -> bool:
 	return has_property(NUM_DICE_IDENTIFIER)
-func set_num_dice(num_dice : int) -> void:
+static func is_valid_num_dice(num_dice: int) -> bool:
+	if(num_dice == 0):
+		return false
+	if(num_dice > NUM_DICE_MAXIMUM):
+		return false
+	if(num_dice < -NUM_DICE_MAXIMUM):
+		return false
+	return true
+func set_num_dice(num_dice: int) -> void:
 	if(num_dice == 0):
 		num_dice = 1
+	if(num_dice > NUM_DICE_MAXIMUM):
+		num_dice = NUM_DICE_MAXIMUM
+	if(num_dice < -NUM_DICE_MAXIMUM):
+		num_dice = -NUM_DICE_MAXIMUM
 	add_property(NUM_DICE_IDENTIFIER, num_dice)
 func get_num_dice() -> int:
 	return get_property(NUM_DICE_IDENTIFIER)
@@ -44,11 +57,22 @@ const REPEAT_ROLL_TITLE_POSTFIX : StringName = "| Times"
 const REPEAT_ROLL_TITLE : StringName = REPEAT_ROLL_TITLE_PREFIX + UNKNOWN_NUMBER_X + REPEAT_ROLL_TITLE_POSTFIX
 const REPEAT_ROLL_DISPLAY_TITLE : StringName = "Repeat Roll"
 const REPEAT_ROLL_DEFAULT : int = 1
+const REPEAT_ROLL_MAXIMUM : int = 1000
 func get_repeat_roll_string() -> String:
 	return str(REPEAT_ROLL_TITLE_PREFIX, get_property(REPEAT_ROLL_IDENTIFIER), REPEAT_ROLL_TITLE_POSTFIX)
 func has_repeat_roll() -> bool:
 	return has_property(REPEAT_ROLL_IDENTIFIER)
+static func is_valid_repeat_roll(repeat: int) -> bool:
+	if(repeat > REPEAT_ROLL_MAXIMUM):
+		return false
+	if(repeat < -REPEAT_ROLL_MAXIMUM):
+		return false
+	return true
 func set_repeat_roll(repeat : int) -> void:
+	if(repeat > REPEAT_ROLL_MAXIMUM):
+		repeat = REPEAT_ROLL_MAXIMUM
+	if(repeat < -REPEAT_ROLL_MAXIMUM):
+		repeat = -REPEAT_ROLL_MAXIMUM
 	add_property(REPEAT_ROLL_IDENTIFIER, repeat)
 func get_repeat_roll() -> int:
 	return get_property(REPEAT_ROLL_IDENTIFIER)

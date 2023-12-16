@@ -25,14 +25,18 @@ var m_min_max_die : MinMaxDie = SimpleRollManager.default_min_max_die
 signal die_accepted(original_die: MinMaxDie, accepted_die: MinMaxDie)
 signal die_removed(removed_die: MinMaxDie)
 
-# Set the y size the heights of all the margins.
-func set_content_panel_minimum_size():
-	
+func _inner_set_size():
 	var content_height = 0
 	
+	# Need to give them a bogus value so they resets to a correct size.
+	name_margins.size.y = 0
+	info_margins.size.y = 0
+	min_margins.size.y = 0
+	max_margins.size.y = 0
+	name_edit_margins.size.y = 0
+	button_row_margins.size.y = 0
+	
 	content_height += name_margins.size.y
-	# Needed to properly grab the size of the die info label
-	info_margins.reset_size()
 	content_height += info_margins.size.y
 	content_height += horizontal_line.size.y
 	content_height += min_margins.size.y
@@ -42,6 +46,10 @@ func set_content_panel_minimum_size():
 	
 	content_panel.custom_minimum_size.y = content_height
 	
+
+# Set the y size the heights of all the margins.
+func set_content_panel_minimum_size():
+	_inner_set_size()
 	# Have the max grab the focus, but don't change size from default.
 	max_line_edit.grab_focus()
 	max_line_edit.select_all()
@@ -72,6 +80,7 @@ func set_min_max_die(die: MinMaxDie, first_set : bool = true):
 		else:
 			name_line_edit.text = die.name()
 	name_line_edit.placeholder_text = m_min_max_die.default_name()
+	_inner_set_size()
 
 # Any time a line edit is changed, update text highlighting and enable/disable the accept button
 func _line_edit_text_changed(_new_text: String):

@@ -75,8 +75,7 @@ func get_class_name() -> StringName:
 	
 func default_name() -> String:
 	var placeholder_name = 'd'
-	placeholder_name += m_faces.reduce(func(a,b): return str(a, b, ':'), "")
-	placeholder_name = placeholder_name.trim_suffix(':')
+	placeholder_name += ":".join(m_faces)
 	return placeholder_name
 
 func info() -> String:

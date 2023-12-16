@@ -1,5 +1,5 @@
 extends PopupBase
-class_name ImbalancedDieDialog
+class_name WordDieDialog
 
 @onready var name_margins : MarginContainer = $ContentPanel/Margins/VBoxContainer/NameMargins
 @onready var die_name_label : SettingsManagedLabel = $ContentPanel/Margins/VBoxContainer/NameMargins/DieNameLabel
@@ -16,11 +16,11 @@ class_name ImbalancedDieDialog
 @onready var accept_cancel_buttons : AcceptCancelButtons = $ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/AcceptCancelButtons
 @onready var remove_confirm_button : RemoveConfirmButton = $ContentPanel/Margins/VBoxContainer/ButtonRowMargins/ButtonRowLayout/RemoveConfirmButton
 
-var first_set_die : ImbalancedDie = SimpleRollManager.default_imbalanced_die
-var m_imbalanced_die : ImbalancedDie = SimpleRollManager.default_imbalanced_die
+var first_set_die : WordDie = SimpleRollManager.default_word_die
+var m_word_die : WordDie = SimpleRollManager.default_word_die
 
-signal die_accepted(original_die: ImbalancedDie, accepted_die: ImbalancedDie)
-signal die_removed(removed_die: ImbalancedDie)
+signal die_accepted(original_die: NonNumberDie, accepted_die: NonNumberDie)
+signal die_removed(removed_die: NonNumberDie)
 
 # Sets the minimum size to display all content
 func _inner_set_size():
@@ -57,25 +57,25 @@ func set_remove_button_visibility(show_hide: bool):
 
 # Set the dice to the given die, update text lines, and highlight issues.
 # if first_set is true, will forcefully update the text lines.
-func set_imbalanced_die(die: ImbalancedDie, first_set : bool = true):
+func set_word_die(die: WordDie, first_set : bool = true):
 	if(first_set):
 		first_set_die = die.duplicate()
 	
-	m_imbalanced_die = die
+	m_word_die = die
 	
-	die_name_label.text = m_imbalanced_die.name()
-	die_info_label.set_text_and_resize_y(m_imbalanced_die.info())
+	die_name_label.text = m_word_die.name()
+	die_info_label.set_text_and_resize_y(m_word_die.info())
 	# Don't mess with text they can change if something is there.
 	if(faces_line_edit.text.is_empty() or first_set):
-		var face_text = ",".join(m_imbalanced_die.get_faces())
+		var face_text = ",".join(m_word_die.get_faces())
 		faces_line_edit.text = face_text
 		
 	if(first_set):
-		if(die.name() == m_imbalanced_die.default_name()):
+		if(die.name() == m_word_die.default_name()):
 			name_line_edit.text = ""
 		else:
 			name_line_edit.text = die.name()
-	name_line_edit.placeholder_text = m_imbalanced_die.default_name()
+	name_line_edit.placeholder_text = m_word_die.default_name()
 	_inner_set_size()
 	
 # Any time a line edit is changed, update text highlighting and enable/disable the accept button
@@ -86,11 +86,11 @@ func _line_edit_text_changed(_text: String):
 	var die_faces = faces_line_edit.text
 	
 	var good_state = true
-	var faces_int_array: Array[int] = []
+	var faces_array: Array[String] = []
 	for face in die_faces.split(","):
 		var stripped_faces = face.strip_edges()
-		if stripped_faces.is_valid_int():
-			faces_int_array.push_back(stripped_faces.to_int())
+		if !stripped_faces.is_empty():
+			faces_array.push_back(stripped_faces)
 		else:
 			good_state = false
 			break
@@ -103,9 +103,9 @@ func _line_edit_text_changed(_text: String):
 		faces_line_edit.add_theme_color_override("font_color", Color.RED)
 	
 	if update_die:
-		m_imbalanced_die.configure(die_name, faces_int_array)
+		m_word_die.configure(die_name, faces_array)
 		accept_cancel_buttons.enable_accept()
-		set_imbalanced_die(m_imbalanced_die, false)
+		set_word_die(m_word_die, false)
 	else:
 		accept_cancel_buttons.disable_accept()
 
@@ -120,9 +120,9 @@ func _on_accept_cancel_buttons_cancel_pressed():
 # If we are in a good state to accept, let it accept and close. Otherwise nothing.
 func _on_accept_cancel_buttons_accept_pressed():
 	if(accept_cancel_buttons.can_accept()):
-		emit_signal("die_accepted", first_set_die.duplicate(), m_imbalanced_die.duplicate())
+		emit_signal("die_accepted", first_set_die.duplicate(), m_word_die.duplicate())
 		animate_close_popup()
 
 func _on_remove_confirm_button_remove_confirmed():
-	emit_signal("die_removed", m_imbalanced_die.duplicate())
+	emit_signal("die_removed", m_word_die.duplicate())
 	animate_close_popup()

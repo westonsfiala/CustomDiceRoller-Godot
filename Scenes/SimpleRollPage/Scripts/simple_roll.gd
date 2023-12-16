@@ -9,6 +9,7 @@ extends Control
 @onready var set_value_exact_popup : SetValueExactPopup = $SetValueExactPopup
 @onready var min_max_edit_die_popup : MinMaxDieDialog = $MinMaxDieDialog
 @onready var imbalanced_edit_die_popup : ImbalancedDieDialog = $ImbalancedDieDialog
+@onready var word_edit_die_popup : WordDieDialog = $WordDieDialog
 
 var currently_edited_property_identifier : StringName = ""
 
@@ -60,6 +61,10 @@ func edit_die(die: AbstractDie):
 			imbalanced_edit_die_popup.set_imbalanced_die(die.duplicate())
 			imbalanced_edit_die_popup.set_remove_button_visibility(true)
 			imbalanced_edit_die_popup.modular_popup_center()
+		WordDie.CLASS_NAME:
+			word_edit_die_popup.set_word_die(die.duplicate())
+			word_edit_die_popup.set_remove_button_visibility(true)
+			word_edit_die_popup.modular_popup_center()
 
 # Displays the dice results
 func set_dice_result(roll_result: RollResults):
@@ -135,4 +140,10 @@ func _on_imbalanced_die_dialog_die_accepted(original_die: ImbalancedDie, accepte
 	SimpleRollManager.edit_die(original_die, accepted_die)
 
 func _on_imbalanced_die_dialog_die_removed(removed_die: ImbalancedDie):
+	SimpleRollManager.remove_die(removed_die)
+
+func _on_word_die_dialog_die_accepted(original_die: WordDie, accepted_die: WordDie):
+	SimpleRollManager.edit_die(original_die, accepted_die)
+
+func _on_word_die_dialog_die_removed(removed_die: WordDie):
 	SimpleRollManager.remove_die(removed_die)

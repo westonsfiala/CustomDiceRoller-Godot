@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://5vm2iatgmrxs"]
+[gd_scene load_steps=12 format=3 uid="uid://5vm2iatgmrxs"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dvlt6"]
 [ext_resource type="Script" path="res://Scenes/SimpleRollPage/Scripts/simple_roll.gd" id="1_tqmuk"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_dbqdo"]
 [ext_resource type="PackedScene" uid="uid://biumolcfuvbmg" path="res://Scenes/Common/Popups/min_max_die_dialog.tscn" id="9_m3l4u"]
 [ext_resource type="PackedScene" uid="uid://8fqktuj4ct18" path="res://Scenes/Common/Popups/imbalanced_die_dialog.tscn" id="10_gns2o"]
+[ext_resource type="PackedScene" uid="uid://c2ckvnabmjnpp" path="res://Scenes/Common/Popups/word_die_dialog.tscn" id="11_0vw6k"]
 
 [node name="SimpleRoll" type="Control"]
 layout_mode = 3
@@ -91,6 +92,9 @@ visible = false
 [node name="ImbalancedDieDialog" parent="." instance=ExtResource("10_gns2o")]
 visible = false
 
+[node name="WordDieDialog" parent="." instance=ExtResource("11_0vw6k")]
+visible = false
+
 [connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
 [connection signal="value_pressed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
 [connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
@@ -104,3 +108,5 @@ visible = false
 [connection signal="die_removed" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_removed"]
 [connection signal="die_accepted" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_accepted"]
 [connection signal="die_removed" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_removed"]
+[connection signal="die_accepted" from="WordDieDialog" to="." method="_on_word_die_dialog_die_accepted"]
+[connection signal="die_removed" from="WordDieDialog" to="." method="_on_word_die_dialog_die_removed"]

@@ -28,5 +28,7 @@ func load_from_save_dict(save_dict: Dictionary) -> AbstractDie:
 			new_die = ImbalancedDie.load_from_save_dict(save_dict)
 		MinMaxDie.CLASS_NAME:
 			new_die = MinMaxDie.load_from_save_dict(save_dict)
+		WordDie.CLASS_NAME:
+			new_die = WordDie.load_from_save_dict(save_dict)
 			
 	return new_die
