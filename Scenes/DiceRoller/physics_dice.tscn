@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://7u2a0y1nw8c5"]
+
+[ext_resource type="Script" path="res://Scenes/DiceRoller/scripts/physics_dice.gd" id="1_tijyv"]
+[ext_resource type="Texture2D" uid="uid://b2xwvheni4p15" path="res://DicePNGs/white/d20.png" id="1_yeonu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ljf0d"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yh4e8"]
+radius = 70.0
+
+[node name="PhysicsDice" type="RigidBody2D"]
+position = Vector2(336, 353)
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_ljf0d")
+gravity_scale = 0.0
+script = ExtResource("1_tijyv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yh4e8")
+
+[node name="DiceImage" type="TextureRect" parent="CollisionShape2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_yeonu")
+expand_mode = 1

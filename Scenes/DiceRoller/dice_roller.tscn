@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://77mx5ul4uuu8"]
+
+[ext_resource type="Script" path="res://Scenes/DiceRoller/scripts/dice_roller.gd" id="1_cmbj3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4cq00"]
+bounce = 0.1
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6b7gr"]
+size = Vector2(1042, 136)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gmv12"]
+bounce = 0.1
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5k16"]
+size = Vector2(195, 1210)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kubvh"]
+bounce = 0.1
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axed0"]
+size = Vector2(1042, 125)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3vgse"]
+bounce = 0.1
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkyvl"]
+size = Vector2(160, 1206)
+
+[node name="DiceRoller" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_cmbj3")
+
+[node name="TopEdge" type="StaticBody2D" parent="."]
+position = Vector2(376, -68)
+collision_layer = 15
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_4cq00")
+
+[node name="TopShape" type="CollisionShape2D" parent="TopEdge"]
+shape = SubResource("RectangleShape2D_6b7gr")
+metadata/_edit_lock_ = true
+
+[node name="RightEdge" type="StaticBody2D" parent="."]
+position = Vector2(846, 466)
+collision_layer = 15
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_gmv12")
+
+[node name="RightShape" type="CollisionShape2D" parent="RightEdge"]
+shape = SubResource("RectangleShape2D_l5k16")
+metadata/_edit_lock_ = true
+
+[node name="BottomEdge" type="StaticBody2D" parent="."]
+position = Vector2(433, 1065)
+collision_layer = 15
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_kubvh")
+
+[node name="BottomShape" type="CollisionShape2D" parent="BottomEdge"]
+shape = SubResource("RectangleShape2D_axed0")
+metadata/_edit_lock_ = true
+
+[node name="LeftEdge" type="StaticBody2D" parent="."]
+position = Vector2(-78, 485)
+collision_layer = 15
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_3vgse")
+
+[node name="LeftShape" type="CollisionShape2D" parent="LeftEdge"]
+shape = SubResource("RectangleShape2D_vkyvl")
+metadata/_edit_lock_ = true
