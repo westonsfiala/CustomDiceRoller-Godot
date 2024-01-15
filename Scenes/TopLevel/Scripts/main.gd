@@ -4,8 +4,10 @@ extends Control
 @onready var resize_timer : Timer = $ResizeTimer
 
 var tween : Tween
-
 var last_click_position : Vector2
+
+var animated_roller: DiceRoller = null
+var full_screen_results: FullScreenResult = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,6 +15,7 @@ func _ready():
 	resize_timer.timeout.connect(SettingsManager.trigger_reconfigure)
 	SettingsManager.reconfigure.connect(reconfigure)
 	SettingsManager.mouse_unpress.connect(fake_unpress)
+	RollManager.new_roll_result.connect(create_animated_roller)
 	reconfigure()
 
 func reconfigure():
@@ -68,5 +71,33 @@ func respond_to_unpress() -> void:
 	tween.tween_property(press_response_image, "scale", Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY / 2)
 	tween.tween_property(press_response_image, "visible", false, 0)
 	last_click_position = Vector2.ZERO
+	
+func create_animated_roller(roll_results: RollResults):
+	animated_roller = preload("res://Scenes/DiceRoller/dice_roller.tscn").instantiate()
+	animated_roller.configure(roll_results)
+	animated_roller.finished_animated_roll.connect(create_roll_results_screen)
+	add_child(animated_roller)
+	
+func destroy_animated_roller():
+	if animated_roller:
+		animated_roller.queue_free()
+		animated_roller = null
+	
+func create_roll_results_screen(roll_results: RollResults):
+	destroy_animated_roller()
+	full_screen_results = preload("res://Scenes/DiceRoller/full_screen_result.tscn").instantiate()
+	full_screen_results.configure(roll_results)
+	full_screen_results.finished.connect(destroy_roll_results_screen)
+	full_screen_results.reroll.connect(reroll_from_roll_results_screen)
+	add_child(full_screen_results)
+	
+func reroll_from_roll_results_screen(roll_results: RollResults):
+	destroy_roll_results_screen()
+	RollManager.reroll_from_results(roll_results)
+	
+func destroy_roll_results_screen():
+	if full_screen_results:
+		full_screen_results.queue_free()
+		full_screen_results = null
 
 

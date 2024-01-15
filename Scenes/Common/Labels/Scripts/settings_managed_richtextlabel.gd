@@ -23,7 +23,7 @@ func reconfigure():
 	if(enforce_all_lines_shown):
 		display_lines = get_line_count()
 	
-	var font_size = get_theme_font_size("font_size", theme_type_variation)
+	var font_size = get_theme_font_size("normal_font_size", theme_type_variation)
 	var needed_pixel_height = get_theme_default_font().get_height(font_size) * display_lines
 	custom_minimum_size.y = needed_pixel_height
 

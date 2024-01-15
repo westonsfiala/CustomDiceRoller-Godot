@@ -96,7 +96,15 @@ func simple_roll(die : AbstractDie, props : RollProperties):
 	new_roll.add_die_to_roll(die, props)
 	var roll_results = new_roll.roll()
 	add_to_history(roll_results)
+	
+# Produce a new roll results using an existing roll results
+func reroll_from_results(roll_results: RollResults):
+	var stored_roll = roll_results.stored_roll
+	var new_results = stored_roll.roll()
+	add_to_history(new_results)
 
+# Adds a new roll to managed history.
+# Sends out the "new_roll_result" signal.
 func add_to_history(roll_result : RollResults):
 	if(not cleared_roll_history.is_empty()):
 		cleared_roll_history.clear()
@@ -105,18 +113,25 @@ func add_to_history(roll_result : RollResults):
 	save_state()
 	emit_signal("new_roll_result", roll_result)
 
+# Gets the array of all stored results
 func get_roll_history() -> Array[RollResults]:
 	return roll_history
 	
+# Clears away the current roll results.
+# Stores cleared results for potential undo.
+# Emits the "refresh_history" signal.
 func clear_roll_history():
 	cleared_roll_history = roll_history.duplicate(true)
 	roll_history.clear()
 	save_state()
 	emit_signal("refresh_history")
 	
+# Checks if we have cleared history to work with.
 func has_cleared_history():
 	return not cleared_roll_history.is_empty()
 	
+# Restores the roll history from the cleared roll history.
+# Emits the "refresh_history" signal.
 func restore_roll_history():
 	roll_history = cleared_roll_history.duplicate(true)
 	cleared_roll_history.clear()

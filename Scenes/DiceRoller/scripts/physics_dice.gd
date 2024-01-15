@@ -5,6 +5,7 @@ var inner_die : AbstractDie = SimpleRollManager.default_die
 
 @onready var dice_image : TextureRect = $CollisionShape2D/DiceImage
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
+@onready var press_spacer_timer : Timer = $PressSpacerTimer
 
 func configure(die: AbstractDie):
 	inner_die = die
@@ -32,12 +33,19 @@ func _ready():
 	rotation_degrees = randi_range(-360, 360)
 	
 	# Launch it and rotate it
+	launch_die_randomly()
+
+# Respond to presses by launching the die around.
+# Only let this happen every so often though.
+func _process(_delta):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		if press_spacer_timer.is_stopped():
+			launch_die_randomly()
+			press_spacer_timer.start()
+			
+func launch_die_randomly():
+	var max_window_size = SettingsManager.get_window_size()
 	var x_impulse = randi_range(-max_window_size.x,max_window_size.x) * 5
 	var y_impulse = randi_range(-max_window_size.y,max_window_size.y) * 5
 	apply_impulse(Vector2(x_impulse, y_impulse))
-	apply_torque_impulse(randi_range(-360, 360))
-
-func _process(_delta):
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		var dir = global_position.direction_to(get_global_mouse_position())
-		apply_impulse(-dir * 1000)
+	apply_torque_impulse(randi_range(-10000, 10000))

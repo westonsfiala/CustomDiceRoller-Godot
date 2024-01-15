@@ -1,31 +1,19 @@
 [gd_scene load_steps=10 format=3 uid="uid://77mx5ul4uuu8"]
 
 [ext_resource type="Script" path="res://Scenes/DiceRoller/scripts/dice_roller.gd" id="1_cmbj3"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4cq00"]
-bounce = 0.1
-absorbent = true
+[ext_resource type="PhysicsMaterial" uid="uid://emomj5bbos5p" path="res://Resources/Materials/WallEdgeMaterial.tres" id="2_m0txb"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="2_rl8r0"]
+[ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="3_oe3t3"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_u5a1l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6b7gr"]
 size = Vector2(1042, 136)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gmv12"]
-bounce = 0.1
-absorbent = true
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l5k16"]
 size = Vector2(195, 1210)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kubvh"]
-bounce = 0.1
-absorbent = true
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_axed0"]
 size = Vector2(1042, 125)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3vgse"]
-bounce = 0.1
-absorbent = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkyvl"]
 size = Vector2(160, 1206)
@@ -45,38 +33,91 @@ script = ExtResource("1_cmbj3")
 position = Vector2(376, -68)
 collision_layer = 15
 collision_mask = 15
-physics_material_override = SubResource("PhysicsMaterial_4cq00")
+physics_material_override = ExtResource("2_m0txb")
 
 [node name="TopShape" type="CollisionShape2D" parent="TopEdge"]
 shape = SubResource("RectangleShape2D_6b7gr")
-metadata/_edit_lock_ = true
 
 [node name="RightEdge" type="StaticBody2D" parent="."]
 position = Vector2(846, 466)
 collision_layer = 15
 collision_mask = 15
-physics_material_override = SubResource("PhysicsMaterial_gmv12")
+physics_material_override = ExtResource("2_m0txb")
 
 [node name="RightShape" type="CollisionShape2D" parent="RightEdge"]
 shape = SubResource("RectangleShape2D_l5k16")
-metadata/_edit_lock_ = true
 
 [node name="BottomEdge" type="StaticBody2D" parent="."]
 position = Vector2(433, 1065)
 collision_layer = 15
 collision_mask = 15
-physics_material_override = SubResource("PhysicsMaterial_kubvh")
+physics_material_override = ExtResource("2_m0txb")
 
 [node name="BottomShape" type="CollisionShape2D" parent="BottomEdge"]
 shape = SubResource("RectangleShape2D_axed0")
-metadata/_edit_lock_ = true
 
 [node name="LeftEdge" type="StaticBody2D" parent="."]
 position = Vector2(-78, 485)
 collision_layer = 15
 collision_mask = 15
-physics_material_override = SubResource("PhysicsMaterial_3vgse")
+physics_material_override = ExtResource("2_m0txb")
 
 [node name="LeftShape" type="CollisionShape2D" parent="LeftEdge"]
 shape = SubResource("RectangleShape2D_vkyvl")
-metadata/_edit_lock_ = true
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("3_u5a1l")
+theme_type_variation = &"FlatBackgroundPanel"
+
+[node name="InstructionLabel" parent="." instance=ExtResource("2_rl8r0")]
+layout_mode = 1
+anchors_preset = 15
+anchor_top = 0.0
+anchor_bottom = 1.0
+offset_top = 0.0
+offset_bottom = 0.0
+size_flags_horizontal = 1
+
+[node name="BackgroundButton" parent="." instance=ExtResource("3_oe3t3")]
+layout_mode = 1
+flat = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="GoToResultsButton" parent="MarginContainer" instance=ExtResource("3_oe3t3")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
+text = "Go To Results"
+
+[node name="TapTimeoutTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HoldTimeoutTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DoneTimeoutTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="BackgroundButton" to="." method="_on_background_button_pressed"]
+[connection signal="short_pressed" from="BackgroundButton" to="." method="_on_background_button_short_pressed"]
+[connection signal="pressed" from="MarginContainer/GoToResultsButton" to="." method="_on_go_to_results_button_pressed"]
+[connection signal="timeout" from="TapTimeoutTimer" to="." method="_on_tap_timeout_timer_timeout"]
+[connection signal="timeout" from="HoldTimeoutTimer" to="." method="_on_hold_timeout_timer_timeout"]
+[connection signal="timeout" from="DoneTimeoutTimer" to="." method="_on_done_timeout_timer_timeout"]

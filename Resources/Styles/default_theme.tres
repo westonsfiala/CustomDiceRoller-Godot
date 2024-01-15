@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cfefgu8jbb3xm"]
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://cfefgu8jbb3xm"]
 
 [ext_resource type="FontFile" uid="uid://dp6a4xtygsyyh" path="res://Resources/Fonts/Roboto/Roboto-Regular.ttf" id="1_dh1c7"]
 [ext_resource type="StyleBox" uid="uid://ciqb75q22o8hi" path="res://Resources/Styles/scroll_bar_style.tres" id="1_vlu4t"]
@@ -8,6 +8,7 @@
 [ext_resource type="StyleBox" uid="uid://lgdpfw2i0fod" path="res://Resources/Styles/button_background.tres" id="3_ac0pq"]
 [ext_resource type="FontFile" uid="uid://dg0thpcypiig3" path="res://Resources/Fonts/Roboto/Roboto-BoldItalic.ttf" id="4_0fve0"]
 [ext_resource type="StyleBox" uid="uid://bfyavmmil7vea" path="res://Resources/Styles/button_pressed.tres" id="4_qd3f4"]
+[ext_resource type="StyleBox" uid="uid://doale707pr5j3" path="res://Resources/Styles/flat_background_panel.tres" id="5_pvmw4"]
 [ext_resource type="StyleBox" uid="uid://081aqpqtgsiq" path="res://Resources/Styles/popup_background.tres" id="6_uhvgg"]
 [ext_resource type="StyleBox" uid="uid://c2f5v3edh1dg7" path="res://Resources/Styles/progress_bar_style.tres" id="7_aw88j"]
 
@@ -28,15 +29,30 @@ Button/styles/focus = SubResource("StyleBoxEmpty_cn40s")
 Button/styles/hover = ExtResource("3_ac0pq")
 Button/styles/normal = ExtResource("3_ac0pq")
 Button/styles/pressed = ExtResource("4_qd3f4")
+FlatBackgroundPanel/base_type = &"Panel"
+FlatBackgroundPanel/styles/panel = ExtResource("5_pvmw4")
 HBoxContainer/constants/separation = 0
 HScrollBar/styles/grabber = ExtResource("1_vlu4t")
 HScrollBar/styles/grabber_highlight = ExtResource("1_vlu4t")
 HScrollBar/styles/grabber_pressed = ExtResource("1_vlu4t")
 HScrollBar/styles/scroll = SubResource("StyleBoxEmpty_1l5wb")
 HSeparator/constants/separation = 8
+HugeRichTextLabel/base_type = &"RichTextLabel"
+HugeRichTextLabel/font_sizes/bold_font_size = 60
+HugeRichTextLabel/font_sizes/bold_italics_font_size = 60
+HugeRichTextLabel/font_sizes/italics_font_size = 60
+HugeRichTextLabel/font_sizes/mono_font_size = 60
+HugeRichTextLabel/font_sizes/normal_font_size = 60
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 3
+Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("1_dh1c7")
+LargeRichTextLabel/base_type = &"RichTextLabel"
+LargeRichTextLabel/font_sizes/bold_font_size = 40
+LargeRichTextLabel/font_sizes/bold_italics_font_size = 40
+LargeRichTextLabel/font_sizes/italics_font_size = 40
+LargeRichTextLabel/font_sizes/mono_font_size = 40
+LargeRichTextLabel/font_sizes/normal_font_size = 40
 MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
 MarginContainer/constants/margin_right = 5
@@ -56,6 +72,11 @@ ProgressBar/styles/background = SubResource("StyleBoxEmpty_uwjs4")
 ProgressBar/styles/fill = ExtResource("7_aw88j")
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 3
+RichTextLabel/font_sizes/bold_font_size = 32
+RichTextLabel/font_sizes/bold_italics_font_size = 32
+RichTextLabel/font_sizes/italics_font_size = 32
+RichTextLabel/font_sizes/mono_font_size = 32
+RichTextLabel/font_sizes/normal_font_size = 32
 RichTextLabel/fonts/bold_font = ExtResource("2_24e56")
 RichTextLabel/fonts/bold_italics_font = ExtResource("3_77j75")
 RichTextLabel/fonts/italics_font = ExtResource("4_0fve0")

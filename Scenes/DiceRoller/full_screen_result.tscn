@@ -1,0 +1,101 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxajtavmw1sf7"]
+
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_fib1j"]
+[ext_resource type="Script" path="res://Scenes/DiceRoller/scripts/full_screen_result.gd" id="2_itmkg"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="3_juqm2"]
+[ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="4_1mwif"]
+
+[node name="FullScreenResult" type="Control"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme = ExtResource("1_fib1j")
+script = ExtResource("2_itmkg")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fib1j")
+theme_type_variation = &"FlatBackgroundPanel"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_fib1j")
+
+[node name="TextAndButtonLayout" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="DateTimeRichText" parent="MarginContainer/TextAndButtonLayout" instance=ExtResource("3_juqm2")]
+layout_mode = 2
+theme_type_variation = &"SmallRichTextLabel"
+text = "[right]1970-01-01 00:00:00[/right]"
+max_lines_shown = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TextAndButtonLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DisplayTextLayout" type="VBoxContainer" parent="MarginContainer/TextAndButtonLayout/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+theme = ExtResource("1_fib1j")
+
+[node name="RollDetailsRichText" parent="MarginContainer/TextAndButtonLayout/ScrollContainer/DisplayTextLayout" instance=ExtResource("3_juqm2")]
+layout_mode = 2
+size_flags_horizontal = 1
+text = "[center]Roll Details[/center]
+"
+enforce_all_lines_shown = true
+
+[node name="SumRichTextLabel" parent="MarginContainer/TextAndButtonLayout/ScrollContainer/DisplayTextLayout" instance=ExtResource("3_juqm2")]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme_type_variation = &"HugeRichTextLabel"
+text = "[center]Sum[/center]"
+enforce_all_lines_shown = true
+
+[node name="RollResultsRichTextLabel" parent="MarginContainer/TextAndButtonLayout/ScrollContainer/DisplayTextLayout" instance=ExtResource("3_juqm2")]
+layout_mode = 2
+text = "[center]Roll Results[/center]"
+enforce_all_lines_shown = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextAndButtonLayout"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="RerollButton" parent="MarginContainer/TextAndButtonLayout/HBoxContainer" instance=ExtResource("4_1mwif")]
+layout_mode = 2
+text = "Re-Roll"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/TextAndButtonLayout/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme = ExtResource("1_fib1j")
+
+[node name="ExitButton" parent="MarginContainer/TextAndButtonLayout/HBoxContainer" instance=ExtResource("4_1mwif")]
+layout_mode = 2
+text = "Exit
+"
+
+[connection signal="pressed" from="MarginContainer/TextAndButtonLayout/HBoxContainer/RerollButton" to="." method="_on_reroll_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TextAndButtonLayout/HBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
