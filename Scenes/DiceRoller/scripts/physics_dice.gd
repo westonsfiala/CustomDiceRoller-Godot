@@ -45,7 +45,17 @@ func _process(_delta):
 			
 func launch_die_randomly():
 	var max_window_size = SettingsManager.get_window_size()
-	var x_impulse = randi_range(-max_window_size.x,max_window_size.x) * 5
-	var y_impulse = randi_range(-max_window_size.y,max_window_size.y) * 5
+	
+	var x_impulse = 0
+	if linear_velocity.x > 0:
+		x_impulse = randi_range(0,max_window_size.x) * 5
+	else:
+		x_impulse = randi_range(-max_window_size.x, 0) * 5
+		
+	var y_impulse = 0
+	if linear_velocity.y > 0:
+		y_impulse = randi_range(0,max_window_size.y) * 5
+	else:
+		y_impulse = randi_range(-max_window_size.y, 0) * 5
 	apply_impulse(Vector2(x_impulse, y_impulse))
 	apply_torque_impulse(randi_range(-10000, 10000))
