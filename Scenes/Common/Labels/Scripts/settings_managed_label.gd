@@ -2,7 +2,7 @@ extends Label
 class_name SettingsManagedLabel
 
 func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
+	SettingsManager.window_size_changed.connect(reconfigure)
 	call_deferred("reconfigure")
 	
 # Reconfigures the scene according to the settings

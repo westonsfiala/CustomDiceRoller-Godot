@@ -7,12 +7,9 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	RollManager.new_roll_result.connect(add_history_item)
-	RollManager.refresh_history.connect(deferred_reconfigure)
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
-	deferred_reconfigure()
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
+	RollManager.refresh_history.connect(reconfigure)
+	SettingsManager.window_size_changed.connect(reconfigure)
+	reconfigure()
 
 func reconfigure():
 	custom_minimum_size.x = SettingsManager.get_window_size().x

@@ -10,7 +10,7 @@ class_name SettingsManagedRichTextLabel
 @export var enforce_all_lines_shown : bool = false
 
 func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
+	SettingsManager.window_size_changed.connect(reconfigure)
 	call_deferred("reconfigure")
 	
 # Reconfigures the scene according to the settings

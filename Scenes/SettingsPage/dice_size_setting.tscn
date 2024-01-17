@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsbeml1whsaf5"]
+
+[ext_resource type="Script" path="res://Scenes/SettingsPage/dice_size_setting.gd" id="1_jyxvd"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="2_x5lo8"]
+[ext_resource type="Texture2D" uid="uid://o1xm76qu6h8h" path="res://DicePNGs/white/unknown-die.png" id="3_erx52"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_soq13"]
+
+[node name="DiceSizeSetting" type="Control"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("1_jyxvd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="DieSizeRichTextLabel" parent="HBoxContainer/VBoxContainer" instance=ExtResource("2_x5lo8")]
+layout_mode = 2
+text = "Die Size"
+
+[node name="DieSizeSlider" type="HSlider" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_soq13")
+min_value = 25.0
+max_value = 400.0
+step = 5.0
+value = 25.0
+
+[node name="DieSizeVisualizer" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = ExtResource("3_erx52")
+expand_mode = 1
+stretch_mode = 4
+
+[connection signal="drag_ended" from="HBoxContainer/VBoxContainer/DieSizeSlider" to="." method="_on_die_size_slider_drag_ended"]
+[connection signal="value_changed" from="HBoxContainer/VBoxContainer/DieSizeSlider" to="." method="_on_die_size_slider_value_changed"]

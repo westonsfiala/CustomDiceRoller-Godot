@@ -8,11 +8,8 @@ class_name PopupBase
 var tween : Tween
 
 func _ready():
-	SettingsManager.reconfigure.connect(reconfigure)
-	deferred_reconfigure()
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
+	SettingsManager.window_size_changed.connect(reconfigure)
+	reconfigure()
 
 # Reconfigures the scene according to the settings
 func reconfigure():

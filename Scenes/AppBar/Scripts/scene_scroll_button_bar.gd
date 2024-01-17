@@ -2,24 +2,22 @@ extends Control
 
 @onready var scroll_container_h_bar : HScrollBar = $ColorRect/ScrollContainer.get_h_scroll_bar()
 @onready var synced_scroll_bar : HScrollBar = $ColorRect/ScrollContainer/VBoxContainer/SyncedScrollBar
+@onready var settings_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/SettingsButton
 @onready var history_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/HistoryButton
 @onready var simple_roll_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/SimpleRollButton
 
 func _ready():
+	settings_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
 	history_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
 	simple_roll_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
-	SettingsManager.scene_scroll_value_changed.connect(set_scoll_value_deferred)
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
-	
-	deferred_reconfigure()
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
+	SettingsManager.scene_scroll_value_changed.connect(set_scroll_value_deferred)
+	SettingsManager.window_size_changed.connect(reconfigure)
+	reconfigure()
 
 # Match our synced scroll bar to the size of the pages so that they line up with the buttons
 func reconfigure():
 	var page_size = SettingsManager.get_window_size().x
-	var margin_size = SettingsManager.get_margin_padding()
+	var margin_size = 5
 	synced_scroll_bar.max_value = page_size * SettingsManager.get_num_scrollable_scenes()
 	synced_scroll_bar.page = page_size
 	synced_scroll_bar.custom_minimum_size.y = margin_size
@@ -28,7 +26,7 @@ func reconfigure():
 # If we have manually scrolled the bar in the direction of movement already, don't update that scrolling
 # If you don't do this it has some jittery movements that look bad.
 # The jittery movement still happens in reverse, but I think thats a less likely scenario and don't know how to solve.
-func set_scoll_value_deferred(value: int):
+func set_scroll_value_deferred(value: int):
 	var current_synced_scroll_bar_value = synced_scroll_bar.value
 	synced_scroll_bar.set_deferred("value", value)
 	

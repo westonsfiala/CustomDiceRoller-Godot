@@ -3,8 +3,8 @@ class_name ClickableDie
 
 var m_die : AbstractDie = SimpleRollManager.get_default_die()
 
-@onready var die_name : Label = $LongPressButton/VerticalContainer/DieName
-@onready var die_image : TextureRect = $LongPressButton/VerticalContainer/Control/DieImage
+@onready var die_name : SettingsManagedRichTextLabel = $LongPressButton/VerticalContainer/DieName
+@onready var die_image : TextureRect = $LongPressButton/VerticalContainer/DieImage
 
 var tween : Tween
 
@@ -13,24 +13,25 @@ signal die_pressed(die: AbstractDie)
 signal die_long_pressed(die: AbstractDie)
 
 func _ready():
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	SettingsManager.dice_size_changed.connect(reconfigure)
 
 # Initializer that takes a die and connects to the SettingsManager
 func configure(die : AbstractDie):
 	m_die = die
-	die_name.text = m_die.name()
+	die_name.set_text_and_resize_y(str("[center]", m_die.name(), "[/center]"))
 	die_image.texture = m_die.texture()
 	reconfigure()
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
 	
 # Reconfigures the scene according to the settings
 func reconfigure() -> void:
 	var dice_size = SettingsManager.get_dice_size()
-	var text_min_size = SettingsManager.get_text_size()
 	
-	var full_button_size = Vector2(dice_size, dice_size + text_min_size)
+	die_image.custom_minimum_size = Vector2.ONE * dice_size
+	die_image.size = die_image.custom_minimum_size
+	
+	var size_x = max(dice_size, die_name.get_content_width())
+	var size_y = dice_size + die_name.custom_minimum_size.y
+	var full_button_size = Vector2(size_x, size_y)
 	
 	# You need to change both of these values to make the flow container work
 	custom_minimum_size = full_button_size

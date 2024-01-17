@@ -15,15 +15,12 @@ signal reroll()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
-	deferred_reconfigure()
+	SettingsManager.window_size_changed.connect(reconfigure)
+	reconfigure()
 	
 func configure(result: RollResults) -> FullScreenResult:
 	m_result = result
 	return self
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
 	
 func reconfigure():
 	# First up is the details

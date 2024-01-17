@@ -51,7 +51,7 @@ func _ready():
 	num_taps = 0
 	physics_dice_array = []
 	
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	SettingsManager.window_size_changed.connect(go_to_results_page)
 	reconfigure()
 	
 	# If we have too many dice in the roll it isn't very fun.
@@ -86,10 +86,6 @@ func _ready():
 			physics_dice_node.configure(die)
 			physics_dice_array.push_back(physics_dice_node)
 			add_child(physics_dice_node)
-			
-
-func deferred_reconfigure():
-	call_deferred("reconfigure")
 	
 func reconfigure():
 	var screen_size: Vector2 = SettingsManager.get_window_size()
@@ -148,8 +144,8 @@ func set_shake_state(new_state: shake_state):
 			for physics_die in physics_dice_array:
 				physics_die.freeze = true
 
-# Press the button, leave the scene.
-func _on_go_to_results_button_pressed():
+# Press the button, resize the window, or finish the final timer, leave the scene.
+func go_to_results_page():
 	emit_signal("finished_animated_roll", stored_roll_results)
 
 # Count the number of taps.
@@ -163,7 +159,3 @@ func _on_tap_timeout_timer_timeout():
 # When hold timeout occurs, go to done.
 func _on_hold_timeout_timer_timeout():
 	set_shake_state(shake_state.DONE)
-
-# When done timeout occurs, emit that we are finished.
-func _on_done_timeout_timer_timeout():
-	emit_signal("finished_animated_roll", stored_roll_results)

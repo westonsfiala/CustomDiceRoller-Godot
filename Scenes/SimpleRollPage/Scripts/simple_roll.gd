@@ -1,4 +1,5 @@
 extends Control
+class_name SimpleRoll
 
 @onready var dice_result : SettingsManagedRichTextLabel = $VerticalLayout/RichTextDiceResult
 @onready var dice_grid : HFlowContainer = $VerticalLayout/ScrollContainer/DiceGrid
@@ -16,15 +17,12 @@ var currently_edited_property_identifier : StringName = ""
 # Connect to the settings manager and setup the scene with all of our dice
 func _ready():
 	RollManager.new_roll_result.connect(set_dice_result)
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	SettingsManager.window_size_changed.connect(reconfigure)
 	SimpleRollManager.roll_properties_updated.connect(properties_updated)
 	SimpleRollManager.simple_dice_updated.connect(dice_updated)
 	dice_updated()
 	properties_updated()
-	deferred_reconfigure()
-
-func deferred_reconfigure():
-	call_deferred("reconfigure")
+	reconfigure()
 
 # Remove all of our currently set diced and place new ones
 func reconfigure():

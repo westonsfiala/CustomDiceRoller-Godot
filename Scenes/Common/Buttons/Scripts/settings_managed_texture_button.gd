@@ -9,7 +9,7 @@ class_name SettingsManagedTextureButton
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	texture_rect.texture = texture_2d
-	SettingsManager.reconfigure.connect(reconfigure)
+	SettingsManager.window_size_changed.connect(reconfigure)
 	call_deferred("reconfigure")
 	
 # Reconfigures the scene according to the settings

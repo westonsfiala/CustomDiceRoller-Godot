@@ -1,68 +1,261 @@
 extends Node
 
-var dice_size : int = 150
-var button_size : int = 50
-var text_size : int = 40
-var text_size_small : int = 35
-var margin_padding : int = 5
+const DICE_SIZE_DEFAULT: int = 150
+var dice_size : int = DICE_SIZE_DEFAULT
+
+const BUTTON_SIZE_DEFAULT: int = 50
+var button_size : int = BUTTON_SIZE_DEFAULT
+
+const FONT_SIZE_SMALL_DEFAULT: int = 24
+var font_size_small : int = FONT_SIZE_SMALL_DEFAULT
+
+const FONT_SIZE_NORMAL_DEFAULT: int = 32
+var font_size_normal : int = FONT_SIZE_NORMAL_DEFAULT
+
+const FONT_SIZE_LARGE_DEFAULT: int = 40
+var font_size_large : int = FONT_SIZE_LARGE_DEFAULT
+
+const FONT_SIZE_HUGE_DEFAULT: int = 60
+var font_size_huge : int = FONT_SIZE_HUGE_DEFAULT
 
 const LONG_PRESS_DELAY : float = 0.5
 
-enum SCENE {HISTORY, SIMPLE_ROLL, NUM_SCENES}
+enum SCENE {SETTINGS, HISTORY, SIMPLE_ROLL, NUM_SCENES}
 
 var default_label_settings : LabelSettings = preload("res://Resources/Styles/normal_label.tres")
 
-signal reconfigure()
+const SAVE_FILE_NAME : StringName = "user://settings_manager.save"
 
-func trigger_reconfigure():
-	print("triggering reconfigure")
-	emit_signal("reconfigure")
+func _ready():
+	load_state()
 	
+# Save the state of the simple roll manager to its save file.
+func save_state() -> void:
+	# Open the save file for writing.
+	var settings_manager_save_file = FileAccess.open(SAVE_FILE_NAME, FileAccess.WRITE)
+	
+	# Start generating the save state dict.
+	var save_dict : Dictionary = {}
+	
+	# Not sure if I need a schema version, but can't hurt to have.
+	save_dict['schema_version'] = "1.0.0"
+	save_dict['class_name'] = "SettingsManager"
+	
+	# Save the properties.
+	save_dict['dice_size'] = dice_size
+	save_dict['button_size'] = button_size
+	save_dict['font_size_small'] = font_size_small
+	save_dict['font_size_normal'] = font_size_normal
+	save_dict['font_size_large'] = font_size_large
+	save_dict['font_size_huge'] = font_size_huge
+	
+	# Turn the dict into a string.
+	var json_string = JSON.stringify(save_dict)
+	
+	# Save it into the file
+	settings_manager_save_file.store_line(json_string)
+	
+# Load our state from our save file.
+func load_state() -> void:
+	# If not save file is present, use the defaults.
+	if not FileAccess.file_exists(SAVE_FILE_NAME):
+		print("No settings manager save file detected.")
+		return
+	
+	# Load our save file and start parsing it.
+	var settings_manager_save_file = FileAccess.open(SAVE_FILE_NAME, FileAccess.READ)
+	while settings_manager_save_file.get_position() < settings_manager_save_file.get_length():
+		
+		# Grab a line and parse it. We should only ever have one line.
+		var json_string = settings_manager_save_file.get_line()
+		var json = JSON.new()
+		
+		# If something goes wrong, print a message and bail.
+		var parse_results = json.parse(json_string)
+		if not parse_results == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			return
+		
+		# Get the data from the JSON object
+		var save_data: Dictionary = json.get_data()
+		
+		# Do some checking to make sure we have all our bits.
+		if not save_data.has('schema_version'):
+			print("Missing schema_version during settings_manager loader")
+			return
+		if not save_data.has('class_name'):
+			print("Missing class_name during settings_manager loader")
+			return
+		if not save_data.has('dice_size'):
+			print("Missing dice_size during settings_manager loader")
+			return
+		if not save_data.has('button_size'):
+			print("Missing button_size during settings_manager loader")
+			return
+		if not save_data.has('font_size_small'):
+			print("Missing font_size_small during settings_manager loader")
+			return
+		if not save_data.has('font_size_normal'):
+			print("Missing font_size_normal during settings_manager loader")
+			return
+		if not save_data.has('font_size_large'):
+			print("Missing font_size_large during settings_manager loader")
+			return
+		if not save_data.has('font_size_huge'):
+			print("Missing font_size_huge during settings_manager loader")
+			return
+			
+		if save_data['schema_version'] != "1.0.0":
+			print("Unknown schema_version found during settings_manager loader: ", save_data['schema_version'])
+			return
+		if save_data['class_name'] != "SettingsManager":
+			print("Unknown class_name found during settings_manager loader: ", save_data['class_name'])
+			return
+		if not (save_data['dice_size'] is int or save_data['dice_size'] is float):
+			print("dice_size not an int during settings_manager loader: ", typeof(save_data['dice_size']))
+			return
+		if not (save_data['button_size'] is int or save_data['button_size'] is float):
+			print("button_size not an int during settings_manager loader: ", typeof(save_data['button_size']))
+			return
+		if not (save_data['font_size_small'] is int or save_data['font_size_small'] is float):
+			print("font_size_small not an int during settings_manager loader: ", typeof(save_data['font_size_small']))
+			return
+		if not (save_data['font_size_normal'] is int or save_data['font_size_normal'] is float):
+			print("font_size_normal not an int during settings_manager loader: ", typeof(save_data['font_size_normal']))
+			return
+		if not (save_data['font_size_large'] is int or save_data['font_size_large'] is float):
+			print("font_size_large not an int during settings_manager loader: ", typeof(save_data['font_size_large']))
+			return
+		if not (save_data['font_size_huge'] is int or save_data['font_size_huge'] is float):
+			print("font_size_huge not an int during settings_manager loader: ", typeof(save_data['font_size_huge']))
+			return
+		
+		dice_size = save_data['dice_size']
+		button_size = save_data['button_size']
+		font_size_small = save_data['font_size_small']
+		font_size_normal = save_data['font_size_normal']
+		font_size_large = save_data['font_size_large']
+		font_size_huge = save_data['font_size_huge']
+
+# Signal emitted when the window size changes
+signal window_size_changed()
+
+# trigger for telling the settings manager that window size has changed.
+func trigger_window_size_change():
+	print("triggering window size change")
+	emit_signal("window_size_changed")
+
+# Gets the window size from the display server
+func get_window_size() -> Vector2:
+	return DisplayServer.window_get_size()
+	
+# Gets the default app scene, the simple roll page.
 func get_default_app_scene() -> int:
 	return SCENE.SIMPLE_ROLL
 
+# Gets the the display name from the given enum
 func get_scene_name(scene_enum: SCENE) -> String:
 	match scene_enum:
+		SCENE.SETTINGS: 
+			return "Settings"
 		SCENE.HISTORY: 
 			return "History"
 		SCENE.SIMPLE_ROLL: 
 			return "Simple Roll"
 		_:
 			return "TEMP"
-	
-signal scene_scroll_value_changed(value: int)
-
-func set_scene_scroll_value(value: int):
-	emit_signal("scene_scroll_value_changed", value)
-	
-signal navigate_to_scene(scene: SCENE)
-
-func set_scrolled_scene(scene: SCENE):
-	emit_signal("navigate_to_scene", scene)
-	
-func get_window_size() -> Vector2:
-	return DisplayServer.window_get_size()
-	
+			
+# Gets the number of scrollable scenes, used for coordinating scrollers
 func get_num_scrollable_scenes() -> int:
 	return SCENE.NUM_SCENES
+
+# Signal to say that the given scene needs to be activated
+signal navigate_to_scene(scene: SCENE)
+
+# Triggers the navigate_to_scene signal to all listeners
+func set_scrolled_scene(scene: SCENE):
+	emit_signal("navigate_to_scene", scene)
+
+# Signal for coordinating scroll value for the display bar
+signal scene_scroll_value_changed(value: int)
+
+# Sends out the signal that the scene scroll has changed
+func set_scene_scroll_value(value: int):
+	emit_signal("scene_scroll_value_changed", value)
+
+# Signal for saying that the dice size has changed
+signal dice_size_changed()
 	
+# Sets the new nice size and emits the dice_size_changed value
+func set_dice_size(new_dice_size: int):
+	dice_size = new_dice_size
+	emit_signal("dice_size_changed")
+	save_state()
+	
+# Gets the dice size
 func get_dice_size() -> int:
 	return dice_size
 	
+# Signal for saying that the button size has changed
+signal button_size_changed()
+
+# Sets the button size to the new size and emits button_size_changed
+func set_button_size(new_button_size: int):
+	button_size = new_button_size
+	emit_signal("button_size_changed")
+	save_state()
+	
+# Gets the button size
 func get_button_size() -> int:
 	return button_size
+
+# Signal for saying that the font size has changed
+signal font_size_changed()
+
+# Sets the small font size to the new size and emits font_size_changed
+func set_font_size_small(new_font_size: int):
+	font_size_small = new_font_size
+	emit_signal("font_size_changed")
+	save_state()
+
+# Sets the normal font size to the new size and emits font_size_changed
+func set_font_size_normal(new_font_size: int):
+	font_size_normal = new_font_size
+	emit_signal("font_size_changed")
+	save_state()
+
+# Sets the large font size to the new size and emits font_size_changed
+func set_font_size_large(new_font_size: int):
+	font_size_large = new_font_size
+	emit_signal("font_size_changed")
+	save_state()
+
+# Sets the huge font size to the new size and emits font_size_changed
+func set_font_size_huge(new_font_size: int):
+	font_size_huge = new_font_size
+	emit_signal("font_size_changed")
+	save_state()
+
+# Gets the small font size
+func get_font_size_small() -> int:
+	return font_size_small
 	
-func get_text_size() -> int:
-	return text_size
+# Gets the normal font size
+func get_font_size_normal() -> int:
+	return font_size_normal
 	
-func get_text_size_small() -> int:
-	return text_size_small
+# Gets the large font size
+func get_font_size_large() -> int:
+	return font_size_large
 	
-func get_margin_padding() -> int:
-	return margin_padding
-	
+# Gets the huge font size
+func get_font_size_huge() -> int:
+	return font_size_huge
+
+# Signal for triggering a fake mouse press
 signal mouse_unpress()
 
+# Trigger a fake mouse unpress. Used for making popups play nice.
 func fake_mouse_unpress() -> void:
 	emit_signal("mouse_unpress")
 

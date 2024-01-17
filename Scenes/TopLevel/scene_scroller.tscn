@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://wgiuyjr6bltu"]
+[gd_scene load_steps=6 format=3 uid="uid://wgiuyjr6bltu"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_ifnbb"]
 [ext_resource type="Script" path="res://Scenes/TopLevel/Scripts/scene_scroller.gd" id="1_vdmet"]
 [ext_resource type="PackedScene" uid="uid://caksmi57k4y3t" path="res://Scenes/HistoryPage/history_screen.tscn" id="2_3rsnc"]
 [ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://Scenes/SimpleRollPage/simple_roll.tscn" id="3_21u8g"]
+[ext_resource type="PackedScene" uid="uid://c5xbwdmgaf0pv" path="res://Scenes/SettingsPage/settings_page.tscn" id="3_ly35x"]
 
 [node name="SceneScroller" type="ScrollContainer"]
 anchors_preset = 15
@@ -25,6 +26,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_ifnbb")
+
+[node name="SettingsPage" parent="SceneContainer" instance=ExtResource("3_ly35x")]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 2
 
 [node name="HistoryScreen" parent="SceneContainer" instance=ExtResource("2_3rsnc")]
 custom_minimum_size = Vector2(750, 0)

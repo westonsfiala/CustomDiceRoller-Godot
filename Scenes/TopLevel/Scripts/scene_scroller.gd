@@ -13,14 +13,11 @@ func _ready():
 	h_scroll_bar.value_changed.connect(value_changed_helper)
 	scroll_snap_timer.timeout.connect(snap_scroll_to_scene)
 	SettingsManager.navigate_to_scene.connect(animate_to_scene)
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	SettingsManager.window_size_changed.connect(reconfigure)
 	
 	scroll_to_scene(SettingsManager.get_default_app_scene(), 0.0)
 	
-	deferred_reconfigure()
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
+	reconfigure()
 
 func reconfigure():
 	var scene_size = SettingsManager.get_window_size().x

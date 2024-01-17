@@ -42,16 +42,13 @@ signal reset_properties()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	SettingsManager.button_size_changed.connect(reconfigure)
 	change_properties_popup.reset_pressed.connect(_on_reset_button_pressed)
 	change_properties_popup.property_pressed.connect(popup_property_pressed)
 	change_properties_popup.properties_updated.connect(popup_properties_updated)
 	set_value_exact_popup.value_changed.connect(property_set_exact)
 	
-	deferred_reconfigure()
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
+	reconfigure()
 
 func reconfigure():
 	var button_size = SettingsManager.get_button_size()

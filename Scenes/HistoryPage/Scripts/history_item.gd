@@ -13,15 +13,12 @@ var m_result : RollResults = RollResults.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
-	deferred_reconfigure()
+	SettingsManager.window_size_changed.connect(reconfigure)
+	reconfigure()
 	
 func configure(result: RollResults) -> HistoryItem:
 	m_result = result
 	return self
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
 	
 func reconfigure():
 	var minimum_height = 0

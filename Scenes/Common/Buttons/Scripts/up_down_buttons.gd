@@ -18,12 +18,9 @@ signal value_changed(value: int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	SettingsManager.reconfigure.connect(deferred_reconfigure)
+	SettingsManager.button_size_changed.connect(reconfigure)
 	set_value(m_value)
-	deferred_reconfigure()
-	
-func deferred_reconfigure():
-	call_deferred("reconfigure")
+	reconfigure()
 	
 func setup_exports(prefix: String, postfix: String, show_plus_minus: bool, disallow_zero: bool):
 	m_prefix = prefix

@@ -12,8 +12,8 @@ var full_screen_results: FullScreenResult = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().get_root().size_changed.connect(start_resize_timer)
-	resize_timer.timeout.connect(SettingsManager.trigger_reconfigure)
-	SettingsManager.reconfigure.connect(reconfigure)
+	resize_timer.timeout.connect(SettingsManager.trigger_window_size_change)
+	SettingsManager.button_size_changed.connect(reconfigure)
 	SettingsManager.mouse_unpress.connect(fake_unpress)
 	RollManager.new_roll_result.connect(create_animated_roller)
 	reconfigure()

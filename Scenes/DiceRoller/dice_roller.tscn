@@ -117,7 +117,7 @@ one_shot = true
 
 [connection signal="pressed" from="BackgroundButton" to="." method="_on_background_button_pressed"]
 [connection signal="short_pressed" from="BackgroundButton" to="." method="_on_background_button_short_pressed"]
-[connection signal="pressed" from="MarginContainer/GoToResultsButton" to="." method="_on_go_to_results_button_pressed"]
+[connection signal="pressed" from="MarginContainer/GoToResultsButton" to="." method="go_to_results_page"]
 [connection signal="timeout" from="TapTimeoutTimer" to="." method="_on_tap_timeout_timer_timeout"]
 [connection signal="timeout" from="HoldTimeoutTimer" to="." method="_on_hold_timeout_timer_timeout"]
-[connection signal="timeout" from="DoneTimeoutTimer" to="." method="_on_done_timeout_timer_timeout"]
+[connection signal="timeout" from="DoneTimeoutTimer" to="." method="go_to_results_page"]
