@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://5vm2iatgmrxs"]
+[gd_scene load_steps=11 format=3 uid="uid://5vm2iatgmrxs"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dvlt6"]
 [ext_resource type="Script" path="res://Scenes/SimpleRollPage/Scripts/simple_roll.gd" id="1_tqmuk"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="2_gwd73"]
-[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="3_3r18e"]
 [ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="3_6vjsp"]
 [ext_resource type="PackedScene" uid="uid://cdqd62tcyenpp" path="res://Scenes/Common/Buttons/property_button.tscn" id="5_uf67h"]
 [ext_resource type="PackedScene" uid="uid://bjqaot0p6s5sg" path="res://Scenes/Common/Buttons/add_dice_button.tscn" id="6_c6xd2"]
@@ -46,10 +45,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_dvlt6")
-
-[node name="RichTextDiceResult" parent="VerticalLayout" instance=ExtResource("3_3r18e")]
-visible = false
-layout_mode = 2
 
 [node name="PropBar" type="VBoxContainer" parent="VerticalLayout"]
 layout_mode = 2

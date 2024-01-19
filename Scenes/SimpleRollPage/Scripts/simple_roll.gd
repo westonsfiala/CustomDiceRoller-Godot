@@ -1,7 +1,6 @@
 extends Control
 class_name SimpleRoll
 
-@onready var dice_result : SettingsManagedRichTextLabel = $VerticalLayout/RichTextDiceResult
 @onready var dice_grid : HFlowContainer = $VerticalLayout/ScrollContainer/DiceGrid
 @onready var no_dice_label : Label = $NoDiceLabel
 @onready var num_dice_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown
@@ -16,7 +15,6 @@ var currently_edited_property_identifier : StringName = ""
 
 # Connect to the settings manager and setup the scene with all of our dice
 func _ready():
-	RollManager.new_roll_result.connect(set_dice_result)
 	SettingsManager.window_size_changed.connect(reconfigure)
 	SimpleRollManager.roll_properties_updated.connect(properties_updated)
 	SimpleRollManager.simple_dice_updated.connect(dice_updated)
@@ -63,14 +61,6 @@ func edit_die(die: AbstractDie):
 			word_edit_die_popup.set_word_die(die.duplicate())
 			word_edit_die_popup.set_remove_button_visibility(true)
 			word_edit_die_popup.modular_popup_center()
-
-# Displays the dice results
-func set_dice_result(roll_result: RollResults):
-	dice_result.visible = true
-	dice_result.clear()
-	dice_result.push_paragraph(HORIZONTAL_ALIGNMENT_CENTER)
-	dice_result.append_text(roll_result.roll_sum.formatted_text)
-	dice_result.pop()
 	
 func refresh_no_dice():
 	var dice = SimpleRollManager.get_dice()

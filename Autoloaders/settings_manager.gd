@@ -3,6 +3,9 @@ extends Node
 const DICE_SIZE_DEFAULT: int = 150
 var dice_size : int = DICE_SIZE_DEFAULT
 
+const DICE_TINT_COLOR_DEFAULT: Color = Color.WHITE
+var dice_tint_color : Color = DICE_TINT_COLOR_DEFAULT
+
 const BUTTON_SIZE_DEFAULT: int = 50
 var button_size : int = BUTTON_SIZE_DEFAULT
 
@@ -43,6 +46,7 @@ func save_state() -> void:
 	
 	# Save the properties.
 	save_dict['dice_size'] = dice_size
+	save_dict['dice_tint_color'] = dice_tint_color.to_html()
 	save_dict['button_size'] = button_size
 	save_dict['font_size_small'] = font_size_small
 	save_dict['font_size_normal'] = font_size_normal
@@ -89,6 +93,9 @@ func load_state() -> void:
 		if not save_data.has('dice_size'):
 			print("Missing dice_size during settings_manager loader")
 			return
+		if not save_data.has('dice_tint_color'):
+			print("Missing dice_tint_color during settings_manager loader")
+			return
 		if not save_data.has('button_size'):
 			print("Missing button_size during settings_manager loader")
 			return
@@ -114,6 +121,9 @@ func load_state() -> void:
 		if not (save_data['dice_size'] is int or save_data['dice_size'] is float):
 			print("dice_size not an int during settings_manager loader: ", typeof(save_data['dice_size']))
 			return
+		if not save_data['dice_tint_color'] is String:
+			print("dice_tint_color not a string during settings_manager loader: ", typeof(save_data['dice_tint_color']))
+			return
 		if not (save_data['button_size'] is int or save_data['button_size'] is float):
 			print("button_size not an int during settings_manager loader: ", typeof(save_data['button_size']))
 			return
@@ -131,6 +141,7 @@ func load_state() -> void:
 			return
 		
 		dice_size = save_data['dice_size']
+		dice_tint_color = Color.from_string(save_data['dice_tint_color'], Color.WHITE)
 		button_size = save_data['button_size']
 		font_size_small = save_data['font_size_small']
 		font_size_normal = save_data['font_size_normal']
@@ -186,7 +197,7 @@ func set_scene_scroll_value(value: int):
 # Signal for saying that the dice size has changed
 signal dice_size_changed()
 	
-# Sets the new nice size and emits the dice_size_changed value
+# Sets the new dice size and emits the dice_size_changed signal
 func set_dice_size(new_dice_size: int):
 	dice_size = new_dice_size
 	emit_signal("dice_size_changed")
@@ -195,6 +206,19 @@ func set_dice_size(new_dice_size: int):
 # Gets the dice size
 func get_dice_size() -> int:
 	return dice_size
+	
+# Signal for saying that the dice tint has changed
+signal dice_tint_color_changed()
+	
+# Sets the new color tint and emits the dice_tint_color_changed signal
+func set_dice_tint_color(new_dice_tint_color: Color):
+	dice_tint_color = new_dice_tint_color
+	emit_signal("dice_tint_color_changed")
+	save_state()
+	
+# Gets the dice size
+func get_dice_tint_color() -> Color:
+	return dice_tint_color
 	
 # Signal for saying that the button size has changed
 signal button_size_changed()

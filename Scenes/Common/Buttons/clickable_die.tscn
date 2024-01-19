@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_3owrk"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/clickable_die.gd" id="1_3xkko"]
-[ext_resource type="Texture2D" uid="uid://o1xm76qu6h8h" path="res://DicePNGs/white/unknown-die.png" id="2_3b5f2"]
 [ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="2_apn0u"]
+[ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="4_l1ivn"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_ytsdx"]
 
 [node name="ClickableDie" type="Control"]
@@ -40,13 +40,8 @@ rotation = -6.28319
 theme = ExtResource("1_3owrk")
 alignment = 1
 
-[node name="DieImage" type="TextureRect" parent="LongPressButton/VerticalContainer"]
-custom_minimum_size = Vector2(75, 75)
+[node name="DieImage" parent="LongPressButton/VerticalContainer" instance=ExtResource("4_l1ivn")]
 layout_mode = 2
-size_flags_vertical = 4
-theme = ExtResource("1_3owrk")
-texture = ExtResource("2_3b5f2")
-expand_mode = 1
 stretch_mode = 5
 
 [node name="DieName" parent="LongPressButton/VerticalContainer" instance=ExtResource("5_ytsdx")]

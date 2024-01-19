@@ -37,3 +37,5 @@ size_flags_vertical = 3
 
 [node name="DiceSettingsGroup" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_hwdei")]
 layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 2

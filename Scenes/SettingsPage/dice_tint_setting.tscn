@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvliwq6ee8rhf"]
+
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_tint_setting.gd" id="1_khcex"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="2_sr5wn"]
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="3_4fjn3"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_e1k6j"]
+[ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="4_346ej"]
+
+[node name="DiceTintSetting" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 3
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("1_khcex")
+
+[node name="SliderContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SliderContainer"]
+layout_mode = 2
+
+[node name="DieTintRichTextLabel" parent="SliderContainer/HBoxContainer" instance=ExtResource("2_sr5wn")]
+layout_mode = 2
+text = "Die Tint
+"
+
+[node name="SettingsManagedTextureButton" parent="SliderContainer/HBoxContainer" instance=ExtResource("3_4fjn3")]
+layout_mode = 2
+texture_2d = ExtResource("4_346ej")
+
+[node name="ColorPicker" type="ColorPicker" parent="SliderContainer"]
+layout_mode = 2
+theme = ExtResource("3_e1k6j")
+picker_shape = 4
+can_add_swatches = false
+sampler_visible = false
+color_modes_visible = false
+hex_visible = false
+presets_visible = false
+
+[connection signal="pressed" from="SliderContainer/HBoxContainer/SettingsManagedTextureButton" to="." method="_on_settings_managed_texture_button_pressed"]
+[connection signal="color_changed" from="SliderContainer/ColorPicker" to="." method="_on_color_picker_color_changed"]

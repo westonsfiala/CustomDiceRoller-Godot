@@ -26,9 +26,6 @@ func configure(die : AbstractDie):
 func reconfigure() -> void:
 	var dice_size = SettingsManager.get_dice_size()
 	
-	die_image.custom_minimum_size = Vector2.ONE * dice_size
-	die_image.size = die_image.custom_minimum_size
-	
 	var size_x = max(dice_size, die_name.get_content_width())
 	var size_y = dice_size + die_name.custom_minimum_size.y
 	var full_button_size = Vector2(size_x, size_y)
@@ -38,7 +35,6 @@ func reconfigure() -> void:
 	size = full_button_size
 	
 	var start_position = Vector2(randi_range(-dice_size, dice_size), randi_range(-dice_size, dice_size))
-	die_image.pivot_offset = Vector2.ONE * dice_size / 2
 	
 	if(tween):
 		tween.kill()

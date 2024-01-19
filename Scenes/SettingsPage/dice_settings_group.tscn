@@ -1,14 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckhrdtgphinlk"]
+[gd_scene load_steps=7 format=3 uid="uid://ckhrdtgphinlk"]
 
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_settings_group.gd" id="1_d3xcx"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="2_t1ee2"]
 [ext_resource type="PackedScene" uid="uid://bsbeml1whsaf5" path="res://Scenes/SettingsPage/dice_size_setting.tscn" id="3_aoww2"]
+[ext_resource type="PackedScene" uid="uid://cvliwq6ee8rhf" path="res://Scenes/SettingsPage/dice_tint_setting.tscn" id="4_eytmn"]
+[ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="5_f5xfk"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="5_r50j0"]
 
 [node name="DiceSettingsGroup" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -16,19 +22,65 @@ size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_d3xcx")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="SettingsHContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.5
+offset_top = -201.5
+offset_bottom = 201.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DiceGroupRichTextLabel" parent="VBoxContainer" instance=ExtResource("2_t1ee2")]
+[node name="SettingsVContainer" type="VBoxContainer" parent="SettingsHContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="DiceGroupRichTextLabel" parent="SettingsHContainer/SettingsVContainer" instance=ExtResource("2_t1ee2")]
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 theme_type_variation = &"HugeRichTextLabel"
 text = "[color=darkcyan]Dice[/color]"
 
-[node name="DiceSizeSetting" parent="VBoxContainer" instance=ExtResource("3_aoww2")]
+[node name="DiceSizeSetting" parent="SettingsHContainer/SettingsVContainer" instance=ExtResource("3_aoww2")]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="HSeparator" type="HSeparator" parent="SettingsHContainer/SettingsVContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DiceTintSetting" parent="SettingsHContainer/SettingsVContainer" instance=ExtResource("4_eytmn")]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="HSeparator" type="HSeparator" parent="SettingsHContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="ImageContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("5_r50j0")
+
+[node name="HSeparator" type="HSeparator" parent="ImageContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="SettingsManagedDiceImage" parent="ImageContainer" instance=ExtResource("5_f5xfk")]
 layout_mode = 2

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://7u2a0y1nw8c5"]
 
 [ext_resource type="Script" path="res://Scenes/DiceRoller/scripts/physics_dice.gd" id="1_tijyv"]
-[ext_resource type="Texture2D" uid="uid://b2xwvheni4p15" path="res://DicePNGs/white/d20.png" id="1_yeonu"]
+[ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="2_rq8jr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ljf0d"]
 friction = 0.5
@@ -21,7 +21,7 @@ script = ExtResource("1_tijyv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_yh4e8")
 
-[node name="DiceImage" type="TextureRect" parent="CollisionShape2D"]
+[node name="DiceImage" parent="CollisionShape2D" instance=ExtResource("2_rq8jr")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -33,9 +33,8 @@ offset_right = 75.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
 mouse_filter = 2
-texture = ExtResource("1_yeonu")
-expand_mode = 1
 
 [node name="PressSpacerTimer" type="Timer" parent="."]
 wait_time = 0.5
