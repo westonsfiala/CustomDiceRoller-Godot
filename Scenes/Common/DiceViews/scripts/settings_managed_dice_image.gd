@@ -16,4 +16,4 @@ func reconfigure_image():
 	size = vector_size
 	pivot_offset = size/2
 	
-	material.set_shader_parameter("ColorParameter", SettingsManager.get_dice_tint_color())
+	material.set_shader_parameter("TintColor", SettingsManager.get_dice_tint_color())

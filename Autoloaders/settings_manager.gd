@@ -3,7 +3,7 @@ extends Node
 const DICE_SIZE_DEFAULT: int = 150
 var dice_size : int = DICE_SIZE_DEFAULT
 
-const DICE_TINT_COLOR_DEFAULT: Color = Color.WHITE
+const DICE_TINT_COLOR_DEFAULT: Color = Color(1,1,1,0)
 var dice_tint_color : Color = DICE_TINT_COLOR_DEFAULT
 
 const BUTTON_SIZE_DEFAULT: int = 50
