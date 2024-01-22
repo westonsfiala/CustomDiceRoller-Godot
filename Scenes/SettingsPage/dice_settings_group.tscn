@@ -22,65 +22,74 @@ size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_d3xcx")
 
-[node name="SettingsHContainer" type="HBoxContainer" parent="."]
+[node name="TopLevelContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -201.5
-offset_bottom = 201.5
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SettingsVContainer" type="VBoxContainer" parent="SettingsHContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-
-[node name="DiceGroupRichTextLabel" parent="SettingsHContainer/SettingsVContainer" instance=ExtResource("2_t1ee2")]
+[node name="DiceGroupRichTextLabel" parent="TopLevelContainer" instance=ExtResource("2_t1ee2")]
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
+size_flags_horizontal = 1
 theme_type_variation = &"HugeRichTextLabel"
 text = "[color=darkcyan]Dice[/color]"
 
-[node name="DiceSizeSetting" parent="SettingsHContainer/SettingsVContainer" instance=ExtResource("3_aoww2")]
+[node name="DiceSettingsGroup" type="Control" parent="TopLevelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SettingsHContainer" type="HBoxContainer" parent="TopLevelContainer/DiceSettingsGroup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSeparator" type="VSeparator" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer"]
+layout_mode = 2
+
+[node name="SettingsVContainer" type="VBoxContainer" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DiceSizeSetting" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer" instance=ExtResource("3_aoww2")]
 layout_mode = 2
 mouse_filter = 1
 
-[node name="HSeparator" type="HSeparator" parent="SettingsHContainer/SettingsVContainer"]
+[node name="HSeparator" type="HSeparator" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="DiceTintSetting" parent="SettingsHContainer/SettingsVContainer" instance=ExtResource("4_eytmn")]
+[node name="DiceTintSetting" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer" instance=ExtResource("4_eytmn")]
 layout_mode = 2
 mouse_filter = 1
 
-[node name="HSeparator" type="HSeparator" parent="SettingsHContainer"]
+[node name="HSeparator" type="HSeparator" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="ImageContainer" type="HBoxContainer" parent="."]
+[node name="ImageContainer" type="HBoxContainer" parent="TopLevelContainer/DiceSettingsGroup"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -75.0
-offset_bottom = 75.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("5_r50j0")
 
-[node name="HSeparator" type="HSeparator" parent="ImageContainer"]
+[node name="HSeparator" type="HSeparator" parent="TopLevelContainer/DiceSettingsGroup/ImageContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="SettingsManagedDiceImage" parent="ImageContainer" instance=ExtResource("5_f5xfk")]
+[node name="SettingsManagedDiceImage" parent="TopLevelContainer/DiceSettingsGroup/ImageContainer" instance=ExtResource("5_f5xfk")]
 layout_mode = 2

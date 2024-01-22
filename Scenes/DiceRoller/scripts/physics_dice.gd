@@ -14,7 +14,7 @@ func configure(die: AbstractDie):
 func _ready():
 	# Load the image for our selected die
 	var die_image_path = DieImageManager.get_die_image(inner_die.image_id())
-	dice_image.texture = load(die_image_path)
+	dice_image.configure_image(load(die_image_path))
 	
 	# Apply the dice size and adjust the collision shape
 	var dice_size : int = SettingsManager.get_dice_size()

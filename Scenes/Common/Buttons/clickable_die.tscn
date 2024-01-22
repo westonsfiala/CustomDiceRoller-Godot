@@ -42,7 +42,6 @@ alignment = 1
 
 [node name="DieImage" parent="LongPressButton/VerticalContainer" instance=ExtResource("4_l1ivn")]
 layout_mode = 2
-stretch_mode = 5
 
 [node name="DieName" parent="LongPressButton/VerticalContainer" instance=ExtResource("5_ytsdx")]
 layout_mode = 2

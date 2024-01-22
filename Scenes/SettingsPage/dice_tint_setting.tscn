@@ -31,15 +31,15 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SliderContainer"]
+[node name="TextContainer" type="HBoxContainer" parent="SliderContainer"]
 layout_mode = 2
 
-[node name="DieTintRichTextLabel" parent="SliderContainer/HBoxContainer" instance=ExtResource("2_sr5wn")]
+[node name="DieTintRichTextLabel" parent="SliderContainer/TextContainer" instance=ExtResource("2_sr5wn")]
 layout_mode = 2
 text = "Die Tint
 "
 
-[node name="SettingsManagedTextureButton" parent="SliderContainer/HBoxContainer" instance=ExtResource("3_4fjn3")]
+[node name="ResetButton" parent="SliderContainer/TextContainer" instance=ExtResource("3_4fjn3")]
 layout_mode = 2
 texture_2d = ExtResource("4_346ej")
 
@@ -53,5 +53,5 @@ color_modes_visible = false
 hex_visible = false
 presets_visible = false
 
-[connection signal="pressed" from="SliderContainer/HBoxContainer/SettingsManagedTextureButton" to="." method="_on_settings_managed_texture_button_pressed"]
+[connection signal="pressed" from="SliderContainer/TextContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="color_changed" from="SliderContainer/ColorPicker" to="." method="_on_color_picker_color_changed"]

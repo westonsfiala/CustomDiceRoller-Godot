@@ -1,7 +1,7 @@
 extends Control
 class_name DiceSettingsPage
 
-@onready var settings_container : VBoxContainer = $SettingsHContainer/SettingsVContainer
+@onready var settings_container : VBoxContainer = $TopLevelContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

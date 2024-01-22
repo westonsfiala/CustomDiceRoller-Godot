@@ -19,7 +19,7 @@ func _ready():
 func configure(die : AbstractDie):
 	m_die = die
 	die_name.set_text_and_resize_y(str("[center]", m_die.name(), "[/center]"))
-	die_image.texture = m_die.texture()
+	die_image.configure_image(m_die.texture())
 	reconfigure()
 	
 # Reconfigures the scene according to the settings

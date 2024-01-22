@@ -22,19 +22,7 @@ script = ExtResource("1_tijyv")
 shape = SubResource("CircleShape2D_yh4e8")
 
 [node name="DiceImage" parent="CollisionShape2D" instance=ExtResource("2_rq8jr")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -75.0
-offset_top = -75.0
-offset_right = 75.0
-offset_bottom = 75.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 4
-mouse_filter = 2
 
 [node name="PressSpacerTimer" type="Timer" parent="."]
 wait_time = 0.5

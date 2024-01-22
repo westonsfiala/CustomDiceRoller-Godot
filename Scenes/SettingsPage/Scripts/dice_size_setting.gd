@@ -1,9 +1,11 @@
 extends Control
 class_name DiceSizeSetting
 
-@onready var die_size_label : SettingsManagedRichTextLabel = $SliderContainer/HBoxContainer/DieSizeRichTextLabel
+@onready var die_size_label : SettingsManagedRichTextLabel = $SliderContainer/TextContainer/DieSizeRichTextLabel
 @onready var die_size_slider : HSlider = $SliderContainer/DieSizeSlider
+@onready var reset_button : Button = $SliderContainer/TextContainer/ResetButton
 @onready var slider_container : VBoxContainer = $SliderContainer
+@onready var text_container : HBoxContainer = $SliderContainer/TextContainer
 
 const DIE_SIZE_LABEL_TEXT : String = "Die Size - "
 
@@ -11,6 +13,7 @@ const DIE_SIZE_LABEL_TEXT : String = "Die Size - "
 func _ready():
 	SettingsManager.window_size_changed.connect(reconfigure_slider)
 	SettingsManager.dice_size_changed.connect(reconfigure_slider)
+	text_container.custom_minimum_size.y = SettingsManager.get_button_size()
 	reconfigure_slider()
 
 # Reconfigures the slider and its maximum value to be half the screen width
@@ -30,11 +33,18 @@ func reconfigure_slider():
 	die_size_label.set_text_and_resize_y(str(DIE_SIZE_LABEL_TEXT, new_size))
 	
 	custom_minimum_size.y = slider_container.size.y
+	hide_reset_button()
+	
+func hide_reset_button():
+	if SettingsManager.get_dice_size() == SettingsManager.DICE_SIZE_DEFAULT:
+		reset_button.visible = false
+	else:
+		reset_button.visible = true
 
 # When the slider changes value update the size of the visualizer
 func _on_die_size_slider_value_changed(value: float):
 	SettingsManager.set_dice_size(int(die_size_slider.value))
 
 # Reset the dice size to the default
-func _on_settings_managed_texture_button_pressed():
+func _on_reset_button_pressed():
 	SettingsManager.set_dice_size(SettingsManager.DICE_SIZE_DEFAULT)
