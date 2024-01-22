@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckhrdtgphinlk"]
+[gd_scene load_steps=9 format=3 uid="uid://ckhrdtgphinlk"]
 
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_settings_group.gd" id="1_d3xcx"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="2_t1ee2"]
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_tmpf8"]
 [ext_resource type="PackedScene" uid="uid://bsbeml1whsaf5" path="res://Scenes/SettingsPage/dice_size_setting.tscn" id="3_aoww2"]
+[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_pxmar"]
 [ext_resource type="PackedScene" uid="uid://cvliwq6ee8rhf" path="res://Scenes/SettingsPage/dice_tint_setting.tscn" id="4_eytmn"]
 [ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="5_f5xfk"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="5_r50j0"]
@@ -30,12 +32,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DiceGroupRichTextLabel" parent="TopLevelContainer" instance=ExtResource("2_t1ee2")]
+[node name="SettingsTitleContainer" type="HBoxContainer" parent="TopLevelContainer"]
+layout_mode = 2
+
+[node name="SettingsArrow" parent="TopLevelContainer/SettingsTitleContainer" instance=ExtResource("2_tmpf8")]
+layout_mode = 2
+flat = true
+texture_2d = ExtResource("3_pxmar")
+
+[node name="DiceGroupRichTextLabel" parent="TopLevelContainer/SettingsTitleContainer" instance=ExtResource("2_t1ee2")]
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
-size_flags_horizontal = 1
 theme_type_variation = &"HugeRichTextLabel"
 text = "[color=darkcyan]Dice[/color]"
+
+[node name="Button" type="Button" parent="TopLevelContainer/SettingsTitleContainer/DiceGroupRichTextLabel"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_r50j0")
 
 [node name="DiceSettingsGroup" type="Control" parent="TopLevelContainer"]
 layout_mode = 2
@@ -93,3 +112,6 @@ mouse_filter = 2
 
 [node name="SettingsManagedDiceImage" parent="TopLevelContainer/DiceSettingsGroup/ImageContainer" instance=ExtResource("5_f5xfk")]
 layout_mode = 2
+
+[connection signal="pressed" from="TopLevelContainer/SettingsTitleContainer/SettingsArrow" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/SettingsTitleContainer/DiceGroupRichTextLabel/Button" to="." method="_on_button_pressed"]

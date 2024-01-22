@@ -16,3 +16,4 @@ func _ready():
 func reconfigure():
 	var button_size = SettingsManager.get_button_size()
 	custom_minimum_size = Vector2.ONE * button_size
+	pivot_offset = custom_minimum_size/2
