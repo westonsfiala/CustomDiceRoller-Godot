@@ -1,8 +1,6 @@
 extends TextureRect
 class_name SettingsManagedDiceImage
 
-@onready var tint_image : TextureRect = $TintImage
-
 # Setup all the signals that will manage what we look like.
 func _ready():
 	SettingsManager.dice_size_changed.connect(reconfigure_image)
@@ -11,7 +9,6 @@ func _ready():
 	
 func configure_image(new_texture: Texture2D):
 	texture = new_texture
-	tint_image.texture = new_texture
 	
 func reconfigure_image():
 	var vector_size = Vector2.ONE * SettingsManager.get_dice_size()
@@ -19,5 +16,4 @@ func reconfigure_image():
 	size = vector_size
 	pivot_offset = size/2
 	
-	tint_image.self_modulate = SettingsManager.get_dice_tint_color()
-
+	material.set_shader_parameter("ColorParameter", SettingsManager.get_dice_tint_color())

@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dy7ly2u0s0axc"]
+[gd_scene load_steps=4 format=3 uid="uid://dy7ly2u0s0axc"]
 
 [ext_resource type="Texture2D" uid="uid://o1xm76qu6h8h" path="res://DicePNGs/white/unknown-die.png" id="1_1m8kj"]
+[ext_resource type="Material" uid="uid://jw3i2ootl1tq" path="res://Resources/Shader/dice_tint_shader_material.tres" id="1_27723"]
 [ext_resource type="Script" path="res://Scenes/Common/DiceViews/scripts/settings_managed_dice_image.gd" id="2_1sys6"]
 
 [node name="SettingsManagedDiceImage" type="TextureRect"]
+material = ExtResource("1_27723")
 custom_minimum_size = Vector2(150, 150)
 anchors_preset = 8
 anchor_left = 0.5
@@ -23,15 +25,3 @@ texture = ExtResource("1_1m8kj")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_1sys6")
-
-[node name="TintImage" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("1_1m8kj")
-expand_mode = 3
-stretch_mode = 5
