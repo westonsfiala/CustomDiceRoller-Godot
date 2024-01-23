@@ -2,7 +2,6 @@ extends Control
 class_name DiceSettingsPage
 
 @onready var settings_container : VBoxContainer = $TopLevelContainer
-@onready var dice_settings_button : Button = $TopLevelContainer/SettingsTitleContainer/DiceGroupRichTextLabel/Button
 @onready var dice_settings_group : Control = $TopLevelContainer/DiceSettingsGroup
 @onready var settings_arrow : SettingsManagedTextureButton = $TopLevelContainer/SettingsTitleContainer/SettingsArrow
 
@@ -23,7 +22,7 @@ func start_collapsed():
 	dice_settings_group.visible = false
 
 # Toggle showing/hiding the dice settings.
-func _on_button_pressed():
+func expand_collapse_inner_settings():
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween()
