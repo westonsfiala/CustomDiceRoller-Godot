@@ -13,7 +13,7 @@ const DIE_SIZE_LABEL_TEXT : String = "Die Size - "
 func _ready():
 	SettingsManager.window_size_changed.connect(reconfigure_slider)
 	SettingsManager.dice_size_changed.connect(reconfigure_slider)
-	text_container.custom_minimum_size.y = SettingsManager.get_button_size()
+	SettingsManager.button_size_changed.connect(reconfigure_slider)
 	reconfigure_slider()
 
 # Reconfigures the slider and its maximum value to be half the screen width
@@ -32,6 +32,7 @@ func reconfigure_slider():
 	die_size_slider.set_value_no_signal(new_size)
 	die_size_label.set_text_and_resize_y(str(DIE_SIZE_LABEL_TEXT, new_size))
 	
+	text_container.custom_minimum_size.y = SettingsManager.get_button_size()
 	custom_minimum_size.y = slider_container.size.y
 	hide_reset_button()
 	

@@ -12,11 +12,12 @@ const DIE_TINT_LABEL_TEXT : String = "Die Tint - "
 # Connect to the setting we will be modifying
 func _ready():
 	SettingsManager.dice_tint_color_changed.connect(reconfigure_sliders)
-	text_container.custom_minimum_size.y = SettingsManager.get_button_size()
+	SettingsManager.button_size_changed.connect(reconfigure_sliders)
 	reconfigure_sliders()
 
 # Grabs the offical value from the settings manager and sets the size
 func reconfigure_sliders():
+	text_container.custom_minimum_size.y = SettingsManager.get_button_size()
 	var new_color: Color = SettingsManager.get_dice_tint_color()
 	die_color_picker.color = new_color
 	die_tint_label.set_text_and_resize_y(str(DIE_TINT_LABEL_TEXT, new_color.to_html()))

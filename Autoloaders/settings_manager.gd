@@ -6,6 +6,9 @@ var dice_size : int = DICE_SIZE_DEFAULT
 const DICE_TINT_COLOR_DEFAULT: Color = Color(1,1,1,0)
 var dice_tint_color : Color = DICE_TINT_COLOR_DEFAULT
 
+const DICE_THEME_DEFAULT: DieImageManager.THEME = DieImageManager.THEME.WHITE
+var dice_theme : DieImageManager.THEME = DICE_THEME_DEFAULT
+
 const BUTTON_SIZE_DEFAULT: int = 50
 var button_size : int = BUTTON_SIZE_DEFAULT
 
@@ -47,6 +50,7 @@ func save_state() -> void:
 	# Save the properties.
 	save_dict['dice_size'] = dice_size
 	save_dict['dice_tint_color'] = dice_tint_color.to_html()
+	save_dict['dice_theme'] = dice_theme
 	save_dict['button_size'] = button_size
 	save_dict['font_size_small'] = font_size_small
 	save_dict['font_size_normal'] = font_size_normal
@@ -96,6 +100,9 @@ func load_state() -> void:
 		if not save_data.has('dice_tint_color'):
 			print("Missing dice_tint_color during settings_manager loader")
 			return
+		if not save_data.has('dice_theme'):
+			print("Missing dice_theme during settings_manager loader")
+			return
 		if not save_data.has('button_size'):
 			print("Missing button_size during settings_manager loader")
 			return
@@ -124,6 +131,9 @@ func load_state() -> void:
 		if not save_data['dice_tint_color'] is String:
 			print("dice_tint_color not a string during settings_manager loader: ", typeof(save_data['dice_tint_color']))
 			return
+		if not (save_data['dice_theme'] is int or save_data['dice_theme'] is float):
+			print("dice_theme not an int during settings_manager loader: ", typeof(save_data['dice_theme']))
+			return
 		if not (save_data['button_size'] is int or save_data['button_size'] is float):
 			print("button_size not an int during settings_manager loader: ", typeof(save_data['button_size']))
 			return
@@ -142,6 +152,7 @@ func load_state() -> void:
 		
 		dice_size = save_data['dice_size']
 		dice_tint_color = Color.from_string(save_data['dice_tint_color'], Color.WHITE)
+		dice_theme = save_data['dice_theme']
 		button_size = save_data['button_size']
 		font_size_small = save_data['font_size_small']
 		font_size_normal = save_data['font_size_normal']
@@ -216,9 +227,22 @@ func set_dice_tint_color(new_dice_tint_color: Color):
 	emit_signal("dice_tint_color_changed")
 	save_state()
 	
-# Gets the dice size
+# Gets the dice tint color
 func get_dice_tint_color() -> Color:
 	return dice_tint_color
+	
+# Signal for saying that the dice theme has changed
+signal dice_theme_changed()
+	
+# Sets the new theme and emits the dice_theme_changed signal
+func set_dice_theme(new_dice_theme: DieImageManager.THEME):
+	dice_theme = new_dice_theme
+	emit_signal("dice_theme_changed")
+	save_state()
+	
+# Gets the dice theme
+func get_dice_theme() -> DieImageManager.THEME:
+	return dice_theme
 	
 # Signal for saying that the button size has changed
 signal button_size_changed()

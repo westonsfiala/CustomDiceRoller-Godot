@@ -3,5 +3,6 @@
 [ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="1_c5o5r"]
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource("1_c5o5r")
 shader_parameter/TintColor = Color(1, 1, 1, 0)

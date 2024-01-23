@@ -1,15 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://daac5vhagqq3m"]
+[gd_scene load_steps=8 format=3 uid="uid://daac5vhagqq3m"]
 
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_theme_setting.gd" id="1_1qbng"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="2_fpf1w"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="3_bkp1r"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="4_i4bme"]
 [ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="5_dxboi"]
+[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="6_bip1y"]
+[ext_resource type="PackedScene" uid="uid://ds66lujjolvu" path="res://Scenes/SettingsPage/theme_list_item.tscn" id="7_sdi86"]
 
 [node name="DiceThemeSetting" type="Control"]
 clip_children = 1
 clip_contents = true
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 3
 anchors_preset = 14
 anchor_top = 0.5
@@ -21,36 +23,72 @@ size_flags_vertical = 4
 mouse_filter = 2
 script = ExtResource("1_1qbng")
 
-[node name="SliderContainer" type="VBoxContainer" parent="."]
+[node name="TopContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme = ExtResource("2_fpf1w")
+
+[node name="TextContainer" type="HBoxContainer" parent="TopContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DieThemeRichTextLabel" parent="TopContainer/TextContainer" instance=ExtResource("3_bkp1r")]
+layout_mode = 2
+text = "Die Theme"
+
+[node name="ResetButton" parent="TopContainer/TextContainer" instance=ExtResource("4_i4bme")]
+layout_mode = 2
+texture_2d = ExtResource("5_dxboi")
+
+[node name="BasicThemeBar" type="HBoxContainer" parent="TopContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+alignment = 1
+
+[node name="BasicRotatingArrow" parent="TopContainer/BasicThemeBar" instance=ExtResource("4_i4bme")]
+layout_mode = 2
+flat = true
+texture_2d = ExtResource("6_bip1y")
+
+[node name="BasicRichTextLabel" parent="TopContainer/BasicThemeBar" instance=ExtResource("3_bkp1r")]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Basic
+"
+
+[node name="BasicExpandButton" type="Button" parent="TopContainer/BasicThemeBar/BasicRichTextLabel"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
+theme = ExtResource("2_fpf1w")
+
+[node name="BasicThemeExpander" type="VBoxContainer" parent="TopContainer"]
+layout_mode = 2
 size_flags_vertical = 4
-theme = ExtResource("2_fpf1w")
+mouse_filter = 2
 
-[node name="TextContainer" type="HBoxContainer" parent="SliderContainer"]
+[node name="WhiteTheme" parent="TopContainer/BasicThemeExpander" instance=ExtResource("7_sdi86")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="DieThemeRichTextLabel" parent="SliderContainer/TextContainer" instance=ExtResource("3_bkp1r")]
+[node name="FireTheme" parent="TopContainer/BasicThemeExpander" instance=ExtResource("7_sdi86")]
 layout_mode = 2
-text = "Die Theme"
+mouse_filter = 2
+die_theme = 7
 
-[node name="ResetButton" parent="SliderContainer/TextContainer" instance=ExtResource("4_i4bme")]
-layout_mode = 2
-texture_2d = ExtResource("5_dxboi")
-
-[node name="DieSizeSlider" type="HSlider" parent="SliderContainer"]
-layout_mode = 2
-theme = ExtResource("2_fpf1w")
-min_value = 25.0
-max_value = 400.0
-step = 5.0
-value = 25.0
-
-[connection signal="pressed" from="SliderContainer/TextContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="drag_ended" from="SliderContainer/DieSizeSlider" to="." method="_on_die_size_slider_drag_ended"]
-[connection signal="value_changed" from="SliderContainer/DieSizeSlider" to="." method="_on_die_size_slider_value_changed"]
+[connection signal="pressed" from="TopContainer/TextContainer/ResetButton" to="." method="_on_reset_button_pressed"]

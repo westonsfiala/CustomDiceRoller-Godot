@@ -1,0 +1,25 @@
+extends HBoxContainer
+class_name ThemeListItem
+
+@export var die_theme : DieImageManager.THEME = DieImageManager.THEME.WHITE
+
+@onready var preview_die_view: TextureRect = $PreviewDieView
+@onready var select_button: Button = $SelectButton
+@onready var preview_color_rect: ColorRect = $PreviewColorRect
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	SettingsManager.button_size_changed.connect(reconfigure)
+	select_button.text = DieImageManager.get_theme_name_from_enum(die_theme)
+	var selected_theme_texture = DieImageManager.get_theme_texture(die_theme)
+	preview_die_view.material.set_shader_parameter("Theme", selected_theme_texture)
+	preview_color_rect.material.set_shader_parameter("Theme", selected_theme_texture)
+	
+func reconfigure():
+	var button_size = SettingsManager.get_button_size()
+	preview_die_view.custom_minimum_size = Vector2.ONE * button_size
+	select_button.custom_minimum_size.y = button_size
+	preview_color_rect.custom_minimum_size = Vector2.ONE * button_size
+
+func _on_select_button_pressed():
+	SettingsManager.set_dice_theme(die_theme)

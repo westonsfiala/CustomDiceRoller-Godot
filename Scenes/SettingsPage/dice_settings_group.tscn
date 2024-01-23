@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckhrdtgphinlk"]
+[gd_scene load_steps=12 format=3 uid="uid://ckhrdtgphinlk"]
 
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_settings_group.gd" id="1_d3xcx"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="2_t1ee2"]
@@ -8,10 +8,17 @@
 [ext_resource type="PackedScene" uid="uid://cvliwq6ee8rhf" path="res://Scenes/SettingsPage/dice_tint_setting.tscn" id="4_eytmn"]
 [ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="5_f5xfk"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="5_r50j0"]
+[ext_resource type="PackedScene" uid="uid://daac5vhagqq3m" path="res://Scenes/SettingsPage/dice_theme_setting.tscn" id="8_x1f25"]
+[ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="10_ienst"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_27okp"]
+resource_local_to_scene = true
+shader = ExtResource("10_ienst")
+shader_parameter/TintColor = Color(1, 1, 1, 0)
 
 [node name="DiceSettingsGroup" type="Control"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 400)
+custom_minimum_size = Vector2(0, 750)
 layout_mode = 3
 anchors_preset = 14
 anchor_top = 0.5
@@ -59,6 +66,7 @@ theme = ExtResource("5_r50j0")
 [node name="DiceSettingsGroup" type="Control" parent="TopLevelContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="SettingsHContainer" type="HBoxContainer" parent="TopLevelContainer/DiceSettingsGroup"]
 layout_mode = 1
@@ -88,6 +96,14 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 1
 
+[node name="HSeparator2" type="HSeparator" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DiceThemeSetting" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer" instance=ExtResource("8_x1f25")]
+layout_mode = 2
+
 [node name="HSeparator" type="HSeparator" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -111,6 +127,7 @@ size_flags_horizontal = 3
 mouse_filter = 2
 
 [node name="SettingsManagedDiceImage" parent="TopLevelContainer/DiceSettingsGroup/ImageContainer" instance=ExtResource("5_f5xfk")]
+material = SubResource("ShaderMaterial_27okp")
 layout_mode = 2
 
 [connection signal="pressed" from="TopLevelContainer/SettingsTitleContainer/SettingsArrow" to="." method="_on_button_pressed"]
