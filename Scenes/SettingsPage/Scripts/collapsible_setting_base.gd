@@ -19,7 +19,6 @@ var tween : Tween
 # Connect to the setting we will be modifying
 func _ready():
 	start_collapsed()
-	inner_ready()
 	
 # Get the safe minimum collapsible height. Max of button size and inner height.
 func get_safe_collabible_section_minimum_height() -> int:
@@ -93,15 +92,10 @@ func enforce_all_content_shown():
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button():
 	reset_button.visible = inner_should_show_reset_button()
-
-# Method for inherited class to use when ready is being called
-func inner_ready():
-	pass
 	
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:
-	var fake_contents = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/VBoxContainer
-	return fake_contents.size.y
+	return 0
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

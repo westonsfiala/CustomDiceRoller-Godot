@@ -3,12 +3,12 @@
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_settings_group.gd" id="1_d3xcx"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="2_t1ee2"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_tmpf8"]
-[ext_resource type="PackedScene" uid="uid://bsbeml1whsaf5" path="res://Scenes/SettingsPage/dice_size_setting.tscn" id="3_aoww2"]
 [ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_pxmar"]
 [ext_resource type="PackedScene" uid="uid://cvliwq6ee8rhf" path="res://Scenes/SettingsPage/dice_tint_setting.tscn" id="4_eytmn"]
 [ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="5_f5xfk"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="5_r50j0"]
 [ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="5_wtsbt"]
+[ext_resource type="PackedScene" uid="uid://eur1e24a885p" path="res://Scenes/SettingsPage/dice_size_setting.tscn" id="6_b4u08"]
 [ext_resource type="PackedScene" uid="uid://daac5vhagqq3m" path="res://Scenes/SettingsPage/dice_theme_setting.tscn" id="8_x1f25"]
 [ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="10_ienst"]
 
@@ -77,11 +77,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="DiceSizeSetting" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer" instance=ExtResource("3_aoww2")]
+[node name="DiceSizeSetting" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer" instance=ExtResource("6_b4u08")]
 layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 0
-mouse_filter = 1
 
 [node name="HSeparator" type="HSeparator" parent="TopLevelContainer/DiceSettingsGroup/SettingsHContainer/SettingsVContainer"]
 modulate = Color(1, 1, 1, 0)

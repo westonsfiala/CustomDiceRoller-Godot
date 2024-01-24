@@ -1,91 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://bsbeml1whsaf5"]
+[gd_scene load_steps=4 format=3 uid="uid://eur1e24a885p"]
 
-[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_size_setting.gd" id="1_vurk4"]
-[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="2_x5lo8"]
-[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_soq13"]
-[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="4_vbkn6"]
-[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="4_xfo0s"]
-[ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="5_f8yio"]
-[ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="6_p66ri"]
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_0pkl2"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_size_setting.gd" id="2_71xwf"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_q4nbl"]
 
-[node name="DiceSizeSetting" type="Control"]
-clip_contents = true
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-script = ExtResource("1_vurk4")
+[node name="DiceSizeSetting" instance=ExtResource("1_0pkl2")]
+script = ExtResource("2_71xwf")
 
-[node name="SliderContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 50.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme = ExtResource("3_soq13")
-
-[node name="TextContainer" type="HBoxContainer" parent="SliderContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-theme = ExtResource("3_soq13")
-alignment = 1
-
-[node name="SettingsArrow" parent="SliderContainer/TextContainer" instance=ExtResource("4_vbkn6")]
-layout_mode = 2
-flat = true
-texture_2d = ExtResource("4_xfo0s")
-
-[node name="DieSizeRichTextLabel" parent="SliderContainer/TextContainer" instance=ExtResource("2_x5lo8")]
-layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 1
-text = "Die Size"
-
-[node name="LongPressButton" parent="SliderContainer/TextContainer/DieSizeRichTextLabel" instance=ExtResource("6_p66ri")]
-layout_mode = 1
-flat = true
-
-[node name="ResetButton" parent="SliderContainer/TextContainer" instance=ExtResource("4_vbkn6")]
-layout_mode = 2
-texture_2d = ExtResource("5_f8yio")
-
-[node name="DiceSizeCollapsible" type="Control" parent="SliderContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="DieSizeSlider" type="HSlider" parent="SliderContainer/DiceSizeCollapsible"]
+[node name="DieSizeSlider" type="HSlider" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_soq13")
+theme = ExtResource("3_q4nbl")
 min_value = 25.0
 max_value = 400.0
 step = 5.0
 value = 25.0
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 0.105882)
-
-[connection signal="pressed" from="SliderContainer/TextContainer/SettingsArrow" to="." method="expand_collapse_inner_settings"]
-[connection signal="pressed" from="SliderContainer/TextContainer/DieSizeRichTextLabel/LongPressButton" to="." method="expand_collapse_inner_settings"]
-[connection signal="pressed" from="SliderContainer/TextContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="drag_ended" from="SliderContainer/DiceSizeCollapsible/DieSizeSlider" to="." method="_on_die_size_slider_drag_ended"]
-[connection signal="value_changed" from="SliderContainer/DiceSizeCollapsible/DieSizeSlider" to="." method="_on_die_size_slider_value_changed"]
