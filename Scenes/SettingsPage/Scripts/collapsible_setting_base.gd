@@ -16,6 +16,8 @@ const EXPANDED_SCALE_VECTOR : Vector2 = Vector2.ONE
 
 var tween : Tween
 
+signal reset_pressed()
+
 # Connect to the setting we will be modifying
 func _ready():
 	start_collapsed()
@@ -33,6 +35,7 @@ func start_collapsed():
 	collapsible_section.size.y = 0
 	collapsible_section.visible = false
 	collapsible_container.visible = false
+	show_hide_reset_button()
 	call_deferred("enforce_all_content_shown")
 
 # Toggle showing/hiding the dice settings.
@@ -45,7 +48,7 @@ func expand_collapse_inner_settings():
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	
-	if collapsible_section.visible:
+	if collapsible_container.visible:
 		tween.tween_property(rotating_arrow, "rotation_degrees", -90, SettingsManager.LONG_PRESS_DELAY).from(0)
 		tween.tween_method(set_content_scale, EXPANDED_SCALE_VECTOR, COLLAPSED_SCALE_VECTOR, SettingsManager.LONG_PRESS_DELAY)
 		tween.tween_method(set_collapsible_min_height, collapsible_full_height, 0, SettingsManager.LONG_PRESS_DELAY)
@@ -92,6 +95,10 @@ func enforce_all_content_shown():
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button():
 	reset_button.visible = inner_should_show_reset_button()
+	
+func signal_reset_pressed():
+	inner_reset_button_pressed()
+	emit_signal("reset_pressed")
 	
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:

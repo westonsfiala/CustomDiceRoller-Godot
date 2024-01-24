@@ -1,5 +1,5 @@
 extends CollapsibleSettingBase
-class_name NewDiceSizeSetting
+class_name DiceSizeSetting
 
 @onready var die_size_slider : HSlider = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieSizeSlider
 
@@ -37,7 +37,7 @@ func _on_die_size_slider_value_changed(value):
 
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:
-	return die_size_slider.size.y
+	return int(die_size_slider.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:
