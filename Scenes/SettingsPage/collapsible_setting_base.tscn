@@ -1,0 +1,118 @@
+[gd_scene load_steps=9 format=3 uid="uid://dg3ikms7niw6"]
+
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/collapsible_setting_base.gd" id="1_0rdis"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="2_vbn0r"]
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="3_15h7j"]
+[ext_resource type="Texture2D" uid="uid://c42nx4siplr56" path="res://Icons/right-arrow.svg" id="4_jbd8d"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_1q1q4"]
+[ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="6_6fgg4"]
+[ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="7_mhmvh"]
+[ext_resource type="Script" path="res://Scenes/Common/Labels/Scripts/settings_managed_label.gd" id="8_6ugxv"]
+
+[node name="CollapsibleSettingBase" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_0rdis")
+
+[node name="TopLevelContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("2_vbn0r")
+
+[node name="TitleBarContainer" type="HBoxContainer" parent="TopLevelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("2_vbn0r")
+alignment = 1
+
+[node name="RotatingArrow" parent="TopLevelContainer/TitleBarContainer" instance=ExtResource("3_15h7j")]
+layout_mode = 2
+flat = true
+texture_2d = ExtResource("4_jbd8d")
+
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer" instance=ExtResource("5_1q1q4")]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 1
+text = "Setting Name"
+
+[node name="CollapseExpandButton" parent="TopLevelContainer/TitleBarContainer/SettingName" instance=ExtResource("6_6fgg4")]
+layout_mode = 1
+flat = true
+
+[node name="ResetButton" parent="TopLevelContainer/TitleBarContainer" instance=ExtResource("3_15h7j")]
+layout_mode = 2
+texture_2d = ExtResource("7_mhmvh")
+
+[node name="CollapsibleContainer" type="HBoxContainer" parent="TopLevelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="TopLevelContainer/CollapsibleContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="CollapsibleSection" type="Control" parent="TopLevelContainer/CollapsibleContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SettingsManagedLabel" type="Label" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/VBoxContainer"]
+layout_mode = 2
+text = "I am something..."
+script = ExtResource("8_6ugxv")
+
+[node name="SettingsManagedLabel2" type="Label" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/VBoxContainer"]
+layout_mode = 2
+text = "I am something..."
+script = ExtResource("8_6ugxv")
+
+[node name="SettingsManagedLabel3" type="Label" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/VBoxContainer"]
+layout_mode = 2
+text = "I am something..."
+script = ExtResource("8_6ugxv")
+
+[node name="ColorRect" type="ColorRect" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.321569, 0.701961, 0.619608, 0.14902)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.105882)
+
+[connection signal="pressed" from="TopLevelContainer/TitleBarContainer/RotatingArrow" to="." method="expand_collapse_inner_settings"]
+[connection signal="pressed" from="TopLevelContainer/TitleBarContainer/SettingName/CollapseExpandButton" to="." method="expand_collapse_inner_settings"]
+[connection signal="pressed" from="TopLevelContainer/TitleBarContainer/ResetButton" to="." method="inner_reset_button_pressed"]

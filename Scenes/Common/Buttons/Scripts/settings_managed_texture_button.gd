@@ -10,10 +10,14 @@ class_name SettingsManagedTextureButton
 func _ready():
 	texture_rect.texture = texture_2d
 	SettingsManager.button_size_changed.connect(reconfigure)
-	call_deferred("reconfigure")
+	reconfigure()
 	
 # Reconfigures the scene according to the settings
 func reconfigure():
 	var button_size = SettingsManager.get_button_size()
 	custom_minimum_size = Vector2.ONE * button_size
 	pivot_offset = custom_minimum_size/2
+	
+func set_new_button_texture(new_texture: Texture2D):
+	texture_2d = new_texture
+	texture_rect.texture = new_texture
