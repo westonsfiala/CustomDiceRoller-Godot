@@ -1,39 +1,35 @@
-extends Control
+extends CollapsibleSettingBase
 class_name DiceTintSetting
 
-@onready var die_tint_label : SettingsManagedRichTextLabel = $SliderContainer/TextContainer/DieTintRichTextLabel
-@onready var die_color_picker : ColorPicker = $SliderContainer/ColorPicker
-@onready var reset_button : Button = $SliderContainer/TextContainer/ResetButton
-@onready var slider_container : VBoxContainer = $SliderContainer
-@onready var text_container : HBoxContainer = $SliderContainer/TextContainer
+@onready var color_picker : ColorPicker = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/ColorPicker
 
-const DIE_TINT_LABEL_TEXT : String = "Die Tint - "
+const DIE_TINT_LABEL_TEXT : String = "Dice Tint - "
 
-# Connect to the setting we will be modifying
+# Called when the node enters the scene tree for the first time.
 func _ready():
+	super()
 	SettingsManager.dice_tint_color_changed.connect(reconfigure_sliders)
-	SettingsManager.button_size_changed.connect(reconfigure_sliders)
 	reconfigure_sliders()
-
+	
 # Grabs the offical value from the settings manager and sets the size
 func reconfigure_sliders():
-	text_container.custom_minimum_size.y = SettingsManager.get_button_size()
 	var new_color: Color = SettingsManager.get_dice_tint_color()
-	die_color_picker.color = new_color
-	die_tint_label.set_text_and_resize_y(str(DIE_TINT_LABEL_TEXT, new_color.to_html()))
-	custom_minimum_size.y = slider_container.size.y
-	hide_reset_button()
-	
-func hide_reset_button():
-	if SettingsManager.get_dice_tint_color() == SettingsManager.DICE_TINT_COLOR_DEFAULT:
-		reset_button.visible = false
-	else:
-		reset_button.visible = true
+	color_picker.color = new_color
+	setting_name_label.set_text_and_resize_y(str(DIE_TINT_LABEL_TEXT, new_color.to_html()))
+	show_hide_reset_button()
 
-# Sends the new color up to the settings manager.
+# Method for inherited class to get the minimum height of the collapsible section
+func inner_get_collapsible_section_minimum_height() -> int:
+	return int(color_picker.size.y)
+	
+# Method for inherited class to implement if the reset button should be shown
+func inner_should_show_reset_button() -> bool:
+	return SettingsManager.get_dice_tint_color() != SettingsManager.DICE_TINT_COLOR_DEFAULT
+
+# Method for inherited class to respond to reset being pressed
+func inner_reset_button_pressed():
+	SettingsManager.set_dice_tint_color(SettingsManager.DICE_TINT_COLOR_DEFAULT)
+
 func _on_color_picker_color_changed(color):
 	SettingsManager.set_dice_tint_color(color)
-
-# Reset the dice tint color to default
-func _on_reset_button_pressed():
-	SettingsManager.set_dice_tint_color(SettingsManager.DICE_TINT_COLOR_DEFAULT)
+	emit_signal("setting_changed")

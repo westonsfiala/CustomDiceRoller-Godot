@@ -71,4 +71,4 @@ mouse_filter = 2
 
 [connection signal="pressed" from="TopLevelContainer/TitleBarContainer/RotatingArrow" to="." method="expand_collapse_inner_settings"]
 [connection signal="pressed" from="TopLevelContainer/TitleBarContainer/SettingName/CollapseExpandButton" to="." method="expand_collapse_inner_settings"]
-[connection signal="pressed" from="TopLevelContainer/TitleBarContainer/ResetButton" to="." method="inner_reset_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/TitleBarContainer/ResetButton" to="." method="signal_reset_pressed"]

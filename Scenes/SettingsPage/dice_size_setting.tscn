@@ -7,6 +7,9 @@
 [node name="DiceSizeSetting" instance=ExtResource("1_0pkl2")]
 script = ExtResource("2_71xwf")
 
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer" index="1"]
+theme_type_variation = &"SmallRichTextLabel"
+
 [node name="DieSizeSlider" type="HSlider" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
 anchors_preset = 15

@@ -17,6 +17,7 @@ const EXPANDED_SCALE_VECTOR : Vector2 = Vector2.ONE
 var tween : Tween
 
 signal reset_pressed()
+signal setting_changed()
 
 # Connect to the setting we will be modifying
 func _ready():
@@ -63,9 +64,15 @@ func expand_collapse_inner_settings():
 
 func set_content_scale(new_scale: Vector2):
 	collapsible_section.scale = new_scale
-	for child in collapsible_section.get_children():
+	for child in collapsible_section.get_children(true):
 		child.scale = new_scale
 		child.pivot_offset = child.size/2
+
+# Method for setting the height of the content when its expanding / collapsing
+func set_collapsible_min_height(current_content_height: int):
+	collapsible_section.custom_minimum_size.y = current_content_height
+	collapsible_section.size.y = current_content_height
+	enforce_all_content_shown()
 
 # At the end of the collapse, this gets called.
 func finish_hide_setting_callback():
@@ -81,16 +88,11 @@ func finish_show_setting_callback():
 	rotating_arrow.set_new_button_texture(DOWN_ARROW)
 	enforce_all_content_shown()
 
-# Method for setting the height of the content when its expanding / collapsing
-func set_collapsible_min_height(current_content_height: int):
-	collapsible_section.custom_minimum_size.y = current_content_height
-	collapsible_section.size.y = current_content_height
-	enforce_all_content_shown()
-
 # Method for having the proper size of the setting at all times.
 func enforce_all_content_shown():
 	title_bar_container.size.y = 0
-	custom_minimum_size.y = title_bar_container.size.y + collapsible_section.size.y
+	collapsible_container.size.y = 0
+	custom_minimum_size.y = title_bar_container.size.y + collapsible_container.size.y
 
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button():

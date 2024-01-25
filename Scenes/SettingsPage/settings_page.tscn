@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_c75hh"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/settings_page.gd" id="2_t4u4y"]
-[ext_resource type="PackedScene" uid="uid://ckhrdtgphinlk" path="res://Scenes/SettingsPage/dice_settings_group.tscn" id="3_hwdei"]
+[ext_resource type="PackedScene" uid="uid://bfbdac4xacsaj" path="res://Scenes/SettingsPage/top_level_dice_settings.tscn" id="3_3k6a7"]
 
 [node name="SettingsPage" type="Control"]
 layout_mode = 3
@@ -35,7 +35,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DiceSettingsGroup" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_hwdei")]
+[node name="TopLevelDiceSettings" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_3k6a7")]
 layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 2

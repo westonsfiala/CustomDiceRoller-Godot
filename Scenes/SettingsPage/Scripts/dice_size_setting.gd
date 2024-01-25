@@ -3,7 +3,7 @@ class_name DiceSizeSetting
 
 @onready var die_size_slider : HSlider = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieSizeSlider
 
-const DIE_SIZE_LABEL_TEXT : String = "Die Size - "
+const DIE_SIZE_LABEL_TEXT : String = "Dice Size - "
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,12 +28,12 @@ func reconfigure_slider():
 	die_size_slider.set_value_no_signal(new_size)
 	setting_name_label.set_text_and_resize_y(str(DIE_SIZE_LABEL_TEXT, new_size))
 	
-	#enforce_all_content_shown()
 	show_hide_reset_button()
 	
 # Called as the slider is being adjusted
 func _on_die_size_slider_value_changed(value):
 	SettingsManager.set_dice_size(int(die_size_slider.value))
+	emit_signal("setting_changed")
 
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:
@@ -46,5 +46,6 @@ func inner_should_show_reset_button() -> bool:
 # Method for inherited class to respond to reset being pressed
 func inner_reset_button_pressed():
 	SettingsManager.set_dice_size(SettingsManager.DICE_SIZE_DEFAULT)
+	emit_signal("setting_changed")
 
 
