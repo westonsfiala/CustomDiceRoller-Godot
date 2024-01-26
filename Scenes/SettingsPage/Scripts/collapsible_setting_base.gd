@@ -35,6 +35,8 @@ func start_collapsed():
 	collapsible_section.custom_minimum_size.y = 0
 	collapsible_section.size.y = 0
 	collapsible_section.visible = false
+	#collapsible_container.custom_minimum_size.y = 0
+	#collapsible_container.size.y = 0
 	collapsible_container.visible = false
 	show_hide_reset_button()
 	call_deferred("enforce_all_content_shown")

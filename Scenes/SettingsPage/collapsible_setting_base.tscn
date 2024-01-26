@@ -45,6 +45,7 @@ texture_2d = ExtResource("4_jbd8d")
 layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 1
+theme_type_variation = &"SmallRichTextLabel"
 text = "Setting Name"
 
 [node name="CollapseExpandButton" parent="TopLevelContainer/TitleBarContainer/SettingName" instance=ExtResource("6_6fgg4")]

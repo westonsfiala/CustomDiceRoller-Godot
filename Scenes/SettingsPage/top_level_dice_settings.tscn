@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfbdac4xacsaj"]
+[gd_scene load_steps=10 format=3 uid="uid://bfbdac4xacsaj"]
 
 [ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_gy556"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/top_level_dice_settings.gd" id="2_vnckq"]
 [ext_resource type="PackedScene" uid="uid://eur1e24a885p" path="res://Scenes/SettingsPage/dice_size_setting.tscn" id="3_yuky0"]
 [ext_resource type="PackedScene" uid="uid://do3te382c5tn5" path="res://Scenes/SettingsPage/dice_tint_setting.tscn" id="4_2fsex"]
+[ext_resource type="PackedScene" uid="uid://bjuvwiiugcdxi" path="res://Scenes/SettingsPage/dice_theme_setting.tscn" id="5_m5w32"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="6_ayfdi"]
 [ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="7_74d46"]
 [ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="8_nmty5"]
@@ -24,6 +25,7 @@ text = "Dice"
 
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = true
+theme = ExtResource("6_ayfdi")
 
 [node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
 custom_minimum_size = Vector2(0, 750)
@@ -38,12 +40,14 @@ offset_top = -58.0
 offset_bottom = 58.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("6_ayfdi")
 alignment = 1
 
 [node name="SettingsVContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+theme = ExtResource("6_ayfdi")
 alignment = 1
 
 [node name="DiceSizeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="0" instance=ExtResource("3_yuky0")]
@@ -61,6 +65,9 @@ layout_mode = 2
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
+
+[node name="DiceThemeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="4" instance=ExtResource("5_m5w32")]
+layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer" index="1"]
 modulate = Color(1, 1, 1, 0)
@@ -92,3 +99,13 @@ mouse_filter = 2
 material = SubResource("ShaderMaterial_00dgr")
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.184314, 1, 0.160784)

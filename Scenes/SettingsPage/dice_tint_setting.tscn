@@ -8,7 +8,6 @@
 script = ExtResource("1_khcex")
 
 [node name="SettingName" parent="TopLevelContainer/TitleBarContainer" index="1"]
-theme_type_variation = &"SmallRichTextLabel"
 text = "Dice Tint
 "
 

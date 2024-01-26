@@ -1,31 +1,26 @@
-extends Control
+extends CollapsibleSettingBase
 class_name DiceThemeSetting
 
-@onready var die_theme_label : SettingsManagedRichTextLabel = $TopContainer/TextContainer/DieThemeRichTextLabel
-@onready var reset_button : Button = $TopContainer/TextContainer/ResetButton
-@onready var top_container : VBoxContainer = $TopContainer
-@onready var text_container : HBoxContainer = $TopContainer/TextContainer
+@onready var themes_container : VBoxContainer = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemesContainer
 
-const DIE_SIZE_LABEL_TEXT : String = "Die Theme - "
-
-# Connect to the setting we will be modifying
+# Called when the node enters the scene tree for the first time.
 func _ready():
-	SettingsManager.button_size_changed.connect(reconfigure_theme_selector)
-	SettingsManager.dice_theme_changed.connect(reconfigure_theme_selector)
-	reconfigure_theme_selector()
-
-# Reconfigures the theme selector to be the correct size
-func reconfigure_theme_selector():
-	text_container.custom_minimum_size.y = SettingsManager.get_button_size()
-	custom_minimum_size.y = top_container.size.y
-	hide_reset_button()
+	super()
+	themes_container.minimum_size_changed.connect(setting_size_responder)
 	
-func hide_reset_button():
-	if SettingsManager.get_dice_theme() == SettingsManager.DICE_THEME_DEFAULT:
-		reset_button.visible = false
-	else:
-		reset_button.visible = true
+func setting_size_responder():
+	collapsible_section.custom_minimum_size.y = themes_container.size.y
+	enforce_all_content_shown()
 
-# Reset the dice theme to the default
-func _on_reset_button_pressed():
+# Method for inherited class to get the minimum height of the collapsible section
+func inner_get_collapsible_section_minimum_height() -> int:
+	return int(themes_container.size.y)
+	
+# Method for inherited class to implement if the reset button should be shown
+func inner_should_show_reset_button() -> bool:
+	return SettingsManager.get_dice_theme() != SettingsManager.DICE_THEME_DEFAULT
+
+# Method for inherited class to respond to reset being pressed
+func inner_reset_button_pressed():
 	SettingsManager.set_dice_theme(SettingsManager.DICE_THEME_DEFAULT)
+	show_hide_reset_button()
