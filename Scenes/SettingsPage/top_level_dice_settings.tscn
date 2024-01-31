@@ -18,14 +18,11 @@ shader_parameter/TintColor = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 75)
 script = ExtResource("2_vnckq")
 
-[node name="SettingName" parent="TopLevelContainer/TitleBarContainer" index="1"]
-custom_minimum_size = Vector2(0, 75)
-theme_type_variation = &"HugeRichTextLabel"
-text = "Dice"
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+theme_type_variation = &"LargeRichTextLabel"
 
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = true
-theme = ExtResource("6_ayfdi")
 
 [node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
 custom_minimum_size = Vector2(0, 750)
@@ -48,25 +45,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme = ExtResource("6_ayfdi")
+theme_override_constants/separation = 5
 alignment = 1
 
 [node name="DiceSizeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="0" instance=ExtResource("3_yuky0")]
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="1"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="DiceTintSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="2" instance=ExtResource("4_2fsex")]
+[node name="DiceTintSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="1" instance=ExtResource("4_2fsex")]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="3"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="DiceThemeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="4" instance=ExtResource("5_m5w32")]
+[node name="DiceThemeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="2" instance=ExtResource("5_m5w32")]
 layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer" index="1"]
@@ -99,13 +87,3 @@ mouse_filter = 2
 material = SubResource("ShaderMaterial_00dgr")
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(1, 0.184314, 1, 0.160784)

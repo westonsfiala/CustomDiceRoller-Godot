@@ -52,6 +52,7 @@ func _ready():
 	physics_dice_array = []
 	
 	SettingsManager.window_size_changed.connect(go_to_results_page)
+	SettingsManager.button_size_changed.connect(reconfigure)
 	reconfigure()
 	
 	# If we have too many dice in the roll it isn't very fun.
@@ -89,6 +90,10 @@ func _ready():
 	
 func reconfigure():
 	var screen_size: Vector2 = SettingsManager.get_window_size()
+	var button_size: int = SettingsManager.get_button_size()
+	
+	# Set the button size.
+	go_to_results_button.custom_minimum_size.y = button_size
 	
 	# Do some precalculations for all the known sizes
 	var horizontal_bumper_width = screen_size.x + extra_bumper_space * 2

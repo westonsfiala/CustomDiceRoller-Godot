@@ -1,16 +1,16 @@
 extends CollapsibleSettingBase
-class_name BasicDiceThemesSetting
+class_name IceCreamDiceThemesSetting
 
 @onready var theme_container : VBoxContainer = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer
 
-const BASIC_DIE_THEME_LABEL_TEXT : String = "Basic"
+const ICE_CREAM_DIE_THEME_LABEL_TEXT : String = "Ice Cream"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
 	
 func inner_get_title() -> String:
-	return BASIC_DIE_THEME_LABEL_TEXT
+	return ICE_CREAM_DIE_THEME_LABEL_TEXT
 
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:

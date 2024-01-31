@@ -4,7 +4,7 @@ class_name CollapsibleSettingBase
 @onready var top_level_container : VBoxContainer = $TopLevelContainer
 @onready var title_bar_container : HBoxContainer = $TopLevelContainer/TitleBarContainer
 @onready var rotating_arrow : SettingsManagedTextureButton = $TopLevelContainer/TitleBarContainer/RotatingArrow
-@onready var setting_name_label : SettingsManagedRichTextLabel = $TopLevelContainer/TitleBarContainer/SettingName
+@onready var setting_name_label : SettingsManagedRichTextLabel = $TopLevelContainer/TitleBarContainer/CollapseExpandButton/SettingName
 @onready var reset_button : Button = $TopLevelContainer/TitleBarContainer/ResetButton
 @onready var collapsible_section : Control = $TopLevelContainer/CollapsibleContainer/CollapsibleSection
 @onready var collapsible_container : HBoxContainer = $TopLevelContainer/CollapsibleContainer
@@ -21,7 +21,9 @@ signal setting_changed()
 
 # Connect to the setting we will be modifying
 func _ready():
+	# If you don't call both of these, it doesnt seem to work...
 	start_collapsed()
+	call_deferred("start_collapsed")
 	
 # Get the safe minimum collapsible height. Max of button size and inner height.
 func get_safe_collabible_section_minimum_height() -> int:
@@ -31,12 +33,15 @@ func get_safe_collabible_section_minimum_height() -> int:
 # Start with the setting collapsed
 func start_collapsed():
 	rotating_arrow.set_new_button_texture(RIGHT_ARROW)
+	set_title()
+	collapsible_section.visible = true
+	collapsible_container.visible = true
 	collapsible_section.scale = COLLAPSED_SCALE_VECTOR
 	collapsible_section.custom_minimum_size.y = 0
 	collapsible_section.size.y = 0
 	collapsible_section.visible = false
-	#collapsible_container.custom_minimum_size.y = 0
-	#collapsible_container.size.y = 0
+	collapsible_container.custom_minimum_size.y = 0
+	collapsible_container.size.y = 0
 	collapsible_container.visible = false
 	show_hide_reset_button()
 	call_deferred("enforce_all_content_shown")
@@ -95,6 +100,7 @@ func enforce_all_content_shown():
 	title_bar_container.size.y = 0
 	collapsible_container.size.y = 0
 	custom_minimum_size.y = title_bar_container.size.y + collapsible_container.size.y
+	#size.y = custom_minimum_size.y
 
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button():
@@ -103,6 +109,12 @@ func show_hide_reset_button():
 func signal_reset_pressed():
 	inner_reset_button_pressed()
 	emit_signal("reset_pressed")
+	
+func set_title():
+	setting_name_label.set_text_and_resize_y(inner_get_title())
+	
+func inner_get_title() -> String:
+	return "Temp"
 	
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:

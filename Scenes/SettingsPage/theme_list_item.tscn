@@ -10,7 +10,8 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 75.0
 grow_horizontal = 2
-size_flags_vertical = 3
+size_flags_horizontal = 3
+size_flags_vertical = 0
 theme = ExtResource("1_7td25")
 script = ExtResource("1_nqdu6")
 
@@ -30,6 +31,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 text = "Theme Name"
+flat = true
 
 [node name="PreviewColorRect" type="ColorRect" parent="."]
 material = ExtResource("3_qok2k")

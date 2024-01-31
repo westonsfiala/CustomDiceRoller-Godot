@@ -15,8 +15,11 @@ func _ready():
 func reconfigure_sliders():
 	var new_color: Color = SettingsManager.get_dice_tint_color()
 	color_picker.color = new_color
-	setting_name_label.set_text_and_resize_y(str(DIE_TINT_LABEL_TEXT, new_color.to_html()))
+	set_title()
 	show_hide_reset_button()
+	
+func inner_get_title() -> String:
+	return str(DIE_TINT_LABEL_TEXT, SettingsManager.get_dice_tint_color().to_html())
 
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:

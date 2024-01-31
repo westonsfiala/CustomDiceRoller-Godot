@@ -24,6 +24,9 @@ func setting_size_responder():
 	var new_size = max(settings_container.size.y, image_container.size.y)
 	collapsible_section.custom_minimum_size.y = new_size
 	enforce_all_content_shown()
+	
+func inner_get_title() -> String:
+	return "Dice"
 
 # Method for inherited class to get the minimum height of the collapsible section
 func inner_get_collapsible_section_minimum_height() -> int:

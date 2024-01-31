@@ -16,6 +16,7 @@ signal reroll()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SettingsManager.window_size_changed.connect(reconfigure)
+	SettingsManager.button_size_changed.connect(reconfigure)
 	reconfigure()
 	
 func configure(result: RollResults) -> FullScreenResult:
@@ -23,6 +24,11 @@ func configure(result: RollResults) -> FullScreenResult:
 	return self
 	
 func reconfigure():
+	var button_size: int = SettingsManager.get_button_size()
+	
+	reroll_button.custom_minimum_size.y = button_size
+	exit_button.custom_minimum_size.y = button_size
+	
 	# First up is the details
 	roll_detailed_name_label.set_text_and_resize_y(str("[center]", m_result.roll_detailed_name_text, "[/center]"))
 	
