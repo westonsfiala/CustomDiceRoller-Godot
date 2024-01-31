@@ -34,16 +34,20 @@ func get_safe_collabible_section_minimum_height() -> int:
 func start_collapsed():
 	rotating_arrow.set_new_button_texture(RIGHT_ARROW)
 	set_title()
-	collapsible_section.visible = true
+	show_hide_reset_button()
+	
 	collapsible_container.visible = true
+	collapsible_section.visible = true
+	
 	collapsible_section.scale = COLLAPSED_SCALE_VECTOR
 	collapsible_section.custom_minimum_size.y = 0
 	collapsible_section.size.y = 0
-	collapsible_section.visible = false
+	
 	collapsible_container.custom_minimum_size.y = 0
 	collapsible_container.size.y = 0
+	
 	collapsible_container.visible = false
-	show_hide_reset_button()
+	collapsible_section.visible = false
 	call_deferred("enforce_all_content_shown")
 
 # Toggle showing/hiding the dice settings.
@@ -100,7 +104,6 @@ func enforce_all_content_shown():
 	title_bar_container.size.y = 0
 	collapsible_container.size.y = 0
 	custom_minimum_size.y = title_bar_container.size.y + collapsible_container.size.y
-	#size.y = custom_minimum_size.y
 
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button():

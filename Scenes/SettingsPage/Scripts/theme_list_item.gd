@@ -5,12 +5,14 @@ class_name ThemeListItem
 
 @onready var preview_die_view: TextureRect = $PreviewDieView
 @onready var select_button: Button = $SelectButton
+@onready var theme_text: SettingsManagedRichTextLabel = $SelectButton/ThemeRichTextLabel
 @onready var preview_color_rect: ColorRect = $PreviewColorRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SettingsManager.button_size_changed.connect(reconfigure)
-	select_button.text = DieImageManager.get_theme_name_from_enum(die_theme)
+	var theme_name = str("[center]", DieImageManager.get_theme_name_from_enum(die_theme), "[/center]")
+	theme_text.set_text_and_resize_y(theme_name)
 	var selected_theme_texture = DieImageManager.get_theme_texture(die_theme)
 	preview_die_view.material.set_shader_parameter("Theme", selected_theme_texture)
 	preview_color_rect.material.set_shader_parameter("Theme", selected_theme_texture)

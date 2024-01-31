@@ -38,11 +38,13 @@ alignment = 1
 
 [node name="RotatingArrow" parent="TopLevelContainer/TitleBarContainer" instance=ExtResource("3_15h7j")]
 layout_mode = 2
+size_flags_horizontal = 0
 flat = true
 texture_2d = ExtResource("4_jbd8d")
 
 [node name="CollapseExpandButton" parent="TopLevelContainer/TitleBarContainer" instance=ExtResource("6_6fgg4")]
 layout_mode = 2
+size_flags_vertical = 1
 flat = true
 
 [node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" instance=ExtResource("5_1q1q4")]
@@ -50,16 +52,16 @@ layout_mode = 1
 size_flags_vertical = 4
 mouse_filter = 1
 text = "Setting Name"
-scroll_active = false
 max_lines_shown = 1
 
 [node name="ResetButton" parent="TopLevelContainer/TitleBarContainer" instance=ExtResource("3_15h7j")]
 layout_mode = 2
+size_flags_horizontal = 8
 texture_2d = ExtResource("7_mhmvh")
 
 [node name="CollapsibleContainer" type="HBoxContainer" parent="TopLevelContainer"]
-visible = false
 layout_mode = 2
+size_flags_vertical = 0
 theme = ExtResource("2_vbn0r")
 
 [node name="VSeparator" type="VSeparator" parent="TopLevelContainer/CollapsibleContainer"]
@@ -71,6 +73,7 @@ theme = ExtResource("2_vbn0r")
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 0
 mouse_filter = 2
 
 [connection signal="pressed" from="TopLevelContainer/TitleBarContainer/RotatingArrow" to="." method="expand_collapse_inner_settings"]

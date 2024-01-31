@@ -8,12 +8,6 @@
 [node name="IceCreamDiceThemesSetting" instance=ExtResource("1_7ue3w")]
 script = ExtResource("2_1a0vl")
 
-[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
-visible = true
-
-[node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
-visible = false
-
 [node name="ThemeContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
 anchors_preset = 14

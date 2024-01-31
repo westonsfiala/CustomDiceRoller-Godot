@@ -8,12 +8,6 @@
 [node name="MetallicDiceThemesSetting" instance=ExtResource("1_60ion")]
 script = ExtResource("2_dfgnu")
 
-[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
-visible = true
-
-[node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
-visible = false
-
 [node name="ThemeContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
 anchors_preset = 14

@@ -21,9 +21,6 @@ script = ExtResource("2_vnckq")
 [node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
 theme_type_variation = &"LargeRichTextLabel"
 
-[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
-visible = true
-
 [node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
 custom_minimum_size = Vector2(0, 750)
 

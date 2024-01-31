@@ -9,8 +9,8 @@ const DIE_THEME_LABEL_TEXT : String = "Dice Theme - "
 func _ready():
 	super()
 	themes_container.minimum_size_changed.connect(setting_size_responder)
-	SettingsManager.dice_theme_changed.connect(set_title)
 	SettingsManager.dice_theme_changed.connect(show_hide_reset_button)
+	SettingsManager.dice_theme_changed.connect(set_title)
 	
 func setting_size_responder():
 	collapsible_section.custom_minimum_size.y = themes_container.size.y

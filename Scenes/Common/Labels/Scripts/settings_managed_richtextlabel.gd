@@ -9,8 +9,15 @@ class_name SettingsManagedRichTextLabel
 # Overrides max_lines_shown.
 @export var enforce_all_lines_shown : bool = false
 
+# When set to true, will scroll the text in a ticker formation like a radio.
+@export var scroll_clipped_text : bool = true
+
+# Save the set text so that we can apply scroll correctly.
+var last_user_set_text : String = ""
+
 func _ready():
 	SettingsManager.window_size_changed.connect(reconfigure)
+	resized.connect(reconfigure)
 	call_deferred("reconfigure")
 	
 # Reconfigures the scene according to the settings
@@ -26,7 +33,18 @@ func reconfigure():
 	var font_size = get_theme_font_size("normal_font_size", theme_type_variation)
 	var needed_pixel_height = get_theme_default_font().get_height(font_size) * display_lines
 	custom_minimum_size.y = needed_pixel_height
+	
+	# When we need to, scroll the text
+	if(scroll_clipped_text):
+		var content_width = get_content_width()
+		# Need to set and unset the scroll.
+		if(content_width > size.x):
+			var scroll_length = content_width - size.x
+			text = str("[scroll lenght=",scroll_length,"]",last_user_set_text,"[/scroll]")
+		else:
+			text = last_user_set_text
 
 func set_text_and_resize_y(bbcode: String) -> void:
 	text = bbcode
+	last_user_set_text = bbcode
 	reconfigure()

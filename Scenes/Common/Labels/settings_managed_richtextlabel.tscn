@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://4y6g5enookh6"]
+[gd_scene load_steps=5 format=3 uid="uid://4y6g5enookh6"]
 
 [ext_resource type="Script" path="res://Scenes/Common/Labels/Scripts/settings_managed_richtextlabel.gd" id="1_eevtr"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_f0p4r"]
+[ext_resource type="Script" path="res://Resources/Shader/scrolling_text_effect.gd" id="2_mxph0"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_jrfaw"]
+script = ExtResource("2_mxph0")
 
 [node name="SettingsManagedRichTextLabel" type="RichTextLabel"]
-clip_contents = false
 custom_minimum_size = Vector2(0, 40)
 anchors_preset = 14
 anchor_top = 0.5
@@ -16,5 +19,8 @@ size_flags_horizontal = 3
 mouse_filter = 2
 theme = ExtResource("1_f0p4r")
 bbcode_enabled = true
-text = "[center]TEMP[/center]"
+text = "[scroll length=0][center]TEMP[/center]"
+scroll_active = false
+autowrap_mode = 0
+custom_effects = [SubResource("RichTextEffect_jrfaw")]
 script = ExtResource("1_eevtr")
