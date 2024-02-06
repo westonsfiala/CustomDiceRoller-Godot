@@ -25,9 +25,9 @@ alignment = 1
 [node name="GoldTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="0" instance=ExtResource("4_ejqx1")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 11
+die_theme = 14
 
 [node name="SteelTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("4_ejqx1")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 22
+die_theme = 27

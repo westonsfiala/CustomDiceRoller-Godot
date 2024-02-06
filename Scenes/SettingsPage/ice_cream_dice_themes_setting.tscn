@@ -30,14 +30,14 @@ die_theme = 6
 [node name="MintChocolateTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("4_of85e")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 15
+die_theme = 18
 
-[node name="RainbowSherbertTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("4_of85e")]
+[node name="SherbertTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("4_of85e")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 21
+die_theme = 26
 
 [node name="SupermanTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="3" instance=ExtResource("4_of85e")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 23
+die_theme = 28

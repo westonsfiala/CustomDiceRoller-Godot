@@ -50,44 +50,44 @@ die_theme = 5
 [node name="GenderfluidTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="5" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 9
+die_theme = 12
 
 [node name="GenderqueerTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="6" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 10
+die_theme = 13
 
 [node name="IntersexTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="7" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 12
+die_theme = 15
 
 [node name="LgbtTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="8" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 13
+die_theme = 16
 
 [node name="LipstickLesbianTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="9" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 14
+die_theme = 17
 
 [node name="NonBinaryTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="10" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 16
+die_theme = 19
 
 [node name="PansexualTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="11" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 17
+die_theme = 20
 
 [node name="PolysexualTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="12" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 18
+die_theme = 21
 
 [node name="TransgenderTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="13" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 24
+die_theme = 29

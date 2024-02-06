@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://de0dsucejbdin"]
+
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_p1g6n"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/custom_dice_themes_setting.gd" id="2_pay6s"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_mj6hq"]
+[ext_resource type="PackedScene" uid="uid://ds66lujjolvu" path="res://Scenes/SettingsPage/theme_list_item.tscn" id="4_r4syw"]
+
+[node name="CustomDiceThemesSetting" instance=ExtResource("1_p1g6n")]
+script = ExtResource("2_pay6s")
+
+[node name="ThemeContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -225.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_mj6hq")
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="RandomTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="0" instance=ExtResource("4_r4syw")]
+layout_mode = 2
+die_theme = 23
+
+[node name="RandomMatchTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("4_r4syw")]
+layout_mode = 2
+die_theme = 24
+
+[node name="Custom1Theme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("4_r4syw")]
+layout_mode = 2
+die_theme = 7
+
+[node name="Custom2Theme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="3" instance=ExtResource("4_r4syw")]
+layout_mode = 2
+die_theme = 8
+
+[node name="Custom3Theme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="4" instance=ExtResource("4_r4syw")]
+layout_mode = 2
+die_theme = 9

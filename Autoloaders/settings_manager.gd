@@ -237,6 +237,8 @@ signal dice_theme_changed()
 # Sets the new theme and emits the dice_theme_changed signal
 func set_dice_theme(new_dice_theme: DieImageManager.THEME):
 	dice_theme = new_dice_theme
+	if(new_dice_theme == DieImageManager.THEME.RANDOM_MATCHING):
+		DieImageManager.randomize_random_match()
 	emit_signal("dice_theme_changed")
 	save_state()
 	

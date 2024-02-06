@@ -20,6 +20,9 @@ enum THEME {
 	BISEXUAL,
 	COMMUNITY_LESBIAN,
 	CREAMSICLE,
+	CUSTOM_1,
+	CUSTOM_2,
+	CUSTOM_3,
 	FIRE,
 	FOREST,
 	GENDERFLUID,
@@ -33,6 +36,8 @@ enum THEME {
 	PANSEXUAL,
 	POLYSEXUAL,
 	RAINBOW,
+	RANDOM,
+	RANDOM_MATCHING,
 	RGB,
 	SHERBERT,
 	STEEL,
@@ -40,6 +45,11 @@ enum THEME {
 	TRANSGENDER,
 	WHITE
 }
+
+var loaded_themes : Dictionary = {}
+
+func _ready():
+	randomize_random_match()
 
 func get_theme_name_from_enum(theme: THEME) -> String:
 	match(theme):
@@ -57,6 +67,12 @@ func get_theme_name_from_enum(theme: THEME) -> String:
 			return "community-lesbian"
 		THEME.CREAMSICLE:
 			return "creamsicle"
+		THEME.CUSTOM_1:
+			return "custom-1"
+		THEME.CUSTOM_2:
+			return "custom-2"
+		THEME.CUSTOM_3:
+			return "custom-3"
 		THEME.FIRE:
 			return "fire"
 		THEME.FOREST:
@@ -83,6 +99,10 @@ func get_theme_name_from_enum(theme: THEME) -> String:
 			return "polysexual"
 		THEME.RAINBOW:
 			return "rainbow"
+		THEME.RANDOM:
+			return "random"
+		THEME.RANDOM_MATCHING:
+			return "random-matching"
 		THEME.RGB:
 			return "rgb"
 		THEME.SHERBERT:
@@ -98,9 +118,43 @@ func get_theme_name_from_enum(theme: THEME) -> String:
 		_:
 			return "unknown"
 			
+func randomize_random_match():
+	var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/random-match.tres")
+	custom_gradient.make_random()
+			
 func get_theme_texture(theme: THEME) -> Texture2D:
-	var theme_name = get_theme_name_from_enum(theme)
-	return load(str("res://DicePNGs/Gradients/", theme_name, ".png"))
+	# If we already processed our theme and generated the texture, don't regenerate it.
+	if loaded_themes.has(theme) && theme != THEME.RANDOM:
+		return loaded_themes[theme]
+		
+	match theme:
+		THEME.FIRE:
+			var fire_gradient : CustomGradient = preload("res://DicePNGs/Gradients/fire.tres")
+			loaded_themes[theme] = fire_gradient.generate_gradient_texture_2d()
+		THEME.CUSTOM_1:
+			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/custom-1.tres")
+			custom_gradient.make_random()
+			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+		THEME.CUSTOM_2:
+			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/custom-2.tres")
+			custom_gradient.make_random()
+			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+		THEME.CUSTOM_3:
+			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/custom-3.tres")
+			custom_gradient.make_random()
+			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+		THEME.RANDOM:
+			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/random.tres")
+			custom_gradient.make_random()
+			return custom_gradient.generate_gradient_texture_2d()
+		THEME.RANDOM_MATCHING:
+			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/random-match.tres")
+			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+		_:
+			var theme_name = get_theme_name_from_enum(theme)
+			loaded_themes[theme] = load(str("res://DicePNGs/Gradients/", theme_name, ".png"))
+			
+	return loaded_themes[theme]
 
 func get_die_image(imageID : int) -> String:
 	var die_name = 'unknown-die'

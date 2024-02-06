@@ -27,20 +27,20 @@ layout_mode = 2
 
 [node name="FireTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("2_ljjjr")]
 layout_mode = 2
-die_theme = 7
+die_theme = 10
 
 [node name="ForestTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("2_ljjjr")]
 layout_mode = 2
-die_theme = 8
+die_theme = 11
 
 [node name="BeachTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="3" instance=ExtResource("2_ljjjr")]
 layout_mode = 2
 die_theme = 3
 
-[node name="RGBTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="4" instance=ExtResource("2_ljjjr")]
+[node name="RainbowTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="4" instance=ExtResource("2_ljjjr")]
 layout_mode = 2
-die_theme = 20
+die_theme = 22
 
-[node name="RainbowTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="5" instance=ExtResource("2_ljjjr")]
+[node name="RGBTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="5" instance=ExtResource("2_ljjjr")]
 layout_mode = 2
-die_theme = 19
+die_theme = 25

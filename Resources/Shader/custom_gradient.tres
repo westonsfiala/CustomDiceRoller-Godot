@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cqgt0va8m4x8c"]
+
+[ext_resource type="Script" path="res://Resources/Shader/Scripts/custom_gradient.gd" id="1_mt6if"]
+
+[resource]
+script = ExtResource("1_mt6if")
+colors = []
+blend_type = 1
+fill_type = 0
+layout_direction = 2

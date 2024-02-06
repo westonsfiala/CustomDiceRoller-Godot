@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjuvwiiugcdxi"]
+[gd_scene load_steps=9 format=3 uid="uid://bjuvwiiugcdxi"]
 
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/dice_theme_setting.gd" id="1_1qbng"]
 [ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_fehq5"]
@@ -7,12 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://c6p3384fvc0ir" path="res://Scenes/SettingsPage/metallic_dice_themes_setting.tscn" id="5_5rd4p"]
 [ext_resource type="PackedScene" uid="uid://chu4fvc7h3y0f" path="res://Scenes/SettingsPage/ice_cream_dice_themes_setting.tscn" id="6_7fn3j"]
 [ext_resource type="PackedScene" uid="uid://c03vl337ik20v" path="res://Scenes/SettingsPage/pride_dice_themes_setting.tscn" id="7_bcewu"]
+[ext_resource type="PackedScene" uid="uid://de0dsucejbdin" path="res://Scenes/SettingsPage/custom_dice_themes_setting.tscn" id="8_xvrx5"]
 
 [node name="DiceThemeSetting" instance=ExtResource("1_fehq5")]
 script = ExtResource("1_1qbng")
 
 [node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
-custom_minimum_size = Vector2(0, 200)
+custom_minimum_size = Vector2(0, 250)
 
 [node name="ThemesContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
@@ -39,4 +40,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="PrideDiceThemesSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemesContainer" index="3" instance=ExtResource("7_bcewu")]
+layout_mode = 2
+
+[node name="CustomDiceThemesSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemesContainer" index="4" instance=ExtResource("8_xvrx5")]
 layout_mode = 2
