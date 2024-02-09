@@ -102,7 +102,7 @@ func generate_gradient_texture_2d() -> GradientTexture2D:
 			fill_from = Vector2(0.5,0.5)
 	
 	# Make the direction vector to help with repeats.
-	var fill_direction_vector = fill_from.direction_to(fill_to)
+	var fill_direction_vector = fill_to - fill_from
 	
 	# Sanity check for making sure we don't increase vector size.
 	var repeats = repeat_num
@@ -141,5 +141,5 @@ func make_random():
 	blend_type = randi_range(0,1) as BLEND_TYPE
 	fill_type = randi_range(0,2) as FILL_TYPE
 	layout_direction = randi_range(0,3) as LAYOUT_DIRECTION
-	repeat_num = float(randi_range(1,15))
+	repeat_num = float(randi_range(1,10))
 	repeat_type = randi_range(0,2) as REPEAT_TYPE

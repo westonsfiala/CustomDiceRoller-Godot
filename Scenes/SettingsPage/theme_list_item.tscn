@@ -1,15 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://ds66lujjolvu"]
+[gd_scene load_steps=7 format=3 uid="uid://ds66lujjolvu"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_7td25"]
 [ext_resource type="Texture2D" uid="uid://o1xm76qu6h8h" path="res://DicePNGs/white/unknown-die.png" id="1_8u0cm"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/theme_list_item.gd" id="1_nqdu6"]
 [ext_resource type="Material" uid="uid://jw3i2ootl1tq" path="res://Resources/Shader/dice_tint_shader_material.tres" id="3_qok2k"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_ujct4"]
+[ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="6_h0pt0"]
 
 [node name="ThemeListItem" type="HBoxContainer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 75.0
+offset_bottom = 50.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -18,7 +19,7 @@ script = ExtResource("1_nqdu6")
 
 [node name="PreviewDieView" type="TextureRect" parent="."]
 material = ExtResource("3_qok2k")
-custom_minimum_size = Vector2(75, 75)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
@@ -37,11 +38,28 @@ flat = true
 layout_mode = 1
 text = "[center]Theme Name[/center]"
 
+[node name="RandomizeButton" type="Button" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="RandomizeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_h0pt0")
+expand_mode = 2
+
 [node name="PreviewColorRect" type="ColorRect" parent="."]
 material = ExtResource("3_qok2k")
-custom_minimum_size = Vector2(75, 75)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 mouse_filter = 2
 theme = ExtResource("1_7td25")
 
 [connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]
+[connection signal="pressed" from="RandomizeButton" to="." method="_on_randomize_button_pressed"]

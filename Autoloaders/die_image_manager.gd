@@ -47,6 +47,7 @@ enum THEME {
 }
 
 var loaded_themes : Dictionary = {}
+var random_is_dirty : bool = false
 
 func _ready():
 	randomize_random_match()
@@ -117,15 +118,17 @@ func get_theme_name_from_enum(theme: THEME) -> String:
 			return "white"
 		_:
 			return "unknown"
-			
+
+# Randomize the matching random gradient. 
 func randomize_random_match():
-	var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/random-match.tres")
-	custom_gradient.make_random()
-			
+	random_is_dirty = true
+
 func get_theme_texture(theme: THEME) -> Texture2D:
 	# If we already processed our theme and generated the texture, don't regenerate it.
-	if loaded_themes.has(theme) && theme != THEME.RANDOM:
-		return loaded_themes[theme]
+	if loaded_themes.has(theme):
+		var is_random_matching_and_dirty = theme == THEME.RANDOM_MATCHING and random_is_dirty
+		if not is_random_matching_and_dirty:
+			return loaded_themes[theme]
 		
 	match theme:
 		THEME.FIRE:
@@ -144,12 +147,14 @@ func get_theme_texture(theme: THEME) -> Texture2D:
 			custom_gradient.make_random()
 			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
 		THEME.RANDOM:
-			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/random.tres")
+			var custom_gradient : CustomGradient = CustomGradient.new()
 			custom_gradient.make_random()
 			return custom_gradient.generate_gradient_texture_2d()
 		THEME.RANDOM_MATCHING:
-			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/random-match.tres")
+			var custom_gradient : CustomGradient = CustomGradient.new()
+			custom_gradient.make_random()
 			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+			random_is_dirty = false
 		_:
 			var theme_name = get_theme_name_from_enum(theme)
 			loaded_themes[theme] = load(str("res://DicePNGs/Gradients/", theme_name, ".png"))
