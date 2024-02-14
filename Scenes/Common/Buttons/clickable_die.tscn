@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctkbps8l4pw6u"]
+[gd_scene load_steps=8 format=3 uid="uid://ctkbps8l4pw6u"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_3owrk"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/clickable_die.gd" id="1_3xkko"]
@@ -6,13 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="4_l1ivn"]
 [ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="5_7n0c0"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_ytsdx"]
-[ext_resource type="Texture2D" uid="uid://dbxmhueptw2cv" path="res://DicePNGs/Gradients/steel.png" id="6_7sdv2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lyfgh"]
 resource_local_to_scene = true
 shader = ExtResource("5_7n0c0")
 shader_parameter/TintColor = Color(1, 1, 1, 0)
-shader_parameter/Theme = ExtResource("6_7sdv2")
 
 [node name="ClickableDie" type="Control"]
 layout_mode = 3

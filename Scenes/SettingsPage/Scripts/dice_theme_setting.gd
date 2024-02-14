@@ -3,7 +3,7 @@ class_name DiceThemeSetting
 
 @onready var themes_container : VBoxContainer = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemesContainer
 
-const DIE_THEME_LABEL_TEXT : String = "Dice Theme - "
+const DIE_THEME_LABEL_TEXT : String = "Theme - "
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

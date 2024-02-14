@@ -3,7 +3,7 @@ class_name DiceSizeSetting
 
 @onready var die_size_slider : HSlider = $TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieSizeSlider
 
-const DIE_SIZE_LABEL_TEXT : String = "Dice Size - "
+const DIE_SIZE_LABEL_TEXT : String = "Size - "
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

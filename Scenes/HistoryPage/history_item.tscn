@@ -51,6 +51,7 @@ layout_mode = 1
 size_flags_horizontal = 1
 size_flags_vertical = 4
 enforce_all_lines_shown = true
+scroll_clipped_text = false
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/TopLayout/TopLineLayout"]
 modulate = Color(1, 1, 1, 0)
@@ -67,11 +68,13 @@ theme = ExtResource("1_si6k0")
 layout_mode = 2
 text = "TEMP"
 enforce_all_lines_shown = true
+scroll_clipped_text = false
 
 [node name="RollDetailsRichText" parent="MarginContainer/TopLayout/TopLineLayout/NameDetailLayout" instance=ExtResource("5_mqthe")]
 layout_mode = 2
 text = "TEMP"
 enforce_all_lines_shown = true
+scroll_clipped_text = false
 
 [node name="DateTimeLayout" type="VBoxContainer" parent="MarginContainer/TopLayout/TopLineLayout"]
 custom_minimum_size = Vector2(150, 0)
@@ -95,3 +98,4 @@ max_lines_shown = 1
 [node name="RollResultsRichTextLabel" parent="MarginContainer/TopLayout" instance=ExtResource("5_mqthe")]
 layout_mode = 2
 enforce_all_lines_shown = true
+scroll_clipped_text = false

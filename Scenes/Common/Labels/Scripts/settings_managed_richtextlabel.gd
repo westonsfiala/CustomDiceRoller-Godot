@@ -26,8 +26,10 @@ func reconfigure():
 	
 	if(max_lines_shown > display_lines):
 		display_lines = min(get_line_count(), max_lines_shown)
-		
+	
+	# When we want to show all lines, force autowrap on.
 	if(enforce_all_lines_shown):
+		autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		display_lines = get_line_count()
 	
 	var font_size = get_theme_font_size("normal_font_size", theme_type_variation)
@@ -35,7 +37,7 @@ func reconfigure():
 	custom_minimum_size.y = needed_pixel_height
 	
 	# When we need to, scroll the text
-	if(scroll_clipped_text):
+	if(scroll_clipped_text and not enforce_all_lines_shown):
 		var content_width = get_content_width()
 		# Need to set and unset the scroll.
 		if(content_width > size.x):

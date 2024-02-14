@@ -21,5 +21,9 @@ func decimal_to_string(decimal_number: float, decimal_places: int) -> String:
 	
 	if(number_split.size() != 2 or number_split[1].length() < decimal_places):
 		return number_string
-
+	
+	# If we don't want anything past the decimal, don't put a decimal.
+	if(decimal_places <= 0):
+		return number_split[0]
+		
 	return number_split[0] + '.' + number_split[1].substr(0, decimal_places)
