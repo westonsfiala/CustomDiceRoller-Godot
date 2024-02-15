@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfbdac4xacsaj"]
+[gd_scene load_steps=8 format=3 uid="uid://bfbdac4xacsaj"]
 
 [ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_gy556"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/top_level_dice_settings.gd" id="2_vnckq"]
@@ -6,23 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://do3te382c5tn5" path="res://Scenes/SettingsPage/dice_tint_setting.tscn" id="4_2fsex"]
 [ext_resource type="PackedScene" uid="uid://bjuvwiiugcdxi" path="res://Scenes/SettingsPage/dice_theme_setting.tscn" id="5_m5w32"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="6_ayfdi"]
-[ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="7_74d46"]
-[ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="8_nmty5"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_00dgr"]
-resource_local_to_scene = true
-shader = ExtResource("8_nmty5")
-shader_parameter/TintColor = Color(1, 1, 1, 0)
+[ext_resource type="PackedScene" uid="uid://dd1rypon6u4ef" path="res://Scenes/Common/DiceViews/settings_managed_dice_image_grid.tscn" id="7_p7h80"]
 
 [node name="TopLevelDiceSettings" instance=ExtResource("1_gy556")]
-custom_minimum_size = Vector2(0, 75)
+custom_minimum_size = Vector2(0, 1000)
 script = ExtResource("2_vnckq")
 
 [node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
 theme_type_variation = &"LargeRichTextLabel"
 
 [node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
-custom_minimum_size = Vector2(0, 750)
+custom_minimum_size = Vector2(0, 200)
 
 [node name="SettingsContainer" type="HBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
@@ -54,33 +48,6 @@ layout_mode = 2
 [node name="DiceThemeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer/SettingsVContainer" index="2" instance=ExtResource("5_m5w32")]
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer" index="1"]
-modulate = Color(1, 1, 1, 0)
+[node name="SettingsManagedDiceImageGrid" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer" index="1" instance=ExtResource("7_p7h80")]
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 1
-
-[node name="ImageContainer" type="HBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="1"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -25.0
-offset_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("6_ayfdi")
-alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ImageContainer" index="0"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="SettingsManagedDiceImage" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ImageContainer" index="1" instance=ExtResource("7_74d46")]
-material = SubResource("ShaderMaterial_00dgr")
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2

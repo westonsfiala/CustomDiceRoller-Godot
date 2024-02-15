@@ -5,8 +5,10 @@
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_q4nbl"]
 
 [node name="DiceSizeSetting" instance=ExtResource("1_0pkl2")]
-custom_minimum_size = Vector2(0, 150)
 script = ExtResource("2_71xwf")
+
+[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
+visible = false
 
 [node name="DieSizeSlider" type="HSlider" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
