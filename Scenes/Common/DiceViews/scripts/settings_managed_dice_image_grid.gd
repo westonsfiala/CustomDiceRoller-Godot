@@ -13,8 +13,10 @@ func _ready():
 func reconfigure():
 	var dice_size = SettingsManager.get_dice_size()
 	custom_minimum_size.y = dice_size
-	var rows: int = max(1, round(size.x / dice_size))
-	var columns: int = max(1, round(size.y / dice_size))
+	# Always have at least one row. Add a second under for smoother expansions without jitter.
+	# Extras get clipped and a few extra doesn't tend to mess with performance.
+	var rows: int = max(1, round(size.x / dice_size)) + 1
+	var columns: int = max(1, round(size.y / dice_size)) + 1
 	var needed_images = rows*columns
 	var current_images = flow_container.get_child_count()
 	
