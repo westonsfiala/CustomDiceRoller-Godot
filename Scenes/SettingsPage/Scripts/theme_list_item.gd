@@ -19,14 +19,14 @@ func is_random():
 	
 func reconfigure():
 	# Set the name and the texture.
-	var theme_name = str("[center]", DieImageManager.get_theme_name_from_enum(die_theme), "[/center]")
-	theme_text.set_text_and_resize_y(theme_name)
 	var selected_theme_texture = DieImageManager.get_theme_texture(die_theme)
 	preview_die_view.material.set_shader_parameter("Theme", selected_theme_texture)
 	preview_color_rect.material.set_shader_parameter("Theme", selected_theme_texture)
 	
 	# Only show the randomize button when we we are random.
 	randomize_button.visible = is_random()
+	var theme_name = str("[center]", DieImageManager.get_theme_name_from_enum(die_theme), "[/center]")
+	theme_text.set_text_and_resize_y(theme_name)
 	
 	# Get all the button sizes correct.
 	var button_size = SettingsManager.get_button_size() * 1.5

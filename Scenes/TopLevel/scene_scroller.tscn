@@ -17,6 +17,7 @@ theme = ExtResource("1_ifnbb")
 follow_focus = true
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
+scroll_deadzone = 25
 script = ExtResource("1_vdmet")
 
 [node name="ScrollSnapTimer" type="Timer" parent="."]

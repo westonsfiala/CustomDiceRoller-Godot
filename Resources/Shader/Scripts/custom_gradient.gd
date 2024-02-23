@@ -17,7 +17,10 @@ enum LAYOUT_DIRECTION {HORIZONTAL, VERTICAL, DIAGONAL_DOWN, DIAGONAL_UP}
 @export var layout_direction : LAYOUT_DIRECTION = LAYOUT_DIRECTION.DIAGONAL_DOWN
 
 # Number of times to repeat the gradient
-@export var repeat_num : float = 1.0
+const REPEAT_MIN : float = 1
+const REPEAT_MAX : float = 10
+@export_range(REPEAT_MIN, REPEAT_MAX, 0.1)
+var repeat_num : float = 1.0
 
 # How to do the repeat
 enum REPEAT_TYPE {NO_REPEAT, REPEAT, MIRROR_REPEAT}

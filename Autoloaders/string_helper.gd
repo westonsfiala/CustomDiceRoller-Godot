@@ -27,3 +27,14 @@ func decimal_to_string(decimal_number: float, decimal_places: int) -> String:
 		return number_split[0]
 		
 	return number_split[0] + '.' + number_split[1].substr(0, decimal_places)
+	
+# Strips out [left][/left][center][/center][right][/right] from the provided string.
+func strip_directional_bbcode(bbcode: String) -> String:
+	var stripped_text = bbcode
+	stripped_text = stripped_text.replace("[left]", "")
+	stripped_text = stripped_text.replace("[/left]", "")
+	stripped_text = stripped_text.replace("[center]", "")
+	stripped_text = stripped_text.replace("[/center]", "")
+	stripped_text = stripped_text.replace("[right]", "")
+	stripped_text = stripped_text.replace("[/right]", "")
+	return stripped_text

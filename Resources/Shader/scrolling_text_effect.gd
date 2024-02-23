@@ -30,5 +30,7 @@ func _process_custom_fx(char_fx):
 	elif(elapsed_loop_time > wait):
 		var scroll_time = elapsed_loop_time - wait
 		char_fx.offset.x = -scroll_time * scroll_speed
+	elif(elapsed_loop_time < wait):
+		char_fx.offset.x = 0
 
 	return true

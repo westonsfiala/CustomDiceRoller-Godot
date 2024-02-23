@@ -43,7 +43,7 @@ layout_mode = 2
 
 [node name="SceneScroller" parent="ColorRect/VBoxContainer" instance=ExtResource("3_wlitc")]
 layout_mode = 2
-scroll_deadzone = 5
+scroll_deadzone = 25
 
 [node name="PressResponseImage" type="TextureRect" parent="."]
 visible = false

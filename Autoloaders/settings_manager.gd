@@ -32,13 +32,6 @@ var default_label_settings : LabelSettings = preload("res://Resources/Styles/nor
 
 const SAVE_FILE_NAME : StringName = "user://settings_manager.save"
 
-const CUSTOM_GRADIENT_1_FILE_NAME : StringName = "user://custom_gradient_1.tres"
-var custom_gradient_1 : CustomGradient = CustomGradient.new()
-const CUSTOM_GRADIENT_2_FILE_NAME : StringName = "user://custom_gradient_2.tres"
-var custom_gradient_2 : CustomGradient = CustomGradient.new()
-const CUSTOM_GRADIENT_3_FILE_NAME : StringName = "user://custom_gradient_3.tres"
-var custom_gradient_3 : CustomGradient = CustomGradient.new()
-
 func _ready():
 	load_state()
 	
@@ -69,16 +62,6 @@ func save_state() -> void:
 	
 	# Save it into the file
 	settings_manager_save_file.store_line(json_string)
-	
-	var save_result1 = ResourceSaver.save(custom_gradient_1, CUSTOM_GRADIENT_1_FILE_NAME)
-	if save_result1 != OK: 
-		print("Failed to save custom gradient 1")
-	var save_result2 = ResourceSaver.save(custom_gradient_2, CUSTOM_GRADIENT_2_FILE_NAME)
-	if save_result2 != OK: 
-		print("Failed to save custom gradient 2")
-	var save_result3 = ResourceSaver.save(custom_gradient_3, CUSTOM_GRADIENT_3_FILE_NAME)
-	if save_result3 != OK: 
-		print("Failed to save custom gradient 3")
 	
 # Load our state from our save file.
 func load_state() -> void:
@@ -175,37 +158,6 @@ func load_state() -> void:
 		font_size_normal = save_data['font_size_normal']
 		font_size_large = save_data['font_size_large']
 		font_size_huge = save_data['font_size_huge']
-	
-	# Load each of our stored gradients
-	if ResourceLoader.exists(CUSTOM_GRADIENT_1_FILE_NAME):
-		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_1_FILE_NAME)
-		if loaded_gradient is CustomGradient:
-			custom_gradient_1 = loaded_gradient
-		else:
-			print("Custom Gradient 1 file is corrupted")
-	else:
-		custom_gradient_1 = CustomGradient.new()
-		custom_gradient_1.make_random()
-	
-	if ResourceLoader.exists(CUSTOM_GRADIENT_2_FILE_NAME):
-		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_2_FILE_NAME)
-		if loaded_gradient is CustomGradient:
-			custom_gradient_2 = loaded_gradient
-		else:
-			print("Custom Gradient 2 file is corrupted")
-	else:
-		custom_gradient_2 = CustomGradient.new()
-		custom_gradient_2.make_random()
-	
-	if ResourceLoader.exists(CUSTOM_GRADIENT_3_FILE_NAME):
-		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_3_FILE_NAME)
-		if loaded_gradient is CustomGradient:
-			custom_gradient_3 = loaded_gradient
-		else:
-			print("Custom Gradient 3 file is corrupted")
-	else:
-		custom_gradient_3 = CustomGradient.new()
-		custom_gradient_3.make_random()
 
 # Signal emitted when the window size changes
 signal window_size_changed()
@@ -291,45 +243,6 @@ func set_dice_theme(new_dice_theme: DieImageManager.THEME):
 # Gets the dice theme
 func get_dice_theme() -> DieImageManager.THEME:
 	return dice_theme
-	
-# Signal for saying that the custom gradient 1 has changed
-signal custom_gradient_1_changed()
-	
-# Sets the new theme and emits the custom_gradient_1_changed signal
-func set_custom_gradient_1(new_custom_gradient: CustomGradient):
-	custom_gradient_1 = new_custom_gradient
-	emit_signal("custom_gradient_1_changed")
-	save_state()
-	
-# Gets the custom gradient 1
-func get_custom_gradient_1() -> CustomGradient:
-	return custom_gradient_1
-	
-# Signal for saying that the custom gradient 2 has changed
-signal custom_gradient_2_changed()
-	
-# Sets the new theme and emits the custom_gradient_1_changed signal
-func set_custom_gradient_2(new_custom_gradient: CustomGradient):
-	custom_gradient_2 = new_custom_gradient
-	emit_signal("custom_gradient_2_changed")
-	save_state()
-	
-# Gets the custom gradient 2
-func get_custom_gradient_2() -> CustomGradient:
-	return custom_gradient_2
-	
-# Signal for saying that the custom gradient 1 has changed
-signal custom_gradient_3_changed()
-	
-# Sets the new theme and emits the custom_gradient_1_changed signal
-func set_custom_gradient_3(new_custom_gradient: CustomGradient):
-	custom_gradient_3 = new_custom_gradient
-	emit_signal("custom_gradient_3_changed")
-	save_state()
-	
-# Gets the custom gradient 3
-func get_custom_gradient_3() -> CustomGradient:
-	return custom_gradient_3
 	
 # Signal for saying that the button size has changed
 signal button_size_changed()

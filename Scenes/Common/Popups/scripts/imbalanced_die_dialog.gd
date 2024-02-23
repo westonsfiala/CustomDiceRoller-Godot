@@ -22,6 +22,10 @@ var m_imbalanced_die : ImbalancedDie = SimpleRollManager.default_imbalanced_die
 signal die_accepted(original_die: ImbalancedDie, accepted_die: ImbalancedDie)
 signal die_removed(removed_die: ImbalancedDie)
 
+func _ready():
+	die_info_label.resized.connect(deferred_helper)
+	super()
+
 # Sets the minimum size to display all content
 func _inner_set_size():
 	var content_height = 0
@@ -42,6 +46,9 @@ func _inner_set_size():
 	content_height += button_row_margins.size.y
 	
 	content_panel.custom_minimum_size.y = content_height
+	# Need this step to force any size shrinks to take effect.
+	content_panel.size.y = 0
+	enforce_content_panel_in_screen(size/2, true)
 	
 # Set the y size the heights of all the margins.
 func set_content_panel_minimum_size():
@@ -54,6 +61,16 @@ func set_content_panel_minimum_size():
 # When you are first creating a die, remove doesn't make sense.
 func set_remove_button_visibility(show_hide: bool):
 	remove_confirm_button.visible = show_hide
+
+# Function pair to help make resizing the dialog work.
+# If you don't have this and the method it calls, the dialog won't respect size changes
+# to the die info label.
+func deferred_helper():
+	call_deferred("helper")
+	
+func helper():
+	die_info_label.reconfigure()
+	_inner_set_size()
 
 # Set the dice to the given die, update text lines, and highlight issues.
 # if first_set is true, will forcefully update the text lines.

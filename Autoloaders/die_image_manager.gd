@@ -46,11 +46,119 @@ enum THEME {
 	WHITE
 }
 
+const CUSTOM_GRADIENT_1_FILE_NAME : StringName = "user://custom_gradient_1.tres"
+var custom_gradient_1 : CustomGradient = CustomGradient.new()
+const CUSTOM_GRADIENT_2_FILE_NAME : StringName = "user://custom_gradient_2.tres"
+var custom_gradient_2 : CustomGradient = CustomGradient.new()
+const CUSTOM_GRADIENT_3_FILE_NAME : StringName = "user://custom_gradient_3.tres"
+var custom_gradient_3 : CustomGradient = CustomGradient.new()
+
 var loaded_themes : Dictionary = {}
-var random_is_dirty : bool = false
 
 func _ready():
 	randomize_random_match()
+	load_state()
+	
+func save_state():
+	var save_result1 = ResourceSaver.save(custom_gradient_1, CUSTOM_GRADIENT_1_FILE_NAME)
+	if save_result1 != OK: 
+		print("Failed to save custom gradient 1")
+	var save_result2 = ResourceSaver.save(custom_gradient_2, CUSTOM_GRADIENT_2_FILE_NAME)
+	if save_result2 != OK: 
+		print("Failed to save custom gradient 2")
+	var save_result3 = ResourceSaver.save(custom_gradient_3, CUSTOM_GRADIENT_3_FILE_NAME)
+	if save_result3 != OK: 
+		print("Failed to save custom gradient 3")
+
+# Load the state
+func load_state():
+	# Load each of our stored gradients
+	if ResourceLoader.exists(CUSTOM_GRADIENT_1_FILE_NAME):
+		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_1_FILE_NAME)
+		if loaded_gradient is CustomGradient:
+			custom_gradient_1 = loaded_gradient
+		else:
+			print("Custom Gradient 1 file is corrupted")
+	else:
+		custom_gradient_1 = CustomGradient.new()
+		custom_gradient_1.make_random()
+	
+	if ResourceLoader.exists(CUSTOM_GRADIENT_2_FILE_NAME):
+		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_2_FILE_NAME)
+		if loaded_gradient is CustomGradient:
+			custom_gradient_2 = loaded_gradient
+		else:
+			print("Custom Gradient 2 file is corrupted")
+	else:
+		custom_gradient_2 = CustomGradient.new()
+		custom_gradient_2.make_random()
+	
+	if ResourceLoader.exists(CUSTOM_GRADIENT_3_FILE_NAME):
+		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_3_FILE_NAME)
+		if loaded_gradient is CustomGradient:
+			custom_gradient_3 = loaded_gradient
+		else:
+			print("Custom Gradient 3 file is corrupted")
+	else:
+		custom_gradient_3 = CustomGradient.new()
+		custom_gradient_3.make_random()
+		
+
+# Signal for saying that the custom gradient 1 has changed
+signal custom_gradient_1_changed()
+	
+# Sets the new theme and emits the custom_gradient_1_changed signal
+func set_custom_gradient_1(new_custom_gradient: CustomGradient):
+	custom_gradient_1 = new_custom_gradient
+	if loaded_themes.has(THEME.CUSTOM_1):
+		loaded_themes.erase(THEME.CUSTOM_1)
+	emit_signal("custom_gradient_1_changed")
+	save_state()
+	SettingsManager.set_dice_theme(THEME.CUSTOM_1)
+	
+# Gets the custom gradient 1
+func get_custom_gradient_1() -> CustomGradient:
+	return custom_gradient_1
+	
+# Signal for saying that the custom gradient 2 has changed
+signal custom_gradient_2_changed()
+	
+# Sets the new theme and emits the custom_gradient_2_changed signal
+func set_custom_gradient_2(new_custom_gradient: CustomGradient):
+	custom_gradient_2 = new_custom_gradient
+	if loaded_themes.has(THEME.CUSTOM_2):
+		loaded_themes.erase(THEME.CUSTOM_2)
+	emit_signal("custom_gradient_2_changed")
+	save_state()
+	SettingsManager.set_dice_theme(THEME.CUSTOM_2)
+	
+# Gets the custom gradient 2
+func get_custom_gradient_2() -> CustomGradient:
+	return custom_gradient_2
+	
+# Signal for saying that the custom gradient 3 has changed
+signal custom_gradient_3_changed()
+	
+# Sets the new theme and emits the custom_gradient_3_changed signal
+func set_custom_gradient_3(new_custom_gradient: CustomGradient):
+	custom_gradient_3 = new_custom_gradient
+	if loaded_themes.has(THEME.CUSTOM_3):
+		loaded_themes.erase(THEME.CUSTOM_3)
+	emit_signal("custom_gradient_3_changed")
+	save_state()
+	SettingsManager.set_dice_theme(THEME.CUSTOM_3)
+	
+# Gets the custom gradient 3
+func get_custom_gradient_3() -> CustomGradient:
+	return custom_gradient_3
+	
+# Signal for saying that the random match gradient has changed
+signal random_match_gradient_changed()
+	
+# Randomize the matching random gradient. 
+func randomize_random_match():
+	if loaded_themes.has(THEME.RANDOM_MATCHING):
+		loaded_themes.erase(THEME.RANDOM_MATCHING)
 
 func get_theme_name_from_enum(theme: THEME) -> String:
 	match(theme):
@@ -119,15 +227,9 @@ func get_theme_name_from_enum(theme: THEME) -> String:
 		_:
 			return "unknown"
 
-# Randomize the matching random gradient. 
-func randomize_random_match():
-	random_is_dirty = true
-
 func get_theme_texture(theme: THEME) -> Texture2D:
 	# If we already processed our theme and generated the texture, don't regenerate it.
 	if loaded_themes.has(theme):
-		var is_random_matching_and_dirty = theme == THEME.RANDOM_MATCHING and random_is_dirty
-		if not is_random_matching_and_dirty:
 			return loaded_themes[theme]
 		
 	match theme:
@@ -135,14 +237,11 @@ func get_theme_texture(theme: THEME) -> Texture2D:
 			var fire_gradient : CustomGradient = ResourceLoader.load("res://DicePNGs/Gradients/fire.tres")
 			loaded_themes[theme] = fire_gradient.generate_gradient_texture_2d()
 		THEME.CUSTOM_1:
-			var custom_gradient : CustomGradient = SettingsManager.get_custom_gradient_1()
-			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+			loaded_themes[theme] = custom_gradient_1.generate_gradient_texture_2d()
 		THEME.CUSTOM_2:
-			var custom_gradient : CustomGradient = SettingsManager.get_custom_gradient_2()
-			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+			loaded_themes[theme] = custom_gradient_2.generate_gradient_texture_2d()
 		THEME.CUSTOM_3:
-			var custom_gradient : CustomGradient = SettingsManager.get_custom_gradient_3()
-			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+			loaded_themes[theme] = custom_gradient_3.generate_gradient_texture_2d()
 		THEME.RANDOM:
 			var custom_gradient : CustomGradient = CustomGradient.new()
 			custom_gradient.make_random()
@@ -151,7 +250,6 @@ func get_theme_texture(theme: THEME) -> Texture2D:
 			var custom_gradient : CustomGradient = CustomGradient.new()
 			custom_gradient.make_random()
 			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
-			random_is_dirty = false
 		_:
 			var theme_name = get_theme_name_from_enum(theme)
 			loaded_themes[theme] = load(str("res://DicePNGs/Gradients/", theme_name, ".png"))

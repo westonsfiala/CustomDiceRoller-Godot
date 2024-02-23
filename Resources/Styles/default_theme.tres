@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=15 format=3 uid="uid://cfefgu8jbb3xm"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://cfefgu8jbb3xm"]
 
 [ext_resource type="FontFile" uid="uid://dp6a4xtygsyyh" path="res://Resources/Fonts/Roboto/Roboto-Regular.ttf" id="1_dh1c7"]
 [ext_resource type="StyleBox" uid="uid://ciqb75q22o8hi" path="res://Resources/Styles/scroll_bar_style.tres" id="1_vlu4t"]
@@ -11,6 +11,7 @@
 [ext_resource type="StyleBox" uid="uid://doale707pr5j3" path="res://Resources/Styles/flat_background_panel.tres" id="5_pvmw4"]
 [ext_resource type="StyleBox" uid="uid://081aqpqtgsiq" path="res://Resources/Styles/popup_background.tres" id="6_uhvgg"]
 [ext_resource type="StyleBox" uid="uid://c2f5v3edh1dg7" path="res://Resources/Styles/progress_bar_style.tres" id="7_aw88j"]
+[ext_resource type="StyleBox" uid="uid://b0qtltgq7px51" path="res://Resources/Styles/toggle_button_pressed.tres" id="12_4caxx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cn40s"]
 
@@ -91,6 +92,8 @@ SmallRichTextLabel/font_sizes/mono_font_size = 16
 SmallRichTextLabel/font_sizes/normal_font_size = 16
 SmallTextLabel/base_type = &"Label"
 SmallTextLabel/font_sizes/font_size = 16
+ToggleButton/base_type = &"Button"
+ToggleButton/styles/pressed = ExtResource("12_4caxx")
 VBoxContainer/constants/separation = 0
 VScrollBar/styles/grabber = ExtResource("1_vlu4t")
 VScrollBar/styles/grabber_highlight = ExtResource("1_vlu4t")

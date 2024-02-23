@@ -18,6 +18,7 @@ var last_user_set_text : String = ""
 func _ready():
 	SettingsManager.window_size_changed.connect(reconfigure)
 	resized.connect(reconfigure)
+	last_user_set_text = text
 	call_deferred("reconfigure")
 	
 # Reconfigures the scene according to the settings
@@ -29,8 +30,8 @@ func reconfigure():
 	
 	# When we want to show all lines, force autowrap on.
 	if(enforce_all_lines_shown):
-		autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		display_lines = get_line_count()
+		autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
 	var font_size = get_theme_font_size("normal_font_size", theme_type_variation)
 	var needed_pixel_height = get_theme_default_font().get_height(font_size) * display_lines
@@ -42,11 +43,15 @@ func reconfigure():
 		# Need to set and unset the scroll.
 		if(content_width > size.x):
 			var scroll_length = content_width - size.x
-			text = str("[scroll lenght=",scroll_length,"]",last_user_set_text,"[/scroll]")
+			var stipped_text = StringHelper.strip_directional_bbcode(last_user_set_text)
+			text = str("[scroll length=",scroll_length,"]",stipped_text,"[/scroll]")
 		else:
 			text = last_user_set_text
 
 func set_text_and_resize_y(bbcode: String) -> void:
 	text = bbcode
+	var _test1 = get_line_count()
+	var _width = get_content_width()
+	var _height = get_content_height()
 	last_user_set_text = bbcode
 	reconfigure()

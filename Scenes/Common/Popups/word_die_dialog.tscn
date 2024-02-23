@@ -33,14 +33,12 @@ horizontal_alignment = 0
 layout_mode = 2
 
 [node name="DieInfoLabel" parent="ContentPanel/Margins/VBoxContainer/InfoMargins" index="0" instance=ExtResource("5_gn0qp")]
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 mouse_filter = 1
-theme_type_variation = &"SmallRichTextLabel"
-max_lines_shown = 2
 enforce_all_lines_shown = true
+scroll_clipped_text = false
 
 [node name="HSeparator" type="HSeparator" parent="ContentPanel/Margins/VBoxContainer" index="2"]
 layout_mode = 2
