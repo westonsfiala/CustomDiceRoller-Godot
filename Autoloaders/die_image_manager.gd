@@ -132,19 +132,16 @@ func get_theme_texture(theme: THEME) -> Texture2D:
 		
 	match theme:
 		THEME.FIRE:
-			var fire_gradient : CustomGradient = preload("res://DicePNGs/Gradients/fire.tres")
+			var fire_gradient : CustomGradient = ResourceLoader.load("res://DicePNGs/Gradients/fire.tres")
 			loaded_themes[theme] = fire_gradient.generate_gradient_texture_2d()
 		THEME.CUSTOM_1:
-			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/custom-1.tres")
-			custom_gradient.make_random()
+			var custom_gradient : CustomGradient = SettingsManager.get_custom_gradient_1()
 			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
 		THEME.CUSTOM_2:
-			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/custom-2.tres")
-			custom_gradient.make_random()
+			var custom_gradient : CustomGradient = SettingsManager.get_custom_gradient_2()
 			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
 		THEME.CUSTOM_3:
-			var custom_gradient : CustomGradient = preload("res://DicePNGs/Gradients/custom-3.tres")
-			custom_gradient.make_random()
+			var custom_gradient : CustomGradient = SettingsManager.get_custom_gradient_3()
 			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
 		THEME.RANDOM:
 			var custom_gradient : CustomGradient = CustomGradient.new()

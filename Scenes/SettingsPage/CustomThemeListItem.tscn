@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3214fckujovf"]
+
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/custom_theme_list_item.gd" id="1_0u83o"]
+[ext_resource type="PackedScene" uid="uid://ds66lujjolvu" path="res://Scenes/SettingsPage/theme_list_item.tscn" id="1_rfbf5"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="2_2i1ll"]
+
+[node name="CustomThemeListItem" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0u83o")
+
+[node name="ThemeListItem" parent="." instance=ExtResource("1_rfbf5")]
+layout_mode = 2
+
+[node name="BlendTypeContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LinearType" parent="BlendTypeContainer" instance=ExtResource("2_2i1ll")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Linear"
+
+[node name="ConstantType" parent="BlendTypeContainer" instance=ExtResource("2_2i1ll")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Constant"
+
+[connection signal="pressed" from="BlendTypeContainer/LinearType" to="." method="_on_linear_type_pressed"]
+[connection signal="pressed" from="BlendTypeContainer/ConstantType" to="." method="_on_constant_type_pressed"]
