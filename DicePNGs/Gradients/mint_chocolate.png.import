@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5c8lwfyusqnk"
-path="res://.godot/imported/lipstick-lesbian.png-d4c901361785b6eb14e09aa435f6aeea.ctex"
+uid="uid://bwukxm74hqquc"
+path="res://.godot/imported/mint_chocolate.png-515e842eee50fa4b38c4ff8afbf82386.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DicePNGs/Gradients/lipstick-lesbian.png"
-dest_files=["res://.godot/imported/lipstick-lesbian.png-d4c901361785b6eb14e09aa435f6aeea.ctex"]
+source_file="res://DicePNGs/Gradients/mint_chocolate.png"
+dest_files=["res://.godot/imported/mint_chocolate.png-515e842eee50fa4b38c4ff8afbf82386.ctex"]
 
 [params]
 

@@ -12,6 +12,7 @@ const DIE_12 : int = 12
 const DIE_20 : int = 20
 const DIE_100 : int = 100
 
+# Supported themes. When this is updated, update the dict below.
 enum THEME {
 	AGENDER,
 	AROMANTIC,
@@ -20,9 +21,7 @@ enum THEME {
 	BISEXUAL,
 	COMMUNITY_LESBIAN,
 	CREAMSICLE,
-	CUSTOM_1,
-	CUSTOM_2,
-	CUSTOM_3,
+	CUSTOM,
 	FIRE,
 	FOREST,
 	GENDERFLUID,
@@ -46,111 +45,93 @@ enum THEME {
 	WHITE
 }
 
-const CUSTOM_GRADIENT_1_FILE_NAME : StringName = "user://custom_gradient_1.tres"
-var custom_gradient_1 : CustomGradient = CustomGradient.new()
-const CUSTOM_GRADIENT_2_FILE_NAME : StringName = "user://custom_gradient_2.tres"
-var custom_gradient_2 : CustomGradient = CustomGradient.new()
-const CUSTOM_GRADIENT_3_FILE_NAME : StringName = "user://custom_gradient_3.tres"
-var custom_gradient_3 : CustomGradient = CustomGradient.new()
+# Dictionary for getting a readable name from the theme name
+const THEME_TO_NAME_DICT : Dictionary = {
+	THEME.AGENDER: "Agender",
+	THEME.AROMANTIC: "Aromantic",
+	THEME.ASEXUAL: "Asexual",
+	THEME.BEACH: "Beach",
+	THEME.BISEXUAL: "Bisexual",
+	THEME.COMMUNITY_LESBIAN: "Community Lesbian",
+	THEME.CREAMSICLE: "Creamsicle",
+	THEME.CUSTOM: "Custom",
+	THEME.FIRE: "Fire",
+	THEME.FOREST: "Forest",
+	THEME.GENDERFLUID: "Genderfluid",
+	THEME.GENDERQUEER: "Genderqueer",
+	THEME.GOLD: "Gold",
+	THEME.INTERSEX: "Intersex",
+	THEME.LGBT: "LGBT",
+	THEME.LIPSTICK_LESBIAN: "Lipstick Lesbian",
+	THEME.MINT_CHOCOLATE: "Mint Chocolate",
+	THEME.NON_BINARY: "Non Binary",
+	THEME.PANSEXUAL: "Pansexual",
+	THEME.POLYSEXUAL: "Polysexual",
+	THEME.RAINBOW: "Rainbow",
+	THEME.RANDOM: "Random",
+	THEME.RANDOM_MATCHING: "Random Matching",
+	THEME.RGB: "RGB",
+	THEME.SHERBERT: "Sherbert",
+	THEME.STEEL: "Steel",
+	THEME.SUPERMAN: "Superman",
+	THEME.TRANSGENDER: "Transgender",
+	THEME.WHITE: "White",
+}
+
+# Dictionary for converting from a name to a theme.
+# Items are stored in snake_case.
+var NAME_TO_THEME_DICT : Dictionary = {}
+
+const CUSTOM_GRADIENT_FILE_NAME : StringName = "user://custom_gradient.tres"
+var custom_gradient : CustomGradient = CustomGradient.new()
 
 var loaded_themes : Dictionary = {}
 
 func _ready():
-	randomize_random_match()
+	setup_name_to_theme_dict()
 	load_state()
 	
 func save_state():
-	var save_result1 = ResourceSaver.save(custom_gradient_1, CUSTOM_GRADIENT_1_FILE_NAME)
-	if save_result1 != OK: 
-		print("Failed to save custom gradient 1")
-	var save_result2 = ResourceSaver.save(custom_gradient_2, CUSTOM_GRADIENT_2_FILE_NAME)
-	if save_result2 != OK: 
-		print("Failed to save custom gradient 2")
-	var save_result3 = ResourceSaver.save(custom_gradient_3, CUSTOM_GRADIENT_3_FILE_NAME)
-	if save_result3 != OK: 
-		print("Failed to save custom gradient 3")
+	var save_result = ResourceSaver.save(custom_gradient, CUSTOM_GRADIENT_FILE_NAME)
+	if save_result != OK: 
+		print("Failed to save custom gradient")
 
 # Load the state
 func load_state():
 	# Load each of our stored gradients
-	if ResourceLoader.exists(CUSTOM_GRADIENT_1_FILE_NAME):
-		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_1_FILE_NAME)
+	if ResourceLoader.exists(CUSTOM_GRADIENT_FILE_NAME):
+		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_FILE_NAME)
 		if loaded_gradient is CustomGradient:
-			custom_gradient_1 = loaded_gradient
+			custom_gradient = loaded_gradient
 		else:
-			print("Custom Gradient 1 file is corrupted")
+			print("Custom Gradient file is corrupted")
 	else:
-		custom_gradient_1 = CustomGradient.new()
-		custom_gradient_1.make_random()
-	
-	if ResourceLoader.exists(CUSTOM_GRADIENT_2_FILE_NAME):
-		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_2_FILE_NAME)
-		if loaded_gradient is CustomGradient:
-			custom_gradient_2 = loaded_gradient
-		else:
-			print("Custom Gradient 2 file is corrupted")
-	else:
-		custom_gradient_2 = CustomGradient.new()
-		custom_gradient_2.make_random()
-	
-	if ResourceLoader.exists(CUSTOM_GRADIENT_3_FILE_NAME):
-		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_3_FILE_NAME)
-		if loaded_gradient is CustomGradient:
-			custom_gradient_3 = loaded_gradient
-		else:
-			print("Custom Gradient 3 file is corrupted")
-	else:
-		custom_gradient_3 = CustomGradient.new()
-		custom_gradient_3.make_random()
+		custom_gradient = CustomGradient.new()
+		custom_gradient.make_random()
 		
+# Setup the name to theme dict off of the theme to name dict
+# String names are stored in snake_case
+func setup_name_to_theme_dict() -> void:
+	for theme_key in THEME_TO_NAME_DICT.keys():
+		var theme_name = THEME_TO_NAME_DICT[theme_key]
+		theme_name = theme_name.to_snake_case()
+		NAME_TO_THEME_DICT[theme_name] = theme_key
 
-# Signal for saying that the custom gradient 1 has changed
-signal custom_gradient_1_changed()
+# Signal for saying that the custom gradient has changed
+signal custom_gradient_changed()
 	
-# Sets the new theme and emits the custom_gradient_1_changed signal
-func set_custom_gradient_1(new_custom_gradient: CustomGradient):
-	custom_gradient_1 = new_custom_gradient
-	if loaded_themes.has(THEME.CUSTOM_1):
-		loaded_themes.erase(THEME.CUSTOM_1)
-	emit_signal("custom_gradient_1_changed")
+# Sets the new theme and emits the custom_gradient_changed signal
+func set_custom_gradient(new_custom_gradient: CustomGradient) -> void:
+	custom_gradient = new_custom_gradient
+	if loaded_themes.has(THEME.CUSTOM):
+		loaded_themes.erase(THEME.CUSTOM)
+	emit_signal("custom_gradient_changed")
 	save_state()
-	SettingsManager.set_dice_theme(THEME.CUSTOM_1)
+	SettingsManager.set_dice_theme(THEME.CUSTOM)
 	
-# Gets the custom gradient 1
-func get_custom_gradient_1() -> CustomGradient:
-	return custom_gradient_1
-	
-# Signal for saying that the custom gradient 2 has changed
-signal custom_gradient_2_changed()
-	
-# Sets the new theme and emits the custom_gradient_2_changed signal
-func set_custom_gradient_2(new_custom_gradient: CustomGradient):
-	custom_gradient_2 = new_custom_gradient
-	if loaded_themes.has(THEME.CUSTOM_2):
-		loaded_themes.erase(THEME.CUSTOM_2)
-	emit_signal("custom_gradient_2_changed")
-	save_state()
-	SettingsManager.set_dice_theme(THEME.CUSTOM_2)
-	
-# Gets the custom gradient 2
-func get_custom_gradient_2() -> CustomGradient:
-	return custom_gradient_2
-	
-# Signal for saying that the custom gradient 3 has changed
-signal custom_gradient_3_changed()
-	
-# Sets the new theme and emits the custom_gradient_3_changed signal
-func set_custom_gradient_3(new_custom_gradient: CustomGradient):
-	custom_gradient_3 = new_custom_gradient
-	if loaded_themes.has(THEME.CUSTOM_3):
-		loaded_themes.erase(THEME.CUSTOM_3)
-	emit_signal("custom_gradient_3_changed")
-	save_state()
-	SettingsManager.set_dice_theme(THEME.CUSTOM_3)
-	
-# Gets the custom gradient 3
-func get_custom_gradient_3() -> CustomGradient:
-	return custom_gradient_3
+# Gets the custom gradient
+func get_custom_gradient() -> CustomGradient:
+	return custom_gradient
 	
 # Signal for saying that the random match gradient has changed
 signal random_match_gradient_changed()
@@ -160,72 +141,27 @@ func randomize_random_match():
 	if loaded_themes.has(THEME.RANDOM_MATCHING):
 		loaded_themes.erase(THEME.RANDOM_MATCHING)
 
+# Gets the theme name from the given theme
+# Returns white if given unknown theme
 func get_theme_name_from_enum(theme: THEME) -> String:
-	match(theme):
-		THEME.AGENDER:
-			return "agender"
-		THEME.AROMANTIC:
-			return "aromantic"
-		THEME.ASEXUAL:
-			return "asexual"
-		THEME.BEACH:
-			return "beach"
-		THEME.BISEXUAL:
-			return "bisexual"
-		THEME.COMMUNITY_LESBIAN:
-			return "community-lesbian"
-		THEME.CREAMSICLE:
-			return "creamsicle"
-		THEME.CUSTOM_1:
-			return "custom-1"
-		THEME.CUSTOM_2:
-			return "custom-2"
-		THEME.CUSTOM_3:
-			return "custom-3"
-		THEME.FIRE:
-			return "fire"
-		THEME.FOREST:
-			return "forest"
-		THEME.GENDERFLUID:
-			return "genderfluid"
-		THEME.GENDERQUEER:
-			return "genderqueer"
-		THEME.GOLD:
-			return "gold"
-		THEME.INTERSEX:
-			return "intersex"
-		THEME.LGBT:
-			return "lgbt"
-		THEME.LIPSTICK_LESBIAN:
-			return "lipstick-lesbian"
-		THEME.MINT_CHOCOLATE:
-			return "mint-chocolate"
-		THEME.NON_BINARY:
-			return "non-binary"
-		THEME.PANSEXUAL:
-			return "pansexual"
-		THEME.POLYSEXUAL:
-			return "polysexual"
-		THEME.RAINBOW:
-			return "rainbow"
-		THEME.RANDOM:
-			return "random"
-		THEME.RANDOM_MATCHING:
-			return "random-matching"
-		THEME.RGB:
-			return "rgb"
-		THEME.SHERBERT:
-			return "sherbert"
-		THEME.STEEL:
-			return "steel"
-		THEME.SUPERMAN:
-			return "superman"
-		THEME.TRANSGENDER:
-			return "transgender"
-		THEME.WHITE:
-			return "white"
-		_:
-			return "unknown"
+	if THEME_TO_NAME_DICT.has(theme):
+		return THEME_TO_NAME_DICT[theme]
+		
+	return THEME_TO_NAME_DICT[THEME.WHITE]
+	
+
+# Gets the theme from the given name.
+# If incorrect theme name is given returns WHITE
+func get_theme_enum_from_name(theme_name: String) -> THEME:
+	if NAME_TO_THEME_DICT.has(theme_name):
+		return NAME_TO_THEME_DICT[theme_name]
+		
+	var snake_cased_name = theme_name.to_snake_case()
+	
+	if NAME_TO_THEME_DICT.has(snake_cased_name):
+		return NAME_TO_THEME_DICT[snake_cased_name]
+		
+	return THEME.WHITE
 
 func get_theme_texture(theme: THEME) -> Texture2D:
 	# If we already processed our theme and generated the texture, don't regenerate it.
@@ -236,22 +172,19 @@ func get_theme_texture(theme: THEME) -> Texture2D:
 		THEME.FIRE:
 			var fire_gradient : CustomGradient = ResourceLoader.load("res://DicePNGs/Gradients/fire.tres")
 			loaded_themes[theme] = fire_gradient.generate_gradient_texture_2d()
-		THEME.CUSTOM_1:
-			loaded_themes[theme] = custom_gradient_1.generate_gradient_texture_2d()
-		THEME.CUSTOM_2:
-			loaded_themes[theme] = custom_gradient_2.generate_gradient_texture_2d()
-		THEME.CUSTOM_3:
-			loaded_themes[theme] = custom_gradient_3.generate_gradient_texture_2d()
-		THEME.RANDOM:
-			var custom_gradient : CustomGradient = CustomGradient.new()
-			custom_gradient.make_random()
-			return custom_gradient.generate_gradient_texture_2d()
-		THEME.RANDOM_MATCHING:
-			var custom_gradient : CustomGradient = CustomGradient.new()
-			custom_gradient.make_random()
+		THEME.CUSTOM:
 			loaded_themes[theme] = custom_gradient.generate_gradient_texture_2d()
+		THEME.RANDOM:
+			var random_gradient : CustomGradient = CustomGradient.new()
+			random_gradient.make_random()
+			return random_gradient.generate_gradient_texture_2d()
+		THEME.RANDOM_MATCHING:
+			var random_gradient : CustomGradient = CustomGradient.new()
+			random_gradient.make_random()
+			loaded_themes[theme] = random_gradient.generate_gradient_texture_2d()
 		_:
 			var theme_name = get_theme_name_from_enum(theme)
+			theme_name = theme_name.to_snake_case()
 			loaded_themes[theme] = load(str("res://DicePNGs/Gradients/", theme_name, ".png"))
 			
 	return loaded_themes[theme]

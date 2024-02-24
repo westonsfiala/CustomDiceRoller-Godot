@@ -28,19 +28,19 @@ alignment = 1
 [node name="CreamsicleTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="0" instance=ExtResource("4_of85e")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 6
+die_theme_name = "creamsicle"
 
 [node name="MintChocolateTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("4_of85e")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 18
+die_theme_name = "mint_chocolate"
 
 [node name="SherbertTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("4_of85e")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 26
+die_theme_name = "sherbert"
 
 [node name="SupermanTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="3" instance=ExtResource("4_of85e")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 28
+die_theme_name = "superman"

@@ -1,9 +1,6 @@
 extends VBoxContainer
 class_name CustomThemeListItem
 
-@export_range(1,3,1)
-var custom_theme_index : int = 1
-
 # Display theme
 @onready var theme_list_item : ThemeListItem = $ThemeListItem
 
@@ -32,37 +29,17 @@ func _ready():
 	blend_rich_text.set_text_and_resize_y(BLEND_TYPE_TEXT)
 	fill_rich_text.set_text_and_resize_y(FILL_TYPE_TEXT)
 	layout_direction_rich_text.set_text_and_resize_y(LAYOUT_DIRECTION_TEXT)
-	match custom_theme_index:
-		1: 
-			theme_list_item.die_theme = DieImageManager.THEME.CUSTOM_1
-			DieImageManager.custom_gradient_1_changed.connect(reconfigure)
-		2:
-			theme_list_item.die_theme = DieImageManager.THEME.CUSTOM_2
-			DieImageManager.custom_gradient_2_changed.connect(reconfigure)
-		3:
-			theme_list_item.die_theme = DieImageManager.THEME.CUSTOM_3
-			DieImageManager.custom_gradient_3_changed.connect(reconfigure)
+	theme_list_item.die_theme = DieImageManager.THEME.CUSTOM
+	DieImageManager.custom_gradient_changed.connect(reconfigure)
 	reconfigure()
 	
 func reconfigure() -> void:
 	theme_list_item.reconfigure()
-	match custom_theme_index:
-		1: 
-			custom_gradient = DieImageManager.get_custom_gradient_1()
-		2:
-			custom_gradient = DieImageManager.get_custom_gradient_2()
-		3:
-			custom_gradient = DieImageManager.get_custom_gradient_3()
+	custom_gradient = DieImageManager.get_custom_gradient()
 	match_buttons_to_gradient()
 	
 func update_gradient() -> void:
-	match custom_theme_index:
-		1: 
-			DieImageManager.set_custom_gradient_1(custom_gradient)
-		2:
-			DieImageManager.set_custom_gradient_2(custom_gradient)
-		3:
-			DieImageManager.set_custom_gradient_3(custom_gradient)
+	DieImageManager.set_custom_gradient(custom_gradient)
 	
 func match_buttons_to_gradient() -> void:
 	# Do our blend type buttons

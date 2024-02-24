@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwukxm74hqquc"
-path="res://.godot/imported/mint-chocolate.png-768a9fc3127b0fe0e02c910ba07caa0c.ctex"
+uid="uid://dxcj01vnddli0"
+path="res://.godot/imported/community_lesbian.png-8d9c7c15421809d7859d527f7b9f074c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DicePNGs/Gradients/mint-chocolate.png"
-dest_files=["res://.godot/imported/mint-chocolate.png-768a9fc3127b0fe0e02c910ba07caa0c.ctex"]
+source_file="res://DicePNGs/Gradients/community_lesbian.png"
+dest_files=["res://.godot/imported/community_lesbian.png-8d9c7c15421809d7859d527f7b9f074c.ctex"]
 
 [params]
 

@@ -28,11 +28,11 @@ alignment = 1
 
 [node name="RandomTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="0" instance=ExtResource("4_r4syw")]
 layout_mode = 2
-die_theme = 23
+die_theme_name = "random"
 
-[node name="RandomMatchTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("4_r4syw")]
+[node name="RandomMatchingTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("4_r4syw")]
 layout_mode = 2
-die_theme = 24
+die_theme_name = "random_matching"
 
 [node name="CustomThemeListItem" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("5_g2be2")]
 layout_mode = 2

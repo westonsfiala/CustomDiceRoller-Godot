@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxcj01vnddli0"
-path="res://.godot/imported/community-lesbian.png-e9b8f1174ade60cedda018dc44750a73.ctex"
+uid="uid://bwaxu7o74nm06"
+path="res://.godot/imported/non_binary.png-8bb09329ce16d6229c6dd070290952ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://DicePNGs/Gradients/community-lesbian.png"
-dest_files=["res://.godot/imported/community-lesbian.png-e9b8f1174ade60cedda018dc44750a73.ctex"]
+source_file="res://DicePNGs/Gradients/non_binary.png"
+dest_files=["res://.godot/imported/non_binary.png-8bb09329ce16d6229c6dd070290952ab.ctex"]
 
 [params]
 

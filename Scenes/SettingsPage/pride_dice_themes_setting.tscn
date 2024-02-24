@@ -28,69 +28,69 @@ alignment = 1
 [node name="AgenderTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="0" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 0
+die_theme_name = "agender"
 
 [node name="AromanticTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="1" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 1
+die_theme_name = "aromantic"
 
 [node name="AsexualTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 2
+die_theme_name = "asexual"
 
 [node name="BisexualTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="3" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 4
+die_theme_name = "bisexual"
 
 [node name="CommunityLesbianTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="4" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 5
+die_theme_name = "community_lesbian"
 
 [node name="GenderfluidTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="5" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 12
+die_theme_name = "genderfluid"
 
 [node name="GenderqueerTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="6" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 13
+die_theme_name = "genderqueer"
 
 [node name="IntersexTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="7" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 15
+die_theme_name = "intersex"
 
 [node name="LgbtTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="8" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 16
+die_theme_name = "lgbt"
 
 [node name="LipstickLesbianTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="9" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 17
+die_theme_name = "lipstick_lesbian"
 
 [node name="NonBinaryTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="10" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 19
+die_theme_name = "non_binary"
 
 [node name="PansexualTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="11" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 20
+die_theme_name = "pansexual"
 
 [node name="PolysexualTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="12" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 21
+die_theme_name = "polysexual"
 
 [node name="TransgenderTheme" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="13" instance=ExtResource("4_s5sor")]
 layout_mode = 2
 size_flags_vertical = 4
-die_theme = 29
+die_theme_name = "transgender"

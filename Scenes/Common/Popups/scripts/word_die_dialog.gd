@@ -38,7 +38,6 @@ func _inner_set_size():
 	button_row_margins.size.y = 0
 	
 	content_height += name_margins.size.y
-	# Needed to properly grab the size of the die info label
 	content_height += info_margins.size.y
 	content_height += horizontal_line.size.y
 	content_height += name_edit_margins.size.y
