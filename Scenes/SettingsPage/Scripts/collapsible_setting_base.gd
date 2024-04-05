@@ -60,11 +60,13 @@ func expand_collapse_inner_settings():
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	
+	# Collapse things down
 	if collapsible_container.visible:
 		tween.tween_property(rotating_arrow, "rotation_degrees", -90, SettingsManager.LONG_PRESS_DELAY).from(0)
 		tween.tween_method(set_content_scale, EXPANDED_SCALE_VECTOR, COLLAPSED_SCALE_VECTOR, SettingsManager.LONG_PRESS_DELAY)
 		tween.tween_method(set_collapsible_min_height, collapsible_full_height, 0, SettingsManager.LONG_PRESS_DELAY)
 		tween.chain().tween_callback(finish_hide_setting_callback)
+	# Expand things out
 	else:
 		collapsible_section.visible = true
 		collapsible_container.visible = true

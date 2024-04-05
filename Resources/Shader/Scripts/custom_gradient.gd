@@ -2,6 +2,8 @@ extends Resource
 class_name CustomGradient
 
 # Colors in the gradient.
+const COLORS_MIN : int = 1
+const COLORS_MAX : int = 10
 @export var colors : PackedColorArray = []
 
 # How do the colors blend together or not.
@@ -18,7 +20,7 @@ enum LAYOUT_DIRECTION {HORIZONTAL, VERTICAL, DIAGONAL_DOWN, DIAGONAL_UP}
 
 # Number of times to repeat the gradient
 const REPEAT_MIN : float = 1
-const REPEAT_MAX : float = 10
+const REPEAT_MAX : float = 15
 @export_range(REPEAT_MIN, REPEAT_MAX, 0.1)
 var repeat_num : float = 1.0
 

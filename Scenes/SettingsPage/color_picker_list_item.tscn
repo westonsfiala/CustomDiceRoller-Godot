@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://djnuhch3py6bx"]
+
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="1_6odnp"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/color_picker_list_item.gd" id="1_721ae"]
+[ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="2_ssxbh"]
+[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_x8tl4"]
+
+[node name="ColorPickerListItem" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+script = ExtResource("1_721ae")
+
+[node name="UpButton" parent="." instance=ExtResource("1_6odnp")]
+layout_mode = 2
+texture_2d = ExtResource("2_ssxbh")
+
+[node name="DownButton" parent="." instance=ExtResource("1_6odnp")]
+layout_mode = 2
+texture_2d = ExtResource("3_x8tl4")
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+edit_alpha = false
+
+[node name="RemoveButton" parent="." instance=ExtResource("1_6odnp")]
+layout_mode = 2
+
+[connection signal="pressed" from="UpButton" to="." method="_on_up_button_pressed"]
+[connection signal="pressed" from="DownButton" to="." method="_on_down_button_pressed"]
+[connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="pressed" from="RemoveButton" to="." method="_on_remove_button_pressed"]

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/custom_dice_themes_setting.gd" id="2_pay6s"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_mj6hq"]
 [ext_resource type="PackedScene" uid="uid://ds66lujjolvu" path="res://Scenes/SettingsPage/theme_list_item.tscn" id="4_r4syw"]
-[ext_resource type="PackedScene" uid="uid://c3214fckujovf" path="res://Scenes/SettingsPage/CustomThemeListItem.tscn" id="5_g2be2"]
+[ext_resource type="PackedScene" uid="uid://c3214fckujovf" path="res://Scenes/SettingsPage/custom_theme_list_item.tscn" id="5_pcle1"]
 
 [node name="CustomDiceThemesSetting" instance=ExtResource("1_p1g6n")]
 script = ExtResource("2_pay6s")
@@ -18,8 +18,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -135.0
-offset_bottom = 135.0
+offset_top = -368.0
+offset_bottom = 368.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_mj6hq")
@@ -34,5 +34,7 @@ die_theme_name = "random"
 layout_mode = 2
 die_theme_name = "random_matching"
 
-[node name="CustomThemeListItem" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("5_g2be2")]
+[node name="CustomThemeListItem" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("5_pcle1")]
 layout_mode = 2
+
+[connection signal="resized" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer/CustomThemeListItem" to="." method="_on_custom_theme_list_item_resized"]

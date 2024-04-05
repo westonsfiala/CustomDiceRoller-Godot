@@ -1,0 +1,245 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3214fckujovf"]
+
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/custom_theme_list_item.gd" id="1_4xmrt"]
+[ext_resource type="PackedScene" uid="uid://ds66lujjolvu" path="res://Scenes/SettingsPage/theme_list_item.tscn" id="2_28chn"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="3_bwb0r"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="4_jjlly"]
+
+[node name="CustomThemeListItem" type="VBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 626.0
+grow_horizontal = 2
+theme_override_constants/separation = 2
+script = ExtResource("1_4xmrt")
+
+[node name="ThemeListItem" parent="." instance=ExtResource("2_28chn")]
+layout_mode = 2
+die_theme_name = "custom"
+
+[node name="BlendTypeRichTextLabel" parent="." instance=ExtResource("3_bwb0r")]
+layout_mode = 2
+text = "Blend Type"
+
+[node name="BlendTypeContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LinearBlendType" parent="BlendTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="BlendTypeContainer/LinearBlendType" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Linear[/center]"
+
+[node name="ConstantBlendType" parent="BlendTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="BlendTypeContainer/ConstantBlendType" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Constant[/center]"
+
+[node name="FillTypeRichTextLabel" parent="." instance=ExtResource("3_bwb0r")]
+layout_mode = 2
+text = "Fill Type"
+
+[node name="FillTypeContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LinearFillType" parent="FillTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="FillTypeContainer/LinearFillType" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Linear[/center]"
+
+[node name="RadialFillType" parent="FillTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="FillTypeContainer/RadialFillType" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Radial[/center]"
+
+[node name="SquareFillType" parent="FillTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="FillTypeContainer/SquareFillType" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Square[/center]"
+
+[node name="LayoutDirectionRichTextLabel" parent="." instance=ExtResource("3_bwb0r")]
+layout_mode = 2
+text = "Layout Direction"
+
+[node name="LayoutDirectionContainer1" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="HorizontalDirection" parent="LayoutDirectionContainer1" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="LayoutDirectionContainer1/HorizontalDirection" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Horizontal[/center]"
+
+[node name="VerticalDirection" parent="LayoutDirectionContainer1" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="LayoutDirectionContainer1/VerticalDirection" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Vertical[/center]"
+
+[node name="LayoutDirectionContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="DownwardDirection" parent="LayoutDirectionContainer2" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="LayoutDirectionContainer2/DownwardDirection" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Downward[/center]"
+
+[node name="UpwardDirection" parent="LayoutDirectionContainer2" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="LayoutDirectionContainer2/UpwardDirection" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Upward[/center]"
+
+[node name="RepeatRichTextLabel" parent="." instance=ExtResource("3_bwb0r")]
+layout_mode = 2
+text = "Repeat"
+
+[node name="RepeatSliderContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="RepeatSlider" type="HSlider" parent="RepeatSliderContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+
+[node name="RepeatTypeContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="NoRepeatButton" parent="RepeatTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="RepeatTypeContainer/NoRepeatButton" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Disable[/center]"
+
+[node name="RepeatButton" parent="RepeatTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="RepeatTypeContainer/RepeatButton" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Repeat[/center]"
+
+[node name="MirrorRepeatButton" parent="RepeatTypeContainer" instance=ExtResource("4_jjlly")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="RepeatTypeContainer/MirrorRepeatButton" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Mirror[/center]"
+
+[node name="ColorsRichTextLabel" parent="." instance=ExtResource("3_bwb0r")]
+layout_mode = 2
+text = "Colors"
+
+[node name="ColorsContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="AddColorButton" parent="." instance=ExtResource("4_jjlly")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="AddColorButton" instance=ExtResource("3_bwb0r")]
+layout_mode = 1
+text = "[center]Add Color[/center]"
+
+[connection signal="pressed" from="BlendTypeContainer/LinearBlendType" to="." method="_on_linear_blend_type_pressed"]
+[connection signal="pressed" from="BlendTypeContainer/ConstantBlendType" to="." method="_on_constant_blend_type_pressed"]
+[connection signal="pressed" from="FillTypeContainer/LinearFillType" to="." method="_on_linear_fill_type_pressed"]
+[connection signal="pressed" from="FillTypeContainer/RadialFillType" to="." method="_on_radial_fill_type_pressed"]
+[connection signal="pressed" from="FillTypeContainer/SquareFillType" to="." method="_on_square_fill_type_pressed"]
+[connection signal="pressed" from="LayoutDirectionContainer1/HorizontalDirection" to="." method="_on_horizontal_direction_pressed"]
+[connection signal="pressed" from="LayoutDirectionContainer1/VerticalDirection" to="." method="_on_vertical_direction_pressed"]
+[connection signal="pressed" from="LayoutDirectionContainer2/DownwardDirection" to="." method="_on_downward_direction_pressed"]
+[connection signal="pressed" from="LayoutDirectionContainer2/UpwardDirection" to="." method="_on_upward_direction_pressed"]
+[connection signal="drag_ended" from="RepeatSliderContainer/RepeatSlider" to="." method="_on_repeat_slider_drag_ended"]
+[connection signal="value_changed" from="RepeatSliderContainer/RepeatSlider" to="." method="_on_repeat_slider_value_changed"]
+[connection signal="pressed" from="RepeatTypeContainer/NoRepeatButton" to="." method="_on_no_repeat_button_pressed"]
+[connection signal="pressed" from="RepeatTypeContainer/RepeatButton" to="." method="_on_repeat_button_pressed"]
+[connection signal="pressed" from="RepeatTypeContainer/MirrorRepeatButton" to="." method="_on_mirror_repeat_button_pressed"]
+[connection signal="pressed" from="AddColorButton" to="." method="_on_add_color_button_pressed"]
