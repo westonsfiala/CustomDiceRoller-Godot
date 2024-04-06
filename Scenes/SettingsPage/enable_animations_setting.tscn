@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnln68o3d2rnm"]
+
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_7nrt5"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/enable_animations_setting.gd" id="2_8r2ms"]
+
+[node name="EnableAnimationsSetting" instance=ExtResource("1_7nrt5")]
+script = ExtResource("2_8r2ms")
+
+[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
+visible = false
+
+[node name="InnerSettingsContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

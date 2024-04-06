@@ -49,9 +49,31 @@ func start_collapsed():
 	collapsible_container.visible = false
 	collapsible_section.visible = false
 	call_deferred("enforce_all_content_shown")
+	
+# Start with the setting expanded
+func start_expanded():
+	rotating_arrow.set_new_button_texture(DOWN_ARROW)
+	set_title()
+	show_hide_reset_button()
+	
+	collapsible_container.visible = true
+	collapsible_section.visible = true
+	
+	collapsible_section.scale = EXPANDED_SCALE_VECTOR
+	collapsible_section.custom_minimum_size.y = get_safe_collabible_section_minimum_height()
+	collapsible_section.size.y = get_safe_collabible_section_minimum_height()
+	
+	#collapsible_container.custom_minimum_size.y = 0
+	#collapsible_container.size.y = 0
+	
+	call_deferred("enforce_all_content_shown")
 
 # Toggle showing/hiding the dice settings.
 func expand_collapse_inner_settings():
+	helper_expand_collapse_inner_settings(not collapsible_container.visible)
+
+# Helper method where you can force it to expand or collapse
+func helper_expand_collapse_inner_settings(expand: bool):
 	var collapsible_full_height = get_safe_collabible_section_minimum_height()
 	if tween:
 		tween.kill()
@@ -61,13 +83,15 @@ func expand_collapse_inner_settings():
 	tween.set_trans(Tween.TRANS_CUBIC)
 	
 	# Collapse things down
-	if collapsible_container.visible:
+	if not expand:
+		rotating_arrow.set_new_button_texture(DOWN_ARROW)
 		tween.tween_property(rotating_arrow, "rotation_degrees", -90, SettingsManager.LONG_PRESS_DELAY).from(0)
 		tween.tween_method(set_content_scale, EXPANDED_SCALE_VECTOR, COLLAPSED_SCALE_VECTOR, SettingsManager.LONG_PRESS_DELAY)
 		tween.tween_method(set_collapsible_min_height, collapsible_full_height, 0, SettingsManager.LONG_PRESS_DELAY)
 		tween.chain().tween_callback(finish_hide_setting_callback)
 	# Expand things out
 	else:
+		rotating_arrow.set_new_button_texture(RIGHT_ARROW)
 		collapsible_section.visible = true
 		collapsible_container.visible = true
 		tween.tween_property(rotating_arrow, "rotation_degrees", 90, SettingsManager.LONG_PRESS_DELAY).from(0)

@@ -10,6 +10,9 @@
 
 [node name="TopLevelDiceSettings" instance=ExtResource("1_gy556")]
 custom_minimum_size = Vector2(0, 1000)
+anchors_preset = 15
+anchor_bottom = 1.0
+grow_vertical = 2
 script = ExtResource("2_vnckq")
 
 [node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]

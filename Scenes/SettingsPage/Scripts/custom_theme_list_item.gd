@@ -35,6 +35,7 @@ const COLOR_TEXT : StringName = "[center]Colors[/center]"
 
 var custom_gradient : CustomGradient
 
+
 # Get which custom theme we are operating on and set everything up from there.
 func _ready():
 	blend_rich_text.set_text_and_resize_y(BLEND_TYPE_TEXT)

@@ -10,6 +10,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 50.0
 grow_horizontal = 2
+theme_override_constants/separation = 2
 script = ExtResource("1_721ae")
 
 [node name="UpButton" parent="." instance=ExtResource("1_6odnp")]

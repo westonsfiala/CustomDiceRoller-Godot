@@ -29,6 +29,7 @@ grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("2_vbn0r")
+theme_override_constants/separation = 2
 
 [node name="TitleBarContainer" type="HBoxContainer" parent="TopLevelContainer"]
 layout_mode = 2

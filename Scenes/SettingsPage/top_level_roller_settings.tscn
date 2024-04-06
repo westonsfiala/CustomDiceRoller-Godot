@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://ratog4ivs623"]
+
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_7jp1i"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/top_level_roller_settings.gd" id="2_j4n70"]
+[ext_resource type="PackedScene" uid="uid://dnln68o3d2rnm" path="res://Scenes/SettingsPage/enable_animations_setting.tscn" id="3_i058g"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_t2htf"]
+
+[node name="TopLevelRollerSettings" instance=ExtResource("1_7jp1i")]
+custom_minimum_size = Vector2(0, 1000)
+script = ExtResource("2_j4n70")
+
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+theme_type_variation = &"LargeRichTextLabel"
+
+[node name="SettingsContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_t2htf")
+
+[node name="EnableAnimationsSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SettingsContainer" index="0" instance=ExtResource("3_i058g")]
+layout_mode = 2

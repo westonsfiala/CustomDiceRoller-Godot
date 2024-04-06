@@ -9,6 +9,7 @@ const CUSTOM_DIE_THEME_LABEL_TEXT : String = "Custom"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
+	DieImageManager.custom_gradient_changed.connect(custom_gradient_modified)
 	
 func inner_get_title() -> String:
 	return CUSTOM_DIE_THEME_LABEL_TEXT
@@ -26,9 +27,9 @@ func inner_reset_button_pressed():
 	pass
 
 # Need to do some adjustments when you add or remove colors.
-func _on_custom_theme_list_item_resized():
+func custom_gradient_modified():
 	# The first time that the container is constructed it enters here, but don't want to act on it.
-	if theme_container and theme_container.position == Vector2.ZERO:
+	if theme_container:
 		call_deferred("correct_position")
 	
 # Need to do this in the deferred calling or it doesn't take.

@@ -36,5 +36,3 @@ die_theme_name = "random_matching"
 
 [node name="CustomThemeListItem" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer" index="2" instance=ExtResource("5_pcle1")]
 layout_mode = 2
-
-[connection signal="resized" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ThemeContainer/CustomThemeListItem" to="." method="_on_custom_theme_list_item_resized"]
