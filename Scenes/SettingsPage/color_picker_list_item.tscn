@@ -33,4 +33,5 @@ layout_mode = 2
 [connection signal="pressed" from="UpButton" to="." method="_on_up_button_pressed"]
 [connection signal="pressed" from="DownButton" to="." method="_on_down_button_pressed"]
 [connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="popup_closed" from="ColorPickerButton" to="." method="_on_color_picker_button_popup_closed"]
 [connection signal="pressed" from="RemoveButton" to="." method="_on_remove_button_pressed"]

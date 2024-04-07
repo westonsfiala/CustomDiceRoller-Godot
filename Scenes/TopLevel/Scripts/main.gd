@@ -15,7 +15,7 @@ func _ready():
 	resize_timer.timeout.connect(SettingsManager.trigger_window_size_change)
 	SettingsManager.button_size_changed.connect(reconfigure)
 	SettingsManager.mouse_unpress.connect(fake_unpress)
-	RollManager.new_roll_result.connect(create_animated_roller)
+	RollManager.new_roll_result.connect(process_new_roll)
 	reconfigure()
 
 func reconfigure():
@@ -71,6 +71,12 @@ func respond_to_unpress() -> void:
 	tween.tween_property(press_response_image, "scale", Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY / 2)
 	tween.tween_property(press_response_image, "visible", false, 0)
 	last_click_position = Vector2.ZERO
+	
+func process_new_roll(roll_results: RollResults):
+	if SettingsManager.animations_enabled:
+		create_animated_roller(roll_results)
+	else:
+		create_roll_results_screen(roll_results)
 	
 func create_animated_roller(roll_results: RollResults):
 	animated_roller = preload("res://Scenes/DiceRoller/dice_roller.tscn").instantiate()

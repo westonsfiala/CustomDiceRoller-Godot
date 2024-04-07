@@ -44,6 +44,9 @@ layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 0
 
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="TopLevelRollerSettings" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_25wpm")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2

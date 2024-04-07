@@ -51,3 +51,7 @@ func _on_remove_button_pressed():
 func _on_color_picker_button_color_changed(new_color: Color):
 	set_color(new_color)
 	emit_signal("color_changed", index, new_color)
+
+# When the popups close it seems to do odd stuff with scrolling, a fake unpress makes it better.
+func _on_color_picker_button_popup_closed():
+	SettingsManager.fake_mouse_unpress()
