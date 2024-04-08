@@ -63,9 +63,6 @@ func start_expanded():
 	collapsible_section.custom_minimum_size.y = get_safe_collabible_section_minimum_height()
 	collapsible_section.size.y = get_safe_collabible_section_minimum_height()
 	
-	#collapsible_container.custom_minimum_size.y = 0
-	#collapsible_container.size.y = 0
-	
 	call_deferred("enforce_all_content_shown")
 
 # Toggle showing/hiding the dice settings.
@@ -130,6 +127,11 @@ func enforce_all_content_shown():
 	title_bar_container.size.y = 0
 	collapsible_container.size.y = 0
 	custom_minimum_size.y = title_bar_container.size.y + collapsible_container.size.y
+	call_deferred("deferred_enforce_all_content_shown")
+
+func deferred_enforce_all_content_shown():
+	size.y = custom_minimum_size.y
+	pass
 
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button():

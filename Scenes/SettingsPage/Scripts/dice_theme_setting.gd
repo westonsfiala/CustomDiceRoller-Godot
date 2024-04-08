@@ -8,11 +8,14 @@ const DIE_THEME_LABEL_TEXT : String = "Theme - "
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
-	themes_container.minimum_size_changed.connect(setting_size_responder)
 	SettingsManager.dice_theme_changed.connect(show_hide_reset_button)
 	SettingsManager.dice_theme_changed.connect(set_title)
+	themes_container.minimum_size_changed.connect(setting_size_responder)
 	
 func setting_size_responder():
+	call_deferred("deferred_size_responder")
+	
+func deferred_size_responder():
 	collapsible_section.custom_minimum_size.y = themes_container.size.y
 	enforce_all_content_shown()
 	

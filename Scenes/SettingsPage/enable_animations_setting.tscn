@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnln68o3d2rnm"]
+[gd_scene load_steps=4 format=3 uid="uid://dnln68o3d2rnm"]
 
 [ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_7nrt5"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/enable_animations_setting.gd" id="2_8r2ms"]
+[ext_resource type="PackedScene" uid="uid://busq18c7xwsfi" path="res://Scenes/SettingsPage/shake_volume_setting.tscn" id="3_sqrl8"]
 
 [node name="EnableAnimationsSetting" instance=ExtResource("1_7nrt5")]
 script = ExtResource("2_8r2ms")
@@ -16,3 +17,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ShakeVolumeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/InnerSettingsContainer" index="0" instance=ExtResource("3_sqrl8")]
+layout_mode = 2

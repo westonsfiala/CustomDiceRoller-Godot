@@ -9,16 +9,14 @@ func _ready():
 	super()
 	enable_animations_setting.setting_changed.connect(show_hide_reset_button)
 	enable_animations_setting.reset_pressed.connect(show_hide_reset_button)
-	settings_container.minimum_size_changed.connect(deferred_setting_size_responder)
-	enable_animations_setting.resized.connect(deferred_setting_size_responder)
+	settings_container.minimum_size_changed.connect(setting_size_responder)
 
 # Calls the size responder deferred which is needed when setting size directly
-func deferred_setting_size_responder():
-	call_deferred("size_responder")
+func setting_size_responder():
+	call_deferred("deferred_size_responder")
 
 # Set the size of the collapsible section 
-func size_responder():
-	enable_animations_setting.size.y = 0
+func deferred_size_responder():
 	var new_size = enable_animations_setting.size.y
 	collapsible_section.custom_minimum_size.y = new_size
 	enforce_all_content_shown()

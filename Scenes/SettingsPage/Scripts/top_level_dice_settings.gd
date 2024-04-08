@@ -15,9 +15,12 @@ func _ready():
 	dice_tint_setting.reset_pressed.connect(show_hide_reset_button)
 	dice_theme_setting.setting_changed.connect(show_hide_reset_button)
 	dice_theme_setting.reset_pressed.connect(show_hide_reset_button)
-	settings_container.minimum_size_changed.connect(setting_size_responder)
+	settings_container.minimum_size_changed.connect(size_responder)
 	
-func setting_size_responder():
+func size_responder():
+	call_deferred("deferred_size_responder")
+	
+func deferred_size_responder():
 	var new_size = max(settings_container.size.y, SettingsManager.get_dice_size())
 	collapsible_section.custom_minimum_size.y = new_size
 	enforce_all_content_shown()

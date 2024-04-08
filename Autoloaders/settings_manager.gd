@@ -15,6 +15,9 @@ var animations_enabled : bool = ANIMATIONS_ENABLED_DEFAULT
 const BUTTON_SIZE_DEFAULT: int = 50
 var button_size : int = BUTTON_SIZE_DEFAULT
 
+const SHAKE_VOLUME_DEFAULT: int = 100
+var shake_volume : int = SHAKE_VOLUME_DEFAULT
+
 const FONT_SIZE_SMALL_DEFAULT: int = 24
 var font_size_small : int = FONT_SIZE_SMALL_DEFAULT
 
@@ -56,6 +59,7 @@ func save_state() -> void:
 	save_dict['dice_theme'] = dice_theme
 	save_dict['animations_enabled'] = animations_enabled
 	save_dict['button_size'] = button_size
+	save_dict['shake_volume'] = shake_volume
 	save_dict['font_size_small'] = font_size_small
 	save_dict['font_size_normal'] = font_size_normal
 	save_dict['font_size_large'] = font_size_large
@@ -90,85 +94,20 @@ func load_state() -> void:
 		
 		# Get the data from the JSON object
 		var save_data: Dictionary = json.get_data()
-		
-		# Do some checking to make sure we have all our bits.
-		if not save_data.has('schema_version'):
-			print("Missing schema_version during settings_manager loader")
-			return
-		if not save_data.has('class_name'):
-			print("Missing class_name during settings_manager loader")
-			return
-		if not save_data.has('dice_size'):
-			print("Missing dice_size during settings_manager loader")
-			return
-		if not save_data.has('dice_tint_color'):
-			print("Missing dice_tint_color during settings_manager loader")
-			return
-		if not save_data.has('dice_theme'):
-			print("Missing dice_theme during settings_manager loader")
-			return
-		if not save_data.has('animations_enabled'):
-			print("Missing animations_enabled during settings_manager loader")
-			return
-		if not save_data.has('button_size'):
-			print("Missing button_size during settings_manager loader")
-			return
-		if not save_data.has('font_size_small'):
-			print("Missing font_size_small during settings_manager loader")
-			return
-		if not save_data.has('font_size_normal'):
-			print("Missing font_size_normal during settings_manager loader")
-			return
-		if not save_data.has('font_size_large'):
-			print("Missing font_size_large during settings_manager loader")
-			return
-		if not save_data.has('font_size_huge'):
-			print("Missing font_size_huge during settings_manager loader")
-			return
 			
 		if save_data['schema_version'] != "1.0.0":
 			print("Unknown schema_version found during settings_manager loader: ", save_data['schema_version'])
-			return
-		if save_data['class_name'] != "SettingsManager":
-			print("Unknown class_name found during settings_manager loader: ", save_data['class_name'])
-			return
-		if not (save_data['dice_size'] is int or save_data['dice_size'] is float):
-			print("dice_size not an int during settings_manager loader: ", typeof(save_data['dice_size']))
-			return
-		if not save_data['dice_tint_color'] is String:
-			print("dice_tint_color not a string during settings_manager loader: ", typeof(save_data['dice_tint_color']))
-			return
-		if not (save_data['dice_theme'] is int or save_data['dice_theme'] is float):
-			print("dice_theme not an int during settings_manager loader: ", typeof(save_data['dice_theme']))
-			return
-		if not (save_data['animations_enabled'] is bool or save_data['animations_enabled'] is bool):
-			print("animations_enabled not a bool during settings_manager loader: ", typeof(save_data['animations_enabled']))
-			return
-		if not (save_data['button_size'] is int or save_data['button_size'] is float):
-			print("button_size not an int during settings_manager loader: ", typeof(save_data['button_size']))
-			return
-		if not (save_data['font_size_small'] is int or save_data['font_size_small'] is float):
-			print("font_size_small not an int during settings_manager loader: ", typeof(save_data['font_size_small']))
-			return
-		if not (save_data['font_size_normal'] is int or save_data['font_size_normal'] is float):
-			print("font_size_normal not an int during settings_manager loader: ", typeof(save_data['font_size_normal']))
-			return
-		if not (save_data['font_size_large'] is int or save_data['font_size_large'] is float):
-			print("font_size_large not an int during settings_manager loader: ", typeof(save_data['font_size_large']))
-			return
-		if not (save_data['font_size_huge'] is int or save_data['font_size_huge'] is float):
-			print("font_size_huge not an int during settings_manager loader: ", typeof(save_data['font_size_huge']))
-			return
 		
-		dice_size = save_data['dice_size']
-		dice_tint_color = Color.from_string(save_data['dice_tint_color'], Color.WHITE)
-		dice_theme = save_data['dice_theme']
-		animations_enabled = save_data['animations_enabled']
-		button_size = save_data['button_size']
-		font_size_small = save_data['font_size_small']
-		font_size_normal = save_data['font_size_normal']
-		font_size_large = save_data['font_size_large']
-		font_size_huge = save_data['font_size_huge']
+		dice_size = save_data.get('dice_size', DICE_SIZE_DEFAULT)
+		dice_tint_color = Color.from_string(save_data.get('dice_tint_color', Color.WHITE.to_html()), Color.WHITE)
+		dice_theme = save_data.get('dice_theme', DICE_THEME_DEFAULT)
+		animations_enabled = save_data.get('animations_enabled', ANIMATIONS_ENABLED_DEFAULT)
+		button_size = save_data.get('button_size', BUTTON_SIZE_DEFAULT)
+		shake_volume = save_data.get('shake_volume', SHAKE_VOLUME_DEFAULT)
+		font_size_small = save_data.get('font_size_small', FONT_SIZE_SMALL_DEFAULT)
+		font_size_normal = save_data.get('font_size_normal', FONT_SIZE_NORMAL_DEFAULT)
+		font_size_large = save_data.get('font_size_large', FONT_SIZE_LARGE_DEFAULT)
+		font_size_huge = save_data.get('font_size_huge', FONT_SIZE_HUGE_DEFAULT)
 
 # Signal emitted when the window size changes
 signal window_size_changed()
@@ -280,6 +219,19 @@ func set_button_size(new_button_size: int):
 # Gets the button size
 func get_button_size() -> int:
 	return button_size
+	
+# Signal for saying that the shake volume has changed
+signal shake_volume_changed()
+
+# Sets the shake volume to the new volume and emits shake_volume_changed
+func set_shake_volume(new_shake_volume: int):
+	shake_volume = new_shake_volume
+	emit_signal("shake_volume_changed")
+	save_state()
+	
+# Gets the shake volume
+func get_shake_volume() -> int:
+	return shake_volume
 
 # Signal for saying that the font size has changed
 signal font_size_changed()
