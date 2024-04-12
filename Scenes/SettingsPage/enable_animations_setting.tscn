@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnln68o3d2rnm"]
+[gd_scene load_steps=5 format=3 uid="uid://dnln68o3d2rnm"]
 
 [ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_7nrt5"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/enable_animations_setting.gd" id="2_8r2ms"]
-[ext_resource type="PackedScene" uid="uid://busq18c7xwsfi" path="res://Scenes/SettingsPage/shake_volume_setting.tscn" id="3_sqrl8"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="3_1aqik"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="4_tfjsy"]
 
 [node name="EnableAnimationsSetting" instance=ExtResource("1_7nrt5")]
 script = ExtResource("2_8r2ms")
@@ -10,13 +11,38 @@ script = ExtResource("2_8r2ms")
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = false
 
-[node name="InnerSettingsContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+[node name="EnableDisableContainer" type="HBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 2
 
-[node name="ShakeVolumeSetting" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/InnerSettingsContainer" index="0" instance=ExtResource("3_sqrl8")]
+[node name="EnableButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer" index="0" instance=ExtResource("3_1aqik")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/EnableButton" index="1" instance=ExtResource("4_tfjsy")]
+layout_mode = 1
+text = "[center]Enable[/center]"
+
+[node name="DisableButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer" index="1" instance=ExtResource("3_1aqik")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/DisableButton" index="1" instance=ExtResource("4_tfjsy")]
+layout_mode = 1
+text = "[center]Disable[/center]"
+
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/EnableButton" to="." method="_on_enable_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/DisableButton" to="." method="_on_disable_button_pressed"]

@@ -12,8 +12,8 @@
 [node name="DiceThemeSetting" instance=ExtResource("1_fehq5")]
 script = ExtResource("1_1qbng")
 
-[node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
-custom_minimum_size = Vector2(0, 250)
+[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
+visible = false
 
 [node name="ThemesContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1
