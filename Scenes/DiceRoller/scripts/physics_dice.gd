@@ -6,6 +6,10 @@ var inner_die : AbstractDie = SimpleRollManager.default_die
 @onready var dice_image : TextureRect = $CollisionShape2D/DiceImage
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 @onready var press_spacer_timer : Timer = $PressSpacerTimer
+@onready var edge_collision_audio_player : AudioStreamPlayer = $EdgeCollisionAudioPlayer
+@onready var dice_collision_audio_player : AudioStreamPlayer = $DiceCollisionAudioPlayer
+
+const MAX_COLLISION_VELOCITY: float = 5000
 
 func configure(die: AbstractDie):
 	inner_die = die
@@ -15,6 +19,10 @@ func _ready():
 	# Load the image for our selected die
 	var die_image_path = DieImageManager.get_die_image(inner_die.image_id())
 	dice_image.configure_image(load(die_image_path))
+	
+	# Do some modification to the pitch, gives us some variety
+	edge_collision_audio_player.pitch_scale = randf_range(0.8, 1.2)
+	dice_collision_audio_player.pitch_scale = randf_range(0.8, 1.2)
 	
 	# Apply the dice size and adjust the collision shape
 	var dice_size : int = SettingsManager.get_dice_size()
@@ -42,7 +50,7 @@ func _process(_delta):
 		if press_spacer_timer.is_stopped():
 			launch_die_randomly()
 			press_spacer_timer.start()
-			
+
 func launch_die_randomly():
 	var max_window_size = SettingsManager.get_window_size()
 	
@@ -59,3 +67,16 @@ func launch_die_randomly():
 		y_impulse = randi_range(-max_window_size.y, 0) * 5
 	apply_impulse(Vector2(x_impulse, y_impulse))
 	apply_torque_impulse(randi_range(-10000, 10000))
+
+# On collision, play a sound
+func _on_body_entered(body):
+	var new_volume_db = linear_to_db(linear_velocity.length() / MAX_COLLISION_VELOCITY)
+	# Never let the volume go above base.
+	new_volume_db = min(0.0, new_volume_db)
+	# Play the different sounds for each type of collision: Wall vs other dice
+	if body is PhysicsDice:
+		dice_collision_audio_player.volume_db = new_volume_db
+		dice_collision_audio_player.play()
+	else:
+		edge_collision_audio_player.volume_db = new_volume_db
+		edge_collision_audio_player.play()

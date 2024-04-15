@@ -71,6 +71,8 @@ func _ready():
 		var die = prop_pair.m_die
 		var properties = prop_pair.m_roll_properties
 		var num_dice = properties.get_num_dice() * properties.get_repeat_roll()
+		if properties.is_advantage() or properties.is_disadvantage():
+			num_dice *= 2
 		dice_dict[die] = num_dice
 		total_dice += num_dice
 	
