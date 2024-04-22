@@ -20,7 +20,7 @@ signal reset_pressed()
 signal setting_changed()
 
 # Connect to the setting we will be modifying
-func _ready():
+func _ready() -> void:
 	# If you don't call both of these, it doesnt seem to work...
 	start_collapsed()
 	call_deferred("start_collapsed")
@@ -31,7 +31,7 @@ func get_safe_collabible_section_minimum_height() -> int:
 	return max(inner_get_collapsible_section_minimum_height(), button_size)
 	
 # Start with the setting collapsed
-func start_collapsed():
+func start_collapsed() -> void:
 	rotating_arrow.set_new_button_texture(RIGHT_ARROW)
 	set_title()
 	show_hide_reset_button()
@@ -51,7 +51,7 @@ func start_collapsed():
 	call_deferred("enforce_all_content_shown")
 	
 # Start with the setting expanded
-func start_expanded():
+func start_expanded() -> void:
 	rotating_arrow.set_new_button_texture(DOWN_ARROW)
 	set_title()
 	show_hide_reset_button()
@@ -66,12 +66,12 @@ func start_expanded():
 	call_deferred("enforce_all_content_shown")
 
 # Toggle showing/hiding the dice settings.
-func expand_collapse_inner_settings():
+func expand_collapse_inner_settings() -> void:
 	helper_expand_collapse_inner_settings(not collapsible_container.visible)
 
 # Helper method where you can force it to expand or collapse
-func helper_expand_collapse_inner_settings(expand: bool):
-	var collapsible_full_height = get_safe_collabible_section_minimum_height()
+func helper_expand_collapse_inner_settings(expand: bool) -> void:
+	var collapsible_full_height : int = get_safe_collabible_section_minimum_height()
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween()
@@ -96,20 +96,20 @@ func helper_expand_collapse_inner_settings(expand: bool):
 		tween.tween_method(set_collapsible_min_height, 0, collapsible_full_height, SettingsManager.LONG_PRESS_DELAY)
 		tween.chain().tween_callback(finish_show_setting_callback)
 
-func set_content_scale(new_scale: Vector2):
+func set_content_scale(new_scale: Vector2) -> void:
 	collapsible_section.scale = new_scale
-	for child in collapsible_section.get_children(true):
+	for child : Node in collapsible_section.get_children(true):
 		child.scale = new_scale
 		child.pivot_offset = child.size/2
 
 # Method for setting the height of the content when its expanding / collapsing
-func set_collapsible_min_height(current_content_height: int):
+func set_collapsible_min_height(current_content_height: int) -> void:
 	collapsible_section.custom_minimum_size.y = current_content_height
 	collapsible_section.size.y = current_content_height
 	enforce_all_content_shown()
 
 # At the end of the collapse, this gets called.
-func finish_hide_setting_callback():
+func finish_hide_setting_callback() -> void:
 	collapsible_section.visible = false
 	collapsible_container.visible = false
 	rotating_arrow.rotation_degrees = 0
@@ -117,31 +117,31 @@ func finish_hide_setting_callback():
 	enforce_all_content_shown()
 	
 # At the end of the expand, this gets called.
-func finish_show_setting_callback():
+func finish_show_setting_callback() -> void:
 	rotating_arrow.rotation_degrees = 0
 	rotating_arrow.set_new_button_texture(DOWN_ARROW)
 	enforce_all_content_shown()
 
 # Method for having the proper size of the setting at all times.
-func enforce_all_content_shown():
+func enforce_all_content_shown() -> void:
 	title_bar_container.size.y = 0
 	collapsible_container.size.y = 0
 	custom_minimum_size.y = title_bar_container.size.y + collapsible_container.size.y
 	call_deferred("deferred_enforce_all_content_shown")
 
-func deferred_enforce_all_content_shown():
+func deferred_enforce_all_content_shown() -> void:
 	size.y = custom_minimum_size.y
 	pass
 
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
-func show_hide_reset_button():
+func show_hide_reset_button() -> void:
 	reset_button.visible = inner_should_show_reset_button()
 	
-func signal_reset_pressed():
+func signal_reset_pressed() -> void:
 	inner_reset_button_pressed()
 	emit_signal("reset_pressed")
 	
-func set_title():
+func set_title() -> void:
 	setting_name_label.set_text_and_resize_y(inner_get_title())
 	
 func inner_get_title() -> String:
@@ -156,5 +156,5 @@ func inner_should_show_reset_button() -> bool:
 	return true
 
 # Method for inherited class to respond to reset being pressed
-func inner_reset_button_pressed():
+func inner_reset_button_pressed() -> void:
 	pass

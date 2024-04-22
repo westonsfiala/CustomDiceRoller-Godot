@@ -62,7 +62,7 @@ static func load_from_save_dict(save_state: Dictionary) -> MinMaxDie:
 		print("max_bound not an int during min_max_die loader: ", typeof(save_state['max_bound']))
 		return null
 		
-	var new_die = MinMaxDie.new().configure(save_state['name'], save_state['min_bound'], save_state['max_bound'])
+	var new_die : MinMaxDie = MinMaxDie.new().configure(save_state['name'], save_state['min_bound'], save_state['max_bound'])
 	new_die.override_image_path = save_state['override_image_path']
 	return new_die
 
@@ -91,7 +91,7 @@ func info() -> String:
 
 # Gets the image id. 
 func image_id() -> int:
-	var id = DieImageManager.DIE_UNKNOWN
+	var id : int = DieImageManager.DIE_UNKNOWN
 	
 	match minimum():
 		-1: 
@@ -112,7 +112,7 @@ func image_id() -> int:
 	return id
 
 func roll() -> DieResult:
-	var result = randi_range(min_bound, max_bound)
+	var result : int = randi_range(min_bound, max_bound)
 	return DieResult.new().configure(DieResult.DieResultType.INTEGER, result, minimum(), maximum())
 
 func minimum() -> int:

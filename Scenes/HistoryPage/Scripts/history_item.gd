@@ -12,7 +12,7 @@ class_name HistoryItem
 var m_result : RollResults = RollResults.new()
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	SettingsManager.window_size_changed.connect(reconfigure)
 	call_deferred("reconfigure")
 	
@@ -20,11 +20,11 @@ func configure(result: RollResults) -> HistoryItem:
 	m_result = result
 	return self
 	
-func reconfigure():
-	var minimum_height = 0
+func reconfigure() -> void:
+	var minimum_height : float = 0
 	
 	# First up is the name, details, and datetime
-	var name_layout_height = 0
+	var name_layout_height : int = 0
 	roll_name_label.set_text_and_resize_y(m_result.roll_name_text)
 	roll_detailed_name_label.set_text_and_resize_y(m_result.roll_detailed_name_text)
 	name_layout_height += roll_name_label.get_content_height()
@@ -41,7 +41,7 @@ func reconfigure():
 	# When we set the text it will resize to make it centered vertically.
 	sum_label.custom_minimum_size = Vector2(color_rect.size.x,name_layout_height)
 	sum_label.set_text_and_resize_y(str("[center]", m_result.roll_sum.formatted_text, "[/center]"))
-	var sum_label_needed_height = sum_label.get_content_height()
+	var sum_label_needed_height : int = sum_label.get_content_height()
 	
 	# Set the minimum height to the maximum of the box and the text lines
 	# If sum_label height is the deciding factor, give it a bit extra because otherwise
@@ -51,9 +51,9 @@ func reconfigure():
 	minimum_height += max(name_layout_height, sum_label_needed_height)
 	
 	# Go through all of the different lists that can be generated
-	var first = true
-	var combined_text = ""
-	for result in m_result.roll_results_array:
+	var first : bool = true
+	var combined_text : String = ""
+	for result : ColoredDieResults in m_result.roll_results_array:
 		if(not first):
 			combined_text += "\n"
 		first = false

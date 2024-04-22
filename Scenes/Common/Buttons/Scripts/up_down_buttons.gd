@@ -17,48 +17,48 @@ signal value_pressed()
 signal value_changed(value: int)
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	SettingsManager.button_size_changed.connect(reconfigure)
 	set_value(m_value)
 	reconfigure()
 	
-func setup_exports(prefix: String, postfix: String, show_plus_minus: bool, disallow_zero: bool):
+func setup_exports(prefix: String, postfix: String, show_plus_minus: bool, disallow_zero: bool) -> void:
 	m_prefix = prefix
 	m_postfix = postfix
 	m_show_plus_minus = show_plus_minus
 	m_disallow_zero = disallow_zero
 	set_value(m_value)
 
-func reconfigure():
-	var button_size = SettingsManager.get_button_size()
-	var margin_size = margin_container.get_theme_constant("margin_top") + margin_container.get_theme_constant("margin_bottom")
+func reconfigure() -> void:
+	var button_size : int = SettingsManager.get_button_size()
+	var margin_size : int = margin_container.get_theme_constant("margin_top") + margin_container.get_theme_constant("margin_bottom")
 	custom_minimum_size = Vector2(0, button_size + margin_size)
 	
 func get_value() -> int:
 	return m_value
 	
-func set_value(value : int):
-	var current_value = m_value
+func set_value(value : int) -> void:
+	var current_value : int = m_value
 	m_value = enforce_good_value(value, 0)
-	var tween = get_tree().create_tween()
+	var tween : Tween = get_tree().create_tween()
 	
-	var tween_duration = min(SettingsManager.LONG_PRESS_DELAY, 0.01 * abs(current_value - m_value))
+	var tween_duration : float = min(SettingsManager.LONG_PRESS_DELAY, 0.01 * abs(current_value - m_value))
 	tween.tween_method(set_value_text, current_value, m_value, tween_duration)
 	
-func set_value_text(value: int):
-	var new_text = str(value)
+func set_value_text(value: int) -> void:
+	var new_text : String = str(value)
 	if(m_show_plus_minus):
 		new_text = StringHelper.get_modifier_string(value, false)
 	value_text_button.text = m_prefix + new_text + m_postfix
 	
-func handle_change(change: int):
-	var snapped_change = snap_to_next_increment(m_value, change)
-	var new_value = enforce_good_value(m_value, snapped_change)
+func handle_change(change: int) -> void:
+	var snapped_change : int = snap_to_next_increment(m_value, change)
+	var new_value : int = enforce_good_value(m_value, snapped_change)
 	emit_signal("value_changed", new_value)
 	
 # Sometimes we do not want to allow for the value to be 0.
-func enforce_good_value(value: int, change: int):
-	var new_value = value + change;
+func enforce_good_value(value: int, change: int) -> int:
+	var new_value : int = value + change;
 	
 	# If we aren't zero or care about not being zero, your good!
 	if(new_value != 0 or not m_disallow_zero):
@@ -83,7 +83,7 @@ func snap_to_next_increment(value_in: int, step_size: int) -> int:
 	if(step_size == 0):
 		return value_in
 		
-	var value_rem = value_in % step_size
+	var value_rem : int = value_in % step_size
 
 	# If you are negative jumping up, or positive jumping down, just drop down/up the remainder.
 	if((value_rem > 0 and step_size < 0) or (value_rem < 0 and step_size > 0)):
@@ -92,17 +92,17 @@ func snap_to_next_increment(value_in: int, step_size: int) -> int:
 		return -value_rem + step_size
 
 # Decrement when pressed
-func _on_down_button_short_pressed():
+func _on_down_button_short_pressed() -> void:
 	handle_change(-1)
 
-func _on_down_button_long_pressed():
+func _on_down_button_long_pressed() -> void:
 	handle_change(-100)
 
-func _on_up_button_short_pressed():
+func _on_up_button_short_pressed() -> void:
 	handle_change(1)
 
-func _on_up_button_long_pressed():
+func _on_up_button_long_pressed() -> void:
 	handle_change(100)
 
-func _on_value_text_button_pressed():
+func _on_value_text_button_pressed() -> void:
 	emit_signal("value_pressed")

@@ -55,9 +55,9 @@ static func load_from_save_dict(save_state: Dictionary) -> ImbalancedDie:
 		return null
 		
 	var face_int_array: Array[int] = []
-	for face_value in save_state['faces']:
+	for face_value : String in save_state['faces']:
 		face_int_array.push_back(int(face_value))
-	var new_die = ImbalancedDie.new().configure(save_state['name'], face_int_array)
+	var new_die : ImbalancedDie = ImbalancedDie.new().configure(save_state['name'], face_int_array)
 	new_die.override_image_path = save_state['override_image_path']
 	return new_die
 
@@ -74,7 +74,7 @@ func get_class_name() -> StringName:
 	return CLASS_NAME
 	
 func default_name() -> String:
-	var placeholder_name = 'd'
+	var placeholder_name : String = 'd'
 	placeholder_name += ":".join(m_faces)
 	return placeholder_name
 
@@ -85,7 +85,7 @@ func image_id() -> int:
 	return DieImageManager.DIE_UNKNOWN
 
 func roll() -> DieResult:
-	var result = m_faces.pick_random()
+	var result : int = m_faces.pick_random()
 	return DieResult.new().configure(DieResult.DieResultType.INTEGER, result, minimum(), maximum())
 
 func minimum() -> int:
@@ -97,7 +97,7 @@ func maximum() -> int:
 func average() -> float:
 	if(m_faces.size() == 0):
 		return 0
-	return m_faces.reduce(func(a,b): return a+b,0) / m_faces.size()
+	return m_faces.reduce(func(a: float, b: float) -> float: return a+b,0) / m_faces.size()
 
 func get_faces() -> Array:
 	return m_faces

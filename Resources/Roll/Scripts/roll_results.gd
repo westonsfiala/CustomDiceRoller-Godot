@@ -39,7 +39,7 @@ func save_dict() -> Dictionary:
 	save_state['roll_sum'] = roll_sum.formatted_text
 	
 	var roll_results_save_array: Array = []
-	for roll_result in roll_results_array:
+	for roll_result : ColoredDieResults in roll_results_array:
 		roll_results_save_array.push_back(roll_result.formatted_text)
 	save_state['roll_results_array'] = roll_results_save_array
 
@@ -51,8 +51,8 @@ static func load_from_array_of_save_dict(array_of_roll_results_save_dicts: Array
 	var loaded_results: Array[RollResults] = []
 	
 	# Go through all of the save dicts and try loading them
-	for save_state in array_of_roll_results_save_dicts:
-		var new_history = load_from_save_dict(save_state)
+	for save_state : Dictionary in array_of_roll_results_save_dicts:
+		var new_history : RollResults = load_from_save_dict(save_state)
 		
 		# If a die was actually created, add it.
 		if new_history != null:
@@ -121,22 +121,22 @@ static func load_from_save_dict(save_state: Dictionary) -> RollResults:
 		print("roll_results_array not an array during roll_results loader")
 		return null
 		
-	var new_roll_results = RollResults.new()
+	var new_roll_results : RollResults = RollResults.new()
 	new_roll_results.time_string = save_state['time_string']
 	new_roll_results.date_string = save_state['date_string']
-	var new_roll = Roll.load_from_save_dict(save_state['stored_roll'])
+	var new_roll : Roll = Roll.load_from_save_dict(save_state['stored_roll'])
 	if new_roll == null:
 		print("Could not load roll during roll_results loader")
 		return null
 	new_roll_results.stored_roll = new_roll
 	new_roll_results.roll_name_text = save_state['roll_name_text']
 	new_roll_results.roll_detailed_name_text = save_state['roll_detailed_name_text']
-	var new_roll_sum = ColoredDieResults.new()
+	var new_roll_sum : ColoredDieResults = ColoredDieResults.new()
 	new_roll_sum.formatted_text = save_state['roll_sum']
 	new_roll_results.roll_sum = new_roll_sum
 	var new_roll_results_array: Array[ColoredDieResults] = []
-	for result_line in save_state['roll_results_array']:
-		var new_result = ColoredDieResults.new()
+	for result_line : String in save_state['roll_results_array']:
+		var new_result : ColoredDieResults = ColoredDieResults.new()
 		new_result.formatted_text = result_line
 		new_roll_results_array.push_back(new_result)
 	new_roll_results.roll_results_array = new_roll_results_array
@@ -144,8 +144,8 @@ static func load_from_save_dict(save_state: Dictionary) -> RollResults:
 	return new_roll_results
 
 # Tiny function used to help the reduce method
-func simple_summer(accum, value): return accum + value
-func die_summer(accum, die_result: DieResult): return accum + die_result.value()
+func simple_summer(accum : int, value : int) -> int: return accum + value
+func die_summer(accum : int, die_result: DieResult) -> int: return accum + die_result.value()
 
 func process_roll(roll: Roll) -> void:
 	stored_roll = roll
@@ -157,10 +157,10 @@ func process_roll(roll: Roll) -> void:
 	
 	var sum_results : Array[int] = []
 	var non_number_results : Array = []
-	var show_split_sums = false
+	var show_split_sums : bool = false
 
 	# Go through all of the dice in the roll and start making the roll detail lines
-	for die in get_merged_keys():
+	for die : AbstractDie in get_merged_keys():
 		
 		# TODO: sort manager
 		#if(SortTypeManager.getInstance().sortAscending()) {
@@ -169,27 +169,27 @@ func process_roll(roll: Roll) -> void:
 		#	this.storedResults.sortDescending();
 		#}
 		
-		var die_roll_results = m_roll_results.get(die, []);
-		var die_dropped_results = m_dropped_rolls.get(die, []);
-		var die_rerolled_results = m_rerolled_rolls.get(die, []);
-		var die_struck_results = m_struck_roll_results.get(die, []);
-		var die_struck_dropped_results = m_struck_dropped_rolls.get(die, []);
-		var die_struck_rerolled_results = m_struck_rerolled_rolls.get(die, []);
-		var die_properties : RollProperties = m_roll_properties.get(die, []);
+		var die_roll_results : Array = m_roll_results.get(die, [])
+		var die_dropped_results : Array = m_dropped_rolls.get(die, [])
+		var die_rerolled_results : Array = m_rerolled_rolls.get(die, [])
+		var die_struck_results : Array = m_struck_roll_results.get(die, [])
+		var die_struck_dropped_results : Array = m_struck_dropped_rolls.get(die, [])
+		var die_struck_rerolled_results : Array = m_struck_rerolled_rolls.get(die, [])
+		var die_properties : RollProperties = m_roll_properties.get(die, [])
 		
 		# If any die has a repeat roll property, split all the results
 		if(die_properties.has_repeat_roll()):
 			show_split_sums = true
 			
-		var main_results = process_roll_pair(die, die.name(), die_roll_results, die_struck_results, sum_results, non_number_results, die_properties, true);
+		var main_results : ColoredDieResults = process_roll_pair(die, die.name(), die_roll_results, die_struck_results, sum_results, non_number_results, die_properties, true);
 		if(main_results != null):
 			roll_results_array.push_back(main_results)
 
-		var dropped_results = process_roll_pair(die, die.name() + ' dropped', die_dropped_results, die_struck_dropped_results, sum_results, non_number_results, die_properties, false);
+		var dropped_results : ColoredDieResults = process_roll_pair(die, die.name() + ' dropped', die_dropped_results, die_struck_dropped_results, sum_results, non_number_results, die_properties, false);
 		if(dropped_results != null):
 			roll_results_array.push_back(dropped_results)
 
-		var rerolled_results = process_roll_pair(die, die.name() + ' re-rolled', die_rerolled_results, die_struck_rerolled_results, sum_results, non_number_results, die_properties, false);
+		var rerolled_results : ColoredDieResults = process_roll_pair(die, die.name() + ' re-rolled', die_rerolled_results, die_struck_rerolled_results, sum_results, non_number_results, die_properties, false);
 		if(rerolled_results != null):
 			roll_results_array.push_back(rerolled_results)
 
@@ -197,60 +197,60 @@ func process_roll(roll: Roll) -> void:
 	# TODO: Add this back in when we have settings working
 	#if(ExpectedResultManager.getInstance().getShowExpected() && sum_results.length !== 0) {
 	if(sum_results.size() != 0):
-		var roll_average_string = StringHelper.decimal_to_string(roll.average(),2)
-		var average_text = str('Expected Result - [', roll_average_string, ']')
+		var roll_average_string : String = StringHelper.decimal_to_string(roll.average(),2)
+		var average_text : String = str('Expected Result - [', roll_average_string, ']')
 		
 		# This isn't the best way to do this, but its good enough.
-		var expected_color_results = ColoredDieResults.new().configure(average_text,"", [], [])
+		var expected_color_results : ColoredDieResults = ColoredDieResults.new().configure(average_text,"", [], [])
 		roll_results_array.push_back(expected_color_results)
 		
-	var sum_append_text = '';
+	var sum_append_text : String = '';
 	
-	var sum_total = sum_results.reduce(simple_summer,0)
+	var sum_total : int = sum_results.reduce(simple_summer,0)
 	var combined_results : Array[DieResult] = []
 
 	# Sometimes things get wonky.
-	var roll_min = roll.minimum();
-	var roll_max = roll.maximum();
+	var roll_min : int = roll.minimum();
+	var roll_max : int = roll.maximum();
 	if(roll_min > roll_max):
-		var temp = roll_min
+		var temp : int = roll_min
 		roll_min = roll_max
 		roll_max = temp
 	
 	if(sum_results.size() != 0):
 		if(show_split_sums):
-			for die_sum in sum_results: 
-				var individual_result = DieResult.new().configure(DieResult.DieResultType.INTEGER, die_sum, roll_min, roll_max)
+			for die_sum : int in sum_results: 
+				var individual_result : DieResult = DieResult.new().configure(DieResult.DieResultType.INTEGER, die_sum, roll_min, roll_max)
 				combined_results.push_back(individual_result);
 			sum_append_text = str(', [', sum_total, ']')
 		else:
-			var combined_result = DieResult.new().configure(DieResult.DieResultType.INTEGER, sum_total, roll_min, roll_max)
+			var combined_result : DieResult = DieResult.new().configure(DieResult.DieResultType.INTEGER, sum_total, roll_min, roll_max)
 			combined_results.push_back(combined_result);
 			
-	for non_number_result in non_number_results:
+	for non_number_result : Variant in non_number_results:
 		combined_results.push_back(non_number_result)
 		
-	var return_color_results = ColoredDieResults.new().configure("",sum_append_text, combined_results, [])
+	var return_color_results : ColoredDieResults = ColoredDieResults.new().configure("",sum_append_text, combined_results, [])
 	
 	roll_sum = return_color_results
 
 # Lambda method for turning the roll numbers into a displayable string.
 func process_roll_pair(die: AbstractDie, die_display_name: String, main_list: Array, strike_list: Array, sum_array: Array, non_number_array: Array, properties : RollProperties, show_prop_info : bool) -> ColoredDieResults:
-	var main_list_check = main_list != null and main_list.size() != 0
-	var strike_list_check = strike_list != null and strike_list.size() != 0
-	var property_check = show_prop_info and properties.has_modifier()
+	var main_list_check : bool = main_list != null and main_list.size() != 0
+	var strike_list_check : bool = strike_list != null and strike_list.size() != 0
+	var property_check : bool = show_prop_info and properties.has_modifier()
 	if(main_list_check or strike_list_check || property_check):
-		var prepend_string = die_display_name;
-		var append_string = '';
+		var prepend_string : String = die_display_name
+		var append_string : String = ''
 		
 		if(die.is_numbered()):
-			var sub_total = 0;
+			var sub_total : int = 0
 			if(show_prop_info):
 				sub_total = properties.get_modifier()
 				if(sub_total != 0):
-					append_string += ' (' + StringHelper.get_modifier_string(sub_total,true) + ')';
+					append_string += ' (' + StringHelper.get_modifier_string(sub_total,true) + ')'
 				if(properties.has_count_above() or properties.has_count_below()):
-					for die_result in main_list:
+					for die_result : DieResult in main_list:
 						if(properties.has_count_above() and properties.has_count_below()):
 							if(die_result.value() >= properties.get_count_above() or die_result.value() <= properties.get_count_below()):
 								sub_total += 1
@@ -273,12 +273,12 @@ func process_roll_pair(die: AbstractDie, die_display_name: String, main_list: Ar
 				
 			prepend_string += str(' [', sub_total, ']: ')
 		else:
-			for value in main_list:
+			for value : Variant in main_list:
 				non_number_array.push_back(value)
 			prepend_string += ': '
 			
-		var die_minimum = die.minimum()
-		var die_maximum = die.maximum()
+		var die_minimum : int = die.minimum()
+		var die_maximum : int = die.maximum()
 		
 		if(properties.get_num_dice() < 0):
 			die_minimum = -die_minimum
@@ -288,7 +288,7 @@ func process_roll_pair(die: AbstractDie, die_display_name: String, main_list: Ar
 	return null
 
 func get_merged_keys() -> Array:
-	var returnKeys = {}
+	var returnKeys : Dictionary = {}
 	returnKeys.merge(m_roll_results)
 	returnKeys.merge(m_dropped_rolls)
 	returnKeys.merge(m_rerolled_rolls)
@@ -298,7 +298,7 @@ func get_merged_keys() -> Array:
 	returnKeys.merge(m_roll_properties)
 	return returnKeys.keys()
 
-func sort_all_descending():
+func sort_all_descending() -> void:
 	sort_map_lists_decending(m_roll_results)
 	sort_map_lists_decending(m_dropped_rolls)
 	sort_map_lists_decending(m_rerolled_rolls)
@@ -306,7 +306,7 @@ func sort_all_descending():
 	sort_map_lists_decending(m_struck_dropped_rolls)
 	sort_map_lists_decending(m_struck_rerolled_rolls)
 
-func sort_all_ascending():
+func sort_all_ascending() -> void:
 	sort_map_lists_ascending(m_roll_results)
 	sort_map_lists_ascending(m_dropped_rolls)
 	sort_map_lists_ascending(m_rerolled_rolls)
@@ -314,10 +314,10 @@ func sort_all_ascending():
 	sort_map_lists_ascending(m_struck_dropped_rolls)
 	sort_map_lists_ascending(m_struck_rerolled_rolls)
 
-func sort_map_lists_ascending(roll_map : Dictionary):
-	for roll_list in roll_map.values():
-		roll_list.sort_custom(func(a,b): return a < b)
+func sort_map_lists_ascending(roll_map : Dictionary) -> void:
+	for roll_list : Variant in roll_map.values():
+		roll_list.sort_custom(func(a : Variant, b : Variant) -> bool: return a < b)
 
-func sort_map_lists_decending(roll_map : Dictionary):
-	for roll_list in roll_map.values():
-		roll_list.sort_custom(func(a,b): return a > b)
+func sort_map_lists_decending(roll_map : Dictionary) -> void:
+	for roll_list : Variant in roll_map.values():
+		roll_list.sort_custom(func(a : Variant, b : Variant) -> bool: return a > b)

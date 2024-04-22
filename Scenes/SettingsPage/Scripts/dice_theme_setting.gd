@@ -6,16 +6,16 @@ class_name DiceThemeSetting
 const DIE_THEME_LABEL_TEXT : String = "Theme - "
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	super()
 	SettingsManager.dice_theme_changed.connect(show_hide_reset_button)
 	SettingsManager.dice_theme_changed.connect(set_title)
 	themes_container.minimum_size_changed.connect(setting_size_responder)
 	
-func setting_size_responder():
+func setting_size_responder() -> void:
 	call_deferred("deferred_size_responder")
 	
-func deferred_size_responder():
+func deferred_size_responder() -> void:
 	collapsible_section.custom_minimum_size.y = themes_container.size.y
 	enforce_all_content_shown()
 	
@@ -31,6 +31,6 @@ func inner_should_show_reset_button() -> bool:
 	return SettingsManager.get_dice_theme() != SettingsManager.DICE_THEME_DEFAULT
 
 # Method for inherited class to respond to reset being pressed
-func inner_reset_button_pressed():
+func inner_reset_button_pressed() -> void:
 	SettingsManager.set_dice_theme(SettingsManager.DICE_THEME_DEFAULT)
 	show_hide_reset_button()

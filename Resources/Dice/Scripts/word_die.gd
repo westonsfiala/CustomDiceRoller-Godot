@@ -55,9 +55,9 @@ static func load_from_save_dict(save_state: Dictionary) -> WordDie:
 		return null
 		
 	var face_string_array: Array[String] = []
-	for face in save_state['faces']:
+	for face : String in save_state['faces']:
 		face_string_array.push_back(face)
-	var new_die = WordDie.new().configure(save_state['name'], face_string_array)
+	var new_die : WordDie = WordDie.new().configure(save_state['name'], face_string_array)
 	new_die.override_image_path = save_state['override_image_path']
 	return new_die
 
@@ -74,7 +74,7 @@ func get_class_name() -> StringName:
 	return CLASS_NAME
 	
 func default_name() -> String:
-	var placeholder_name = 'd-'
+	var placeholder_name : String = 'd-'
 	placeholder_name += ":".join(m_faces)
 	return placeholder_name
 
@@ -85,7 +85,7 @@ func image_id() -> int:
 	return DieImageManager.DIE_UNKNOWN
 
 func roll() -> DieResult:
-	var result = m_faces.pick_random()
+	var result : String = m_faces.pick_random()
 	return DieResult.new().configure(DieResult.DieResultType.STRING, result, minimum(), maximum())
 
 func get_faces() -> Array:

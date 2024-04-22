@@ -25,13 +25,13 @@ const SAVE_FILE_NAME : StringName = "user://simple_roll_manager.save"
 signal roll_properties_updated()
 signal simple_dice_updated()
 
-func _ready():
+func _ready() -> void:
 	load_state()
 	
 # Save the state of the simple roll manager to its save file.
 func save_state() -> void:
 	# Open the save file for writing.
-	var simple_roll_save_file = FileAccess.open(SAVE_FILE_NAME, FileAccess.WRITE)
+	var simple_roll_save_file : FileAccess = FileAccess.open(SAVE_FILE_NAME, FileAccess.WRITE)
 	
 	# Start generating the save state dict.
 	var save_dict : Dictionary = {}
@@ -45,13 +45,13 @@ func save_state() -> void:
 	
 	# Save all of the dice.
 	var dice_save_dict_array: Array = []
-	for die in simple_roll_dice:
-		var die_save_dict = die.save_dict()
+	for die : AbstractDie in simple_roll_dice:
+		var die_save_dict : Dictionary = die.save_dict()
 		dice_save_dict_array.push_back(die_save_dict)
 	save_dict['dice'] = dice_save_dict_array
 	
 	# Turn the dict into a string.
-	var json_string = JSON.stringify(save_dict)
+	var json_string : String = JSON.stringify(save_dict)
 	
 	# Save it into the file
 	simple_roll_save_file.store_line(json_string)
@@ -68,15 +68,15 @@ func load_state() -> void:
 		return
 	
 	# Load our save file and start parsing it.
-	var simple_roll_save_file = FileAccess.open(SAVE_FILE_NAME, FileAccess.READ)
+	var simple_roll_save_file : FileAccess = FileAccess.open(SAVE_FILE_NAME, FileAccess.READ)
 	while simple_roll_save_file.get_position() < simple_roll_save_file.get_length():
 		
 		# Grab a line and parse it. We should only ever have one line.
-		var json_string = simple_roll_save_file.get_line()
-		var json = JSON.new()
+		var json_string : String = simple_roll_save_file.get_line()
+		var json : JSON = JSON.new()
 		
 		# If something goes wrong, print a message and bail.
-		var parse_results = json.parse(json_string)
+		var parse_results : Error = json.parse(json_string)
 		if not parse_results == OK:
 			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
 			return
@@ -115,7 +115,7 @@ func load_state() -> void:
 		simple_roll_properties = RollProperties.load_from_save_dict(properties_save_dict)
 		
 		var dice_array_save_array: Array = save_data['dice']
-		var loaded_dice = DieLoaderFactory.load_from_array_of_save_dict(dice_array_save_array)
+		var loaded_dice : Array[AbstractDie] = DieLoaderFactory.load_from_array_of_save_dict(dice_array_save_array)
 		if not loaded_dice.is_empty():
 			simple_roll_dice = loaded_dice
 		
@@ -132,15 +132,15 @@ func get_dice() -> Array[AbstractDie]:
 # It then signals to any listeners that the dice have been updated.
 func set_dice(dice: Array[AbstractDie]) -> void:
 	simple_roll_dice = dice
-	simple_roll_dice.sort_custom(func(left: AbstractDie, right: AbstractDie): return left.average() < right.average())
+	simple_roll_dice.sort_custom(func(left: AbstractDie, right: AbstractDie) -> bool: return left.average() < right.average())
 	save_state()
 	emit_signal("simple_dice_updated")
 	
 # Gets the index of the die given by name.
 # If not found, returns -1.
 func get_die_index_by_name(check_die : AbstractDie) -> int:
-	var index = 0
-	for die in simple_roll_dice:
+	var index : int = 0
+	for die : AbstractDie in simple_roll_dice:
 		if check_die.name() == die.name():
 			return index
 		index += 1
@@ -166,7 +166,7 @@ func add_die(die: AbstractDie, supress_update: bool = false) -> bool:
 # If suppress_update is set, will not trigger signals.
 func remove_die(die: AbstractDie, supress_update: bool = false) -> bool:
 	if(has_die_by_name(die)):
-		var die_index = get_die_index_by_name(die)
+		var die_index : int = get_die_index_by_name(die)
 		simple_roll_dice.remove_at(die_index)
 		if(not supress_update):
 			set_dice(simple_roll_dice)
@@ -176,7 +176,7 @@ func remove_die(die: AbstractDie, supress_update: bool = false) -> bool:
 # Edits the original die, by removing it and attempting to add the new die.
 # If the original is removed and the new is added returns true, else false.
 func edit_die(original_die: AbstractDie, new_die: AbstractDie) -> bool:
-	var edited = false
+	var edited : bool = false
 	
 	if(remove_die(original_die, true)):
 		if(add_die(new_die, true)):

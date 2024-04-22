@@ -6,7 +6,7 @@ class_name MetallicDiceThemesSetting
 const METALLIC_DIE_THEME_LABEL_TEXT : String = "Metallic"
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	super()
 	
 func inner_get_title() -> String:
@@ -21,5 +21,5 @@ func inner_should_show_reset_button() -> bool:
 	return false
 
 # Method for inherited class to respond to reset being pressed
-func inner_reset_button_pressed():
+func inner_reset_button_pressed() -> void:
 	pass

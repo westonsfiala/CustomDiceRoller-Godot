@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7rd5scy05a76"]
+
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_3mu50"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/roll_container_size_setting.gd" id="2_1h4vx"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="3_fqtkj"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="4_j00j1"]
+
+[node name="RollContainerSizeSetting" instance=ExtResource("1_3mu50")]
+script = ExtResource("2_1h4vx")
+
+[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
+visible = false
+
+[node name="ButtonContainer" type="HBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="FullscreenButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer" index="0" instance=ExtResource("3_fqtkj")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/FullscreenButton" index="1" instance=ExtResource("4_j00j1")]
+layout_mode = 1
+text = "[center]Fullscreen[/center]"
+
+[node name="DialogButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer" index="1" instance=ExtResource("3_fqtkj")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/DialogButton" index="1" instance=ExtResource("4_j00j1")]
+layout_mode = 1
+text = "[center]Dialog[/center]"
+
+[node name="MinimalButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer" index="2" instance=ExtResource("3_fqtkj")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/MinimalButton" index="1" instance=ExtResource("4_j00j1")]
+layout_mode = 1
+text = "[center]Minimal[/center]"
+
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/FullscreenButton" to="." method="_on_enable_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/DialogButton" to="." method="_on_disable_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/MinimalButton" to="." method="_on_disable_button_pressed"]

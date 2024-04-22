@@ -41,7 +41,7 @@ signal properties_updated(roll_properties: RollProperties)
 signal reset_properties()
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	SettingsManager.button_size_changed.connect(reconfigure)
 	change_properties_popup.reset_pressed.connect(_on_reset_button_pressed)
 	change_properties_popup.property_pressed.connect(popup_property_pressed)
@@ -50,9 +50,9 @@ func _ready():
 	
 	reconfigure()
 
-func reconfigure():
-	var button_size = SettingsManager.get_button_size()
-	var margin_size = reset_button_margins.get_theme_constant("margin_top") + reset_button_margins.get_theme_constant("margin_bottom")
+func reconfigure() -> void:
+	var button_size : int = SettingsManager.get_button_size()
+	var margin_size : int = reset_button_margins.get_theme_constant("margin_top") + reset_button_margins.get_theme_constant("margin_bottom")
 	custom_minimum_size = Vector2(0, button_size + margin_size)
 	
 func set_properties(props: RollProperties) -> void:
@@ -64,13 +64,13 @@ func set_properties(props: RollProperties) -> void:
 		property_button.text = NO_PROP_STRING
 	else:
 		reset_button_margins.visible = true
-		var num_non_default = roll_properties.get_num_non_default()
+		var num_non_default : int = roll_properties.get_num_non_default()
 		if(num_non_default == 1):
 			property_button.text = str(num_non_default, SINGLE_PROP_STRING)
 		else:
 			property_button.text = str(num_non_default, MULTIPLE_PROP_STRING)
 			
-func popup_property_pressed(property_identifier: StringName):
+func popup_property_pressed(property_identifier: StringName) -> void:
 	currently_edited_property_identifier = property_identifier
 	match property_identifier:
 		RollProperties.REPEAT_ROLL_IDENTIFIER:
@@ -184,9 +184,9 @@ func popup_properties_updated(properties: RollProperties) -> void:
 	roll_properties = properties
 	emit_signal("properties_updated", roll_properties)
 	
-func _on_reset_button_pressed():
+func _on_reset_button_pressed() -> void:
 	emit_signal("reset_properties")
 
-func _on_property_button_pressed():
+func _on_property_button_pressed() -> void:
 	change_properties_popup.modular_popup(get_screen_position())
 	

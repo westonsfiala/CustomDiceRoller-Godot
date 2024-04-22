@@ -37,7 +37,7 @@ var custom_gradient : CustomGradient
 
 
 # Get which custom theme we are operating on and set everything up from there.
-func _ready():
+func _ready() -> void:
 	blend_rich_text.set_text_and_resize_y(BLEND_TYPE_TEXT)
 	fill_rich_text.set_text_and_resize_y(FILL_TYPE_TEXT)
 	layout_direction_rich_text.set_text_and_resize_y(LAYOUT_DIRECTION_TEXT)
@@ -124,8 +124,8 @@ func match_buttons_to_gradient() -> void:
 			mirror_button.button_pressed = true
 			
 	# Set the colors
-	var colors = custom_gradient.colors
-	var color_list_items = colors_container.get_children()
+	var colors : PackedColorArray = custom_gradient.colors
+	var color_list_items : Array[Node] = colors_container.get_children()
 	
 	# Add or remove items that we no longer need
 	while colors.size() > color_list_items.size():
@@ -138,115 +138,115 @@ func match_buttons_to_gradient() -> void:
 		color_list_items = colors_container.get_children()
 	
 	while colors.size() < color_list_items.size():
-		var item_to_remove = color_list_items.back()
+		var item_to_remove : Node = color_list_items.back()
 		colors_container.remove_child(item_to_remove)
 		item_to_remove.queue_free()
 		color_list_items = colors_container.get_children()
 		
 	# Set the colors to match what the gradient has
-	for index in color_list_items.size():
-		var color = custom_gradient.colors[index]
-		var color_list_item = color_list_items[index]
+	for index : int in color_list_items.size():
+		var color : Color = custom_gradient.colors[index]
+		var color_list_item : Node = color_list_items[index]
 		color_list_item.set_color(color)
 		color_list_item.set_index(index)
 	
 
 # Set the blend type to linear and update it.
-func _on_linear_blend_type_pressed():
+func _on_linear_blend_type_pressed() -> void:
 	custom_gradient.blend_type = CustomGradient.BLEND_TYPE.LINEAR
 	update_gradient()
 
 # Set the blend type to constant and update it.
-func _on_constant_blend_type_pressed():
+func _on_constant_blend_type_pressed() -> void:
 	custom_gradient.blend_type = CustomGradient.BLEND_TYPE.CONSTANT
 	update_gradient()
 
 # Set the fill type to linear and update it.
-func _on_linear_fill_type_pressed():
+func _on_linear_fill_type_pressed() -> void:
 	custom_gradient.fill_type = CustomGradient.FILL_TYPE.LINEAR
 	update_gradient()
 
 # Set the fill type to radial and update it.
-func _on_radial_fill_type_pressed():
+func _on_radial_fill_type_pressed() -> void:
 	custom_gradient.fill_type = CustomGradient.FILL_TYPE.RADIAL
 	update_gradient()
 
 # Set the fill type to square and update it.
-func _on_square_fill_type_pressed():
+func _on_square_fill_type_pressed() -> void:
 	custom_gradient.fill_type = CustomGradient.FILL_TYPE.SQUARE
 	update_gradient()
 
 # Set the layout direction to horizontal and update it.
-func _on_horizontal_direction_pressed():
+func _on_horizontal_direction_pressed() -> void:
 	custom_gradient.layout_direction = CustomGradient.LAYOUT_DIRECTION.HORIZONTAL
 	update_gradient()
 
 # Set the layout direction to vertical and update it.
-func _on_vertical_direction_pressed():
+func _on_vertical_direction_pressed() -> void:
 	custom_gradient.layout_direction = CustomGradient.LAYOUT_DIRECTION.VERTICAL
 	update_gradient()
 
 # Set the layout direction to downward and update it.
-func _on_downward_direction_pressed():
+func _on_downward_direction_pressed() -> void:
 	custom_gradient.layout_direction = CustomGradient.LAYOUT_DIRECTION.DIAGONAL_DOWN
 	update_gradient()
 
 # Set the layout direction to upward and update it.
-func _on_upward_direction_pressed():
+func _on_upward_direction_pressed() -> void:
 	custom_gradient.layout_direction = CustomGradient.LAYOUT_DIRECTION.DIAGONAL_UP
 	update_gradient()
 
 # Set the repeat num to the new value and update it.
-func _on_repeat_slider_value_changed(value):
+func _on_repeat_slider_value_changed(value : float) -> void:
 	custom_gradient.repeat_num = value
 	update_gradient()
 
 # Set the repeat type to no repeat and update it.
-func _on_no_repeat_button_pressed():
+func _on_no_repeat_button_pressed() -> void:
 	custom_gradient.repeat_type = CustomGradient.REPEAT_TYPE.NO_REPEAT
 	update_gradient()
 
 # Set the repeat type to repeat and update it.
-func _on_repeat_button_pressed():
+func _on_repeat_button_pressed() -> void:
 	custom_gradient.repeat_type = CustomGradient.REPEAT_TYPE.REPEAT
 	update_gradient()
 
 # Set the repeat type to mirror repeat and update it.
-func _on_mirror_repeat_button_pressed():
+func _on_mirror_repeat_button_pressed() -> void:
 	custom_gradient.repeat_type = CustomGradient.REPEAT_TYPE.MIRROR_REPEAT
 	update_gradient()
 
 # When a color picker item has up pressed, move that color up in the list.
-func _on_color_picker_list_item_up_pressed(index: int):
+func _on_color_picker_list_item_up_pressed(index: int) -> void:
 	# Don't try to move something up that is already at the top.
 	if index > 0 and index < custom_gradient.colors.size():
-		var moved_color = custom_gradient.colors[index]
+		var moved_color : Color = custom_gradient.colors[index]
 		custom_gradient.colors.remove_at(index)
 		custom_gradient.colors.insert(index - 1, moved_color)
 		update_gradient()
 
 # When a color picker item has down pressed, move that color down in the list.
-func _on_color_picker_list_item_down_pressed(index: int):
+func _on_color_picker_list_item_down_pressed(index: int) -> void:
 	# Don't try to move something down that is already at the bottom.
 	if index > -1 and index < custom_gradient.colors.size()-1:
-		var moved_color = custom_gradient.colors[index]
+		var moved_color : Color = custom_gradient.colors[index]
 		custom_gradient.colors.remove_at(index)
 		custom_gradient.colors.insert(index+1, moved_color)
 		update_gradient()
 
 # When a color picker item has remove pressed, remove that color from the list.
-func _on_color_picker_list_item_remove_pressed(index: int):
+func _on_color_picker_list_item_remove_pressed(index: int) -> void:
 	if index > -1 and index < custom_gradient.colors.size():
 		custom_gradient.colors.remove_at(index)
 		update_gradient()
 
 # When a color picker item changes, update the color.
-func _on_color_picker_list_item_color_changed(index: int, new_color: Color):
+func _on_color_picker_list_item_color_changed(index: int, new_color: Color) -> void:
 	if index > -1 and index < custom_gradient.colors.size():
 		custom_gradient.colors[index] = new_color
 		update_gradient()
 
 # When the add color button is pressed, add a new color list item
-func _on_add_color_button_pressed():
+func _on_add_color_button_pressed() -> void:
 	custom_gradient.colors.append(Color.WHITE)
 	update_gradient()

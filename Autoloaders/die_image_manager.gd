@@ -87,20 +87,20 @@ var custom_gradient : CustomGradient = CustomGradient.new()
 
 var loaded_themes : Dictionary = {}
 
-func _ready():
+func _ready() -> void:
 	setup_name_to_theme_dict()
 	load_state()
 	
-func save_state():
-	var save_result = ResourceSaver.save(custom_gradient, CUSTOM_GRADIENT_FILE_NAME)
+func save_state() -> void:
+	var save_result : Error = ResourceSaver.save(custom_gradient, CUSTOM_GRADIENT_FILE_NAME)
 	if save_result != OK: 
 		print("Failed to save custom gradient")
 
 # Load the state
-func load_state():
+func load_state() -> void:
 	# Load each of our stored gradients
 	if ResourceLoader.exists(CUSTOM_GRADIENT_FILE_NAME):
-		var loaded_gradient = ResourceLoader.load(CUSTOM_GRADIENT_FILE_NAME)
+		var loaded_gradient : Resource = ResourceLoader.load(CUSTOM_GRADIENT_FILE_NAME)
 		if loaded_gradient is CustomGradient:
 			custom_gradient = loaded_gradient
 		else:
@@ -112,8 +112,8 @@ func load_state():
 # Setup the name to theme dict off of the theme to name dict
 # String names are stored in snake_case
 func setup_name_to_theme_dict() -> void:
-	for theme_key in THEME_TO_NAME_DICT.keys():
-		var theme_name = THEME_TO_NAME_DICT[theme_key]
+	for theme_key : THEME in THEME_TO_NAME_DICT.keys():
+		var theme_name : String = THEME_TO_NAME_DICT[theme_key]
 		theme_name = theme_name.to_snake_case()
 		NAME_TO_THEME_DICT[theme_name] = theme_key
 
@@ -137,7 +137,7 @@ func get_custom_gradient() -> CustomGradient:
 signal random_match_gradient_changed()
 	
 # Randomize the matching random gradient. 
-func randomize_random_match():
+func randomize_random_match() -> void:
 	if loaded_themes.has(THEME.RANDOM_MATCHING):
 		loaded_themes.erase(THEME.RANDOM_MATCHING)
 
@@ -156,7 +156,7 @@ func get_theme_enum_from_name(theme_name: String) -> THEME:
 	if NAME_TO_THEME_DICT.has(theme_name):
 		return NAME_TO_THEME_DICT[theme_name]
 		
-	var snake_cased_name = theme_name.to_snake_case()
+	var snake_cased_name : String = theme_name.to_snake_case()
 	
 	if NAME_TO_THEME_DICT.has(snake_cased_name):
 		return NAME_TO_THEME_DICT[snake_cased_name]
@@ -183,14 +183,14 @@ func get_theme_texture(theme: THEME) -> Texture2D:
 			random_gradient.make_random()
 			loaded_themes[theme] = random_gradient.generate_gradient_texture_2d()
 		_:
-			var theme_name = get_theme_name_from_enum(theme)
+			var theme_name : String = get_theme_name_from_enum(theme)
 			theme_name = theme_name.to_snake_case()
 			loaded_themes[theme] = load(str("res://DicePNGs/Gradients/", theme_name, ".png"))
 			
 	return loaded_themes[theme]
 
 func get_die_image(imageID : int) -> String:
-	var die_name = 'unknown-die'
+	var die_name : String = 'unknown-die'
 	
 	match(imageID):
 		DIE_FATE: die_name = "fate"

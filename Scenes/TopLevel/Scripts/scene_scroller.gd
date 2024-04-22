@@ -8,7 +8,7 @@ var tween_duration : float = 0.5
 @onready var scroll_snap_timer : Timer = $ScrollSnapTimer
 @onready var scene_container : HBoxContainer = $SceneContainer
 
-func _ready():
+func _ready() -> void:
 	h_scroll_bar.rounded = true
 	h_scroll_bar.value_changed.connect(value_changed_helper)
 	scroll_snap_timer.timeout.connect(snap_scroll_to_scene)
@@ -19,33 +19,33 @@ func _ready():
 	
 	reconfigure()
 
-func reconfigure():
-	var scene_size = SettingsManager.get_window_size().x
+func reconfigure() -> void:
+	var scene_size : float = SettingsManager.get_window_size().x
 	h_scroll_bar.max_value = scene_size * SettingsManager.get_num_scrollable_scenes()
 	h_scroll_bar.page = scene_size
 	
-func _on_scroll_ended():
+func _on_scroll_ended() -> void:
 	call_deferred("snap_scroll_to_scene")
 	
-func value_changed_helper(value: float):
+func value_changed_helper(value: float) -> void:
 	scroll_snap_timer.start(timer_duration)
 	SettingsManager.set_scene_scroll_value(int(value))
 	
-func animate_to_scene(scene: SettingsManager.SCENE):
+func animate_to_scene(scene: SettingsManager.SCENE) -> void:
 	scroll_to_scene(scene, tween_duration)
 	
-func scroll_to_scene(page: int, duration: float):
-	var tween = get_tree().create_tween()
+func scroll_to_scene(page: int, duration: float) -> void:
+	var tween : Tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(h_scroll_bar, "value", page * SettingsManager.get_window_size().x, duration)
 	
-func snap_scroll_to_scene():
+func snap_scroll_to_scene() -> void:
 	scroll_snap_timer.stop()
-	var current_position = int(h_scroll_bar.value)
-	var step_size = int(SettingsManager.get_window_size().x)
-	var step_remainer = current_position % step_size
-	var destination_position = 0
-	var move_distance = 0
+	var current_position : int = int(h_scroll_bar.value)
+	var step_size : int = int(SettingsManager.get_window_size().x)
+	var step_remainer : int = current_position % step_size
+	var destination_position : int = 0
+	var move_distance : int = 0
 	
 	if(step_remainer >= int(step_size/2.0)):
 		move_distance = step_size - step_remainer
@@ -54,9 +54,9 @@ func snap_scroll_to_scene():
 		move_distance = step_remainer
 		destination_position = current_position - move_distance
 		
-	var duration_modifier = float(move_distance) / float(step_size/2.0)
+	var duration_modifier : float = float(move_distance) / float(step_size/2.0)
 		
-	var tween = get_tree().create_tween()
+	var tween : Tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(h_scroll_bar, "value", destination_position, tween_duration * duration_modifier)
 

@@ -24,13 +24,13 @@ func color_string(text: String, color: String) -> String:
 	return str("[color=", color, "]", text, "[/color]")
 	
 func produce_list_text(list: Array) -> String:
-	var list_text = ""
-	var first = true
-	for result in list:
+	var list_text : String = ""
+	var first : bool = true
+	for result : DieResult in list:
 		if(not first):
 			list_text += ", "
 		first = false
-		var result_value_string = str(result.value())
+		var result_value_string : String = str(result.value())
 		if(result.is_maximum()):
 			list_text += color_string(result_value_string, "GREEN")
 		elif(result.is_minimum()):

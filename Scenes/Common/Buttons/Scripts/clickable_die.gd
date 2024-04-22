@@ -12,11 +12,11 @@ var tween : Tween
 signal die_pressed(die: AbstractDie)
 signal die_long_pressed(die: AbstractDie)
 
-func _ready():
+func _ready() -> void:
 	SettingsManager.dice_size_changed.connect(reconfigure)
 
 # Initializer that takes a die and connects to the SettingsManager
-func configure(die : AbstractDie):
+func configure(die : AbstractDie) -> void:
 	m_die = die
 	die_name.set_text_and_resize_y(str("[center]", m_die.name(), "[/center]"))
 	die_image.configure_image(m_die.texture())
@@ -24,17 +24,17 @@ func configure(die : AbstractDie):
 	
 # Reconfigures the scene according to the settings
 func reconfigure() -> void:
-	var dice_size = SettingsManager.get_dice_size()
+	var dice_size : int = SettingsManager.get_dice_size()
 	
-	var size_x = max(dice_size, die_name.get_content_width())
-	var size_y = dice_size + die_name.custom_minimum_size.y
-	var full_button_size = Vector2(size_x, size_y)
+	var size_x : int = max(dice_size, die_name.get_content_width())
+	var size_y : int = dice_size + int(die_name.custom_minimum_size.y)
+	var full_button_size : Vector2 = Vector2(size_x, size_y)
 	
 	# You need to change both of these values to make the flow container work
 	custom_minimum_size = full_button_size
 	size = full_button_size
 	
-	var start_position = Vector2(randi_range(-dice_size, dice_size), randi_range(-dice_size, dice_size))
+	var start_position : Vector2 = Vector2(randi_range(-dice_size, dice_size), randi_range(-dice_size, dice_size))
 	
 	if(tween):
 		tween.kill()
@@ -43,9 +43,9 @@ func reconfigure() -> void:
 	tween.tween_property(die_image, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY).from(Vector2.ZERO)
 	tween.tween_property(die_image, 'rotation_degrees', 0, SettingsManager.LONG_PRESS_DELAY).from(-360)
 
-func _on_long_press_button_short_pressed():
+func _on_long_press_button_short_pressed() -> void:
 	print(str(m_die.name(), " pressed"))
 	emit_signal("die_pressed", m_die)
 
-func _on_long_press_button_long_pressed():
+func _on_long_press_button_long_pressed() -> void:
 	emit_signal("die_long_pressed", m_die)

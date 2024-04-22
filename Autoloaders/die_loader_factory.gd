@@ -6,8 +6,8 @@ func load_from_array_of_save_dict(array_of_dice_save_dicts: Array) -> Array[Abst
 	var loaded_dice: Array[AbstractDie] = []
 	
 	# Go through all of the save dicts and try loading them
-	for save_dict in array_of_dice_save_dicts:
-		var new_die = load_from_save_dict(save_dict)
+	for save_dict : Dictionary in array_of_dice_save_dicts:
+		var new_die : AbstractDie = load_from_save_dict(save_dict)
 		
 		# If a die was actually created, add it.
 		if new_die != null:

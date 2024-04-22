@@ -7,17 +7,17 @@ class_name AcceptCancelButtons
 signal accept_pressed()
 signal cancel_pressed()
 
-func _on_cancel_button_pressed():
+func _on_cancel_button_pressed() -> void:
 	emit_signal("cancel_pressed")
 
-func _on_accept_button_pressed():
+func _on_accept_button_pressed() -> void:
 	emit_signal("accept_pressed")
 	
 func can_accept() -> bool:
 	return accept_button.disabled == false
 
-func disable_accept():
+func disable_accept() -> void:
 	accept_button.disabled = true
 	
-func enable_accept():
+func enable_accept() -> void:
 	accept_button.disabled = false

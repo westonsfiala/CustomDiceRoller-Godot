@@ -8,13 +8,13 @@ class_name EnableAnimationsSetting
 const ANIMATIONS_LABEL_TEXT : String = "Animations - "
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	super()
 	SettingsManager.animations_enabled_changed.connect(reconfigure_buttons)
 	reconfigure_buttons()
 	
 # Make sure the buttons are nice and visible.
-func reconfigure_buttons():
+func reconfigure_buttons() -> void:
 	if SettingsManager.get_animations_enabled():
 		enable_button.button_pressed = true
 		disable_button.button_pressed = false
@@ -26,7 +26,7 @@ func reconfigure_buttons():
 	set_title()
 	
 func inner_get_title() -> String:
-	var animations_enabled_string = "Disabled"
+	var animations_enabled_string : String = "Disabled"
 	if SettingsManager.get_animations_enabled():
 		animations_enabled_string = "Enabled"
 	return str(ANIMATIONS_LABEL_TEXT, animations_enabled_string)
@@ -40,16 +40,16 @@ func inner_should_show_reset_button() -> bool:
 	return SettingsManager.get_animations_enabled() != SettingsManager.ANIMATIONS_ENABLED_DEFAULT
 
 # Method for inherited class to respond to reset being pressed
-func inner_reset_button_pressed():
+func inner_reset_button_pressed() -> void:
 	SettingsManager.set_animations_enabled(SettingsManager.ANIMATIONS_ENABLED_DEFAULT)
 	emit_signal("setting_changed")
 
 # Set the animations enabled to true.
-func _on_enable_button_pressed():
+func _on_enable_button_pressed() -> void:
 	SettingsManager.set_animations_enabled(true)
 	emit_signal("setting_changed")
 
 # Set the animations enabled to false.
-func _on_disable_button_pressed():
+func _on_disable_button_pressed() -> void:
 	SettingsManager.set_animations_enabled(false)
 	emit_signal("setting_changed")

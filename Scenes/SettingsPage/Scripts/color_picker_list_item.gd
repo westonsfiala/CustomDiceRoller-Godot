@@ -12,8 +12,8 @@ signal down_pressed(index: int)
 signal remove_pressed(index: int)
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	var picker = color_picker_button.get_picker()
+func _ready() -> void:
+	var picker : ColorPicker = color_picker_button.get_picker()
 	picker.picker_shape = ColorPicker.SHAPE_NONE
 	picker.can_add_swatches = false
 	picker.sampler_visible = false
@@ -23,35 +23,35 @@ func _ready():
 	reconfigure()
 	
 # Change the size of the picker when the window size changes.
-func reconfigure():
-	var picker = color_picker_button.get_picker()
+func reconfigure() -> void:
+	var picker : ColorPicker = color_picker_button.get_picker()
 	picker.custom_minimum_size.x = SettingsManager.get_window_size().x/2
 
 # Set the color without a signal.
-func set_color(new_color: Color):
+func set_color(new_color: Color) -> void:
 	color_picker_button.color = new_color
 	
 # Set the index to the new index.
-func set_index(new_index: int):
+func set_index(new_index: int) -> void:
 	index = new_index
 
 # Send that this list item should be moved up.
-func _on_up_button_pressed():
+func _on_up_button_pressed() -> void:
 	emit_signal("up_pressed", index)
 
 # Send that this list item should be moved down.
-func _on_down_button_pressed():
+func _on_down_button_pressed() -> void:
 	emit_signal("down_pressed", index)
 	
 # Send that this list item should be removed.
-func _on_remove_button_pressed():
+func _on_remove_button_pressed() -> void:
 	emit_signal("remove_pressed", index)
 
 # Send that we have a new color to use.
-func _on_color_picker_button_color_changed(new_color: Color):
+func _on_color_picker_button_color_changed(new_color: Color) -> void:
 	set_color(new_color)
 	emit_signal("color_changed", index, new_color)
 
 # When the popups close it seems to do odd stuff with scrolling, a fake unpress makes it better.
-func _on_color_picker_button_popup_closed():
+func _on_color_picker_button_popup_closed() -> void:
 	SettingsManager.fake_mouse_unpress()

@@ -151,13 +151,13 @@ var known_colors : Dictionary = Dictionary({
 })
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	super()
 	SettingsManager.dice_tint_color_changed.connect(reconfigure_sliders)
 	reconfigure_sliders()
 	
 # Grabs the offical value from the settings manager and sets the size
-func reconfigure_sliders():
+func reconfigure_sliders() -> void:
 	var new_color: Color = SettingsManager.get_dice_tint_color()
 	color_picker.color = new_color
 	set_title()
@@ -169,9 +169,9 @@ func get_closest_known_color(given_color: Color) -> Color:
 	var closest_color: Color = Color.ALICE_BLUE
 	var closest_distance: float = INF
 	
-	for known_color in known_colors.keys():
-		var possible_color_vec = Vector3(known_color.r, known_color.g, known_color.b)
-		var possible_distance = given_color_vec.distance_to(possible_color_vec)
+	for known_color : Color in known_colors.keys():
+		var possible_color_vec : Vector3 = Vector3(known_color.r, known_color.g, known_color.b)
+		var possible_distance : float = given_color_vec.distance_to(possible_color_vec)
 		if possible_distance < closest_distance:
 			closest_color = known_color
 			closest_distance = possible_distance
@@ -179,11 +179,11 @@ func get_closest_known_color(given_color: Color) -> Color:
 	return closest_color
 	
 func inner_get_title() -> String:
-	var current_color = SettingsManager.get_dice_tint_color()
-	var closest_color = get_closest_known_color(current_color)
-	var closest_color_name = known_colors[closest_color]
-	var alpha_percent_string = StringHelper.decimal_to_string(current_color.a * 100, 0)
-	var possible_squigle = ""
+	var current_color : Color = SettingsManager.get_dice_tint_color()
+	var closest_color : Color = get_closest_known_color(current_color)
+	var closest_color_name : String = known_colors[closest_color]
+	var alpha_percent_string : String = StringHelper.decimal_to_string(current_color.a * 100, 0)
+	var possible_squigle : String = ""
 	# If we aren't really close to that color put the squigle in.
 	if Vector3(current_color.r, current_color.g, current_color.b).distance_to(Vector3(closest_color.r, closest_color.g, closest_color.b)) > 0.05:
 		possible_squigle = "~"
@@ -198,9 +198,9 @@ func inner_should_show_reset_button() -> bool:
 	return SettingsManager.get_dice_tint_color() != SettingsManager.DICE_TINT_COLOR_DEFAULT
 
 # Method for inherited class to respond to reset being pressed
-func inner_reset_button_pressed():
+func inner_reset_button_pressed() -> void:
 	SettingsManager.set_dice_tint_color(SettingsManager.DICE_TINT_COLOR_DEFAULT)
 
-func _on_color_picker_color_changed(color):
+func _on_color_picker_color_changed(color : Color) -> void:
 	SettingsManager.set_dice_tint_color(color)
 	emit_signal("setting_changed")

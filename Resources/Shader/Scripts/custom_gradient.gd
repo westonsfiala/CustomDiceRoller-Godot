@@ -32,7 +32,7 @@ enum REPEAT_TYPE {NO_REPEAT, REPEAT, MIRROR_REPEAT}
 func generate_gradient_texture_2d() -> GradientTexture2D:
 	
 	# Create the inner gradient for the texture.
-	var inner_gradient = Gradient.new()
+	var inner_gradient : Gradient = Gradient.new()
 	
 	# Make sure we have at least 1 color.
 	var gradient_colors: PackedColorArray = colors
@@ -43,7 +43,7 @@ func generate_gradient_texture_2d() -> GradientTexture2D:
 	inner_gradient.colors = gradient_colors
 	
 	# Used for generating the offsets
-	var divisor = 1.0
+	var divisor : float = 1.0
 	
 	# Set the interpolation.
 	match blend_type:
@@ -65,14 +65,14 @@ func generate_gradient_texture_2d() -> GradientTexture2D:
 	# Example: 3 colors are in an array
 	# Linear offsets = [0,.5,1]
 	# Constant offsets = [0,.33, .66]
-	for i in range(0, gradient_colors.size()):
-		var new_offset = float(i)/divisor
+	for i : int in range(0, gradient_colors.size()):
+		var new_offset : float = float(i)/divisor
 		gradient_offsets.append(new_offset)
 		
 	inner_gradient.offsets = gradient_offsets
 	
 	# With the new gradient, make the texture.
-	var new_texture = GradientTexture2D.new()
+	var new_texture : GradientTexture2D = GradientTexture2D.new()
 	new_texture.gradient = inner_gradient
 	# 512 is good enough for most applications
 	new_texture.width = 512
@@ -107,10 +107,10 @@ func generate_gradient_texture_2d() -> GradientTexture2D:
 			fill_from = Vector2(0.5,0.5)
 	
 	# Make the direction vector to help with repeats.
-	var fill_direction_vector = fill_to - fill_from
+	var fill_direction_vector : Vector2 = fill_to - fill_from
 	
 	# Sanity check for making sure we don't increase vector size.
-	var repeats = repeat_num
+	var repeats : float = repeat_num
 	if(repeats < 1.0):
 		repeats = 1.0
 	
@@ -133,13 +133,13 @@ func generate_gradient_texture_2d() -> GradientTexture2D:
 	return new_texture
 	
 # Randomize the exports of the gradient.
-func make_random():
-	var num_colors = randi_range(2,6)
+func make_random() -> void:
+	var num_colors : int = randi_range(2,6)
 	colors = []
-	for i in range(num_colors):
-		var red = randf_range(0,1)
-		var green = randf_range(0,1)
-		var blue = randf_range(0,1)
+	for i : int in range(num_colors):
+		var red : float = randf_range(0,1)
+		var green : float = randf_range(0,1)
+		var blue : float = randf_range(0,1)
 		colors.append(Color(red, green, blue))
 
 	# Enums are always starting from 0 so this works.

@@ -6,18 +6,18 @@ func get_modifier_string(value: int, hide_zero: bool) -> String:
 	if(hide_zero and value == 0):
 		return ''
 		
-	var prefix = ''
+	var prefix : String = ''
 	if(value >= 0):
 		prefix = '+'
 		
 	return str(prefix, value)
 
-func wrap_in_parens(wrapper) -> String:
+func wrap_in_parens(wrapper : String) -> String:
 	return str('(', wrapper, ')')
 
 func decimal_to_string(decimal_number: float, decimal_places: int) -> String:
-	var number_string = str(decimal_number)
-	var number_split = number_string.split('.')
+	var number_string : String = str(decimal_number)
+	var number_split : PackedStringArray = number_string.split('.')
 	
 	if(number_split.size() != 2 or number_split[1].length() < decimal_places):
 		return number_string
@@ -30,7 +30,7 @@ func decimal_to_string(decimal_number: float, decimal_places: int) -> String:
 	
 # Strips out [left][/left][center][/center][right][/right] from the provided string.
 func strip_directional_bbcode(bbcode: String) -> String:
-	var stripped_text = bbcode
+	var stripped_text : String = bbcode
 	stripped_text = stripped_text.replace("[left]", "")
 	stripped_text = stripped_text.replace("[/left]", "")
 	stripped_text = stripped_text.replace("[center]", "")

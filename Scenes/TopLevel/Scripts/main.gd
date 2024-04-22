@@ -10,7 +10,7 @@ var animated_roller: DiceRoller = null
 var full_screen_results: FullScreenResult = null
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	get_tree().get_root().size_changed.connect(start_resize_timer)
 	resize_timer.timeout.connect(SettingsManager.trigger_window_size_change)
 	SettingsManager.button_size_changed.connect(reconfigure)
@@ -18,7 +18,7 @@ func _ready():
 	RollManager.new_roll_result.connect(process_new_roll)
 	reconfigure()
 
-func reconfigure():
+func reconfigure() -> void:
 	press_response_image.size = Vector2.ONE * SettingsManager.get_button_size()
 	press_response_image.pivot_offset = press_response_image.size / 2
 	
@@ -28,15 +28,15 @@ func start_resize_timer() -> void:
 # Special method used to trigger a mouse unpress event.
 # The game state can get weird when you do popups and it can get
 # locked in a state of thinking its pressed.
-func fake_unpress():
+func fake_unpress() -> void:
 	if(Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
-		var unpress_event = InputEventMouseButton.new()
+		var unpress_event : InputEventMouseButton = InputEventMouseButton.new()
 		unpress_event.position = get_global_mouse_position()
 		unpress_event.button_index = MOUSE_BUTTON_LEFT
 		unpress_event.pressed = false
 		get_viewport().push_input(unpress_event)
 
-func _on_gui_input(event):
+func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if(event.is_pressed()):
@@ -45,11 +45,11 @@ func _on_gui_input(event):
 				respond_to_unpress()
 	if event is InputEventMouseMotion or event is InputEventScreenDrag:
 		if last_click_position:
-			var move_length = (last_click_position - get_global_mouse_position()).length()
+			var move_length : float = (last_click_position - get_global_mouse_position()).length()
 			if move_length > 5:
 				respond_to_unpress()
 			
-func respond_to_press():
+func respond_to_press() -> void:
 	if tween:
 		tween.kill() 
 	last_click_position = get_global_mouse_position()
@@ -72,24 +72,24 @@ func respond_to_unpress() -> void:
 	tween.tween_property(press_response_image, "visible", false, 0)
 	last_click_position = Vector2.ZERO
 	
-func process_new_roll(roll_results: RollResults):
+func process_new_roll(roll_results: RollResults) -> void:
 	if SettingsManager.animations_enabled:
 		create_animated_roller(roll_results)
 	else:
 		create_roll_results_screen(roll_results)
 	
-func create_animated_roller(roll_results: RollResults):
+func create_animated_roller(roll_results: RollResults) -> void:
 	animated_roller = preload("res://Scenes/DiceRoller/dice_roller.tscn").instantiate()
 	animated_roller.configure(roll_results)
 	animated_roller.finished_animated_roll.connect(create_roll_results_screen)
 	add_child(animated_roller)
 	
-func destroy_animated_roller():
+func destroy_animated_roller() -> void:
 	if animated_roller:
 		animated_roller.queue_free()
 		animated_roller = null
 	
-func create_roll_results_screen(roll_results: RollResults):
+func create_roll_results_screen(roll_results: RollResults) -> void:
 	destroy_animated_roller()
 	full_screen_results = preload("res://Scenes/DiceRoller/full_screen_result.tscn").instantiate()
 	full_screen_results.configure(roll_results)
@@ -97,11 +97,11 @@ func create_roll_results_screen(roll_results: RollResults):
 	full_screen_results.reroll.connect(reroll_from_roll_results_screen)
 	add_child(full_screen_results)
 	
-func reroll_from_roll_results_screen(roll_results: RollResults):
+func reroll_from_roll_results_screen(roll_results: RollResults) -> void:
 	destroy_roll_results_screen()
 	RollManager.reroll_from_results(roll_results)
 	
-func destroy_roll_results_screen():
+func destroy_roll_results_screen() -> void:
 	if full_screen_results:
 		full_screen_results.queue_free()
 		full_screen_results = null

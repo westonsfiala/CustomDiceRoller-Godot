@@ -92,7 +92,7 @@ func get_advantage_disadvantage_string() -> String:
 	return ''
 func has_advantage_disadvantage() -> bool:
 	return has_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER)
-func set_advantage_disadvantage(advantage_disadvantage_state: AdvantageDisadvantageState):
+func set_advantage_disadvantage(advantage_disadvantage_state: AdvantageDisadvantageState) -> void:
 	add_property(ADVANTAGE_DISADVANTAGE_IDENTIFIER, advantage_disadvantage_state)
 func toggle_advantage() -> void:
 	if(is_advantage()):
@@ -124,7 +124,7 @@ func get_double_halve_string() -> String:
 	return ''
 func has_double_halve() -> bool:
 	return has_property(DOUBLE_HALVE_IDENTIFIER)
-func set_double_halve(doube_halve_state: DoubleHalveState):
+func set_double_halve(doube_halve_state: DoubleHalveState) -> void:
 	add_property(DOUBLE_HALVE_IDENTIFIER, doube_halve_state)
 func toggle_double() -> void:
 	if(is_double()):
@@ -336,7 +336,7 @@ const PROPERTY_DEFAULT_MAP : Dictionary = {
 # Maintains existing properties, unless overwritten.
 # Returns the modified self.
 func configure(props : Dictionary) -> RollProperties:
-	for prop in props:
+	for prop : String in props:
 		add_property(prop, props[prop])
 	return self
 
@@ -376,7 +376,7 @@ static func load_from_save_dict(save_state: Dictionary) -> RollProperties:
 		return RollProperties.new()
 	
 	# Load the propterties, set them and get out.
-	var loaded_properties = RollProperties.new()
+	var loaded_properties : RollProperties = RollProperties.new()
 	loaded_properties.m_property_map = save_state['properties']
 	return loaded_properties
 
@@ -386,14 +386,14 @@ func check_key_value_correctness(prop_name: StringName, value: Variant) -> bool:
 
 # Check if all of the properties are default values.
 func is_default() -> bool:
-	for prop in PROPERTY_DEFAULT_MAP:
+	for prop : String in PROPERTY_DEFAULT_MAP:
 		if(not property_equals_default(prop)):
 			return false
 	return true
 	
 func get_num_non_default() -> int:
-	var num_non_default = 0
-	for prop in PROPERTY_DEFAULT_MAP:
+	var num_non_default : int = 0
+	for prop : String in PROPERTY_DEFAULT_MAP:
 		if(not property_equals_default(prop)):
 			num_non_default += 1
 	return num_non_default

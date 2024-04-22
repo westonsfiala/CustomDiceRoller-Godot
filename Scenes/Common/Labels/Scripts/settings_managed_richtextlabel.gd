@@ -15,15 +15,15 @@ class_name SettingsManagedRichTextLabel
 # Save the set text so that we can apply scroll correctly.
 var last_user_set_text : String = ""
 
-func _ready():
+func _ready() -> void:
 	SettingsManager.window_size_changed.connect(reconfigure)
 	resized.connect(reconfigure)
 	last_user_set_text = text
 	call_deferred("reconfigure")
 	
 # Reconfigures the scene according to the settings
-func reconfigure():
-	var display_lines = 1
+func reconfigure() -> void:
+	var display_lines : int = 1
 	
 	if(max_lines_shown > display_lines):
 		display_lines = min(get_line_count(), max_lines_shown)
@@ -33,25 +33,22 @@ func reconfigure():
 		display_lines = get_line_count()
 		autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
-	var font_size = get_theme_font_size("normal_font_size", theme_type_variation)
-	var needed_pixel_height = get_theme_default_font().get_height(font_size) * display_lines
+	var font_size : int = get_theme_font_size("normal_font_size", theme_type_variation)
+	var needed_pixel_height : int = int(get_theme_default_font().get_height(font_size) * display_lines)
 	custom_minimum_size.y = needed_pixel_height
 	
 	# When we need to, scroll the text
 	if(scroll_clipped_text and not enforce_all_lines_shown):
-		var content_width = get_content_width()
+		var content_width : int = get_content_width()
 		# Need to set and unset the scroll.
 		if(content_width > size.x):
-			var scroll_length = content_width - size.x
-			var stipped_text = StringHelper.strip_directional_bbcode(last_user_set_text)
+			var scroll_length : float = content_width - size.x
+			var stipped_text : String = StringHelper.strip_directional_bbcode(last_user_set_text)
 			text = str("[scroll length=",scroll_length,"]",stipped_text,"[/scroll]")
 		else:
 			text = last_user_set_text
 
 func set_text_and_resize_y(bbcode: String) -> void:
 	text = bbcode
-	var _test1 = get_line_count()
-	var _width = get_content_width()
-	var _height = get_content_height()
 	last_user_set_text = bbcode
 	reconfigure()

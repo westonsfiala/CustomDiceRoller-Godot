@@ -25,12 +25,12 @@ var m_min_max_die : MinMaxDie = SimpleRollManager.default_min_max_die
 signal die_accepted(original_die: MinMaxDie, accepted_die: MinMaxDie)
 signal die_removed(removed_die: MinMaxDie)
 
-func _ready():
+func _ready() -> void:
 	die_info_label.resized.connect(deferred_helper)
 	super()
 
-func _inner_set_size():
-	var content_height = 0
+func _inner_set_size() -> void:
+	var content_height : float = 0
 	
 	# Need to give them a bogus value so they resets to a correct size.
 	name_margins.size.y = 0
@@ -54,7 +54,7 @@ func _inner_set_size():
 	enforce_content_panel_in_screen(size/2, true)
 
 # Set the y size the heights of all the margins.
-func set_content_panel_minimum_size():
+func set_content_panel_minimum_size() -> void:
 	_inner_set_size()
 	# Have the max grab the focus, but don't change size from default.
 	max_line_edit.grab_focus()
@@ -62,22 +62,22 @@ func set_content_panel_minimum_size():
 
 # Sets the visibility of the remove button.
 # When you are first creating a die, remove doesn't make sense.
-func set_remove_button_visibility(show_hide: bool):
+func set_remove_button_visibility(show_hide: bool) -> void:
 	remove_confirm_button.visible = show_hide
 
 # Function pair to help make resizing the dialog work.
 # If you don't have this and the method it calls, the dialog won't respect size changes
 # to the die info label.
-func deferred_helper():
+func deferred_helper() -> void:
 	call_deferred("helper")
 	
-func helper():
+func helper() -> void:
 	die_info_label.reconfigure()
 	_inner_set_size()
 
 # Set the dice to the given die, update text lines, and highlight issues.
 # if first_set is true, will forcefully update the text lines.
-func set_min_max_die(die: MinMaxDie, first_set : bool = true):
+func set_min_max_die(die: MinMaxDie, first_set : bool = true) -> void:
 	if(first_set):
 		first_set_die = die.duplicate()
 	
@@ -99,11 +99,11 @@ func set_min_max_die(die: MinMaxDie, first_set : bool = true):
 	_inner_set_size()
 
 # Any time a line edit is changed, update text highlighting and enable/disable the accept button
-func _line_edit_text_changed(_new_text: String):
-	var update_die = true
+func _line_edit_text_changed(_new_text: String) -> void:
+	var update_die : bool = true
 	
-	var die_name = name_line_edit.text
-	var die_min_value = min_line_edit.text
+	var die_name : String = name_line_edit.text
+	var die_min_value : String = min_line_edit.text
 	if(die_min_value.is_valid_int()):
 		if(min_line_edit.has_theme_color_override("font_color")):
 			min_line_edit.remove_theme_color_override("font_color")
@@ -111,7 +111,7 @@ func _line_edit_text_changed(_new_text: String):
 		update_die = false
 		min_line_edit.add_theme_color_override("font_color", Color.RED)
 		
-	var die_max_value = max_line_edit.text
+	var die_max_value : String = max_line_edit.text
 	if(die_max_value.is_valid_int()):
 		if(max_line_edit.has_theme_color_override("font_color")):
 			max_line_edit.remove_theme_color_override("font_color")
@@ -127,19 +127,19 @@ func _line_edit_text_changed(_new_text: String):
 		accept_cancel_buttons.disable_accept()
 
 # If someone hits enter, try to click the accept button.
-func _line_edit_text_submitted(_new_text: String):
+func _line_edit_text_submitted(_new_text: String) -> void:
 	_on_accept_cancel_buttons_accept_pressed()
 
 # They canceled, close it up.
-func _on_accept_cancel_buttons_cancel_pressed():
+func _on_accept_cancel_buttons_cancel_pressed() -> void:
 	animate_close_popup()
 
 # If we are in a good state to accept, let it accept and close. Otherwise nothing.
-func _on_accept_cancel_buttons_accept_pressed():
+func _on_accept_cancel_buttons_accept_pressed() -> void:
 	if(accept_cancel_buttons.can_accept()):
 		emit_signal("die_accepted", first_set_die.duplicate(), m_min_max_die.duplicate())
 		animate_close_popup()
 
-func _on_remove_confirm_button_remove_confirmed():
+func _on_remove_confirm_button_remove_confirmed() -> void:
 	emit_signal("die_removed", m_min_max_die.duplicate())
 	animate_close_popup()

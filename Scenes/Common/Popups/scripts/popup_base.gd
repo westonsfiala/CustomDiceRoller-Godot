@@ -7,32 +7,32 @@ class_name PopupBase
 
 var tween : Tween
 
-func _ready():
+func _ready() -> void:
 	SettingsManager.window_size_changed.connect(reconfigure)
 	reconfigure()
 
 # Reconfigures the scene according to the settings
-func reconfigure():
+func reconfigure() -> void:
 	hide()
 	
-func modular_popup(display_position: Vector2i):
+func modular_popup(display_position: Vector2i) -> void:
 	size = SettingsManager.get_window_size()
 	set_content_panel_minimum_size()
 	enforce_content_panel_in_screen(display_position, false)
 	popup(Rect2i(Vector2.ZERO, size))
 
-func modular_popup_center():
+func modular_popup_center() -> void:
 	size = SettingsManager.get_window_size()
 	set_content_panel_minimum_size()
 	enforce_content_panel_in_screen(size/2, true)
 	popup(Rect2i(Vector2.ZERO, size))
 	
-func set_content_panel_minimum_size():
+func set_content_panel_minimum_size() -> void:
 	assert(false, "This must be set by consumers of PopupBase")
 	
-func enforce_content_panel_in_screen(content_position: Vector2i, center_contents: bool):
-	var valid_rect = Rect2i(Vector2i.ZERO, SettingsManager.get_window_size())
-	var content_rect = Rect2i(content_position, content_panel.custom_minimum_size)
+func enforce_content_panel_in_screen(content_position: Vector2i, center_contents: bool) -> void:
+	var valid_rect : Rect2i = Rect2i(Vector2i.ZERO, SettingsManager.get_window_size())
+	var content_rect : Rect2i = Rect2i(content_position, content_panel.custom_minimum_size)
 	
 	if(center_contents):
 		content_rect.position -= content_rect.size / 2
@@ -59,14 +59,14 @@ func enforce_content_panel_in_screen(content_position: Vector2i, center_contents
 	content_panel.size = content_rect.size
 	content_panel.pivot_offset = content_rect.size / 2
 
-func _on_about_to_popup():
+func _on_about_to_popup() -> void:
 	SettingsManager.fake_mouse_unpress()
 	animate_popup()
 
-func _on_hide_popup_button_pressed():
+func _on_hide_popup_button_pressed() -> void:
 	animate_close_popup()
 	
-func animate_popup():
+func animate_popup() -> void:
 	if(tween):
 		tween.kill()
 	content_panel.scale = Vector2.ZERO
@@ -75,7 +75,7 @@ func animate_popup():
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(content_panel, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY)
 	
-func animate_close_popup():
+func animate_close_popup() -> void:
 	if(tween):
 		tween.kill()
 	visible = true

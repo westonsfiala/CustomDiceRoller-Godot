@@ -22,13 +22,13 @@ var m_imbalanced_die : ImbalancedDie = SimpleRollManager.default_imbalanced_die
 signal die_accepted(original_die: ImbalancedDie, accepted_die: ImbalancedDie)
 signal die_removed(removed_die: ImbalancedDie)
 
-func _ready():
+func _ready() -> void:
 	die_info_label.resized.connect(deferred_helper)
 	super()
 
 # Sets the minimum size to display all content
-func _inner_set_size():
-	var content_height = 0
+func _inner_set_size() -> void:
+	var content_height : float = 0
 	
 	# If you don't set their size, the margins report incorrect numbers.
 	name_margins.size.y = 0
@@ -51,7 +51,7 @@ func _inner_set_size():
 	enforce_content_panel_in_screen(size/2, true)
 	
 # Set the y size the heights of all the margins.
-func set_content_panel_minimum_size():
+func set_content_panel_minimum_size() -> void:
 	_inner_set_size()
 	# Have the max grab the focus, but don't change size from default.
 	faces_line_edit.grab_focus()
@@ -59,22 +59,22 @@ func set_content_panel_minimum_size():
 
 # Sets the visibility of the remove button.
 # When you are first creating a die, remove doesn't make sense.
-func set_remove_button_visibility(show_hide: bool):
+func set_remove_button_visibility(show_hide: bool) -> void:
 	remove_confirm_button.visible = show_hide
 
 # Function pair to help make resizing the dialog work.
 # If you don't have this and the method it calls, the dialog won't respect size changes
 # to the die info label.
-func deferred_helper():
+func deferred_helper() -> void:
 	call_deferred("helper")
 	
-func helper():
+func helper() -> void:
 	die_info_label.reconfigure()
 	_inner_set_size()
 
 # Set the dice to the given die, update text lines, and highlight issues.
 # if first_set is true, will forcefully update the text lines.
-func set_imbalanced_die(die: ImbalancedDie, first_set : bool = true):
+func set_imbalanced_die(die: ImbalancedDie, first_set : bool = true) -> void:
 	if(first_set):
 		first_set_die = die.duplicate()
 	
@@ -84,7 +84,7 @@ func set_imbalanced_die(die: ImbalancedDie, first_set : bool = true):
 	die_info_label.set_text_and_resize_y(m_imbalanced_die.info())
 	# Don't mess with text they can change if something is there.
 	if(faces_line_edit.text.is_empty() or first_set):
-		var face_text = ",".join(m_imbalanced_die.get_faces())
+		var face_text : String = ",".join(m_imbalanced_die.get_faces())
 		faces_line_edit.text = face_text
 		
 	if(first_set):
@@ -96,16 +96,16 @@ func set_imbalanced_die(die: ImbalancedDie, first_set : bool = true):
 	_inner_set_size()
 	
 # Any time a line edit is changed, update text highlighting and enable/disable the accept button
-func _line_edit_text_changed(_text: String):
-	var update_die = true
+func _line_edit_text_changed(_text: String) -> void:
+	var update_die : bool = true
 	
-	var die_name = name_line_edit.text
-	var die_faces = faces_line_edit.text
+	var die_name : String = name_line_edit.text
+	var die_faces : String = faces_line_edit.text
 	
-	var good_state = true
+	var good_state : bool = true
 	var faces_int_array: Array[int] = []
-	for face in die_faces.split(","):
-		var stripped_faces = face.strip_edges()
+	for face : String in die_faces.split(","):
+		var stripped_faces : String = face.strip_edges()
 		if stripped_faces.is_valid_int():
 			faces_int_array.push_back(stripped_faces.to_int())
 		else:
@@ -127,19 +127,19 @@ func _line_edit_text_changed(_text: String):
 		accept_cancel_buttons.disable_accept()
 
 # If someone hits enter, try to click the accept button.
-func _line_edit_text_submitted(_text: String):
+func _line_edit_text_submitted(_text: String) -> void:
 	_on_accept_cancel_buttons_accept_pressed()
 
 # They canceled, close it up.
-func _on_accept_cancel_buttons_cancel_pressed():
+func _on_accept_cancel_buttons_cancel_pressed() -> void:
 	animate_close_popup()
 
 # If we are in a good state to accept, let it accept and close. Otherwise nothing.
-func _on_accept_cancel_buttons_accept_pressed():
+func _on_accept_cancel_buttons_accept_pressed() -> void:
 	if(accept_cancel_buttons.can_accept()):
 		emit_signal("die_accepted", first_set_die.duplicate(), m_imbalanced_die.duplicate())
 		animate_close_popup()
 
-func _on_remove_confirm_button_remove_confirmed():
+func _on_remove_confirm_button_remove_confirmed() -> void:
 	emit_signal("die_removed", m_imbalanced_die.duplicate())
 	animate_close_popup()

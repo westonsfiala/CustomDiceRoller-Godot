@@ -18,7 +18,7 @@ class_name DiceRoller
 @onready var done_timeout_timer : Timer = $DoneTimeoutTimer
 
 enum shake_state {SHAKE, HOLD, DONE}
-var state = shake_state.SHAKE
+var state : shake_state = shake_state.SHAKE
 
 const tap_instruction_text : String = "Tap!"
 const shake_instruction_text : String = "Shake!"
@@ -41,11 +41,11 @@ var physics_dice_array: Array[PhysicsDice] = []
 signal finished_animated_roll(roll_results: RollResults)
 
 # Set up the roller with the roll it will be animating
-func configure(roll_results: RollResults):
+func configure(roll_results: RollResults) -> void:
 	stored_roll_results = roll_results
 	
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	# reset our state
 	set_shake_state(shake_state.SHAKE)
 	num_taps = 0
@@ -67,10 +67,10 @@ func _ready():
 	# Go through and calculate how many dice there should be.
 	var total_dice: int = 0
 	var dice_dict: Dictionary = {}
-	for prop_pair in stored_roll_results.stored_roll.m_die_prop_array:
-		var die = prop_pair.m_die
-		var properties = prop_pair.m_roll_properties
-		var num_dice = properties.get_num_dice() * properties.get_repeat_roll()
+	for prop_pair : DiePropertyPair in stored_roll_results.stored_roll.m_die_prop_array:
+		var die : AbstractDie = prop_pair.m_die
+		var properties : RollProperties = prop_pair.m_roll_properties
+		var num_dice : int = properties.get_num_dice() * properties.get_repeat_roll()
 		if properties.is_advantage() or properties.is_disadvantage():
 			num_dice *= 2
 		dice_dict[die] = num_dice
@@ -79,18 +79,18 @@ func _ready():
 	# If we have too many dice, modify it down to the correct amount.
 	if total_dice > max_allowed_dice:
 		var adjust_ratio: float = float(max_allowed_dice) / total_dice
-		for key in dice_dict.keys():
+		for key : AbstractDie in dice_dict.keys():
 			dice_dict[key] = int(dice_dict[key] * adjust_ratio)
 	
 	# Put some number of dice into the screen
-	for die in dice_dict:
-		for count in dice_dict[die]:
+	for die : AbstractDie in dice_dict:
+		for count : int in dice_dict[die]:
 			var physics_dice_node: PhysicsDice = preload("res://Scenes/DiceRoller/physics_dice.tscn").instantiate()
 			physics_dice_node.configure(die)
 			physics_dice_array.push_back(physics_dice_node)
 			add_child(physics_dice_node)
 	
-func reconfigure():
+func reconfigure() -> void:
 	var screen_size: Vector2 = SettingsManager.get_window_size()
 	var button_size: int = SettingsManager.get_button_size()
 	
@@ -98,12 +98,12 @@ func reconfigure():
 	go_to_results_button.custom_minimum_size.y = button_size
 	
 	# Do some precalculations for all the known sizes
-	var horizontal_bumper_width = screen_size.x + extra_bumper_space * 2
-	var horizontal_bumper_height = bumper_thickness
-	var vertical_bumber_width = bumper_thickness
-	var vertical_bumper_height = screen_size.y + extra_bumper_space * 2
+	var horizontal_bumper_width : float = screen_size.x + extra_bumper_space * 2
+	var horizontal_bumper_height : float = bumper_thickness
+	var vertical_bumber_width : float = bumper_thickness
+	var vertical_bumper_height : float = screen_size.y + extra_bumper_space * 2
 	
-	var half_screen_size = screen_size / 2.0
+	var half_screen_size : Vector2 = screen_size / 2.0
 	
 	# Apply the sizes and place all the bumpers
 	top_shape.shape.size = Vector2(horizontal_bumper_width, horizontal_bumper_height)
@@ -119,14 +119,14 @@ func reconfigure():
 	left_edge.position = Vector2(-half_bumper_thickness, half_screen_size.y)
 
 # While we are waiting for the taps, keep processing.
-func _process(_delta):
+func _process(_delta: float) -> void:
 	match state:
 		shake_state.SHAKE:
 			if(num_taps >= NEEDED_TAPS):
 				set_shake_state(shake_state.HOLD)
 		
 # Set the shake state and adjust the text in the middle of screen.
-func set_shake_state(new_state: shake_state):
+func set_shake_state(new_state: shake_state) -> void:
 	# Stop any timers that are still going so we don't get a timeout signal from them.
 	tap_timeout_timer.stop()
 	hold_timeout_timer.stop()
@@ -141,28 +141,28 @@ func set_shake_state(new_state: shake_state):
 		shake_state.HOLD:
 			instruction_label.text = hold_instruction_text
 			hold_timeout_timer.start(HOLD_TIMEOUT_TIME)
-			for physics_die in physics_dice_array:
+			for physics_die : PhysicsDice in physics_dice_array:
 				physics_die.linear_damp = 2
 				physics_die.angular_damp = 2
 				physics_die.gravity_scale = 0
 		shake_state.DONE:
 			instruction_label.text = done_instruction_text
 			done_timeout_timer.start(DONE_TIMEOUT_TIME)
-			for physics_die in physics_dice_array:
+			for physics_die : PhysicsDice in physics_dice_array:
 				physics_die.freeze = true
 
 # Press the button, resize the window, or finish the final timer, leave the scene.
-func go_to_results_page():
+func go_to_results_page() -> void:
 	emit_signal("finished_animated_roll", stored_roll_results)
 
 # Count the number of taps.
-func _on_background_button_pressed():
+func _on_background_button_pressed() -> void:
 	num_taps += 1
 
 # When tap timeout occurs, go to hold.
-func _on_tap_timeout_timer_timeout():
+func _on_tap_timeout_timer_timeout() -> void:
 	set_shake_state(shake_state.HOLD)
 
 # When hold timeout occurs, go to done.
-func _on_hold_timeout_timer_timeout():
+func _on_hold_timeout_timer_timeout() -> void:
 	set_shake_state(shake_state.DONE)

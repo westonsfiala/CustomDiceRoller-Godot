@@ -14,7 +14,7 @@ signal finished()
 signal reroll()
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	SettingsManager.window_size_changed.connect(reconfigure)
 	SettingsManager.button_size_changed.connect(reconfigure)
 	reconfigure()
@@ -23,7 +23,7 @@ func configure(result: RollResults) -> FullScreenResult:
 	m_result = result
 	return self
 	
-func reconfigure():
+func reconfigure() -> void:
 	var button_size: int = SettingsManager.get_button_size()
 	
 	reroll_button.custom_minimum_size.y = button_size
@@ -40,9 +40,9 @@ func reconfigure():
 	sum_label.set_text_and_resize_y(str("[center]", m_result.roll_sum.formatted_text, "[/center]"))
 	
 	# Go through all of the different lists that can be generated
-	var first = true
-	var combined_text = "[center]"
-	for result in m_result.roll_results_array:
+	var first : bool = true
+	var combined_text : String = "[center]"
+	for result : ColoredDieResults in m_result.roll_results_array:
 		if(not first):
 			combined_text += "\n"
 		first = false
@@ -52,9 +52,9 @@ func reconfigure():
 	roll_results_label.set_text_and_resize_y(combined_text)
 
 # Send out the reroll signal
-func _on_reroll_button_pressed():
+func _on_reroll_button_pressed() -> void:
 	emit_signal("reroll", m_result)
 
 # Send out the exit signal
-func _on_exit_button_pressed():
+func _on_exit_button_pressed() -> void:
 	emit_signal("finished")

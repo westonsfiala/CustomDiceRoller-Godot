@@ -28,6 +28,19 @@ SimpleRollManager="*res://Autoloaders/simple_roll_manager.gd"
 DieImageManager="*res://Autoloaders/die_image_manager.gd"
 DieLoaderFactory="*res://Autoloaders/die_loader_factory.gd"
 
+[debug]
+
+gdscript/warnings/unassigned_variable=2
+gdscript/warnings/unassigned_variable_op_assign=2
+gdscript/warnings/shadowed_variable=2
+gdscript/warnings/shadowed_variable_base_class=2
+gdscript/warnings/shadowed_global_identifier=2
+gdscript/warnings/property_used_as_function=2
+gdscript/warnings/constant_used_as_function=2
+gdscript/warnings/function_used_as_property=2
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/inferred_declaration=2
+
 [display]
 
 window/size/viewport_width=750
