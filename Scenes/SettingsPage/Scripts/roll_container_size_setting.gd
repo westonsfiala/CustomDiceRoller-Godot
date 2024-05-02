@@ -58,12 +58,17 @@ func inner_reset_button_pressed() -> void:
 	SettingsManager.set_roll_container_size(SettingsManager.ROLL_CONTAINER_SIZE_DEFAULT)
 	emit_signal("setting_changed")
 
-# Set the animations enabled to true.
-func _on_enable_button_pressed() -> void:
-	SettingsManager.set_roll_container_size(true)
+# Set to fullscreen.
+func _on_fullscreen_button_pressed() -> void:
+	SettingsManager.set_roll_container_size(SettingsManager.ROLL_CONTAINER_SIZE.FULLSCREEN)
 	emit_signal("setting_changed")
 
-# Set the animations enabled to false.
-func _on_disable_button_pressed() -> void:
-	SettingsManager.set_roll_container_size(false)
+# Set to dialog
+func _on_dialog_button_pressed() -> void:
+	SettingsManager.set_roll_container_size(SettingsManager.ROLL_CONTAINER_SIZE.DIALOG)
+	emit_signal("setting_changed")
+
+# Set to minimal
+func _on_minimal_button_pressed() -> void:
+	SettingsManager.set_roll_container_size(SettingsManager.ROLL_CONTAINER_SIZE.MINIMAL)
 	emit_signal("setting_changed")

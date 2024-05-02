@@ -56,6 +56,6 @@ text = ""
 layout_mode = 1
 text = "[center]Minimal[/center]"
 
-[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/FullscreenButton" to="." method="_on_enable_button_pressed"]
-[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/DialogButton" to="." method="_on_disable_button_pressed"]
-[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/MinimalButton" to="." method="_on_disable_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/FullscreenButton" to="." method="_on_fullscreen_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/DialogButton" to="." method="_on_dialog_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/ButtonContainer/MinimalButton" to="." method="_on_minimal_button_pressed"]
