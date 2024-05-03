@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5xbwdmgaf0pv"]
+[gd_scene load_steps=11 format=3 uid="uid://c5xbwdmgaf0pv"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_c75hh"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/settings_page.gd" id="2_t4u4y"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dd1rypon6u4ef" path="res://Scenes/Common/DiceViews/settings_managed_dice_image_grid.tscn" id="7_4dbbt"]
 [ext_resource type="PackedScene" uid="uid://dnln68o3d2rnm" path="res://Scenes/SettingsPage/enable_animations_setting.tscn" id="8_dyl61"]
 [ext_resource type="PackedScene" uid="uid://busq18c7xwsfi" path="res://Scenes/SettingsPage/shake_volume_setting.tscn" id="9_sgwpq"]
+[ext_resource type="PackedScene" uid="uid://c7rd5scy05a76" path="res://Scenes/SettingsPage/roll_container_size_setting.tscn" id="10_jw2m0"]
 
 [node name="SettingsPage" type="Control"]
 layout_mode = 3
@@ -91,4 +92,7 @@ theme_override_constants/separation = 2
 layout_mode = 2
 
 [node name="ShakeVolumeSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("9_sgwpq")]
+layout_mode = 2
+
+[node name="RollContainerSizeSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("10_jw2m0")]
 layout_mode = 2

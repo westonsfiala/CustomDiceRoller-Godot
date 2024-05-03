@@ -25,8 +25,8 @@ const shake_instruction_text : String = "Shake!"
 const hold_instruction_text : String = "Hold Still"
 const done_instruction_text : String = "Done"
 
-const extra_bumper_space : int = 150
-const bumper_thickness : int = 250
+const extra_bumper_space : int = 300
+const bumper_thickness : int = 500
 const half_bumper_thickness: int = int(bumper_thickness / 2.0)
 
 var num_taps: int = 0
@@ -52,13 +52,12 @@ func _ready() -> void:
 	physics_dice_array = []
 	
 	SettingsManager.window_size_changed.connect(go_to_results_page)
-	SettingsManager.button_size_changed.connect(reconfigure)
-	reconfigure()
+	setup_bumpers()
 	
+	var window_size : Vector2 = SettingsManager.get_window_size()
 	# If we have too many dice in the roll it isn't very fun.
 	# Only allow up to half of the screen to be filled with dice.
-	var screen_size: Vector2 = SettingsManager.get_window_size()
-	var screen_area: float = int(screen_size.x * screen_size.y)
+	var screen_area: float = int(window_size.x * window_size.y)
 	var die_size: float = SettingsManager.get_dice_size()
 	var die_area: float = die_size * die_size
 	var max_allowed_dice_float: float = screen_area / die_area / 2
@@ -89,31 +88,31 @@ func _ready() -> void:
 			physics_dice_node.configure(die)
 			physics_dice_array.push_back(physics_dice_node)
 			add_child(physics_dice_node)
-	
-func reconfigure() -> void:
-	var screen_size: Vector2 = SettingsManager.get_window_size()
+
+# Sets up all the bouncer bars 
+func setup_bumpers() -> void:
 	var button_size: int = SettingsManager.get_button_size()
 	
 	# Set the button size.
 	go_to_results_button.custom_minimum_size.y = button_size
 	
 	# Do some precalculations for all the known sizes
-	var horizontal_bumper_width : float = screen_size.x + extra_bumper_space * 2
+	var horizontal_bumper_width : float = size.x + extra_bumper_space * 2
 	var horizontal_bumper_height : float = bumper_thickness
 	var vertical_bumber_width : float = bumper_thickness
-	var vertical_bumper_height : float = screen_size.y + extra_bumper_space * 2
+	var vertical_bumper_height : float = size.y + extra_bumper_space * 2
 	
-	var half_screen_size : Vector2 = screen_size / 2.0
+	var half_screen_size : Vector2 = size / 2.0
 	
 	# Apply the sizes and place all the bumpers
 	top_shape.shape.size = Vector2(horizontal_bumper_width, horizontal_bumper_height)
 	top_edge.position = Vector2(half_screen_size.x, -half_bumper_thickness)
 	
 	right_shape.shape.size = Vector2(vertical_bumber_width, vertical_bumper_height)
-	right_edge.position = Vector2(screen_size.x + half_bumper_thickness, half_screen_size.y)
+	right_edge.position = Vector2(size.x + half_bumper_thickness, half_screen_size.y)
 	
 	bottom_shape.shape.size = Vector2(horizontal_bumper_width, horizontal_bumper_height)
-	bottom_edge.position = Vector2(half_screen_size.x, screen_size.y + half_bumper_thickness)
+	bottom_edge.position = Vector2(half_screen_size.x, size.y + half_bumper_thickness)
 	
 	left_shape.shape.size = Vector2(vertical_bumber_width, vertical_bumper_height)
 	left_edge.position = Vector2(-half_bumper_thickness, half_screen_size.y)

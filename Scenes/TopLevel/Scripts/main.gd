@@ -2,12 +2,13 @@ extends Control
 
 @onready var press_response_image : TextureRect = $PressResponseImage
 @onready var resize_timer : Timer = $ResizeTimer
+@onready var half_screen_popup : HalfScreenPopup = $HalfScreenPopup
 
 var tween : Tween
 var last_click_position : Vector2
 
-var animated_roller: DiceRoller = null
-var full_screen_results: FullScreenResult = null
+var animated_roller : DiceRoller = null
+var full_screen_results : FullScreenResult = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,6 +17,7 @@ func _ready() -> void:
 	SettingsManager.button_size_changed.connect(reconfigure)
 	SettingsManager.mouse_unpress.connect(fake_unpress)
 	RollManager.new_roll_result.connect(process_new_roll)
+	half_screen_popup.popup_hide.connect(destroy_roll_results_screen)
 	reconfigure()
 
 func reconfigure() -> void:
@@ -79,10 +81,21 @@ func process_new_roll(roll_results: RollResults) -> void:
 		create_roll_results_screen(roll_results)
 	
 func create_animated_roller(roll_results: RollResults) -> void:
+	# Prep our animated roller to go into where it should go.
 	animated_roller = preload("res://Scenes/DiceRoller/dice_roller.tscn").instantiate()
 	animated_roller.configure(roll_results)
 	animated_roller.finished_animated_roll.connect(create_roll_results_screen)
-	add_child(animated_roller)
+	
+	# Go through the roll container sizes and put our animated_roller where it should go.
+	var roll_container_size : SettingsManager.ROLL_CONTAINER_SIZE = SettingsManager.get_roll_container_size()
+	match roll_container_size:
+		SettingsManager.ROLL_CONTAINER_SIZE.FULLSCREEN:
+			add_child(animated_roller)
+		SettingsManager.ROLL_CONTAINER_SIZE.DIALOG:
+			half_screen_popup.modular_popup_center()
+			half_screen_popup.set_content(animated_roller)
+		SettingsManager.ROLL_CONTAINER_SIZE.MINIMAL:
+			print("Roll Container Size: 'Minimal' is currently not supported")
 	
 func destroy_animated_roller() -> void:
 	if animated_roller:
@@ -95,15 +108,29 @@ func create_roll_results_screen(roll_results: RollResults) -> void:
 	full_screen_results.configure(roll_results)
 	full_screen_results.finished.connect(destroy_roll_results_screen)
 	full_screen_results.reroll.connect(reroll_from_roll_results_screen)
-	add_child(full_screen_results)
+	
+	var roll_container_size : SettingsManager.ROLL_CONTAINER_SIZE = SettingsManager.get_roll_container_size()
+	match roll_container_size:
+		SettingsManager.ROLL_CONTAINER_SIZE.FULLSCREEN:
+			add_child(full_screen_results)
+		SettingsManager.ROLL_CONTAINER_SIZE.DIALOG:
+			half_screen_popup.set_content(full_screen_results)
+		SettingsManager.ROLL_CONTAINER_SIZE.MINIMAL:
+			print("Roll Container Size: 'Minimal' is currently not supported")
 	
 func reroll_from_roll_results_screen(roll_results: RollResults) -> void:
 	destroy_roll_results_screen()
 	RollManager.reroll_from_results(roll_results)
 	
+# Destroy the roll results screen.
 func destroy_roll_results_screen() -> void:
-	if full_screen_results:
-		full_screen_results.queue_free()
-		full_screen_results = null
+	if half_screen_popup.visible:
+		half_screen_popup.animate_close_popup()
+	else:
+		if full_screen_results:
+			full_screen_results.queue_free()
+			full_screen_results = null
+		
+	
 
 

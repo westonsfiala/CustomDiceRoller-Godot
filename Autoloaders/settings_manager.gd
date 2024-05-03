@@ -307,6 +307,7 @@ func fake_mouse_unpress() -> void:
 
 # Removes all the children nodes of a given node and frees them
 func remove_and_free_children(node: Node) -> void:
-	for n : Node in node.get_children():
-		node.remove_child(n)
-		n.queue_free()
+	if node:
+		for n : Node in node.get_children():
+			node.remove_child(n)
+			n.queue_free()
