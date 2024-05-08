@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0pg6n0jgry8f"]
+
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_nj4xa"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/sort_type_setting.gd" id="2_d8xmh"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="3_8s1wr"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="4_crjpb"]
+
+[node name="SortTypetSetting" instance=ExtResource("1_nj4xa")]
+script = ExtResource("2_d8xmh")
+
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Sort Type"
+
+[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
+visible = false
+
+[node name="SortTypeContainer" type="HBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="NaturalButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer" index="0" instance=ExtResource("3_8s1wr")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer/NaturalButton" index="1" instance=ExtResource("4_crjpb")]
+layout_mode = 1
+text = "[center]Natural[/center]"
+
+[node name="AscendingButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer" index="1" instance=ExtResource("3_8s1wr")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer/AscendingButton" index="1" instance=ExtResource("4_crjpb")]
+layout_mode = 1
+text = "[center]Ascending[/center]"
+
+[node name="DescendingButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer" index="2" instance=ExtResource("3_8s1wr")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer/DescendingButton" index="1" instance=ExtResource("4_crjpb")]
+layout_mode = 1
+text = "[center]Descending[/center]"
+
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer/NaturalButton" to="." method="_on_natural_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer/AscendingButton" to="." method="_on_ascending_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/SortTypeContainer/DescendingButton" to="." method="_on_descending_button_pressed"]

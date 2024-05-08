@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5xbwdmgaf0pv"]
+[gd_scene load_steps=13 format=3 uid="uid://c5xbwdmgaf0pv"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_c75hh"]
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/settings_page.gd" id="2_t4u4y"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://busq18c7xwsfi" path="res://Scenes/SettingsPage/shake_volume_setting.tscn" id="9_sgwpq"]
 [ext_resource type="PackedScene" uid="uid://c7rd5scy05a76" path="res://Scenes/SettingsPage/roll_container_size_setting.tscn" id="10_jw2m0"]
 [ext_resource type="PackedScene" uid="uid://5g7n78hhxjht" path="res://Scenes/SettingsPage/min_max_highlight_setting.tscn" id="11_62px5"]
+[ext_resource type="PackedScene" uid="uid://d0pg6n0jgry8f" path="res://Scenes/SettingsPage/sort_type_setting.tscn" id="12_6cn1m"]
 
 [node name="SettingsPage" type="Control"]
 layout_mode = 3
@@ -112,4 +113,7 @@ theme = ExtResource("1_c75hh")
 theme_override_constants/separation = 2
 
 [node name="MinMaxHighlightSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/ResultsSettingsContainer" instance=ExtResource("11_62px5")]
+layout_mode = 2
+
+[node name="SortTypetSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/ResultsSettingsContainer" instance=ExtResource("12_6cn1m")]
 layout_mode = 2

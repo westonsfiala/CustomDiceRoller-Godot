@@ -162,12 +162,11 @@ func process_roll(roll: Roll) -> void:
 	# Go through all of the dice in the roll and start making the roll detail lines
 	for die : AbstractDie in get_merged_keys():
 		
-		# TODO: sort manager
-		#if(SortTypeManager.getInstance().sortAscending()) {
-		#	this.storedResults.sortAscending();
-		#} else if(SortTypeManager.getInstance().sortDescending()) {
-		#	this.storedResults.sortDescending();
-		#}
+		# Sort the results if we need to
+		if(SettingsManager.get_sort_type() == SettingsManager.SORT_TYPE.ASCENDING):
+			sort_all_ascending()
+		elif(SettingsManager.get_sort_type() == SettingsManager.SORT_TYPE.DESCENDING):
+			sort_all_descending()
 		
 		var die_roll_results : Array = m_roll_results.get(die, [])
 		var die_dropped_results : Array = m_dropped_rolls.get(die, [])
@@ -316,8 +315,8 @@ func sort_all_ascending() -> void:
 
 func sort_map_lists_ascending(roll_map : Dictionary) -> void:
 	for roll_list : Variant in roll_map.values():
-		roll_list.sort_custom(func(a : Variant, b : Variant) -> bool: return a < b)
+		roll_list.sort_custom(func(a : Variant, b : Variant) -> bool: return a.value() < b.value())
 
 func sort_map_lists_decending(roll_map : Dictionary) -> void:
 	for roll_list : Variant in roll_map.values():
-		roll_list.sort_custom(func(a : Variant, b : Variant) -> bool: return a > b)
+		roll_list.sort_custom(func(a : Variant, b : Variant) -> bool: return a.value() > b.value())

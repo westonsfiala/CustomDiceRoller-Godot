@@ -19,6 +19,10 @@ var animations_enabled : bool = ANIMATIONS_ENABLED_DEFAULT
 const MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT: bool = true
 var min_max_highlight_enabled : bool = MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT
 
+enum SORT_TYPE { NATURAL, ASCENDING, DESCENDING }
+const SORT_TYPE_DEFAULT: SORT_TYPE = SORT_TYPE.NATURAL
+var sort_type : SORT_TYPE = SORT_TYPE_DEFAULT
+
 const BUTTON_SIZE_DEFAULT: int = 50
 var button_size : int = BUTTON_SIZE_DEFAULT
 
@@ -68,6 +72,7 @@ func save_state() -> void:
 	save_dict['roll_container_size'] = roll_container_size
 	save_dict['animations_enabled'] = animations_enabled
 	save_dict['min_max_highlight_enabled'] = min_max_highlight_enabled
+	save_dict['sort_type'] = sort_type
 	save_dict['button_size'] = button_size
 	save_dict['shake_volume'] = shake_volume
 	save_dict['font_size_small'] = font_size_small
@@ -114,6 +119,7 @@ func load_state() -> void:
 		set_roll_container_size(save_data.get('roll_container_size', ROLL_CONTAINER_SIZE_DEFAULT))
 		set_animations_enabled(save_data.get('animations_enabled', ANIMATIONS_ENABLED_DEFAULT))
 		set_min_max_highlight_enabled(save_data.get('min_max_highlight_enabled', MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT))
+		set_sort_type(save_data.get('sort_type', SORT_TYPE_DEFAULT))
 		set_button_size(save_data.get('button_size', BUTTON_SIZE_DEFAULT))
 		set_shake_volume(save_data.get('shake_volume', SHAKE_VOLUME_DEFAULT))
 		set_font_size_small(save_data.get('font_size_small', FONT_SIZE_SMALL_DEFAULT))
@@ -244,6 +250,19 @@ func set_min_max_highlight_enabled(enabled: bool) -> void:
 # Gets if min max highlight is enabled
 func get_min_max_highlight_enabled() -> bool:
 	return min_max_highlight_enabled
+	
+# Signal for saying that the sort type has changed
+signal sort_type_changed()
+	
+# Sets the new sort type and emits the sort_type_changed signal
+func set_sort_type(new_sort_type: SORT_TYPE) -> void:
+	sort_type = new_sort_type
+	emit_signal("sort_type_changed")
+	save_state()
+	
+# Gets the sort type
+func get_sort_type() -> SORT_TYPE:
+	return sort_type
 	
 # Signal for saying that the button size has changed
 signal button_size_changed()
