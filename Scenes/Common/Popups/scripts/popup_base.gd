@@ -73,25 +73,26 @@ func _on_about_to_popup() -> void:
 func _on_hide_popup_button_pressed() -> void:
 	animate_close_popup()
 	
+# Animates the popup opening
 func animate_popup() -> void:
-	if(tween):
-		tween.kill()
+	# Don't animate if we're already animating
+	if(tween and tween.is_running()):
+		return
 	content_panel.scale = Vector2.ZERO
 	tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(content_panel, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY)
-	
+
+# Animates the popup closing	
 func animate_close_popup() -> void:
-	if(tween):
-		tween.kill()
+	# Don't animate if we're already animating
+	if(tween and tween.is_running()):
+		return
 	visible = true
 	content_panel.scale = Vector2.ONE
 	tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.set_ease(Tween.EASE_IN)
 	tween.tween_property(content_panel, 'scale', Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY)
-	tween.tween_callback(final_hide)
-
-func final_hide() -> void:
-	hide()
+	tween.tween_callback(hide)

@@ -7,6 +7,9 @@
 [node name="ShakeVolumeSetting" instance=ExtResource("1_nqbxc")]
 script = ExtResource("2_gski2")
 
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Shake Volume"
+
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = false
 

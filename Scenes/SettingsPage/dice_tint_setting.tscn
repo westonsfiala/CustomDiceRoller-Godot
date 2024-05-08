@@ -7,6 +7,9 @@
 [node name="DiceTintSetting" instance=ExtResource("1_s6s3l")]
 script = ExtResource("1_khcex")
 
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Dice Tint"
+
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = false
 

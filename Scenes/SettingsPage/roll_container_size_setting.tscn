@@ -8,6 +8,9 @@
 [node name="RollContainerSizeSetting" instance=ExtResource("1_3mu50")]
 script = ExtResource("2_1h4vx")
 
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Roll Container Size"
+
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = false
 

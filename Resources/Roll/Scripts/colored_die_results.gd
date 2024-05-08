@@ -31,9 +31,12 @@ func produce_list_text(list: Array) -> String:
 			list_text += ", "
 		first = false
 		var result_value_string : String = str(result.value())
-		if(result.is_maximum()):
+		
+		# Only color the result if it is a maximum or minimum and highlighting is enabled
+		var highlight_enabled : bool = SettingsManager.get_min_max_highlight_enabled()
+		if(result.is_maximum() and highlight_enabled):
 			list_text += color_string(result_value_string, "GREEN")
-		elif(result.is_minimum()):
+		elif(result.is_minimum() and highlight_enabled):
 			list_text += color_string(result_value_string, "RED")
 		else:
 			list_text += result_value_string

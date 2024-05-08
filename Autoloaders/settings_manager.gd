@@ -16,6 +16,9 @@ var roll_container_size : ROLL_CONTAINER_SIZE = ROLL_CONTAINER_SIZE_DEFAULT
 const ANIMATIONS_ENABLED_DEFAULT: bool = true
 var animations_enabled : bool = ANIMATIONS_ENABLED_DEFAULT
 
+const MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT: bool = true
+var min_max_highlight_enabled : bool = MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT
+
 const BUTTON_SIZE_DEFAULT: int = 50
 var button_size : int = BUTTON_SIZE_DEFAULT
 
@@ -64,6 +67,7 @@ func save_state() -> void:
 	save_dict['dice_theme'] = dice_theme
 	save_dict['roll_container_size'] = roll_container_size
 	save_dict['animations_enabled'] = animations_enabled
+	save_dict['min_max_highlight_enabled'] = min_max_highlight_enabled
 	save_dict['button_size'] = button_size
 	save_dict['shake_volume'] = shake_volume
 	save_dict['font_size_small'] = font_size_small
@@ -109,6 +113,7 @@ func load_state() -> void:
 		set_dice_theme(save_data.get('dice_theme', DICE_THEME_DEFAULT))
 		set_roll_container_size(save_data.get('roll_container_size', ROLL_CONTAINER_SIZE_DEFAULT))
 		set_animations_enabled(save_data.get('animations_enabled', ANIMATIONS_ENABLED_DEFAULT))
+		set_min_max_highlight_enabled(save_data.get('min_max_highlight_enabled', MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT))
 		set_button_size(save_data.get('button_size', BUTTON_SIZE_DEFAULT))
 		set_shake_volume(save_data.get('shake_volume', SHAKE_VOLUME_DEFAULT))
 		set_font_size_small(save_data.get('font_size_small', FONT_SIZE_SMALL_DEFAULT))
@@ -226,6 +231,19 @@ func set_animations_enabled(enabled: bool) -> void:
 # Gets if animations are enabled
 func get_animations_enabled() -> bool:
 	return animations_enabled
+	
+# Signal for saying that the min max highlight enabled setting has changed
+signal min_max_highlight_enabled_changed()
+	
+# Enables or disables the min max highlight and emits the min_max_highlight_enabled_changed signal
+func set_min_max_highlight_enabled(enabled: bool) -> void:
+	min_max_highlight_enabled = enabled
+	emit_signal("min_max_highlight_enabled_changed")
+	save_state()
+	
+# Gets if min max highlight is enabled
+func get_min_max_highlight_enabled() -> bool:
+	return min_max_highlight_enabled
 	
 # Signal for saying that the button size has changed
 signal button_size_changed()

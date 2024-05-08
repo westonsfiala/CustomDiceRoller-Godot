@@ -12,6 +12,9 @@
 [node name="DiceThemeSetting" instance=ExtResource("1_fehq5")]
 script = ExtResource("1_1qbng")
 
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Dice Theme"
+
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = false
 

@@ -8,6 +8,9 @@
 [node name="EnableAnimationsSetting" instance=ExtResource("1_7nrt5")]
 script = ExtResource("2_8r2ms")
 
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Enable Animations"
+
 [node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
 visible = false
 
