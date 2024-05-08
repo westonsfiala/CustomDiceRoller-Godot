@@ -1,7 +1,6 @@
 extends Popup
 class_name PopupBase
 
-
 @onready var content_panel : Panel = $ContentPanel
 @onready var hide_popup_button : Button = $HidePopupButton
 
@@ -25,6 +24,14 @@ func modular_popup_center() -> void:
 	size = SettingsManager.get_window_size()
 	set_content_panel_minimum_size()
 	enforce_content_panel_in_screen(size/2, true)
+	popup(Rect2i(Vector2.ZERO, size))
+
+# Pops up the panel at the bottom center of the screen
+func modular_popup_bottom_center() -> void:
+	size = SettingsManager.get_window_size()
+	set_content_panel_minimum_size()
+	var bottom_center : Vector2 = Vector2(size.x / 2.0, size.y)
+	enforce_content_panel_in_screen(bottom_center, true)
 	popup(Rect2i(Vector2.ZERO, size))
 	
 func set_content_panel_minimum_size() -> void:
@@ -84,4 +91,7 @@ func animate_close_popup() -> void:
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.set_ease(Tween.EASE_IN)
 	tween.tween_property(content_panel, 'scale', Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY)
-	tween.tween_property(self, 'visible', false, 0)
+	tween.tween_callback(final_hide)
+
+func final_hide() -> void:
+	hide()

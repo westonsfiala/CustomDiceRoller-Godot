@@ -46,7 +46,6 @@ func configure(roll_results: RollResults) -> void:
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# reset our state
 	set_shake_state(shake_state.SHAKE)
 	num_taps = 0
 	physics_dice_array = []
@@ -65,6 +64,7 @@ func _ready() -> void:
 	
 	# Go through and calculate how many dice there should be.
 	var total_dice: int = 0
+	var onscreen_dice: int = 0
 	var dice_dict: Dictionary = {}
 	for prop_pair : DiePropertyPair in stored_roll_results.stored_roll.m_die_prop_array:
 		var die : AbstractDie = prop_pair.m_die
@@ -79,15 +79,22 @@ func _ready() -> void:
 	if total_dice > max_allowed_dice:
 		var adjust_ratio: float = float(max_allowed_dice) / total_dice
 		for key : AbstractDie in dice_dict.keys():
-			dice_dict[key] = int(dice_dict[key] * adjust_ratio)
+			var num_dice : int = int(dice_dict[key] * adjust_ratio)
+			dice_dict[key] = num_dice
+			onscreen_dice += num_dice
+	else:
+		onscreen_dice = total_dice
 	
 	# Put some number of dice into the screen
 	for die : AbstractDie in dice_dict:
 		for count : int in dice_dict[die]:
 			var physics_dice_node: PhysicsDice = preload("res://Scenes/DiceRoller/physics_dice.tscn").instantiate()
 			physics_dice_node.configure(die)
+			physics_dice_node.set_index(count, onscreen_dice)
 			physics_dice_array.push_back(physics_dice_node)
 			add_child(physics_dice_node)
+			
+	
 
 # Sets up all the bouncer bars 
 func setup_bumpers() -> void:
@@ -165,3 +172,10 @@ func _on_tap_timeout_timer_timeout() -> void:
 # When hold timeout occurs, go to done.
 func _on_hold_timeout_timer_timeout() -> void:
 	set_shake_state(shake_state.DONE)
+
+# Unfreeze all the dice after a short delay.
+# If we don't do this, some weird flash appears on screen.
+func _on_initial_unfreeze_timer_timeout() -> void:
+	for die : PhysicsDice in physics_dice_array:
+		die.freeze = false
+		die.launch_die_randomly()

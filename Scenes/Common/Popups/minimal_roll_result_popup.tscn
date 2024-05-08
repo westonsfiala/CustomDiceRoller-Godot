@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo3fnb3wvdfy4"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_morp1"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/minimal_roll_results_popup.gd" id="2_pjbek"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="3_0ulns"]
+
+[node name="MinimalRollResultPopup" instance=ExtResource("1_morp1")]
+script = ExtResource("2_pjbek")
+
+[node name="ContentPanel" parent="." index="1"]
+custom_minimum_size = Vector2(200, 50)
+offset_right = 150.0
+offset_bottom = 50.0
+
+[node name="RollResultRichTextLabel" parent="ContentPanel/Margins" index="0" instance=ExtResource("3_0ulns")]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 1
+text = "TEMP"
+
+[node name="AutoCloseTimer" type="Timer" parent="." index="2"]
+one_shot = true
+
+[connection signal="timeout" from="AutoCloseTimer" to="." method="_on_auto_close_timer_timeout"]

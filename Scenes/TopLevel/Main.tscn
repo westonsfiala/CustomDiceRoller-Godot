@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4nvrn4hpsjtu"]
+[gd_scene load_steps=8 format=3 uid="uid://d4nvrn4hpsjtu"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dlix8"]
 [ext_resource type="Script" path="res://Scenes/TopLevel/Scripts/main.gd" id="1_jwssx"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://wgiuyjr6bltu" path="res://Scenes/TopLevel/scene_scroller.tscn" id="3_wlitc"]
 [ext_resource type="Texture2D" uid="uid://b2xwvheni4p15" path="res://DicePNGs/white/d20.png" id="5_x2lqq"]
 [ext_resource type="PackedScene" uid="uid://lruu6u5wbxh5" path="res://Scenes/Common/Popups/half_screen_popup.tscn" id="6_6g8v8"]
+[ext_resource type="PackedScene" uid="uid://bo3fnb3wvdfy4" path="res://Scenes/Common/Popups/minimal_roll_result_popup.tscn" id="7_2e452"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -64,4 +65,9 @@ one_shot = true
 [node name="HalfScreenPopup" parent="." instance=ExtResource("6_6g8v8")]
 visible = false
 
+[node name="MinimalRollResultPopup" parent="." instance=ExtResource("7_2e452")]
+visible = false
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="popup_hide" from="HalfScreenPopup" to="." method="_on_half_screen_popup_popup_hide"]
+[connection signal="popup_hide" from="MinimalRollResultPopup" to="." method="_on_minimal_roll_result_popup_popup_hide"]

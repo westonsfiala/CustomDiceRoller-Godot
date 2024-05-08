@@ -20,8 +20,10 @@ shader_parameter/TintColor = Color(1, 1, 1, 0)
 
 [node name="PhysicsDice" type="RigidBody2D"]
 position = Vector2(336, 353)
+collision_layer = 15
 collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_ljf0d")
+continuous_cd = 1
 max_contacts_reported = 1
 contact_monitor = true
 linear_damp_mode = 1

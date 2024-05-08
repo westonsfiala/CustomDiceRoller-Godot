@@ -84,7 +84,7 @@ func load_state() -> void:
 		print("No settings manager save file detected.")
 		return
 	
-	# Load our save file and start parsing it.
+	# Load our save file and start parsing it.F
 	var settings_manager_save_file : FileAccess = FileAccess.open(SAVE_FILE_NAME, FileAccess.READ)
 	while settings_manager_save_file.get_position() < settings_manager_save_file.get_length():
 		
