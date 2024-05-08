@@ -23,6 +23,9 @@ enum SORT_TYPE { NATURAL, ASCENDING, DESCENDING }
 const SORT_TYPE_DEFAULT: SORT_TYPE = SORT_TYPE.NATURAL
 var sort_type : SORT_TYPE = SORT_TYPE_DEFAULT
 
+const SHOW_EXPECTED_RESULT_ENABLED_DEFAULT: bool = true
+var show_expected_result_enabled : bool = SHOW_EXPECTED_RESULT_ENABLED_DEFAULT
+
 const BUTTON_SIZE_DEFAULT: int = 50
 var button_size : int = BUTTON_SIZE_DEFAULT
 
@@ -73,6 +76,7 @@ func save_state() -> void:
 	save_dict['animations_enabled'] = animations_enabled
 	save_dict['min_max_highlight_enabled'] = min_max_highlight_enabled
 	save_dict['sort_type'] = sort_type
+	save_dict['show_expected_result_enabled'] = show_expected_result_enabled
 	save_dict['button_size'] = button_size
 	save_dict['shake_volume'] = shake_volume
 	save_dict['font_size_small'] = font_size_small
@@ -120,6 +124,7 @@ func load_state() -> void:
 		set_animations_enabled(save_data.get('animations_enabled', ANIMATIONS_ENABLED_DEFAULT))
 		set_min_max_highlight_enabled(save_data.get('min_max_highlight_enabled', MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT))
 		set_sort_type(save_data.get('sort_type', SORT_TYPE_DEFAULT))
+		set_show_expected_result_enabled(save_data.get('show_expected_result_enabled', SHOW_EXPECTED_RESULT_ENABLED_DEFAULT))
 		set_button_size(save_data.get('button_size', BUTTON_SIZE_DEFAULT))
 		set_shake_volume(save_data.get('shake_volume', SHAKE_VOLUME_DEFAULT))
 		set_font_size_small(save_data.get('font_size_small', FONT_SIZE_SMALL_DEFAULT))
@@ -263,6 +268,19 @@ func set_sort_type(new_sort_type: SORT_TYPE) -> void:
 # Gets the sort type
 func get_sort_type() -> SORT_TYPE:
 	return sort_type
+	
+# Signal for saying that the show expected result enabled setting has changed
+signal show_expected_result_enabled_changed()
+	
+# Enables or disables the show expected result and emits the show_expected_result_enabled_changed signal
+func set_show_expected_result_enabled(enabled: bool) -> void:
+	show_expected_result_enabled = enabled
+	emit_signal("show_expected_result_enabled_changed")
+	save_state()
+	
+# Gets if show expected result is enabled
+func get_show_expected_result_enabled() -> bool:
+	return show_expected_result_enabled
 	
 # Signal for saying that the button size has changed
 signal button_size_changed()

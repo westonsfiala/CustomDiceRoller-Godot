@@ -193,9 +193,7 @@ func process_roll(roll: Roll) -> void:
 			roll_results_array.push_back(rerolled_results)
 
 	# Only show expected result when asked for and when we have some some to report.
-	# TODO: Add this back in when we have settings working
-	#if(ExpectedResultManager.getInstance().getShowExpected() && sum_results.length !== 0) {
-	if(sum_results.size() != 0):
+	if(SettingsManager.get_show_expected_result_enabled() and sum_results.size() != 0):
 		var roll_average_string : String = StringHelper.decimal_to_string(roll.average(),2)
 		var average_text : String = str('Expected Result - [', roll_average_string, ']')
 		
