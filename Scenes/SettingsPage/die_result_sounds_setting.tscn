@@ -52,19 +52,20 @@ text = ""
 layout_mode = 1
 text = "[center]Disable[/center]"
 
-[node name="CriticalSoundsContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer" index="1"]
+[node name="DieResultSoundsContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer" index="1"]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="AddCriticalSoundButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer" index="2" instance=ExtResource("3_j457g")]
+[node name="AddDieResultSoundButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer" index="2" instance=ExtResource("3_j457g")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"ToggleButton"
 text = ""
 
-[node name="SettingsManagedRichTextLabel2" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/AddCriticalSoundButton" index="1" instance=ExtResource("4_2sfct")]
+[node name="SettingsManagedRichTextLabel2" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/AddDieResultSoundButton" index="1" instance=ExtResource("4_2sfct")]
 layout_mode = 1
 text = "[center]Add Die Result Sound[/center]"
 
 [connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer/EnableButton" to="." method="_on_enable_button_pressed"]
 [connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer/DisableButton" to="." method="_on_disable_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/AddDieResultSoundButton" to="." method="_on_add_die_result_sound_button_pressed"]

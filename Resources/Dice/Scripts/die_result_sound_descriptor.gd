@@ -1,8 +1,8 @@
 extends Node
 class_name DieResultSoundDescriptor
 
-@export var die_name : String = ""
-@export var die_result : String = "0"
+@export var die_name : StringName = ""
+@export var die_result : StringName = ""
 @export var sound_id : StringName = ""
 
 func configure(new_die_name: String, new_die_result: String, new_sound_id: StringName) -> DieResultSoundDescriptor:

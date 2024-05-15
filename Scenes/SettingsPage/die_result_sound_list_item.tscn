@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://pmp5uc61o3kg"]
+
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/die_result_sound_list_item.gd" id="1_jvyg3"]
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_dfpuf"]
+[ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="3_w3rjm"]
+[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="4_rb7go"]
+
+[node name="DieResultListItem" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_constants/separation = 2
+script = ExtResource("1_jvyg3")
+
+[node name="UpButton" parent="." instance=ExtResource("2_dfpuf")]
+layout_mode = 2
+texture_2d = ExtResource("3_w3rjm")
+
+[node name="DownButton" parent="." instance=ExtResource("2_dfpuf")]
+layout_mode = 2
+texture_2d = ExtResource("4_rb7go")
+
+[node name="DieNameOptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DieResultOptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SoundNameOptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RemoveButton" parent="." instance=ExtResource("2_dfpuf")]
+layout_mode = 2
+
+[connection signal="pressed" from="UpButton" to="." method="_on_up_button_pressed"]
+[connection signal="pressed" from="DownButton" to="." method="_on_down_button_pressed"]
+[connection signal="item_selected" from="DieNameOptionButton" to="." method="_on_die_name_option_button_item_selected"]
+[connection signal="item_selected" from="DieResultOptionButton" to="." method="_on_die_result_option_button_item_selected"]
+[connection signal="pressed" from="RemoveButton" to="." method="_on_remove_button_pressed"]
