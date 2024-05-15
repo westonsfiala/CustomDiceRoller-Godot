@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b8m3bng66jw2l"]
+
+[ext_resource type="Script" path="res://Resources/Dice/Scripts/die_result_sound_descriptor.gd" id="1_70pqt"]
+
+[resource]
+script = ExtResource("1_70pqt")

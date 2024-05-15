@@ -45,6 +45,11 @@ func _on_down_button_pressed() -> void:
 	
 # Send that this list item should be removed.
 func _on_remove_button_pressed() -> void:
+	# Without this the signal is sent before the mouse unpress event is processed.
+	call_deferred("remove_button_helper")
+
+# Helper method for removing self. 
+func remove_button_helper() -> void:
 	emit_signal("remove_pressed", index)
 
 # Send that we have a new color to use.

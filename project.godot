@@ -27,6 +27,7 @@ StringHelper="*res://Autoloaders/string_helper.gd"
 SimpleRollManager="*res://Autoloaders/simple_roll_manager.gd"
 DieImageManager="*res://Autoloaders/die_image_manager.gd"
 DieLoaderFactory="*res://Autoloaders/die_loader_factory.gd"
+SoundManager="*res://Autoloaders/sound_manager.gd"
 
 [debug]
 

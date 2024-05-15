@@ -30,8 +30,11 @@ const BUTTON_SIZE_DEFAULT: int = 50
 var button_size : int = BUTTON_SIZE_DEFAULT
 
 const SHAKE_VOLUME_DEFAULT: int = 100
-const SHAKE_AUDIO_BUS_NAME: StringName = "Shake"
 var shake_volume : int = SHAKE_VOLUME_DEFAULT
+
+const DIE_RESULT_SOUNDS_ENABLED_DEFAULT: bool = true
+var die_result_sounds_enabled : bool = DIE_RESULT_SOUNDS_ENABLED_DEFAULT
+var die_result_sounds : Array[DieResultSoundDescriptor] = []
 
 const FONT_SIZE_SMALL_DEFAULT: int = 24
 var font_size_small : int = FONT_SIZE_SMALL_DEFAULT
@@ -53,11 +56,17 @@ var default_label_settings : LabelSettings = preload("res://Resources/Styles/nor
 
 const SAVE_FILE_NAME : StringName = "user://settings_manager.save"
 
+var disable_save : bool = false
+
 func _ready() -> void:
 	load_state()
 	
 # Save the state of the simple roll manager to its save file.
 func save_state() -> void:
+	# If we're not supposed to save, bail.
+	if disable_save:
+		return
+
 	# Open the save file for writing.
 	var settings_manager_save_file : FileAccess = FileAccess.open(SAVE_FILE_NAME, FileAccess.WRITE)
 	
@@ -79,6 +88,8 @@ func save_state() -> void:
 	save_dict['show_expected_result_enabled'] = show_expected_result_enabled
 	save_dict['button_size'] = button_size
 	save_dict['shake_volume'] = shake_volume
+	save_dict['die_result_sounds_enabled'] = die_result_sounds_enabled
+	save_dict['die_result_sounds'] = DieResultSoundDescriptor.save_array_of_descriptors(die_result_sounds)
 	save_dict['font_size_small'] = font_size_small
 	save_dict['font_size_normal'] = font_size_normal
 	save_dict['font_size_large'] = font_size_large
@@ -117,6 +128,8 @@ func load_state() -> void:
 		if save_data['schema_version'] != "1.0.0":
 			print("Unknown schema_version found during settings_manager loader: ", save_data['schema_version'])
 		
+		# Disable saving while we set the saved properties.
+		disable_save = true
 		set_dice_size(save_data.get('dice_size', DICE_SIZE_DEFAULT))
 		set_dice_tint_color(Color.from_string(save_data.get('dice_tint_color', Color.WHITE.to_html()), Color.WHITE))
 		set_dice_theme(save_data.get('dice_theme', DICE_THEME_DEFAULT))
@@ -127,10 +140,14 @@ func load_state() -> void:
 		set_show_expected_result_enabled(save_data.get('show_expected_result_enabled', SHOW_EXPECTED_RESULT_ENABLED_DEFAULT))
 		set_button_size(save_data.get('button_size', BUTTON_SIZE_DEFAULT))
 		set_shake_volume(save_data.get('shake_volume', SHAKE_VOLUME_DEFAULT))
+		set_die_result_sounds_enabled(save_data.get('die_result_sounds_enabled', DIE_RESULT_SOUNDS_ENABLED_DEFAULT))
+		var die_result_sounds_array : Array = save_data.get('die_result_sounds', DieResultSoundDescriptor.save_array_of_descriptors(SoundManager.default_sound_descriptors_list))
+		set_die_result_sounds(DieResultSoundDescriptor.load_from_array_of_save_dict(die_result_sounds_array))
 		set_font_size_small(save_data.get('font_size_small', FONT_SIZE_SMALL_DEFAULT))
 		set_font_size_normal(save_data.get('font_size_normal', FONT_SIZE_NORMAL_DEFAULT))
 		set_font_size_large(save_data.get('font_size_large', FONT_SIZE_LARGE_DEFAULT))
 		set_font_size_huge(save_data.get('font_size_huge', FONT_SIZE_HUGE_DEFAULT))
+		disable_save = false
 
 # Signal emitted when the window size changes
 signal window_size_changed()
@@ -301,7 +318,7 @@ signal shake_volume_changed()
 # Sets the shake volume to the new volume and emits shake_volume_changed
 func set_shake_volume(new_shake_volume: int) -> void:
 	shake_volume = new_shake_volume
-	var bus_index : int = AudioServer.get_bus_index(SHAKE_AUDIO_BUS_NAME)
+	var bus_index : int = AudioServer.get_bus_index(SoundManager.SHAKE_AUDIO_BUS_NAME)
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(new_shake_volume / 100.0))
 	emit_signal("shake_volume_changed")
 	save_state()
@@ -309,6 +326,32 @@ func set_shake_volume(new_shake_volume: int) -> void:
 # Gets the shake volume
 func get_shake_volume() -> int:
 	return shake_volume
+	
+# Signal for saying that the die result sounds enabled setting has changed
+signal die_result_sounds_enabled_changed()
+	
+# Enables or disables the die result sounds and emits the die_result_sounds_enabled_changed signal
+func set_die_result_sounds_enabled(enabled: bool) -> void:
+	die_result_sounds_enabled = enabled
+	emit_signal("die_result_sounds_enabled_changed")
+	save_state()
+	
+# Gets if die result sounds are enabled
+func get_die_result_sounds_enabled() -> bool:
+	return die_result_sounds_enabled
+	
+# Signal for saying that the die result sounds setting has changed
+signal die_result_sounds_changed()
+	
+# Set the die result sounds and emits the die_result_sounds_changed signal
+func set_die_result_sounds(sounds: Array[DieResultSoundDescriptor]) -> void:
+	die_result_sounds = sounds
+	emit_signal("die_result_sounds_changed")
+	save_state()
+	
+# Gets the die result sounds
+func get_die_result_sounds() -> Array[DieResultSoundDescriptor]:
+	return die_result_sounds
 
 # Signal for saying that the font size has changed
 signal font_size_changed()

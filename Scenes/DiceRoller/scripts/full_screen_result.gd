@@ -21,6 +21,7 @@ func _ready() -> void:
 	
 func configure(result: RollResults) -> FullScreenResult:
 	m_result = result
+	SoundManager.process_results_sound(result)
 	return self
 	
 func reconfigure() -> void:

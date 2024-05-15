@@ -11,8 +11,7 @@ class_name RollResults
 @export var roll_results_array : Array[ColoredDieResults] = []
 
 # Variables that are only used internally to process a roll.
-# Each of these maps is of type <String, Array<Variant>>
-# The map string should be in the form: JSON.stringify(die)
+# Each of these maps is of type <AbsractDie, Array<Variant>>
 var m_roll_results : Dictionary = {}
 var m_dropped_rolls : Dictionary = {}
 var m_rerolled_rolls : Dictionary = {}
@@ -21,7 +20,7 @@ var m_struck_roll_results : Dictionary = {}
 var m_struck_dropped_rolls : Dictionary = {}
 var m_struck_rerolled_rolls : Dictionary = {}
 
-# The roll properties of each die in the form <String, RollProperties>
+# The roll properties of each die in the form <AbsractDie, RollProperties>
 # Use the same keys as above for access.
 var m_roll_properties : Dictionary = {}
 
@@ -142,6 +141,18 @@ static func load_from_save_dict(save_state: Dictionary) -> RollResults:
 	new_roll_results.roll_results_array = new_roll_results_array
 		
 	return new_roll_results
+
+
+# Check the roll results to see if we have specific results for a given die name.
+# All of the results of the die must be the same as the given result.
+func search_for_die_result_sound_matching(search_result : DieResultSoundDescriptor) -> bool:
+	for die : AbstractDie in m_roll_results.keys():
+		if(die.name() == search_result.die_name):
+			var results : Array = m_roll_results.get(die, [])
+			var all_results_equal_given : bool = results.all(func(result : DieResult) -> bool: return str(result.value()) == search_result.die_result)
+			if(all_results_equal_given):
+				return true
+	return false
 
 # Tiny function used to help the reduce method
 func simple_summer(accum : int, value : int) -> int: return accum + value

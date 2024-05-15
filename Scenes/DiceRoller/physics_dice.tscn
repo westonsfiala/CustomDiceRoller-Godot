@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://Scenes/DiceRoller/scripts/physics_dice.gd" id="1_tijyv"]
 [ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="2_rq8jr"]
 [ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="3_ffnch"]
-[ext_resource type="AudioStream" uid="uid://dwhb315hxtca1" path="res://Sounds/diceroll_no_silence.mp3" id="4_q6007"]
-[ext_resource type="AudioStream" uid="uid://dx4pxc5yjhv5" path="res://Sounds/diceroll_quiet.mp3" id="5_qr1t5"]
+[ext_resource type="AudioStream" uid="uid://dwhb315hxtca1" path="res://Sounds/Roller/diceroll_no_silence.mp3" id="4_q6007"]
+[ext_resource type="AudioStream" uid="uid://dx4pxc5yjhv5" path="res://Sounds/Roller/diceroll_quiet.mp3" id="5_qr1t5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ljf0d"]
 friction = 0.5

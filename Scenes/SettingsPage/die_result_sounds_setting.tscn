@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://cil3a0ftp3k1a"]
+
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_a4xvl"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/die_result_sounds_setting.gd" id="2_vsi87"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="3_j457g"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="4_2sfct"]
+
+[node name="DieResultSoundsSetting" instance=ExtResource("1_a4xvl")]
+custom_minimum_size = Vector2(0, 500)
+script = ExtResource("2_vsi87")
+
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Die Result Sounds"
+
+[node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
+custom_minimum_size = Vector2(0, 750)
+
+[node name="DieResultContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="EnableDisableContainer" type="HBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="EnableButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer" index="0" instance=ExtResource("3_j457g")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer/EnableButton" index="1" instance=ExtResource("4_2sfct")]
+layout_mode = 1
+text = "[center]Enable[/center]"
+
+[node name="DisableButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer" index="1" instance=ExtResource("3_j457g")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer/DisableButton" index="1" instance=ExtResource("4_2sfct")]
+layout_mode = 1
+text = "[center]Disable[/center]"
+
+[node name="CriticalSoundsContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer" index="1"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="AddCriticalSoundButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer" index="2" instance=ExtResource("3_j457g")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+text = ""
+
+[node name="SettingsManagedRichTextLabel2" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/AddCriticalSoundButton" index="1" instance=ExtResource("4_2sfct")]
+layout_mode = 1
+text = "[center]Add Die Result Sound[/center]"
+
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer/EnableButton" to="." method="_on_enable_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/DieResultContainer/EnableDisableContainer/DisableButton" to="." method="_on_disable_button_pressed"]
