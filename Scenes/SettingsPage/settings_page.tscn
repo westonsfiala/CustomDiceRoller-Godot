@@ -67,13 +67,19 @@ theme_override_constants/separation = 5
 alignment = 1
 
 [node name="DiceSizeSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/DiceSettingsContainer/SettingsVContainer" instance=ExtResource("4_gdqpn")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="DiceTintSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/DiceSettingsContainer/SettingsVContainer" instance=ExtResource("5_b7ujc")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="DiceThemeSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/DiceSettingsContainer/SettingsVContainer" instance=ExtResource("6_al3gl")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="SettingsManagedDiceImageGrid" parent="ScrollContainer/MarginContainer/VBoxContainer/DiceSettingsContainer" instance=ExtResource("7_4dbbt")]
 layout_mode = 2
@@ -93,16 +99,24 @@ theme = ExtResource("1_c75hh")
 theme_override_constants/separation = 2
 
 [node name="RollContainerSizeSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("10_jw2m0")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="EnableAnimationsSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("8_dyl61")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="ShakeVolumeSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("9_sgwpq")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="DieResultSoundsSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("11_05kol")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -118,10 +132,16 @@ theme = ExtResource("1_c75hh")
 theme_override_constants/separation = 2
 
 [node name="MinMaxHighlightSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/ResultsSettingsContainer" instance=ExtResource("11_62px5")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="SortTypetSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/ResultsSettingsContainer" instance=ExtResource("12_6cn1m")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null
 
 [node name="ShowExpectedResultSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/ResultsSettingsContainer" instance=ExtResource("13_il1md")]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = null

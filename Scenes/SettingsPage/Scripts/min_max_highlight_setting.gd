@@ -31,10 +31,6 @@ func inner_get_title() -> String:
 	if SettingsManager.get_min_max_highlight_enabled():
 		min_max_highlight_enabled_string = "Enabled"
 	return str(MIN_MAX_HIGHLIGHT_LABEL_TEXT, min_max_highlight_enabled_string)
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(button_container.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

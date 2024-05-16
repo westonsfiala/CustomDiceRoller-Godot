@@ -10,16 +10,8 @@ script = ExtResource("2_71xwf")
 [node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
 text = "Dice Size"
 
-[node name="CollapsibleContainer" parent="TopLevelContainer" index="1"]
-visible = false
-
 [node name="DieSizeSlider" type="HSlider" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme = ExtResource("3_q4nbl")
 min_value = 25.0
 max_value = 400.0

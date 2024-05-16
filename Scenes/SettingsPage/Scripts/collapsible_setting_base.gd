@@ -6,7 +6,7 @@ class_name CollapsibleSettingBase
 @onready var rotating_arrow : SettingsManagedTextureButton = $TopLevelContainer/TitleBarContainer/RotatingArrow
 @onready var setting_name_label : SettingsManagedRichTextLabel = $TopLevelContainer/TitleBarContainer/CollapseExpandButton/SettingName
 @onready var reset_button : Button = $TopLevelContainer/TitleBarContainer/ResetButton
-@onready var collapsible_section : Control = $TopLevelContainer/CollapsibleContainer/CollapsibleSection
+@onready var collapsible_section : VBoxContainer = $TopLevelContainer/CollapsibleContainer/CollapsibleSection
 @onready var collapsible_container : HBoxContainer = $TopLevelContainer/CollapsibleContainer
 
 const RIGHT_ARROW : Texture2D = preload("res://Icons/right-arrow.svg")
@@ -21,49 +21,9 @@ signal setting_changed()
 
 # Connect to the setting we will be modifying
 func _ready() -> void:
-	# If you don't call both of these, it doesnt seem to work...
-	start_collapsed()
-	call_deferred("start_collapsed")
-	
-# Get the safe minimum collapsible height. Max of button size and inner height.
-func get_safe_collabible_section_minimum_height() -> int:
-	var button_size: int = SettingsManager.get_button_size()
-	return max(inner_get_collapsible_section_minimum_height(), button_size)
-	
-# Start with the setting collapsed
-func start_collapsed() -> void:
-	rotating_arrow.set_new_button_texture(RIGHT_ARROW)
+	helper_expand_collapse_inner_settings(false)
 	set_title()
 	show_hide_reset_button()
-	
-	collapsible_container.visible = true
-	collapsible_section.visible = true
-	
-	collapsible_section.scale = COLLAPSED_SCALE_VECTOR
-	collapsible_section.custom_minimum_size.y = 0
-	collapsible_section.size.y = 0
-	
-	collapsible_container.custom_minimum_size.y = 0
-	collapsible_container.size.y = 0
-	
-	collapsible_container.visible = false
-	collapsible_section.visible = false
-	call_deferred("enforce_all_content_shown")
-	
-# Start with the setting expanded
-func start_expanded() -> void:
-	rotating_arrow.set_new_button_texture(DOWN_ARROW)
-	set_title()
-	show_hide_reset_button()
-	
-	collapsible_container.visible = true
-	collapsible_section.visible = true
-	
-	collapsible_section.scale = EXPANDED_SCALE_VECTOR
-	collapsible_section.custom_minimum_size.y = get_safe_collabible_section_minimum_height()
-	collapsible_section.size.y = get_safe_collabible_section_minimum_height()
-	
-	call_deferred("enforce_all_content_shown")
 
 # Toggle showing/hiding the dice settings.
 func expand_collapse_inner_settings() -> void:
@@ -71,7 +31,6 @@ func expand_collapse_inner_settings() -> void:
 
 # Helper method where you can force it to expand or collapse
 func helper_expand_collapse_inner_settings(expand: bool) -> void:
-	var collapsible_full_height : int = get_safe_collabible_section_minimum_height()
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween()
@@ -84,7 +43,6 @@ func helper_expand_collapse_inner_settings(expand: bool) -> void:
 		rotating_arrow.set_new_button_texture(DOWN_ARROW)
 		tween.tween_property(rotating_arrow, "rotation_degrees", -90, SettingsManager.LONG_PRESS_DELAY).from(0)
 		tween.tween_method(set_content_scale, EXPANDED_SCALE_VECTOR, COLLAPSED_SCALE_VECTOR, SettingsManager.LONG_PRESS_DELAY)
-		tween.tween_method(set_collapsible_min_height, collapsible_full_height, 0, SettingsManager.LONG_PRESS_DELAY)
 		tween.chain().tween_callback(finish_hide_setting_callback)
 	# Expand things out
 	else:
@@ -93,20 +51,10 @@ func helper_expand_collapse_inner_settings(expand: bool) -> void:
 		collapsible_container.visible = true
 		tween.tween_property(rotating_arrow, "rotation_degrees", 90, SettingsManager.LONG_PRESS_DELAY).from(0)
 		tween.tween_method(set_content_scale, COLLAPSED_SCALE_VECTOR, EXPANDED_SCALE_VECTOR, SettingsManager.LONG_PRESS_DELAY)
-		tween.tween_method(set_collapsible_min_height, 0, collapsible_full_height, SettingsManager.LONG_PRESS_DELAY)
 		tween.chain().tween_callback(finish_show_setting_callback)
 
 func set_content_scale(new_scale: Vector2) -> void:
-	collapsible_section.scale = new_scale
-	for child : Node in collapsible_section.get_children(true):
-		child.scale = new_scale
-		child.pivot_offset = child.size/2
-
-# Method for setting the height of the content when its expanding / collapsing
-func set_collapsible_min_height(current_content_height: int) -> void:
-	collapsible_section.custom_minimum_size.y = current_content_height
-	collapsible_section.size.y = current_content_height
-	enforce_all_content_shown()
+	collapsible_container.scale = new_scale
 
 # At the end of the collapse, this gets called.
 func finish_hide_setting_callback() -> void:
@@ -114,23 +62,11 @@ func finish_hide_setting_callback() -> void:
 	collapsible_container.visible = false
 	rotating_arrow.rotation_degrees = 0
 	rotating_arrow.set_new_button_texture(RIGHT_ARROW)
-	enforce_all_content_shown()
 	
 # At the end of the expand, this gets called.
 func finish_show_setting_callback() -> void:
 	rotating_arrow.rotation_degrees = 0
 	rotating_arrow.set_new_button_texture(DOWN_ARROW)
-	enforce_all_content_shown()
-
-# Method for having the proper size of the setting at all times.
-func enforce_all_content_shown() -> void:
-	title_bar_container.size.y = 0
-	collapsible_container.size.y = 0
-	custom_minimum_size.y = title_bar_container.size.y + collapsible_container.size.y
-	call_deferred("deferred_enforce_all_content_shown")
-
-func deferred_enforce_all_content_shown() -> void:
-	size.y = custom_minimum_size.y
 
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button() -> void:
@@ -145,10 +81,6 @@ func set_title() -> void:
 	
 func inner_get_title() -> String:
 	return "Temp"
-	
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return 0
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

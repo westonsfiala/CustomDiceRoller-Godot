@@ -188,10 +188,6 @@ func inner_get_title() -> String:
 	if Vector3(current_color.r, current_color.g, current_color.b).distance_to(Vector3(closest_color.r, closest_color.g, closest_color.b)) > 0.05:
 		possible_squigle = "~"
 	return str(DIE_TINT_LABEL_TEXT, possible_squigle, closest_color_name, " - ", alpha_percent_string, "%")
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(color_picker.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

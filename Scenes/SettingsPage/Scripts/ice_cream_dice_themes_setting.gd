@@ -11,10 +11,6 @@ func _ready() -> void:
 	
 func inner_get_title() -> String:
 	return ICE_CREAM_DIE_THEME_LABEL_TEXT
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(theme_container.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

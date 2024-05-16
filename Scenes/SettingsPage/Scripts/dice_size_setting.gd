@@ -37,10 +37,6 @@ func _on_die_size_slider_value_changed(_value: int) -> void:
 	
 func inner_get_title() -> String:
 	return str(DIE_SIZE_LABEL_TEXT, SettingsManager.get_dice_size())
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(die_size_slider.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:
@@ -50,5 +46,4 @@ func inner_should_show_reset_button() -> bool:
 func inner_reset_button_pressed() -> void:
 	SettingsManager.set_dice_size(SettingsManager.DICE_SIZE_DEFAULT)
 	emit_signal("setting_changed")
-
 

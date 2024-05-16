@@ -25,14 +25,14 @@ func process_sounds() -> void:
 	var roller_sound_files : PackedStringArray = DirAccess.get_files_at(ROLLER_SOUNDS_PATH)
 
 	for sound_file : String in roller_sound_files:
-		if sound_file.get_extension() == "mp3":
+		if sound_file.get_extension() == "mp3" or sound_file.get_extension() == "wav":
 			var sound_key : String = sound_file.get_file().get_basename().to_pascal_case()
 			roller_sounds[sound_key] = ROLLER_SOUNDS_PATH + '/' + sound_file
 
 	var results_sound_files : PackedStringArray = DirAccess.get_files_at(RESULTS_SOUNDS_PATH)
 
 	for sound_file : String in results_sound_files:
-		if sound_file.get_extension() == "mp3":
+		if sound_file.get_extension() == "mp3" or sound_file.get_extension() == "wav":
 			var sound_key : String = sound_file.get_file().get_basename().to_pascal_case()
 			results_sounds[sound_key] = RESULTS_SOUNDS_PATH + '/' + sound_file
 
@@ -51,4 +51,14 @@ func process_results_sound(roll_result: RollResults) -> void:
 					audio_player.play()
 					return
 
-
+# Play the sound that is passed in if it exists.
+func play_sound(sound_id: StringName) -> void:
+	if results_sounds.has(sound_id):
+		audio_player.stream = load(results_sounds[sound_id])
+		audio_player.play()
+		return
+	
+	if roller_sounds.has(sound_id):
+		audio_player.stream = load(results_sounds[sound_id])
+		audio_player.play()
+		return

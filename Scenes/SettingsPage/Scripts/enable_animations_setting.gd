@@ -30,10 +30,6 @@ func inner_get_title() -> String:
 	if SettingsManager.get_animations_enabled():
 		animations_enabled_string = "Enabled"
 	return str(ANIMATIONS_LABEL_TEXT, animations_enabled_string)
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(button_container.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

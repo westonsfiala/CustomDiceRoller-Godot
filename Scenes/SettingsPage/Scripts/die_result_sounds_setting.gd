@@ -64,12 +64,6 @@ func reconfigure_buttons() -> void:
 	
 	show_hide_reset_button()
 	set_title()
-	call_deferred("helper")
-
-func helper() -> void:
-	#die_result_container.custom_minimum_size.y = 0
-	set_collapsible_min_height(inner_get_collapsible_section_minimum_height())
-	print(size)
 	
 # Method for inherited class to get the title to display
 func inner_get_title() -> String:
@@ -77,10 +71,6 @@ func inner_get_title() -> String:
 	if SettingsManager.get_die_result_sounds_enabled():
 		die_result_sounds_enabled_string = "Enabled"
 	return str(DIE_RESULT_SOUNDS_LABEL_TEXT, die_result_sounds_enabled_string)
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(die_result_container.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

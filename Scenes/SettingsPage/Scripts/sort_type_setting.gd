@@ -45,10 +45,6 @@ func inner_get_title() -> String:
 		SettingsManager.SORT_TYPE.DESCENDING:
 			sort_type_string = "Descending"
 	return str(SORT_TYPE_LABEL_TEXT, sort_type_string)
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(button_container.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

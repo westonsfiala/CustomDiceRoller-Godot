@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://pmp5uc61o3kg"]
+[gd_scene load_steps=6 format=3 uid="uid://pmp5uc61o3kg"]
 
 [ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/die_result_sound_list_item.gd" id="1_jvyg3"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="2_dfpuf"]
 [ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="3_w3rjm"]
 [ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="4_rb7go"]
+[ext_resource type="Texture2D" uid="uid://csex2acxdbsd5" path="res://Icons/musical-notes.svg" id="5_3adli"]
 
 [node name="DieResultListItem" type="HBoxContainer"]
 anchors_preset = 10
@@ -33,6 +34,10 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="PlaySoundButton" parent="." instance=ExtResource("2_dfpuf")]
+layout_mode = 2
+texture_2d = ExtResource("5_3adli")
+
 [node name="RemoveButton" parent="." instance=ExtResource("2_dfpuf")]
 layout_mode = 2
 
@@ -41,4 +46,5 @@ layout_mode = 2
 [connection signal="item_selected" from="DieNameOptionButton" to="." method="_on_die_name_option_button_item_selected"]
 [connection signal="item_selected" from="DieResultOptionButton" to="." method="_on_die_result_option_button_item_selected"]
 [connection signal="item_selected" from="SoundNameOptionButton" to="." method="_on_sound_name_option_button_item_selected"]
+[connection signal="pressed" from="PlaySoundButton" to="." method="_on_play_sound_button_pressed"]
 [connection signal="pressed" from="RemoveButton" to="." method="_on_remove_button_pressed"]

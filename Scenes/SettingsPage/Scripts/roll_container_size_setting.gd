@@ -44,10 +44,6 @@ func inner_get_title() -> String:
 		SettingsManager.ROLL_CONTAINER_SIZE.MINIMAL:
 			roll_container_size_string = "Minimal"
 	return str(ROLL_CONTAINER_SIZE_LABEL_TEXT, roll_container_size_string)
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(button_container.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

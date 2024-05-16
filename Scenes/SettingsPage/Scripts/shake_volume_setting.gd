@@ -26,10 +26,6 @@ func _on_shake_volume_slider_value_changed(_value : int) -> void:
 	
 func inner_get_title() -> String:
 	return str(SHAKE_VOLUME_LABEL_TEXT, SettingsManager.get_shake_volume(), "%")
-
-# Method for inherited class to get the minimum height of the collapsible section
-func inner_get_collapsible_section_minimum_height() -> int:
-	return int(shake_volume_slider.size.y)
 	
 # Method for inherited class to implement if the reset button should be shown
 func inner_should_show_reset_button() -> bool:

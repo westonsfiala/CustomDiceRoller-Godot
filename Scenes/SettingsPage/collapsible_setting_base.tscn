@@ -8,28 +8,22 @@
 [ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="6_6fgg4"]
 [ext_resource type="Texture2D" uid="uid://beflagctk5v4y" path="res://Icons/anticlockwise-rotation.svg" id="7_mhmvh"]
 
-[node name="CollapsibleSettingBase" type="Control"]
+[node name="CollapsibleSettingBase" type="HBoxContainer"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
+theme = ExtResource("2_vbn0r")
 script = ExtResource("1_0rdis")
 
 [node name="TopLevelContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 50.0
-grow_horizontal = 2
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("2_vbn0r")
-theme_override_constants/separation = 2
 
 [node name="TitleBarContainer" type="HBoxContainer" parent="TopLevelContainer"]
 layout_mode = 2
@@ -61,21 +55,24 @@ size_flags_horizontal = 8
 texture_2d = ExtResource("7_mhmvh")
 
 [node name="CollapsibleContainer" type="HBoxContainer" parent="TopLevelContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("2_vbn0r")
+alignment = 1
 
 [node name="VSeparator" type="VSeparator" parent="TopLevelContainer/CollapsibleContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme = ExtResource("2_vbn0r")
 
-[node name="CollapsibleSection" type="Control" parent="TopLevelContainer/CollapsibleContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="CollapsibleSection" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 mouse_filter = 2
+theme = ExtResource("2_vbn0r")
+alignment = 1
 
 [connection signal="pressed" from="TopLevelContainer/TitleBarContainer/RotatingArrow" to="." method="expand_collapse_inner_settings"]
 [connection signal="pressed" from="TopLevelContainer/TitleBarContainer/CollapseExpandButton" to="." method="expand_collapse_inner_settings"]

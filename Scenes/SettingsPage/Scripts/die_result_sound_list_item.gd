@@ -125,3 +125,6 @@ func _on_sound_name_option_button_item_selected(index : int) -> void:
 	setup_sound_name_option_button()
 	emit_signal("die_result_sound_changed", list_index, die_result_sound_descriptor)
 
+# When pressed, tell the sound manager to play this sound.
+func _on_play_sound_button_pressed() -> void:
+	SoundManager.play_sound(die_result_sound_descriptor.sound_id)
