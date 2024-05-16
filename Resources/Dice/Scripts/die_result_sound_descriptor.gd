@@ -5,7 +5,7 @@ class_name DieResultSoundDescriptor
 @export var die_result : StringName = ""
 @export var sound_id : StringName = ""
 
-func configure(new_die_name: String, new_die_result: String, new_sound_id: StringName) -> DieResultSoundDescriptor:
+func configure(new_die_name: StringName, new_die_result: StringName, new_sound_id: StringName) -> DieResultSoundDescriptor:
 	self.die_name = new_die_name
 	self.die_result = new_die_result
 	self.sound_id = new_sound_id
@@ -34,13 +34,13 @@ static func load_from_save_dict(save_state: Dictionary) -> DieResultSoundDescrip
 	if save_state['schema_version'] != '1.0.0':
 		print("Unknown schema_version during die_result_sound_descriptor loader: ", save_state['schema_version'])
 		return null
-	if not save_state['die_name'] is String:
+	if not (save_state['die_name'] is String or save_state['die_name'] is StringName):
 		print("die_name not a string during die_result_sound_descriptor loader")
 		return null
-	if not save_state['die_result'] is String:
+	if not (save_state['die_result'] is String or save_state['die_result'] is StringName):
 		print("die_result not a string during die_result_sound_descriptor loader")
 		return null
-	if not (save_state['sound_id'] is String):
+	if not (save_state['sound_id'] is String or save_state['sound_id'] is StringName):
 		print("sound_id not an String during die_result_sound_descriptor loader")
 		return null
 		

@@ -84,6 +84,7 @@ func setup_sound_name_option_button() -> void:
 func set_die_result_sound(new_die_result_sound: DieResultSoundDescriptor) -> void:
 	die_result_sound_descriptor = new_die_result_sound
 	setup_die_name_option_button()
+	setup_sound_name_option_button()
 	
 # Set the index to the new index.
 func set_index(new_index : int) -> void:
@@ -117,3 +118,10 @@ func _on_die_result_option_button_item_selected(index : int) -> void:
 	die_result_sound_descriptor.die_result = die_result_option_button.get_item_text(index)
 	setup_die_result_option_button()
 	emit_signal("die_result_sound_changed", list_index, die_result_sound_descriptor)
+
+# When a new sound is selected, update the die result.
+func _on_sound_name_option_button_item_selected(index : int) -> void:
+	die_result_sound_descriptor.sound_id = sound_name_option_button.get_item_text(index)
+	setup_sound_name_option_button()
+	emit_signal("die_result_sound_changed", list_index, die_result_sound_descriptor)
+

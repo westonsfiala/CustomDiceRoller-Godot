@@ -6,14 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="4_2sfct"]
 
 [node name="DieResultSoundsSetting" instance=ExtResource("1_a4xvl")]
-custom_minimum_size = Vector2(0, 500)
 script = ExtResource("2_vsi87")
 
 [node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
 text = "Die Result Sounds"
 
 [node name="CollapsibleSection" parent="TopLevelContainer/CollapsibleContainer" index="1"]
-custom_minimum_size = Vector2(0, 750)
+custom_minimum_size = Vector2(0, 100)
 
 [node name="DieResultContainer" type="VBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
 layout_mode = 1

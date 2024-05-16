@@ -101,7 +101,7 @@ layout_mode = 2
 [node name="ShakeVolumeSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("9_sgwpq")]
 layout_mode = 2
 
-[node name="CriticalSoundsSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("11_05kol")]
+[node name="DieResultSoundsSetting" parent="ScrollContainer/MarginContainer/VBoxContainer/RollerSettingsContainer" instance=ExtResource("11_05kol")]
 layout_mode = 2
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]

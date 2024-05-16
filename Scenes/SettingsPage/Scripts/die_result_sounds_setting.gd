@@ -15,6 +15,11 @@ func _ready() -> void:
 	SettingsManager.die_result_sounds_changed.connect(reconfigure_buttons)
 	reconfigure_buttons()
 
+func _process(_delta : float) -> void:
+	#if collapsible_section.size.y != die_result_container.size.y:
+		#print(str("collapsible size = ", collapsible_section.size.y, " : result_container size = ", die_result_container.size.y))
+	pass
+
 # Send to the settings manager that we have updated.
 func update_die_result_sounds() -> void:
 	# Just set it to iteself to trigger the signal. We already modified the array.
@@ -54,11 +59,17 @@ func reconfigure_buttons() -> void:
 	for index : int in die_result_sound_list_items.size():
 		var die_result_sound : DieResultSoundDescriptor = die_result_sounds[index]
 		var die_result_sound_list_item : Node = die_result_sound_list_items[index]
-		die_result_sound_list_item.set_die_result_sound(die_result_sound)
 		die_result_sound_list_item.set_index(index)
+		die_result_sound_list_item.set_die_result_sound(die_result_sound)
 	
 	show_hide_reset_button()
 	set_title()
+	call_deferred("helper")
+
+func helper() -> void:
+	#die_result_container.custom_minimum_size.y = 0
+	set_collapsible_min_height(inner_get_collapsible_section_minimum_height())
+	print(size)
 	
 # Method for inherited class to get the title to display
 func inner_get_title() -> String:

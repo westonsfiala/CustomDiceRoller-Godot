@@ -2,13 +2,9 @@ extends Control
 class_name DiceRoller
 
 @onready var top_edge : StaticBody2D = $TopEdge
-@onready var top_shape : CollisionShape2D = $TopEdge/TopShape
 @onready var right_edge : StaticBody2D = $RightEdge
-@onready var right_shape : CollisionShape2D = $RightEdge/RightShape
 @onready var bottom_edge : StaticBody2D = $BottomEdge
-@onready var bottom_shape : CollisionShape2D = $BottomEdge/BottomShape
 @onready var left_edge : StaticBody2D = $LeftEdge
-@onready var left_shape : CollisionShape2D = $LeftEdge/LeftShape
 
 @onready var instruction_label : Label = $InstructionLabel
 @onready var go_to_results_button : LongPressButton = $MarginContainer/GoToResultsButton
@@ -94,8 +90,6 @@ func _ready() -> void:
 			physics_dice_array.push_back(physics_dice_node)
 			add_child(physics_dice_node)
 			
-	
-
 # Sets up all the bouncer bars 
 func setup_bumpers() -> void:
 	var button_size: int = SettingsManager.get_button_size()
@@ -103,26 +97,13 @@ func setup_bumpers() -> void:
 	# Set the button size.
 	go_to_results_button.custom_minimum_size.y = button_size
 	
-	# Do some precalculations for all the known sizes
-	var horizontal_bumper_width : float = size.x + extra_bumper_space * 2
-	var horizontal_bumper_height : float = bumper_thickness
-	var vertical_bumber_width : float = bumper_thickness
-	var vertical_bumper_height : float = size.y + extra_bumper_space * 2
-	
 	var half_screen_size : Vector2 = size / 2.0
 	
 	# Apply the sizes and place all the bumpers
-	top_shape.shape.size = Vector2(horizontal_bumper_width, horizontal_bumper_height)
-	top_edge.position = Vector2(half_screen_size.x, -half_bumper_thickness)
-	
-	right_shape.shape.size = Vector2(vertical_bumber_width, vertical_bumper_height)
-	right_edge.position = Vector2(size.x + half_bumper_thickness, half_screen_size.y)
-	
-	bottom_shape.shape.size = Vector2(horizontal_bumper_width, horizontal_bumper_height)
-	bottom_edge.position = Vector2(half_screen_size.x, size.y + half_bumper_thickness)
-	
-	left_shape.shape.size = Vector2(vertical_bumber_width, vertical_bumper_height)
-	left_edge.position = Vector2(-half_bumper_thickness, half_screen_size.y)
+	top_edge.position = Vector2(half_screen_size.x, 0)
+	right_edge.position = Vector2(size.x, half_screen_size.y)
+	bottom_edge.position = Vector2(half_screen_size.x, size.y )
+	left_edge.position = Vector2(0, half_screen_size.y)
 
 # While we are waiting for the taps, keep processing.
 func _process(_delta: float) -> void:

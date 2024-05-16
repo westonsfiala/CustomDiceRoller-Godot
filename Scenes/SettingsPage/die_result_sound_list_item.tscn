@@ -40,4 +40,5 @@ layout_mode = 2
 [connection signal="pressed" from="DownButton" to="." method="_on_down_button_pressed"]
 [connection signal="item_selected" from="DieNameOptionButton" to="." method="_on_die_name_option_button_item_selected"]
 [connection signal="item_selected" from="DieResultOptionButton" to="." method="_on_die_result_option_button_item_selected"]
+[connection signal="item_selected" from="SoundNameOptionButton" to="." method="_on_sound_name_option_button_item_selected"]
 [connection signal="pressed" from="RemoveButton" to="." method="_on_remove_button_pressed"]

@@ -131,7 +131,6 @@ func enforce_all_content_shown() -> void:
 
 func deferred_enforce_all_content_shown() -> void:
 	size.y = custom_minimum_size.y
-	pass
 
 # Shows or hides the reset button as dictacted by inner_should_show_reset_button
 func show_hide_reset_button() -> void:

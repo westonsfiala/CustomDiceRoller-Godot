@@ -6,17 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="3_oe3t3"]
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_u5a1l"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6b7gr"]
-size = Vector2(1042, 136)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_226po"]
+normal = Vector2(0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5k16"]
-size = Vector2(195, 1210)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rud4m"]
+normal = Vector2(-1, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_axed0"]
-size = Vector2(1042, 125)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7gqg1"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkyvl"]
-size = Vector2(160, 1206)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_t870p"]
+normal = Vector2(1, 0)
 
 [node name="DiceRoller" type="Control"]
 layout_mode = 3
@@ -30,40 +29,40 @@ size_flags_vertical = 3
 script = ExtResource("1_cmbj3")
 
 [node name="TopEdge" type="StaticBody2D" parent="."]
-position = Vector2(376, -68)
+position = Vector2(376, -2)
 collision_layer = 15
 collision_mask = 15
 physics_material_override = ExtResource("2_m0txb")
 
 [node name="TopShape" type="CollisionShape2D" parent="TopEdge"]
-shape = SubResource("RectangleShape2D_6b7gr")
+shape = SubResource("WorldBoundaryShape2D_226po")
 
 [node name="RightEdge" type="StaticBody2D" parent="."]
-position = Vector2(846, 466)
+position = Vector2(755, 479)
 collision_layer = 15
 collision_mask = 15
 physics_material_override = ExtResource("2_m0txb")
 
 [node name="RightShape" type="CollisionShape2D" parent="RightEdge"]
-shape = SubResource("RectangleShape2D_l5k16")
+shape = SubResource("WorldBoundaryShape2D_rud4m")
 
 [node name="BottomEdge" type="StaticBody2D" parent="."]
-position = Vector2(433, 1065)
+position = Vector2(382, 1000)
 collision_layer = 15
 collision_mask = 15
 physics_material_override = ExtResource("2_m0txb")
 
 [node name="BottomShape" type="CollisionShape2D" parent="BottomEdge"]
-shape = SubResource("RectangleShape2D_axed0")
+shape = SubResource("WorldBoundaryShape2D_7gqg1")
 
 [node name="LeftEdge" type="StaticBody2D" parent="."]
-position = Vector2(-78, 485)
+position = Vector2(-1, 500)
 collision_layer = 15
 collision_mask = 15
 physics_material_override = ExtResource("2_m0txb")
 
 [node name="LeftShape" type="CollisionShape2D" parent="LeftEdge"]
-shape = SubResource("RectangleShape2D_vkyvl")
+shape = SubResource("WorldBoundaryShape2D_t870p")
 
 [node name="BackgroundPanel" type="Panel" parent="."]
 layout_mode = 1
