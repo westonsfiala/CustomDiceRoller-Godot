@@ -1,13 +1,13 @@
-extends Control
+extends MarginContainer
 class_name HistoryItem
 
-@onready var color_rect : ColorRect = $MarginContainer/TopLayout/TopLineLayout/ColorRect
-@onready var sum_label : SettingsManagedRichTextLabel = $MarginContainer/TopLayout/TopLineLayout/ColorRect/SumRichTextLabel
-@onready var roll_name_label : SettingsManagedRichTextLabel = $MarginContainer/TopLayout/TopLineLayout/NameDetailLayout/RollNameRichText
-@onready var roll_detailed_name_label : SettingsManagedRichTextLabel = $MarginContainer/TopLayout/TopLineLayout/NameDetailLayout/RollDetailsRichText
-@onready var date_label : SettingsManagedRichTextLabel = $MarginContainer/TopLayout/TopLineLayout/DateTimeLayout/DateRichText
-@onready var time_label : SettingsManagedRichTextLabel = $MarginContainer/TopLayout/TopLineLayout/DateTimeLayout/TimeRichText
-@onready var roll_results_label : SettingsManagedRichTextLabel = $MarginContainer/TopLayout/RollResultsRichTextLabel
+@onready var color_rect : ColorRect = $TopLayout/TopLineLayout/ColorRect
+@onready var sum_label : SettingsManagedRichTextLabel = $TopLayout/TopLineLayout/ColorRect/SumRichTextLabel
+@onready var roll_name_label : SettingsManagedRichTextLabel = $TopLayout/TopLineLayout/NameDetailLayout/RollNameRichText
+@onready var roll_detailed_name_label : SettingsManagedRichTextLabel = $TopLayout/TopLineLayout/NameDetailLayout/RollDetailsRichText
+@onready var date_label : SettingsManagedRichTextLabel = $TopLayout/TopLineLayout/DateTimeLayout/DateRichText
+@onready var time_label : SettingsManagedRichTextLabel = $TopLayout/TopLineLayout/DateTimeLayout/TimeRichText
+@onready var roll_results_label : SettingsManagedRichTextLabel = $TopLayout/RollResultsRichTextLabel
 
 var m_result : RollResults = RollResults.new()
 
@@ -21,7 +21,6 @@ func configure(result: RollResults) -> HistoryItem:
 	return self
 	
 func reconfigure() -> void:
-	var minimum_height : float = 0
 	
 	# First up is the name, details, and datetime
 	var name_layout_height : int = 0
@@ -48,7 +47,6 @@ func reconfigure() -> void:
 	# it will be too flush.
 	if(sum_label_needed_height > name_layout_height):
 		sum_label_needed_height += 5
-	minimum_height += max(name_layout_height, sum_label_needed_height)
 	
 	# Go through all of the different lists that can be generated
 	var first : bool = true
@@ -60,6 +58,12 @@ func reconfigure() -> void:
 		combined_text += result.formatted_text
 	
 	roll_results_label.set_text_and_resize_y(combined_text)
-	minimum_height += roll_results_label.custom_minimum_size.y
-	
-	custom_minimum_size.y = minimum_height
+
+# Reroll from our result.
+func _on_reroll_button_pressed() -> void:
+	RollManager.reroll_from_results(m_result)
+
+# Save our roll as a named roll.
+func _on_save_button_pressed() -> void:
+	# TODO: Need to get the save roll page going for this to work.
+	pass # Replace with function body.
