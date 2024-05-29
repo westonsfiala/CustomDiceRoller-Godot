@@ -22,6 +22,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_wgccd")
+theme_override_constants/separation = 2
 
 [node name="ResetProp" parent="ContentPanel/Margins/PropertiesScroller/PropertiesLayout" index="0" instance=ExtResource("4_cotgu")]
 layout_mode = 2

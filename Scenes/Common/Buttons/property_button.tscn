@@ -8,9 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b3y31p8o0rflk" path="res://Scenes/Common/Popups/change_properties_popup.tscn" id="7_dmcq2"]
 [ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_olfs5"]
 
-[node name="PropertyButton" type="Control"]
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 3
+[node name="PropertyButton" type="HBoxContainer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -18,37 +16,15 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-mouse_filter = 1
 theme = ExtResource("1_4iyvt")
+theme_override_constants/separation = 2
 script = ExtResource("2_02ubf")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -30.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_4iyvt")
-
-[node name="ResetMargins" type="MarginContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("1_4iyvt")
-
-[node name="ResetButton" parent="HBoxContainer/ResetMargins" instance=ExtResource("3_pl6br")]
+[node name="ResetButton" parent="." instance=ExtResource("3_pl6br")]
 layout_mode = 2
 texture_2d = ExtResource("4_hiflb")
 
-[node name="PropertyMargins" type="MarginContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("1_4iyvt")
-
-[node name="PropertyButton" parent="HBoxContainer/PropertyMargins" instance=ExtResource("2_cc5bv")]
+[node name="PropertyButton" parent="." instance=ExtResource("2_cc5bv")]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -58,5 +34,5 @@ visible = false
 [node name="SetValueExactPopup" parent="." instance=ExtResource("7_olfs5")]
 visible = false
 
-[connection signal="pressed" from="HBoxContainer/ResetMargins/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/PropertyMargins/PropertyButton" to="." method="_on_property_button_pressed"]
+[connection signal="pressed" from="ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="PropertyButton" to="." method="_on_property_button_pressed"]

@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://dwrsorst7xcde"]
+
+[ext_resource type="Script" path="res://Scenes/CustomRoll/Scripts/custom_roll_list_item.gd" id="1_afc7a"]
+[ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="1_ijapc"]
+[ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="2_yceqa"]
+[ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_0t5vq"]
+[ext_resource type="Texture2D" uid="uid://b2xwvheni4p15" path="res://DicePNGs/white/d20.png" id="4_pohj4"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_05cnf"]
+[ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="6_6w438"]
+[ext_resource type="PackedScene" uid="uid://cdqd62tcyenpp" path="res://Scenes/Common/Buttons/property_button.tscn" id="7_g0s4d"]
+
+[node name="CustomRollListItem" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 154.0
+grow_horizontal = 2
+script = ExtResource("1_afc7a")
+
+[node name="UpDownButtonsLayout" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="UpButton" parent="UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
+layout_mode = 2
+texture_2d = ExtResource("2_yceqa")
+
+[node name="DeleteButton" parent="UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
+layout_mode = 2
+
+[node name="DownButton" parent="UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
+layout_mode = 2
+texture_2d = ExtResource("3_0t5vq")
+
+[node name="DieViewLayout" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="DiceImage" type="TextureRect" parent="DieViewLayout"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("4_pohj4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DiceName" parent="DieViewLayout" instance=ExtResource("5_05cnf")]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="PropertiesLayout" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NumDiceUpDown" parent="PropertiesLayout" instance=ExtResource("6_6w438")]
+layout_mode = 2
+m_prefix = "d"
+m_disallow_zero = true
+
+[node name="ModifierUpDown" parent="PropertiesLayout" instance=ExtResource("6_6w438")]
+layout_mode = 2
+m_show_plus_minus = true
+
+[node name="PropertyButton" parent="PropertiesLayout" instance=ExtResource("7_g0s4d")]
+layout_mode = 2

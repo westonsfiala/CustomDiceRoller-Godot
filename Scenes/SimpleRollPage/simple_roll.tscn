@@ -49,10 +49,12 @@ theme = ExtResource("1_dvlt6")
 [node name="PropBar" type="VBoxContainer" parent="VerticalLayout"]
 layout_mode = 2
 theme = ExtResource("1_dvlt6")
+theme_override_constants/separation = 2
 
 [node name="UpDownButtonBar" type="HBoxContainer" parent="VerticalLayout/PropBar"]
 layout_mode = 2
 theme = ExtResource("1_dvlt6")
+theme_override_constants/separation = 2
 
 [node name="NumDiceUpDown" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("3_6vjsp")]
 layout_mode = 2
@@ -67,6 +69,7 @@ m_show_plus_minus = true
 
 [node name="PropertyButtonBar" type="HBoxContainer" parent="VerticalLayout/PropBar"]
 layout_mode = 2
+theme_override_constants/separation = 2
 
 [node name="PropertyButton" parent="VerticalLayout/PropBar/PropertyButtonBar" instance=ExtResource("5_uf67h")]
 layout_mode = 2

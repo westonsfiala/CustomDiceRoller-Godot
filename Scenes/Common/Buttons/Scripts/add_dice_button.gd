@@ -1,4 +1,4 @@
-extends Control
+extends HBoxContainer
 class_name AddDiceButton
 
 @onready var add_dice_popup_menu : AddDicePopupMenu = $AddDicePopupMenu

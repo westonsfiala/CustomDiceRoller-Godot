@@ -1,9 +1,8 @@
-extends Control
+extends HBoxContainer
 class_name PropertyButton
 
-@onready var reset_button_margins : MarginContainer = $HBoxContainer/ResetMargins
-@onready var reset_button : LongPressButton = $HBoxContainer/ResetMargins/ResetButton
-@onready var property_button : SettingsManagedTextButton = $HBoxContainer/PropertyMargins/PropertyButton
+@onready var reset_button : LongPressButton = $ResetButton
+@onready var property_button : SettingsManagedTextButton = $PropertyButton
 @onready var change_properties_popup : ChangePropertiesPopup = $ChangePropertiesPopup
 @onready var set_value_exact_popup : SetValueExactPopup = $SetValueExactPopup
 
@@ -51,19 +50,17 @@ func _ready() -> void:
 	reconfigure()
 
 func reconfigure() -> void:
-	var button_size : int = SettingsManager.get_button_size()
-	var margin_size : int = reset_button_margins.get_theme_constant("margin_top") + reset_button_margins.get_theme_constant("margin_bottom")
-	custom_minimum_size = Vector2(0, button_size + margin_size)
+	pass
 	
 func set_properties(props: RollProperties) -> void:
 	roll_properties = props
 	change_properties_popup.set_properties(roll_properties)
 	
 	if(roll_properties.is_default()):
-		reset_button_margins.visible = false
+		reset_button.visible = false
 		property_button.text = NO_PROP_STRING
 	else:
-		reset_button_margins.visible = true
+		reset_button.visible = true
 		var num_non_default : int = roll_properties.get_num_non_default()
 		if(num_non_default == 1):
 			property_button.text = str(num_non_default, SINGLE_PROP_STRING)

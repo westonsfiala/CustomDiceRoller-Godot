@@ -1,4 +1,4 @@
-extends Control
+extends HBoxContainer
 class_name UpDownButtons
 
 @export var m_prefix : String
@@ -6,10 +6,9 @@ class_name UpDownButtons
 @export var m_show_plus_minus : bool
 @export var m_disallow_zero : bool
 
-@onready var margin_container : MarginContainer = $MarginContainer
-@onready var down_button : LongPressButton = $MarginContainer/HBoxContainer/DownButton
-@onready var value_text_button : SettingsManagedTextButton = $MarginContainer/HBoxContainer/ValueTextButton
-@onready var up_button : LongPressButton = $MarginContainer/HBoxContainer/UpButton
+@onready var down_button : LongPressButton = $DownButton
+@onready var value_text_button : SettingsManagedTextButton = $ValueTextButton
+@onready var up_button : LongPressButton = $UpButton
 
 var m_value : int = 0
 
@@ -30,9 +29,7 @@ func setup_exports(prefix: String, postfix: String, show_plus_minus: bool, disal
 	set_value(m_value)
 
 func reconfigure() -> void:
-	var button_size : int = SettingsManager.get_button_size()
-	var margin_size : int = margin_container.get_theme_constant("margin_top") + margin_container.get_theme_constant("margin_bottom")
-	custom_minimum_size = Vector2(0, button_size + margin_size)
+	pass
 	
 func get_value() -> int:
 	return m_value

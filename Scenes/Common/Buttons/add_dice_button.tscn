@@ -1,16 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjqaot0p6s5sg"]
+[gd_scene load_steps=7 format=3 uid="uid://bjqaot0p6s5sg"]
 
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="1_2dgxu"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/add_dice_button.gd" id="1_82tli"]
-[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="2_lq7ou"]
 [ext_resource type="PackedScene" uid="uid://bh4v1127nlkuw" path="res://Scenes/Common/Popups/add_dice_popup_menu.tscn" id="4_qkus1"]
 [ext_resource type="PackedScene" uid="uid://biumolcfuvbmg" path="res://Scenes/Common/Popups/min_max_die_dialog.tscn" id="5_2e1bf"]
 [ext_resource type="PackedScene" uid="uid://8fqktuj4ct18" path="res://Scenes/Common/Popups/imbalanced_die_dialog.tscn" id="6_uap46"]
 [ext_resource type="PackedScene" uid="uid://c2ckvnabmjnpp" path="res://Scenes/Common/Popups/word_die_dialog.tscn" id="7_cwwoi"]
 
-[node name="AddDiceButton" type="Control"]
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 3
+[node name="AddDiceButton" type="HBoxContainer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -18,23 +15,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-mouse_filter = 1
 script = ExtResource("1_82tli")
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_lq7ou")
-
-[node name="AddButton" parent="MarginContainer" instance=ExtResource("1_2dgxu")]
-layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 1
-text = "Add Die"
 
 [node name="AddDicePopupMenu" parent="." instance=ExtResource("4_qkus1")]
 visible = false
@@ -48,7 +29,12 @@ visible = false
 [node name="WordDieDialog" parent="." instance=ExtResource("7_cwwoi")]
 visible = false
 
-[connection signal="pressed" from="MarginContainer/AddButton" to="." method="_on_add_button_pressed"]
+[node name="AddButton" parent="." instance=ExtResource("1_2dgxu")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Add Die"
+
 [connection signal="new_imbalanced_die" from="AddDicePopupMenu" to="." method="_on_add_dice_popup_menu_new_imbalanced_die"]
 [connection signal="new_min_max_die" from="AddDicePopupMenu" to="." method="_on_add_dice_popup_menu_new_min_max_die"]
 [connection signal="new_word_die" from="AddDicePopupMenu" to="." method="_on_add_dice_popup_menu_new_word_die"]
@@ -56,3 +42,4 @@ visible = false
 [connection signal="die_accepted" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_accepted"]
 [connection signal="die_accepted" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_accepted"]
 [connection signal="die_accepted" from="WordDieDialog" to="." method="_on_word_die_dialog_die_accepted"]
+[connection signal="pressed" from="AddButton" to="." method="_on_add_button_pressed"]

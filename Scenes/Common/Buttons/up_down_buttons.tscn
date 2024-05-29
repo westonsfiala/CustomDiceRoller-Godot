@@ -7,9 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="5_4rc5u"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="5_n3c68"]
 
-[node name="UpDownButtons" type="Control"]
-custom_minimum_size = Vector2(0, 75)
-layout_mode = 3
+[node name="UpDownButtons" type="HBoxContainer"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -17,42 +15,25 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
-mouse_filter = 1
 theme = ExtResource("1_045hk")
 script = ExtResource("1_o2tqo")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -30.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_045hk")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-theme = ExtResource("1_045hk")
-
-[node name="DownButton" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_52mnr")]
+[node name="DownButton" parent="." instance=ExtResource("2_52mnr")]
 layout_mode = 2
 texture_2d = ExtResource("3_48qfq")
 
-[node name="ValueTextButton" parent="MarginContainer/HBoxContainer" instance=ExtResource("5_n3c68")]
+[node name="ValueTextButton" parent="." instance=ExtResource("5_n3c68")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "MOD HERE"
 flat = true
 
-[node name="UpButton" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_52mnr")]
+[node name="UpButton" parent="." instance=ExtResource("2_52mnr")]
 layout_mode = 2
 texture_2d = ExtResource("5_4rc5u")
 
-[connection signal="long_pressed" from="MarginContainer/HBoxContainer/DownButton" to="." method="_on_down_button_long_pressed"]
-[connection signal="short_pressed" from="MarginContainer/HBoxContainer/DownButton" to="." method="_on_down_button_short_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/ValueTextButton" to="." method="_on_value_text_button_pressed"]
-[connection signal="long_pressed" from="MarginContainer/HBoxContainer/UpButton" to="." method="_on_up_button_long_pressed"]
-[connection signal="short_pressed" from="MarginContainer/HBoxContainer/UpButton" to="." method="_on_up_button_short_pressed"]
+[connection signal="long_pressed" from="DownButton" to="." method="_on_down_button_long_pressed"]
+[connection signal="short_pressed" from="DownButton" to="." method="_on_down_button_short_pressed"]
+[connection signal="pressed" from="ValueTextButton" to="." method="_on_value_text_button_pressed"]
+[connection signal="long_pressed" from="UpButton" to="." method="_on_up_button_long_pressed"]
+[connection signal="short_pressed" from="UpButton" to="." method="_on_up_button_short_pressed"]
