@@ -51,7 +51,8 @@ func _ready() -> void:
 
 func reconfigure() -> void:
 	pass
-	
+
+# Set the properties to the given properties. Does not send a signal.
 func set_properties(props: RollProperties) -> void:
 	roll_properties = props
 	change_properties_popup.set_properties(roll_properties)

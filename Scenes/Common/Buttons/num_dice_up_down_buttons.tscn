@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3er8nhufefsi"]
+
+[ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="1_iixo8"]
+
+[node name="NumDiceUpDownButtons" instance=ExtResource("1_iixo8")]
+m_display_title = &"Num Dice"
+m_postfix = "d"
+m_disallow_zero = true

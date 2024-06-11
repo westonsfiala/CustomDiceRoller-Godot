@@ -192,10 +192,6 @@ func _on_repeat_up_down_value_changed(value : int) -> void:
 	roll_properties.set_repeat_roll(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_repeat_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.REPEAT_ROLL_IDENTIFIER)
-
 func _on_advantage_prop_pressed() -> void:
 	emit_signal("property_pressed", RollProperties.ADVANTAGE_IDENTIFIER)
 
@@ -212,97 +208,49 @@ func _on_num_dice_up_down_value_changed(value : int) -> void:
 	roll_properties.set_num_dice(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_num_dice_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.NUM_DICE_IDENTIFIER)
-
 func _on_modifier_up_down_value_changed(value : int) -> void:
 	roll_properties.set_modifier(value)
 	emit_signal("properties_updated", roll_properties)
-
-func _on_modifier_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.DICE_MODIFIER_IDENTIFIER)
 
 func _on_drop_high_up_down_value_changed(value : int) -> void:
 	roll_properties.set_drop_highest(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_drop_high_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.DROP_HIGHEST_IDENTIFIER)
-
 func _on_drop_low_up_down_value_changed(value : int) -> void:
 	roll_properties.set_drop_lowest(value)
 	emit_signal("properties_updated", roll_properties)
-
-func _on_drop_low_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.DROP_LOWEST_IDENTIFIER)
 
 func _on_keep_high_up_down_value_changed(value : int) -> void:
 	roll_properties.set_keep_highest(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_keep_high_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.KEEP_HIGHEST_IDENTIFIER)
-
 func _on_keep_low_up_down_value_changed(value : int) -> void:
 	roll_properties.set_keep_lowest(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_keep_low_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.KEEP_LOWEST_IDENTIFIER)
-
 func _on_reroll_over_up_down_value_changed(value : int) -> void:
 	roll_properties.set_reroll_over(value)
 	emit_signal("properties_updated", roll_properties)
-
-func _on_reroll_over_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.REROLL_OVER_IDENTIFIER)
 	
 func _on_reroll_under_up_down_value_changed(value : int) -> void:
 	roll_properties.set_reroll_under(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_reroll_under_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.REROLL_UNDER_IDENTIFIER)
-
 func _on_maximum_up_down_value_changed(value : int) -> void:
 	roll_properties.set_maximum(value)
 	emit_signal("properties_updated", roll_properties)
-
-func _on_maximum_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.MAXIMUM_ROLL_VALUE_IDENTIFIER)
 
 func _on_minimum_up_down_value_changed(value : int) -> void:
 	roll_properties.set_minimum(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_minimum_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.MINIMUM_ROLL_VALUE_IDENTIFIER)
-
 func _on_count_above_up_down_value_changed(value : int) -> void:
 	roll_properties.set_count_above(value)
 	emit_signal("properties_updated", roll_properties)
 
-func _on_count_above_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.COUNT_ABOVE_EQUAL_IDENTIFIER)
-
 func _on_count_below_up_down_value_changed(value : int) -> void:
 	roll_properties.set_count_below(value)
 	emit_signal("properties_updated", roll_properties)
-
-func _on_count_below_up_down_value_pressed() -> void:
-	animate_close_popup()
-	emit_signal("property_pressed", RollProperties.COUNT_BELOW_EQUAL_IDENTIFIER)
 
 func _on_explode_prop_pressed() -> void:
 	emit_signal("property_pressed", RollProperties.EXPLODE_IDENTIFIER)

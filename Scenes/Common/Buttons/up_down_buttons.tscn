@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6j8433ge4v87"]
+[gd_scene load_steps=8 format=3 uid="uid://c6j8433ge4v87"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_045hk"]
 [ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/up_down_buttons.gd" id="1_o2tqo"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_48qfq"]
 [ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="5_4rc5u"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="5_n3c68"]
+[ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_uifqo"]
 
 [node name="UpDownButtons" type="HBoxContainer"]
 anchors_preset = 14
@@ -17,6 +18,11 @@ grow_vertical = 2
 size_flags_vertical = 4
 theme = ExtResource("1_045hk")
 script = ExtResource("1_o2tqo")
+m_display_title = null
+m_prefix = null
+m_postfix = null
+m_show_plus_minus = null
+m_disallow_zero = null
 
 [node name="DownButton" parent="." instance=ExtResource("2_52mnr")]
 layout_mode = 2
@@ -32,8 +38,12 @@ flat = true
 layout_mode = 2
 texture_2d = ExtResource("5_4rc5u")
 
+[node name="SetValueExactPopup" parent="." instance=ExtResource("7_uifqo")]
+visible = false
+
 [connection signal="long_pressed" from="DownButton" to="." method="_on_down_button_long_pressed"]
 [connection signal="short_pressed" from="DownButton" to="." method="_on_down_button_short_pressed"]
 [connection signal="pressed" from="ValueTextButton" to="." method="_on_value_text_button_pressed"]
 [connection signal="long_pressed" from="UpButton" to="." method="_on_up_button_long_pressed"]
 [connection signal="short_pressed" from="UpButton" to="." method="_on_up_button_short_pressed"]
+[connection signal="value_changed" from="SetValueExactPopup" to="." method="_on_set_value_exact_popup_value_changed"]

@@ -1,6 +1,7 @@
 extends HBoxContainer
 class_name UpDownButtons
 
+@export var m_display_title : StringName
 @export var m_prefix : String
 @export var m_postfix : String
 @export var m_show_plus_minus : bool
@@ -9,10 +10,12 @@ class_name UpDownButtons
 @onready var down_button : LongPressButton = $DownButton
 @onready var value_text_button : SettingsManagedTextButton = $ValueTextButton
 @onready var up_button : LongPressButton = $UpButton
+@onready var set_value_exact_popup : SetValueExactPopup = $SetValueExactPopup
 
 var m_value : int = 0
+var m_text_value : int = 0
+var m_tween : Tween = null
 
-signal value_pressed()
 signal value_changed(value: int)
 
 # Called when the node enters the scene tree for the first time.
@@ -31,27 +34,41 @@ func setup_exports(prefix: String, postfix: String, show_plus_minus: bool, disal
 func reconfigure() -> void:
 	pass
 	
+# Gets the exact value of the button.
 func get_value() -> int:
 	return m_value
-	
+
+# Set the value of the button. Will tween the text to the new value.
 func set_value(value : int) -> void:
-	var current_value : int = m_value
 	m_value = enforce_good_value(value, 0)
-	var tween : Tween = get_tree().create_tween()
+
+	if m_tween:
+		m_tween.kill()
+	m_tween = get_tree().create_tween()
 	
-	var tween_duration : float = min(SettingsManager.LONG_PRESS_DELAY, 0.01 * abs(current_value - m_value))
-	tween.tween_method(set_value_text, current_value, m_value, tween_duration)
-	
+	var tween_duration : float = min(SettingsManager.LONG_PRESS_DELAY, 0.01 * abs(m_text_value - m_value))
+	m_tween.tween_method(set_value_text, m_text_value, m_value, tween_duration)
+
+# Helper function to set the text of the value button. Don't call directly.
 func set_value_text(value: int) -> void:
+	m_text_value = value
 	var new_text : String = str(value)
 	if(m_show_plus_minus):
 		new_text = StringHelper.get_modifier_string(value, false)
 	value_text_button.text = m_prefix + new_text + m_postfix
-	
+
+# Handles a change from one of the button presses.
 func handle_change(change: int) -> void:
 	var snapped_change : int = snap_to_next_increment(m_value, change)
 	var new_value : int = enforce_good_value(m_value, snapped_change)
-	emit_signal("value_changed", new_value)
+	set_value(new_value)
+	emit_signal("value_changed", m_value)
+
+# Handles the change when set exactly.
+func handle_exact_change(value: int) -> void:
+	var new_value : int = enforce_good_value(value, 0)
+	set_value(new_value)
+	emit_signal("value_changed", m_value)
 	
 # Sometimes we do not want to allow for the value to be 0.
 func enforce_good_value(value: int, change: int) -> int:
@@ -102,4 +119,9 @@ func _on_up_button_long_pressed() -> void:
 	handle_change(100)
 
 func _on_value_text_button_pressed() -> void:
-	emit_signal("value_pressed")
+	set_value_exact_popup.set_initial_value(m_display_title, m_value)
+	set_value_exact_popup.modular_popup_center()
+
+# When the user has entered a new value from the popup
+func _on_set_value_exact_popup_value_changed(value: int) -> void:
+	handle_exact_change(value)

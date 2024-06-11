@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dwrsorst7xcde"]
+[gd_scene load_steps=10 format=3 uid="uid://dwrsorst7xcde"]
 
 [ext_resource type="Script" path="res://Scenes/CustomRoll/Scripts/custom_roll_list_item.gd" id="1_afc7a"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="1_ijapc"]
@@ -6,8 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_0t5vq"]
 [ext_resource type="Texture2D" uid="uid://b2xwvheni4p15" path="res://DicePNGs/white/d20.png" id="4_pohj4"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_05cnf"]
-[ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="6_6w438"]
+[ext_resource type="PackedScene" uid="uid://d3er8nhufefsi" path="res://Scenes/Common/Buttons/num_dice_up_down_buttons.tscn" id="7_81xqu"]
 [ext_resource type="PackedScene" uid="uid://cdqd62tcyenpp" path="res://Scenes/Common/Buttons/property_button.tscn" id="7_g0s4d"]
+[ext_resource type="PackedScene" uid="uid://xw1h45p7sb8o" path="res://Scenes/Common/Buttons/modifier_up_down_buttons.tscn" id="8_3o5fp"]
 
 [node name="CustomRollListItem" type="HBoxContainer"]
 anchors_preset = 10
@@ -51,14 +52,16 @@ size_flags_vertical = 8
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NumDiceUpDown" parent="PropertiesLayout" instance=ExtResource("6_6w438")]
+[node name="NumDiceUpDownButtons" parent="PropertiesLayout" instance=ExtResource("7_81xqu")]
 layout_mode = 2
-m_prefix = "d"
-m_disallow_zero = true
 
-[node name="ModifierUpDown" parent="PropertiesLayout" instance=ExtResource("6_6w438")]
+[node name="ModifierUpDownButtons" parent="PropertiesLayout" instance=ExtResource("8_3o5fp")]
 layout_mode = 2
-m_show_plus_minus = true
 
 [node name="PropertyButton" parent="PropertiesLayout" instance=ExtResource("7_g0s4d")]
 layout_mode = 2
+
+[connection signal="value_changed" from="PropertiesLayout/NumDiceUpDownButtons" to="." method="_on_num_dice_up_down_value_changed"]
+[connection signal="value_changed" from="PropertiesLayout/ModifierUpDownButtons" to="." method="_on_modifier_up_down_value_changed"]
+[connection signal="properties_updated" from="PropertiesLayout/PropertyButton" to="." method="_on_property_button_properties_updated"]
+[connection signal="reset_properties" from="PropertiesLayout/PropertyButton" to="." method="_on_property_button_reset_properties"]

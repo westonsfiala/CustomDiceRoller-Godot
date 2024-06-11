@@ -3,10 +3,9 @@ class_name SimpleRoll
 
 @onready var dice_grid : HFlowContainer = $VerticalLayout/ScrollContainer/DiceGrid
 @onready var no_dice_label : Label = $NoDiceLabel
-@onready var num_dice_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown
-@onready var modifier_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown
+@onready var num_dice_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDownButtons
+@onready var modifier_buttons : UpDownButtons = $VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDownButtons
 @onready var property_button : PropertyButton = $VerticalLayout/PropBar/PropertyButtonBar/PropertyButton
-@onready var set_value_exact_popup : SetValueExactPopup = $SetValueExactPopup
 @onready var min_max_edit_die_popup : MinMaxDieDialog = $MinMaxDieDialog
 @onready var imbalanced_edit_die_popup : ImbalancedDieDialog = $ImbalancedDieDialog
 @onready var word_edit_die_popup : WordDieDialog = $WordDieDialog
@@ -80,37 +79,10 @@ func _on_num_dice_up_down_value_changed(value: int) -> void:
 	roll_properties.set_num_dice(value)
 	SimpleRollManager.set_roll_properties(roll_properties)
 
-func _on_num_dice_up_down_value_pressed() -> void:
-	up_down_pressed(RollProperties.NUM_DICE_IDENTIFIER)
-
 func _on_modifier_up_down_value_changed(value : int) -> void:
 	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
 	roll_properties.set_modifier(value)
 	SimpleRollManager.set_roll_properties(roll_properties)
-
-func _on_modifier_up_down_value_pressed() -> void:
-	up_down_pressed(RollProperties.DICE_MODIFIER_IDENTIFIER)
-
-func up_down_pressed(property_identifier: StringName) -> void:
-	currently_edited_property_identifier = property_identifier
-	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
-	match property_identifier:
-		RollProperties.NUM_DICE_IDENTIFIER:
-			set_value_exact_popup.set_initial_value(roll_properties.NUM_DICE_DISPLAY_TITLE, roll_properties.get_num_dice())
-			set_value_exact_popup.modular_popup_center()
-		RollProperties.DICE_MODIFIER_IDENTIFIER:
-			set_value_exact_popup.set_initial_value(roll_properties.DICE_MODIFIER_DISPLAY_TITLE, roll_properties.get_modifier())
-			set_value_exact_popup.modular_popup_center()
-
-func _on_set_value_exact_popup_value_changed(value: int) -> void:
-	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
-	match currently_edited_property_identifier:
-		RollProperties.NUM_DICE_IDENTIFIER:
-			roll_properties.set_num_dice(value)
-			SimpleRollManager.set_roll_properties(roll_properties)
-		RollProperties.DICE_MODIFIER_IDENTIFIER:
-			roll_properties.set_modifier(value)
-			SimpleRollManager.set_roll_properties(roll_properties)
 
 func _on_add_dice_button_die_accepted(die: AbstractDie) -> void:
 	SimpleRollManager.add_die(die)

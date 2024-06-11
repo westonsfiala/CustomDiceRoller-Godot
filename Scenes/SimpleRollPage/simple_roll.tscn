@@ -3,10 +3,10 @@
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_dvlt6"]
 [ext_resource type="Script" path="res://Scenes/SimpleRollPage/Scripts/simple_roll.gd" id="1_tqmuk"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="2_gwd73"]
-[ext_resource type="PackedScene" uid="uid://c6j8433ge4v87" path="res://Scenes/Common/Buttons/up_down_buttons.tscn" id="3_6vjsp"]
+[ext_resource type="PackedScene" uid="uid://d3er8nhufefsi" path="res://Scenes/Common/Buttons/num_dice_up_down_buttons.tscn" id="3_1ni5t"]
+[ext_resource type="PackedScene" uid="uid://xw1h45p7sb8o" path="res://Scenes/Common/Buttons/modifier_up_down_buttons.tscn" id="4_10x8b"]
 [ext_resource type="PackedScene" uid="uid://cdqd62tcyenpp" path="res://Scenes/Common/Buttons/property_button.tscn" id="5_uf67h"]
 [ext_resource type="PackedScene" uid="uid://bjqaot0p6s5sg" path="res://Scenes/Common/Buttons/add_dice_button.tscn" id="6_c6xd2"]
-[ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_dbqdo"]
 [ext_resource type="PackedScene" uid="uid://biumolcfuvbmg" path="res://Scenes/Common/Popups/min_max_die_dialog.tscn" id="9_m3l4u"]
 [ext_resource type="PackedScene" uid="uid://8fqktuj4ct18" path="res://Scenes/Common/Popups/imbalanced_die_dialog.tscn" id="10_gns2o"]
 [ext_resource type="PackedScene" uid="uid://c2ckvnabmjnpp" path="res://Scenes/Common/Popups/word_die_dialog.tscn" id="11_0vw6k"]
@@ -56,16 +56,13 @@ layout_mode = 2
 theme = ExtResource("1_dvlt6")
 theme_override_constants/separation = 2
 
-[node name="NumDiceUpDown" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("3_6vjsp")]
+[node name="NumDiceUpDownButtons" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("3_1ni5t")]
 layout_mode = 2
 size_flags_horizontal = 3
-m_postfix = "d"
-m_disallow_zero = true
 
-[node name="ModifierUpDown" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("3_6vjsp")]
+[node name="ModifierUpDownButtons" parent="VerticalLayout/PropBar/UpDownButtonBar" instance=ExtResource("4_10x8b")]
 layout_mode = 2
 size_flags_horizontal = 3
-m_show_plus_minus = true
 
 [node name="PropertyButtonBar" type="HBoxContainer" parent="VerticalLayout/PropBar"]
 layout_mode = 2
@@ -81,9 +78,6 @@ layout_mode = 2
 layout_mode = 1
 text = "No Dice Added"
 
-[node name="SetValueExactPopup" parent="." instance=ExtResource("7_dbqdo")]
-visible = false
-
 [node name="MinMaxDieDialog" parent="." instance=ExtResource("9_m3l4u")]
 visible = false
 
@@ -93,15 +87,12 @@ visible = false
 [node name="WordDieDialog" parent="." instance=ExtResource("11_0vw6k")]
 visible = false
 
-[connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_changed"]
-[connection signal="value_pressed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDown" to="." method="_on_num_dice_up_down_value_pressed"]
-[connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown" to="." method="_on_modifier_up_down_value_changed"]
-[connection signal="value_pressed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDown" to="." method="_on_modifier_up_down_value_pressed"]
+[connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/NumDiceUpDownButtons" to="." method="_on_num_dice_up_down_value_changed"]
+[connection signal="value_changed" from="VerticalLayout/PropBar/UpDownButtonBar/ModifierUpDownButtons" to="." method="_on_modifier_up_down_value_changed"]
 [connection signal="properties_updated" from="VerticalLayout/PropBar/PropertyButtonBar/PropertyButton" to="." method="_on_property_button_properties_updated"]
 [connection signal="reset_properties" from="VerticalLayout/PropBar/PropertyButtonBar/PropertyButton" to="." method="_on_property_button_reset_properties"]
 [connection signal="die_accepted" from="VerticalLayout/PropBar/PropertyButtonBar/AddDiceButton" to="." method="_on_add_dice_button_die_accepted"]
 [connection signal="reset_dice" from="VerticalLayout/PropBar/PropertyButtonBar/AddDiceButton" to="." method="_on_add_dice_button_reset_dice"]
-[connection signal="value_changed" from="SetValueExactPopup" to="." method="_on_set_value_exact_popup_value_changed"]
 [connection signal="die_accepted" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_accepted"]
 [connection signal="die_removed" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_removed"]
 [connection signal="die_accepted" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_accepted"]
