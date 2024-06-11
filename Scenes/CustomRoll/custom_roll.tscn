@@ -1,16 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://0ym74w7gkfq6"]
+[gd_scene load_steps=6 format=3 uid="uid://0ym74w7gkfq6"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_iwoq1"]
 [ext_resource type="Script" path="res://Scenes/CustomRoll/Scripts/custom_roll.gd" id="2_vvdjh"]
 [ext_resource type="PackedScene" uid="uid://dwrsorst7xcde" path="res://Scenes/CustomRoll/custom_roll_list_item.tscn" id="3_8jxa0"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="4_00nb1"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="6_m1vkj"]
-[ext_resource type="PackedScene" uid="uid://gvqbnabor6pt" path="res://Scenes/Common/Popups/set_value_exact_popup.tscn" id="7_7gk0u"]
-[ext_resource type="PackedScene" uid="uid://biumolcfuvbmg" path="res://Scenes/Common/Popups/min_max_die_dialog.tscn" id="8_7q8lu"]
-[ext_resource type="PackedScene" uid="uid://8fqktuj4ct18" path="res://Scenes/Common/Popups/imbalanced_die_dialog.tscn" id="9_kgjh3"]
-[ext_resource type="PackedScene" uid="uid://c2ckvnabmjnpp" path="res://Scenes/Common/Popups/word_die_dialog.tscn" id="10_w2xhf"]
 
 [node name="CustomRoll" type="Control"]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,19 +29,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_iwoq1")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VerticalLayout"]
+[node name="MarginContainer" type="MarginContainer" parent="VerticalLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VerticalLayout/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_iwoq1")
 horizontal_scroll_mode = 0
 scroll_deadzone = 5
 
-[node name="CustomRollItemLayout" type="VBoxContainer" parent="VerticalLayout/ScrollContainer"]
+[node name="CustomRollItemLayout" type="VBoxContainer" parent="VerticalLayout/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="CustomRollListItem" parent="VerticalLayout/ScrollContainer/CustomRollItemLayout" instance=ExtResource("3_8jxa0")]
+[node name="CustomRollListItem" parent="VerticalLayout/MarginContainer/ScrollContainer/CustomRollItemLayout" instance=ExtResource("3_8jxa0")]
 layout_mode = 2
 
 [node name="AddSaveRollLayout" type="HBoxContainer" parent="VerticalLayout"]
@@ -70,23 +71,3 @@ text = "Roll
 [node name="NoDiceLabel" parent="." instance=ExtResource("6_m1vkj")]
 layout_mode = 1
 text = "No Dice Added"
-
-[node name="SetValueExactPopup" parent="." instance=ExtResource("7_7gk0u")]
-visible = false
-
-[node name="MinMaxDieDialog" parent="." instance=ExtResource("8_7q8lu")]
-visible = false
-
-[node name="ImbalancedDieDialog" parent="." instance=ExtResource("9_kgjh3")]
-visible = false
-
-[node name="WordDieDialog" parent="." instance=ExtResource("10_w2xhf")]
-visible = false
-
-[connection signal="value_changed" from="SetValueExactPopup" to="." method="_on_set_value_exact_popup_value_changed"]
-[connection signal="die_accepted" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_accepted"]
-[connection signal="die_removed" from="MinMaxDieDialog" to="." method="_on_min_max_die_dialog_die_removed"]
-[connection signal="die_accepted" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_accepted"]
-[connection signal="die_removed" from="ImbalancedDieDialog" to="." method="_on_imbalanced_die_dialog_die_removed"]
-[connection signal="die_accepted" from="WordDieDialog" to="." method="_on_word_die_dialog_die_accepted"]
-[connection signal="die_removed" from="WordDieDialog" to="." method="_on_word_die_dialog_die_removed"]

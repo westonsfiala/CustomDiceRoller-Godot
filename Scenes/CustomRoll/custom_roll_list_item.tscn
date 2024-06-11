@@ -1,14 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwrsorst7xcde"]
+[gd_scene load_steps=12 format=3 uid="uid://dwrsorst7xcde"]
 
 [ext_resource type="Script" path="res://Scenes/CustomRoll/Scripts/custom_roll_list_item.gd" id="1_afc7a"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="1_ijapc"]
 [ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="2_yceqa"]
 [ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_0t5vq"]
-[ext_resource type="Texture2D" uid="uid://b2xwvheni4p15" path="res://DicePNGs/white/d20.png" id="4_pohj4"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_05cnf"]
+[ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="5_stngl"]
+[ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="6_kqmv0"]
 [ext_resource type="PackedScene" uid="uid://d3er8nhufefsi" path="res://Scenes/Common/Buttons/num_dice_up_down_buttons.tscn" id="7_81xqu"]
 [ext_resource type="PackedScene" uid="uid://cdqd62tcyenpp" path="res://Scenes/Common/Buttons/property_button.tscn" id="7_g0s4d"]
 [ext_resource type="PackedScene" uid="uid://xw1h45p7sb8o" path="res://Scenes/Common/Buttons/modifier_up_down_buttons.tscn" id="8_3o5fp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fwcsu"]
+resource_local_to_scene = true
+shader = ExtResource("6_kqmv0")
+shader_parameter/TintColor = Color(1, 1, 1, 0)
 
 [node name="CustomRollListItem" type="HBoxContainer"]
 anchors_preset = 10
@@ -36,13 +42,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="DiceImage" type="TextureRect" parent="DieViewLayout"]
+[node name="DiceImage" parent="DieViewLayout" instance=ExtResource("5_stngl")]
+material = SubResource("ShaderMaterial_fwcsu")
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-size_flags_vertical = 3
-texture = ExtResource("4_pohj4")
-expand_mode = 1
-stretch_mode = 5
+use_setting_size = false
 
 [node name="DiceName" parent="DieViewLayout" instance=ExtResource("5_05cnf")]
 layout_mode = 2

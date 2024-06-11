@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cnb44mjrsn3rh" path="res://Scenes/AppBar/scene_button.tscn" id="3_b3p5b"]
 
 [node name="SceneScrollButtonBar" type="Control"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 57)
 layout_mode = 3
 anchors_preset = 14
 anchor_top = 0.5
@@ -66,6 +66,11 @@ scene_enum = 1
 layout_mode = 2
 size_flags_horizontal = 3
 scene_enum = 2
+
+[node name="CustomRollButton" parent="ColorRect/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_b3p5b")]
+layout_mode = 2
+size_flags_horizontal = 3
+scene_enum = 3
 
 [node name="SyncedScrollBar" type="HScrollBar" parent="ColorRect/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)

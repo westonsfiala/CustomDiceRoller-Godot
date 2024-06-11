@@ -52,3 +52,6 @@ func set_text_and_resize_y(bbcode: String) -> void:
 	text = bbcode
 	last_user_set_text = bbcode
 	reconfigure()
+
+func set_text_and_resize_y_centered(bbcode: String) -> void:
+	set_text_and_resize_y(str("[center]", bbcode, "[/center]"))

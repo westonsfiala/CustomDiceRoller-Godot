@@ -12,7 +12,7 @@ class_name CustomRollListItem
 @onready var modifier_updown : UpDownButtons = $PropertiesLayout/ModifierUpDownButtons
 @onready var property_button : PropertyButton = $PropertiesLayout/PropertyButton
 
-var dice : AbstractDie = SimpleRollManager.default_die
+var dice : AbstractDie = SimpleRollManager.default_min_max_die
 var roll_properties : RollProperties = RollProperties.new()
 var index : int = -1
 
@@ -23,7 +23,22 @@ signal remove_pressed(index: int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	SettingsManager.button_size_changed.connect(reconfigure)
+	reconfigure()
 	update_properties()
+
+func reconfigure() -> void:
+	dice_image.custom_minimum_size = Vector2.ONE * SettingsManager.get_button_size() * 2
+	call_deferred("reset_dice_size")
+	set_dice(dice)
+
+func reset_dice_size() -> void:
+	dice_image.size = dice_image.custom_minimum_size
+
+func set_dice(new_dice: AbstractDie) -> void:
+	dice = new_dice
+	dice_name.set_text_and_resize_y_centered(dice.name())
+	dice_image.configure_image(dice.texture())
 
 # Set the color without a signal.
 func set_roll_properties(properties: RollProperties) -> void:
@@ -65,12 +80,18 @@ func _on_property_button_reset_properties() -> void:
 
 # When the property button is updated, update our properties.
 func _on_property_button_properties_updated(properties: RollProperties) -> void:
-	pass # Replace with function body.
-
-# When the number of dice is updated, update our properties.
-func _on_modifier_up_down_value_changed(value:int) -> void:
-	pass # Replace with function body.
+	roll_properties = properties
+	emit_signal("properties_changed", index, roll_properties)
+	update_properties()
 
 # When the modifier is updated, update our properties.
+func _on_modifier_up_down_value_changed(value:int) -> void:
+	roll_properties.set_modifier(value)
+	emit_signal("properties_changed", index, roll_properties)
+	update_properties()
+
+# When the number of dice is updated, update our properties.
 func _on_num_dice_up_down_value_changed(value:int) -> void:
-	pass # Replace with function body.
+	roll_properties.set_num_dice(value)
+	emit_signal("properties_changed", index, roll_properties)
+	update_properties()

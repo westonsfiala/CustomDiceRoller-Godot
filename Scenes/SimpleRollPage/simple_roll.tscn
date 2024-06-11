@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c2ckvnabmjnpp" path="res://Scenes/Common/Popups/word_die_dialog.tscn" id="11_0vw6k"]
 
 [node name="SimpleRoll" type="Control"]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

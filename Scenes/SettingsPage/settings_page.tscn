@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cllolidrs3qsd" path="res://Scenes/SettingsPage/show_expected_result_setting.tscn" id="13_il1md"]
 
 [node name="SettingsPage" type="Control"]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
