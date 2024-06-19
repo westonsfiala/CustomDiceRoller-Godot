@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwrsorst7xcde"]
+[gd_scene load_steps=13 format=3 uid="uid://dwrsorst7xcde"]
 
 [ext_resource type="Script" path="res://Scenes/CustomRoll/Scripts/custom_roll_list_item.gd" id="1_afc7a"]
 [ext_resource type="PackedScene" uid="uid://btj8iwsaoid87" path="res://Scenes/Common/Buttons/settings_managed_texture_button.tscn" id="1_ijapc"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_qjgsk"]
 [ext_resource type="Texture2D" uid="uid://caj222uwxllqe" path="res://Icons/up-arrow.svg" id="2_yceqa"]
 [ext_resource type="Texture2D" uid="uid://bb1rdbn37n0gc" path="res://Icons/down-arrow.svg" id="3_0t5vq"]
 [ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="5_05cnf"]
@@ -14,6 +15,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fwcsu"]
 resource_local_to_scene = true
 shader = ExtResource("6_kqmv0")
+shader_parameter/NegateColor = null
 shader_parameter/TintColor = Color(1, 1, 1, 0)
 
 [node name="CustomRollListItem" type="HBoxContainer"]
@@ -21,51 +23,66 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 154.0
 grow_horizontal = 2
+theme = ExtResource("1_qjgsk")
 script = ExtResource("1_afc7a")
 
-[node name="UpDownButtonsLayout" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="UpButton" parent="UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
+[node name="UpDownButtonsLayout" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="UpButton" parent="VBoxContainer/HBoxContainer/UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
 layout_mode = 2
 texture_2d = ExtResource("2_yceqa")
 
-[node name="DeleteButton" parent="UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
+[node name="DeleteButton" parent="VBoxContainer/HBoxContainer/UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
 layout_mode = 2
 
-[node name="DownButton" parent="UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
+[node name="DownButton" parent="VBoxContainer/HBoxContainer/UpDownButtonsLayout" instance=ExtResource("1_ijapc")]
 layout_mode = 2
 texture_2d = ExtResource("3_0t5vq")
 
-[node name="DieViewLayout" type="VBoxContainer" parent="."]
+[node name="DieViewLayout" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="DiceImage" parent="DieViewLayout" instance=ExtResource("5_stngl")]
+[node name="DiceImage" parent="VBoxContainer/HBoxContainer/DieViewLayout" instance=ExtResource("5_stngl")]
 material = SubResource("ShaderMaterial_fwcsu")
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 use_setting_size = false
 
-[node name="DiceName" parent="DieViewLayout" instance=ExtResource("5_05cnf")]
+[node name="DiceName" parent="VBoxContainer/HBoxContainer/DieViewLayout" instance=ExtResource("5_05cnf")]
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="PropertiesLayout" type="VBoxContainer" parent="."]
+[node name="PropertiesLayout" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NumDiceUpDownButtons" parent="PropertiesLayout" instance=ExtResource("7_81xqu")]
+[node name="NumDiceUpDownButtons" parent="VBoxContainer/HBoxContainer/PropertiesLayout" instance=ExtResource("7_81xqu")]
 layout_mode = 2
 
-[node name="ModifierUpDownButtons" parent="PropertiesLayout" instance=ExtResource("8_3o5fp")]
+[node name="ModifierUpDownButtons" parent="VBoxContainer/HBoxContainer/PropertiesLayout" instance=ExtResource("8_3o5fp")]
 layout_mode = 2
 
-[node name="PropertyButton" parent="PropertiesLayout" instance=ExtResource("7_g0s4d")]
+[node name="PropertyButton" parent="VBoxContainer/HBoxContainer/PropertiesLayout" instance=ExtResource("7_g0s4d")]
 layout_mode = 2
 
-[connection signal="value_changed" from="PropertiesLayout/NumDiceUpDownButtons" to="." method="_on_num_dice_up_down_value_changed"]
-[connection signal="value_changed" from="PropertiesLayout/ModifierUpDownButtons" to="." method="_on_modifier_up_down_value_changed"]
-[connection signal="properties_updated" from="PropertiesLayout/PropertyButton" to="." method="_on_property_button_properties_updated"]
-[connection signal="reset_properties" from="PropertiesLayout/PropertyButton" to="." method="_on_property_button_reset_properties"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/UpDownButtonsLayout/UpButton" to="." method="_on_up_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/UpDownButtonsLayout/DeleteButton" to="." method="_on_remove_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/UpDownButtonsLayout/DownButton" to="." method="_on_down_button_pressed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/PropertiesLayout/NumDiceUpDownButtons" to="." method="_on_num_dice_up_down_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/PropertiesLayout/ModifierUpDownButtons" to="." method="_on_modifier_up_down_value_changed"]
+[connection signal="properties_updated" from="VBoxContainer/HBoxContainer/PropertiesLayout/PropertyButton" to="." method="_on_property_button_properties_updated"]
+[connection signal="reset_properties" from="VBoxContainer/HBoxContainer/PropertiesLayout/PropertyButton" to="." method="_on_property_button_reset_properties"]

@@ -69,7 +69,7 @@ func _ready() -> void:
 		if properties.is_advantage() or properties.is_disadvantage():
 			num_dice *= 2
 		dice_dict[die] = num_dice
-		total_dice += num_dice
+		total_dice += abs(num_dice)
 	
 	# If we have too many dice, modify it down to the correct amount.
 	if total_dice > max_allowed_dice:
@@ -77,18 +77,20 @@ func _ready() -> void:
 		for key : AbstractDie in dice_dict.keys():
 			var num_dice : int = int(dice_dict[key] * adjust_ratio)
 			dice_dict[key] = num_dice
-			onscreen_dice += num_dice
+			onscreen_dice += abs(num_dice)
 	else:
 		onscreen_dice = total_dice
 	
 	# Put some number of dice into the screen
 	for die : AbstractDie in dice_dict:
-		for count : int in dice_dict[die]:
+		var negate_color : bool = dice_dict[die] < 0
+		for count : int in abs(dice_dict[die]):
 			var physics_dice_node: PhysicsDice = preload("res://Scenes/DiceRoller/physics_dice.tscn").instantiate()
 			physics_dice_node.configure(die)
 			physics_dice_node.set_index(count, onscreen_dice)
 			physics_dice_array.push_back(physics_dice_node)
 			add_child(physics_dice_node)
+			physics_dice_node.set_negate_color(negate_color)
 			
 # Sets up all the bouncer bars 
 func setup_bumpers() -> void:

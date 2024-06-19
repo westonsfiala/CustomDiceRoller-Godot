@@ -15,11 +15,6 @@ func _ready() -> void:
 	SettingsManager.die_result_sounds_changed.connect(reconfigure_buttons)
 	reconfigure_buttons()
 
-func _process(_delta : float) -> void:
-	#if collapsible_section.size.y != die_result_container.size.y:
-		#print(str("collapsible size = ", collapsible_section.size.y, " : result_container size = ", die_result_container.size.y))
-	pass
-
 # Send to the settings manager that we have updated.
 func update_die_result_sounds() -> void:
 	# Just set it to iteself to trigger the signal. We already modified the array.

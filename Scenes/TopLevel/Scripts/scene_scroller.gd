@@ -24,7 +24,6 @@ func reconfigure() -> void:
 	var scene_size : float = SettingsManager.get_window_size().x
 	h_scroll_bar.max_value = scene_size * SettingsManager.get_num_scrollable_scenes()
 	h_scroll_bar.page = scene_size
-	print("Scene Size: ", scene_size)
 	
 func _on_scroll_ended() -> void:
 	call_deferred("snap_scroll_to_scene")

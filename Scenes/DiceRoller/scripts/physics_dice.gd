@@ -3,7 +3,7 @@ class_name PhysicsDice
 
 var inner_die : AbstractDie = SimpleRollManager.default_die
 
-@onready var dice_image : TextureRect = $CollisionShape2D/DiceImage
+@onready var dice_image : SettingsManagedDiceImage = $CollisionShape2D/DiceImage
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 @onready var press_spacer_timer : Timer = $PressSpacerTimer
 @onready var edge_collision_audio_player : AudioStreamPlayer = $EdgeCollisionAudioPlayer
@@ -20,6 +20,9 @@ var given_max_index : int = 1
 
 func configure(die: AbstractDie) -> void:
 	inner_die = die
+
+func set_negate_color(negate : bool) -> void:
+	dice_image.set_negate_color(negate)
 
 # Launch the dice into a random direction from a random position
 func _ready() -> void:

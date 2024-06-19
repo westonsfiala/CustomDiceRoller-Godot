@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://crsc6pqs0tnex"]
+
+[ext_resource type="PackedScene" uid="uid://cvvyt7shl1nu3" path="res://Scenes/Common/Buttons/long_press_button.tscn" id="1_ohqvj"]
+[ext_resource type="PackedScene" uid="uid://dy7ly2u0s0axc" path="res://Scenes/Common/DiceViews/settings_managed_dice_image.tscn" id="2_guxlq"]
+[ext_resource type="Script" path="res://Scenes/Common/Buttons/Scripts/die_selector_button.gd" id="2_kfs7u"]
+[ext_resource type="Shader" uid="uid://crebs61161mid" path="res://Resources/Shader/dice_tint_shader_script.tres" id="3_n6o8k"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="4_3fd2n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oejnj"]
+resource_local_to_scene = true
+shader = ExtResource("3_n6o8k")
+shader_parameter/NegateColor = null
+shader_parameter/TintColor = Color(1, 1, 1, 0)
+
+[node name="DieSelectorButton" instance=ExtResource("1_ohqvj")]
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 10
+anchor_bottom = 0.0
+grow_vertical = 1
+size_flags_vertical = 0
+script = ExtResource("2_kfs7u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiceImage" parent="HBoxContainer" index="0" instance=ExtResource("2_guxlq")]
+material = SubResource("ShaderMaterial_oejnj")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+use_setting_size = false
+
+[node name="DiceName" parent="HBoxContainer" index="1" instance=ExtResource("4_3fd2n")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

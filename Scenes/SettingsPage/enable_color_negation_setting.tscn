@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://homj1eypjaev"]
+
+[ext_resource type="PackedScene" uid="uid://dg3ikms7niw6" path="res://Scenes/SettingsPage/collapsible_setting_base.tscn" id="1_ruvnk"]
+[ext_resource type="Script" path="res://Scenes/SettingsPage/Scripts/enable_color_negation_setting.gd" id="2_mub83"]
+[ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="3_wb0vh"]
+[ext_resource type="PackedScene" uid="uid://4y6g5enookh6" path="res://Scenes/Common/Labels/settings_managed_richtextlabel.tscn" id="4_mxjhs"]
+
+[node name="EnableColorNegationSetting" instance=ExtResource("1_ruvnk")]
+script = ExtResource("2_mub83")
+
+[node name="SettingName" parent="TopLevelContainer/TitleBarContainer/CollapseExpandButton" index="1"]
+text = "Enable Color Negation"
+
+[node name="EnableDisableContainer" type="HBoxContainer" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="EnableButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer" index="0" instance=ExtResource("3_wb0vh")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/EnableButton" index="1" instance=ExtResource("4_mxjhs")]
+layout_mode = 1
+text = "[center]Enable[/center]"
+
+[node name="DisableButton" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer" index="1" instance=ExtResource("3_wb0vh")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ToggleButton"
+toggle_mode = true
+text = ""
+
+[node name="SettingsManagedRichTextLabel" parent="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/DisableButton" index="1" instance=ExtResource("4_mxjhs")]
+layout_mode = 1
+text = "[center]Disable[/center]"
+
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/EnableButton" to="." method="_on_enable_button_pressed"]
+[connection signal="pressed" from="TopLevelContainer/CollapsibleContainer/CollapsibleSection/EnableDisableContainer/DisableButton" to="." method="_on_disable_button_pressed"]

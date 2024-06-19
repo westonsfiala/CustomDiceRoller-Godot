@@ -35,11 +35,17 @@ func dice_updated() -> void:
 		dice_node.configure(die)
 	refresh_no_dice()
 
+# Update the properties to reflect what is atually set.
 func properties_updated() -> void:
 	var roll_properties : RollProperties = SimpleRollManager.get_roll_properties()
-	num_dice_buttons.set_value(roll_properties.get_num_dice())
+	var num_dice : int = roll_properties.get_num_dice()
+	num_dice_buttons.set_value(num_dice)
 	modifier_buttons.set_value(roll_properties.get_modifier())
 	property_button.set_properties(roll_properties)
+
+	# If we have negative dice, set the color of the dice to reflect that.
+	for node : Node in dice_grid.get_children():
+		node.set_negate_color(num_dice < 0)
 
 # Roll the die that was clicked and set the results
 func roll_die(die: AbstractDie) -> void:

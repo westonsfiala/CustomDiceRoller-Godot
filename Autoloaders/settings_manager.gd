@@ -9,6 +9,9 @@ var dice_tint_color : Color = DICE_TINT_COLOR_DEFAULT
 const DICE_THEME_DEFAULT: DieImageManager.THEME = DieImageManager.THEME.WHITE
 var dice_theme : DieImageManager.THEME = DICE_THEME_DEFAULT
 
+const COLOR_NEGATION_ENABLED_DEFAULT: bool = true
+var color_negation_enabled : bool = COLOR_NEGATION_ENABLED_DEFAULT
+
 enum ROLL_CONTAINER_SIZE { FULLSCREEN, DIALOG, MINIMAL }
 const ROLL_CONTAINER_SIZE_DEFAULT: ROLL_CONTAINER_SIZE = ROLL_CONTAINER_SIZE.FULLSCREEN
 var roll_container_size : ROLL_CONTAINER_SIZE = ROLL_CONTAINER_SIZE_DEFAULT
@@ -81,6 +84,7 @@ func save_state() -> void:
 	save_dict['dice_size'] = dice_size
 	save_dict['dice_tint_color'] = dice_tint_color.to_html()
 	save_dict['dice_theme'] = dice_theme
+	save_dict['color_negation_enabled'] = color_negation_enabled
 	save_dict['roll_container_size'] = roll_container_size
 	save_dict['animations_enabled'] = animations_enabled
 	save_dict['min_max_highlight_enabled'] = min_max_highlight_enabled
@@ -133,6 +137,7 @@ func load_state() -> void:
 		set_dice_size(save_data.get('dice_size', DICE_SIZE_DEFAULT))
 		set_dice_tint_color(Color.from_string(save_data.get('dice_tint_color', Color.WHITE.to_html()), Color.WHITE))
 		set_dice_theme(save_data.get('dice_theme', DICE_THEME_DEFAULT))
+		set_color_negation_enabled(save_data.get('color_negation_enabled', COLOR_NEGATION_ENABLED_DEFAULT))
 		set_roll_container_size(save_data.get('roll_container_size', ROLL_CONTAINER_SIZE_DEFAULT))
 		set_animations_enabled(save_data.get('animations_enabled', ANIMATIONS_ENABLED_DEFAULT))
 		set_min_max_highlight_enabled(save_data.get('min_max_highlight_enabled', MIN_MAX_HIGHLIGHT_ENABLED_DEFAULT))
@@ -235,6 +240,19 @@ func set_dice_theme(new_dice_theme: DieImageManager.THEME) -> void:
 # Gets the dice theme
 func get_dice_theme() -> DieImageManager.THEME:
 	return dice_theme
+	
+# Signal for saying that the color negation enabled setting has changed
+signal color_negation_enabled_changed()
+	
+# Enables or disables the color negation and emits the color_negation_enabled_changed signal
+func set_color_negation_enabled(enabled: bool) -> void:
+	color_negation_enabled = enabled
+	emit_signal("color_negation_enabled_changed")
+	save_state()
+	
+# Gets if color negation are enabled
+func get_color_negation_enabled() -> bool:
+	return color_negation_enabled
 	
 # Signal for saying that the roll container sizing has changed
 signal roll_container_size_changed()

@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_iwoq1"]
 [ext_resource type="Script" path="res://Scenes/CustomRoll/Scripts/custom_roll.gd" id="2_vvdjh"]
-[ext_resource type="PackedScene" uid="uid://dwrsorst7xcde" path="res://Scenes/CustomRoll/custom_roll_list_item.tscn" id="3_8jxa0"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="4_00nb1"]
+[ext_resource type="PackedScene" uid="uid://cyafym7lccrr8" path="res://Scenes/Common/Popups/die_selector_popup.tscn" id="6_a2i36"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="6_m1vkj"]
 
 [node name="CustomRoll" type="Control"]
@@ -40,13 +40,11 @@ theme = ExtResource("1_iwoq1")
 horizontal_scroll_mode = 0
 scroll_deadzone = 5
 
-[node name="CustomRollItemLayout" type="VBoxContainer" parent="VerticalLayout/MarginContainer/ScrollContainer"]
+[node name="CustomRollItemContainer" type="VBoxContainer" parent="VerticalLayout/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="CustomRollListItem" parent="VerticalLayout/MarginContainer/ScrollContainer/CustomRollItemLayout" instance=ExtResource("3_8jxa0")]
-layout_mode = 2
+theme = ExtResource("1_iwoq1")
 
 [node name="AddSaveRollLayout" type="HBoxContainer" parent="VerticalLayout"]
 layout_mode = 2
@@ -71,3 +69,10 @@ text = "Roll
 [node name="NoDiceLabel" parent="." instance=ExtResource("6_m1vkj")]
 layout_mode = 1
 text = "No Dice Added"
+
+[node name="DieSelectorPopup" parent="." instance=ExtResource("6_a2i36")]
+visible = false
+
+[connection signal="pressed" from="VerticalLayout/AddSaveRollLayout/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="VerticalLayout/AddSaveRollLayout/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VerticalLayout/AddSaveRollLayout/RollButton" to="." method="_on_roll_button_pressed"]

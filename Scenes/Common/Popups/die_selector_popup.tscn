@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyafym7lccrr8"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_y2vbr"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/die_selector_popup.gd" id="2_u765c"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="3_hyls2"]
+[ext_resource type="PackedScene" uid="uid://crsc6pqs0tnex" path="res://Scenes/Common/Buttons/die_selector_button.tscn" id="4_byrg7"]
+
+[node name="DieSelectorPopup" instance=ExtResource("1_y2vbr")]
+script = ExtResource("2_u765c")
+
+[node name="ContentPanel" parent="." index="1"]
+custom_minimum_size = Vector2(400, 750)
+
+[node name="DiceScroller" type="ScrollContainer" parent="ContentPanel/Margins" index="0"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("3_hyls2")
+
+[node name="DiceButtonContainer" type="VBoxContainer" parent="ContentPanel/Margins/DiceScroller" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_hyls2")
+theme_override_constants/separation = 2
+
+[node name="DieSelectorButton" parent="ContentPanel/Margins/DiceScroller/DiceButtonContainer" index="0" instance=ExtResource("4_byrg7")]
+layout_mode = 2

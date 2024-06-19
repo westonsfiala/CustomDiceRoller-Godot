@@ -193,9 +193,12 @@ func contains_die(die: AbstractDie) -> bool:
 # Adds a die to a roll. If the die already exists, fails.
 # Returns if the die has been added.
 func add_die_to_roll(die: AbstractDie, properties: RollProperties) -> bool:
-	if(contains_die(die)):
-		return false
-	var new_pair : DiePropertyPair = DiePropertyPair.new().configure(die.duplicate(true), properties.duplicate(true))
+	var die_to_add : AbstractDie = die.duplicate(true)
+	var loop_index : int = 1
+	while(contains_die(die_to_add)):
+		die_to_add.m_name = str(die.m_name, "_", loop_index)
+		loop_index += 1
+	var new_pair : DiePropertyPair = DiePropertyPair.new().configure(die_to_add, properties.duplicate(true))
 	m_die_prop_array.push_back(new_pair)
 	return true
 	

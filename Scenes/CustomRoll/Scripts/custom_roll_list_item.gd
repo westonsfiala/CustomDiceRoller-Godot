@@ -1,22 +1,23 @@
 extends HBoxContainer
 class_name CustomRollListItem
 
-@onready var up_button : Button = $UpDownButtonsLayout/UpButton
-@onready var delete_button : Button = $UpDownButtonsLayout/DeleteButton
-@onready var down_button : Button = $UpDownButtonsLayout/DownButton
+@onready var up_button : Button = $VBoxContainer/HBoxContainer/UpDownButtonsLayout/UpButton
+@onready var delete_button : Button = $VBoxContainer/HBoxContainer/UpDownButtonsLayout/DeleteButton
+@onready var down_button : Button = $VBoxContainer/HBoxContainer/UpDownButtonsLayout/DownButton
 
-@onready var dice_image : TextureRect = $DieViewLayout/DiceImage
-@onready var dice_name : SettingsManagedRichTextLabel = $DieViewLayout/DiceName
+@onready var dice_image : SettingsManagedDiceImage = $VBoxContainer/HBoxContainer/DieViewLayout/DiceImage
+@onready var dice_name : SettingsManagedRichTextLabel = $VBoxContainer/HBoxContainer/DieViewLayout/DiceName
 
-@onready var num_dice_updown : UpDownButtons = $PropertiesLayout/NumDiceUpDownButtons
-@onready var modifier_updown : UpDownButtons = $PropertiesLayout/ModifierUpDownButtons
-@onready var property_button : PropertyButton = $PropertiesLayout/PropertyButton
+@onready var num_dice_updown : UpDownButtons = $VBoxContainer/HBoxContainer/PropertiesLayout/NumDiceUpDownButtons
+@onready var modifier_updown : UpDownButtons = $VBoxContainer/HBoxContainer/PropertiesLayout/ModifierUpDownButtons
+@onready var property_button : PropertyButton = $VBoxContainer/HBoxContainer/PropertiesLayout/PropertyButton
 
-var dice : AbstractDie = SimpleRollManager.default_min_max_die
-var roll_properties : RollProperties = RollProperties.new()
+@onready var separator : HSeparator = $VBoxContainer/HSeparator
+
+var die_prop_pair : DiePropertyPair = DiePropertyPair.new().configure(SimpleRollManager.default_min_max_die, RollProperties.new())
 var index : int = -1
 
-signal properties_changed(index: int, properties: RollProperties)
+signal properties_changed(index: int, die_prop_pair: DiePropertyPair)
 signal up_pressed(index: int)
 signal down_pressed(index: int)
 signal remove_pressed(index: int)
@@ -30,26 +31,29 @@ func _ready() -> void:
 func reconfigure() -> void:
 	dice_image.custom_minimum_size = Vector2.ONE * SettingsManager.get_button_size() * 2
 	call_deferred("reset_dice_size")
-	set_dice(dice)
+	set_die_property_pair(die_prop_pair)
 
 func reset_dice_size() -> void:
 	dice_image.size = dice_image.custom_minimum_size
 
-func set_dice(new_dice: AbstractDie) -> void:
-	dice = new_dice
-	dice_name.set_text_and_resize_y_centered(dice.name())
-	dice_image.configure_image(dice.texture())
-
-# Set the color without a signal.
-func set_roll_properties(properties: RollProperties) -> void:
-	roll_properties = properties
+# Set the new die prop pair without a signal.
+func set_die_property_pair(new_die_prop_pair: DiePropertyPair) -> void:
+	die_prop_pair = new_die_prop_pair
+	dice_name.set_text_and_resize_y_centered(die_prop_pair.m_die.name())
+	dice_image.configure_image(die_prop_pair.m_die.texture())
 	update_properties()
 
 # Set update the property buttons without a signal.
 func update_properties() -> void:
-	num_dice_updown.set_value(roll_properties.get_num_dice())
-	modifier_updown.set_value(roll_properties.get_modifier())
-	property_button.set_properties(roll_properties)
+	var num_dice: int = die_prop_pair.m_roll_properties.get_num_dice()
+	dice_image.set_negate_color(num_dice < 0)
+	num_dice_updown.set_value(num_dice)
+	modifier_updown.set_value(die_prop_pair.m_roll_properties.get_modifier())
+	property_button.set_properties(die_prop_pair.m_roll_properties)
+
+# External method for showing/hiding the separator.
+func set_separator_visible(separator_visibility: bool) -> void:
+	separator.visible = separator_visibility
 	
 # Set the index to the new index.
 func set_index(new_index: int) -> void:
@@ -74,24 +78,24 @@ func remove_button_helper() -> void:
 
 # When property reset is pressed, reset our properties.
 func _on_property_button_reset_properties() -> void:
-	roll_properties = RollProperties.new()
-	emit_signal("properties_changed", index, roll_properties)
-	update_properties()
+	die_prop_pair.m_roll_properties = RollProperties.new()
+	send_update()
 
 # When the property button is updated, update our properties.
 func _on_property_button_properties_updated(properties: RollProperties) -> void:
-	roll_properties = properties
-	emit_signal("properties_changed", index, roll_properties)
-	update_properties()
+	die_prop_pair.m_roll_properties = properties
+	send_update()
 
 # When the modifier is updated, update our properties.
 func _on_modifier_up_down_value_changed(value:int) -> void:
-	roll_properties.set_modifier(value)
-	emit_signal("properties_changed", index, roll_properties)
-	update_properties()
+	die_prop_pair.m_roll_properties.set_modifier(value)
+	send_update()
 
 # When the number of dice is updated, update our properties.
 func _on_num_dice_up_down_value_changed(value:int) -> void:
-	roll_properties.set_num_dice(value)
-	emit_signal("properties_changed", index, roll_properties)
+	die_prop_pair.m_roll_properties.set_num_dice(value)
+	send_update()
+
+func send_update() -> void:
+	emit_signal("properties_changed", index, die_prop_pair)
 	update_properties()

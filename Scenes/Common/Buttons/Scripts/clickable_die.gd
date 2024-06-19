@@ -4,7 +4,7 @@ class_name ClickableDie
 var m_die : AbstractDie = SimpleRollManager.get_default_die()
 
 @onready var die_name : SettingsManagedRichTextLabel = $LongPressButton/VerticalContainer/DieName
-@onready var die_image : TextureRect = $LongPressButton/VerticalContainer/DieImage
+@onready var die_image : SettingsManagedDiceImage = $LongPressButton/VerticalContainer/DieImage
 
 var tween : Tween
 
@@ -42,6 +42,10 @@ func reconfigure() -> void:
 	tween.tween_property(die_image, 'position', Vector2.ZERO, SettingsManager.LONG_PRESS_DELAY).from(start_position)
 	tween.tween_property(die_image, 'scale', Vector2.ONE, SettingsManager.LONG_PRESS_DELAY).from(Vector2.ZERO)
 	tween.tween_property(die_image, 'rotation_degrees', 0, SettingsManager.LONG_PRESS_DELAY).from(-360)
+
+# Negate the color if asked to do so.
+func set_negate_color(negate : bool) -> void:
+	die_image.set_negate_color(negate)
 
 func _on_long_press_button_short_pressed() -> void:
 	print(str(m_die.name(), " pressed"))
