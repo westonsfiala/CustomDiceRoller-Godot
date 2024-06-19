@@ -18,6 +18,7 @@ anchors_preset = 10
 anchor_bottom = 0.0
 grow_vertical = 1
 size_flags_vertical = 0
+flat = true
 script = ExtResource("2_kfs7u")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." index="1"]
