@@ -53,7 +53,7 @@ var font_size_huge : int = FONT_SIZE_HUGE_DEFAULT
 
 const LONG_PRESS_DELAY : float = 0.5
 
-enum SCENE {SETTINGS, HISTORY, SIMPLE_ROLL, CUSTOM_ROLL, NUM_SCENES}
+enum SCENE {SETTINGS, HISTORY, SIMPLE_ROLL, CUSTOM_ROLL, SAVED_ROLL, NUM_SCENES}
 
 var default_label_settings : LabelSettings = preload("res://Resources/Styles/normal_label.tres")
 
@@ -181,6 +181,8 @@ func get_scene_name(scene_enum: SCENE) -> String:
 			return "Simple Roll"
 		SCENE.CUSTOM_ROLL: 
 			return "Custom Roll"
+		SCENE.SAVED_ROLL: 
+			return "Saved Roll"
 		_:
 			return "TEMP"
 			

@@ -83,4 +83,5 @@ func _on_roll_button_pressed() -> void:
 	var die_prop_pairs : Array[DiePropertyPair] = CustomRollManager.get_die_prop_pairs()
 	if die_prop_pairs.size() == 0:
 		return
-	RollManager.custom_roll(CustomRollManager.get_die_prop_pairs())
+	var custom_roll : CustomRollModel = CustomRollModel.new().configure("Custom Roll", "", die_prop_pairs)
+	RollManager.custom_roll(custom_roll)

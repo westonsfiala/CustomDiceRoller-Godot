@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CustomRollModel" load_steps=2 format=3 uid="uid://jcuhnf6dfwsm"]
+
+[ext_resource type="Script" path="res://Resources/Roll/Scripts/custom_roll_model.gd" id="1_3ohtu"]
+
+[resource]
+script = ExtResource("1_3ohtu")
+m_die_prop_pairs = Array[Resource("res://Resources/Roll/Scripts/die_property_pair.gd")]([])
+m_name = ""
+m_category = ""

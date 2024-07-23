@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://wgiuyjr6bltu"]
+[gd_scene load_steps=8 format=3 uid="uid://wgiuyjr6bltu"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_ifnbb"]
 [ext_resource type="Script" path="res://Scenes/TopLevel/Scripts/scene_scroller.gd" id="1_vdmet"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://5vm2iatgmrxs" path="res://Scenes/SimpleRollPage/simple_roll.tscn" id="3_21u8g"]
 [ext_resource type="PackedScene" uid="uid://c5xbwdmgaf0pv" path="res://Scenes/SettingsPage/settings_page.tscn" id="3_ly35x"]
 [ext_resource type="PackedScene" uid="uid://0ym74w7gkfq6" path="res://Scenes/CustomRoll/custom_roll.tscn" id="6_oxyeb"]
+[ext_resource type="PackedScene" uid="uid://bofesf34vuoci" path="res://Scenes/SavedRollPage/saved_roll.tscn" id="7_k58sm"]
 
 [node name="SceneScroller" type="ScrollContainer"]
 anchors_preset = 15
@@ -46,6 +47,10 @@ layout_mode = 2
 size_flags_vertical = 1
 
 [node name="CustomRoll" parent="SceneContainer" instance=ExtResource("6_oxyeb")]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 2
+
+[node name="SavedRoll" parent="SceneContainer" instance=ExtResource("7_k58sm")]
 custom_minimum_size = Vector2(750, 0)
 layout_mode = 2
 

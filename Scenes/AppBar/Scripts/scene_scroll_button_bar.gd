@@ -7,12 +7,14 @@ extends Control
 @onready var history_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/HistoryButton
 @onready var simple_roll_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/SimpleRollButton
 @onready var custom_roll_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/CustomRollButton
+@onready var saved_roll_button : SceneButton = $ColorRect/ScrollContainer/VBoxContainer/HBoxContainer/SavedRollButton
 
 func _ready() -> void:
 	settings_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
 	history_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
 	simple_roll_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
 	custom_roll_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
+	saved_roll_button.scene_navigation_pressed.connect(SettingsManager.set_scrolled_scene)
 	SettingsManager.scene_scroll_value_changed.connect(set_scroll_value_deferred)
 	SettingsManager.window_size_changed.connect(reconfigure)
 	reconfigure()

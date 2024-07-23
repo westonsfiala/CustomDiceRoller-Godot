@@ -98,9 +98,9 @@ func simple_roll(die : AbstractDie, props : RollProperties) -> void:
 	add_to_history(roll_results)
 
 # Add a custom roll to the history.
-func custom_roll(custom_dice : Array[DiePropertyPair]) -> void:
-	var new_roll : Roll = Roll.new().configure("Custom Roll", "")
-	for die_prop : DiePropertyPair in custom_dice:
+func custom_roll(custom_dice : CustomRollModel) -> void:
+	var new_roll : Roll = Roll.new().configure(custom_dice.m_name, custom_dice.m_category)
+	for die_prop : DiePropertyPair in custom_dice.m_die_prop_pairs:
 		new_roll.add_die_to_roll(die_prop.m_die, die_prop.m_roll_properties)
 	var roll_results : RollResults = new_roll.roll()
 	add_to_history(roll_results)

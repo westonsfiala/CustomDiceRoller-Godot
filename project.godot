@@ -29,6 +29,7 @@ DieImageManager="*res://Autoloaders/die_image_manager.gd"
 DieLoaderFactory="*res://Autoloaders/die_loader_factory.gd"
 SoundManager="*res://Autoloaders/sound_manager.gd"
 CustomRollManager="*res://Autoloaders/custom_roll_manager.gd"
+SavedRollManager="*res://Autoloaders/saved_roll_manager.gd"
 
 [debug]
 
