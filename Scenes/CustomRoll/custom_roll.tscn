@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://0ym74w7gkfq6"]
+[gd_scene load_steps=7 format=3 uid="uid://0ym74w7gkfq6"]
 
 [ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="1_iwoq1"]
 [ext_resource type="Script" path="res://Scenes/CustomRoll/Scripts/custom_roll.gd" id="2_vvdjh"]
 [ext_resource type="PackedScene" uid="uid://d34hkypk02kw1" path="res://Scenes/Common/Buttons/settings_managed_text_button.tscn" id="4_00nb1"]
 [ext_resource type="PackedScene" uid="uid://cyafym7lccrr8" path="res://Scenes/Common/Popups/die_selector_popup.tscn" id="6_a2i36"]
 [ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="6_m1vkj"]
+[ext_resource type="PackedScene" uid="uid://cx16tyw7bdtgr" path="res://Scenes/Common/Popups/save_roll_popup.tscn" id="6_umxeb"]
 
 [node name="CustomRoll" type="Control"]
 clip_contents = true
@@ -73,6 +74,10 @@ text = "No Dice Added"
 [node name="DieSelectorPopup" parent="." instance=ExtResource("6_a2i36")]
 visible = false
 
+[node name="SaveRollPopup" parent="." instance=ExtResource("6_umxeb")]
+visible = false
+
 [connection signal="pressed" from="VerticalLayout/AddSaveRollLayout/AddButton" to="." method="_on_add_button_pressed"]
 [connection signal="pressed" from="VerticalLayout/AddSaveRollLayout/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="VerticalLayout/AddSaveRollLayout/RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="roll_saved" from="SaveRollPopup" to="." method="_on_save_roll_popup_roll_saved"]

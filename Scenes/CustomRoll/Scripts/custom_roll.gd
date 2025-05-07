@@ -5,6 +5,7 @@ class_name CustomRoll
 @onready var add_button : SettingsManagedTextButton = $VerticalLayout/AddSaveRollLayout/AddButton
 @onready var custom_roll_item_container : VBoxContainer = $VerticalLayout/MarginContainer/ScrollContainer/CustomRollItemContainer
 @onready var die_selector_popup : DieSelectorPopup = $DieSelectorPopup
+@onready var save_roll_popup : SaveRollPopup = $SaveRollPopup
 
 # Connect to the settings manager and setup the scene with all of our dice
 func _ready() -> void:
@@ -77,7 +78,12 @@ func _on_add_button_pressed() -> void:
 	die_selector_popup.modular_popup(add_button.global_position)
 
 func _on_save_button_pressed() -> void:
-	pass # Replace with function body.
+	var die_prop_pairs : Array[DiePropertyPair] = CustomRollManager.get_die_prop_pairs()
+	if die_prop_pairs.size() == 0:
+		return
+	var custom_roll : CustomRollModel = CustomRollModel.new().configure("Custom Roll", "", die_prop_pairs)
+	save_roll_popup.set_initial_value(custom_roll)
+	save_roll_popup.modular_popup_center()
 
 func _on_roll_button_pressed() -> void:
 	var die_prop_pairs : Array[DiePropertyPair] = CustomRollManager.get_die_prop_pairs()
@@ -85,3 +91,7 @@ func _on_roll_button_pressed() -> void:
 		return
 	var custom_roll : CustomRollModel = CustomRollModel.new().configure("Custom Roll", "", die_prop_pairs)
 	RollManager.custom_roll(custom_roll)
+
+# When the save roll popup is saved, save the roll to the saved roll manager
+func _on_save_roll_popup_roll_saved(saved_roll:CustomRollModel) -> void:
+	pass # Replace with function body.

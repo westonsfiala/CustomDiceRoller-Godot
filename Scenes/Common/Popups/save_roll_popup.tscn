@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://cx16tyw7bdtgr"]
+
+[ext_resource type="PackedScene" uid="uid://bcryfkqxdni45" path="res://Scenes/Common/Popups/popup_base.tscn" id="1_m8nh4"]
+[ext_resource type="Script" path="res://Scenes/Common/Popups/scripts/save_roll_popup.gd" id="2_0dqsd"]
+[ext_resource type="PackedScene" uid="uid://2jcpfncolph" path="res://Scenes/Common/Labels/settings_managed_label.tscn" id="3_h2ile"]
+[ext_resource type="Theme" uid="uid://cfefgu8jbb3xm" path="res://Resources/Styles/default_theme.tres" id="4_p77rb"]
+[ext_resource type="PackedScene" uid="uid://duvmnbujl5for" path="res://Scenes/Common/Buttons/accept_cancel_buttons.tscn" id="5_nidw0"]
+
+[node name="SaveRollPopup" instance=ExtResource("1_m8nh4")]
+size = Vector2i(500, 750)
+script = ExtResource("2_0dqsd")
+
+[node name="ContentPanel" parent="." index="1"]
+custom_minimum_size = Vector2(500, 300)
+
+[node name="VerticalLayout" type="VBoxContainer" parent="ContentPanel/Margins" index="0"]
+layout_mode = 2
+alignment = 1
+
+[node name="SaveRollLabel" parent="ContentPanel/Margins/VerticalLayout" index="0" instance=ExtResource("3_h2ile")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 6
+text = "Save Roll"
+horizontal_alignment = 0
+
+[node name="RollNameLineEditLayout" type="HBoxContainer" parent="ContentPanel/Margins/VerticalLayout" index="1"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_p77rb")
+
+[node name="RollNameLabel" parent="ContentPanel/Margins/VerticalLayout/RollNameLineEditLayout" index="0" instance=ExtResource("3_h2ile")]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Roll Name"
+horizontal_alignment = 0
+
+[node name="RollNameLineEdit" type="LineEdit" parent="ContentPanel/Margins/VerticalLayout/RollNameLineEditLayout" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TEMP"
+virtual_keyboard_type = 2
+select_all_on_focus = true
+
+[node name="RollCategoryLineEditLayout" type="HBoxContainer" parent="ContentPanel/Margins/VerticalLayout" index="2"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_p77rb")
+
+[node name="CategoryNameLabel" parent="ContentPanel/Margins/VerticalLayout/RollCategoryLineEditLayout" index="0" instance=ExtResource("3_h2ile")]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Category"
+horizontal_alignment = 0
+
+[node name="CategoryLineEdit" type="LineEdit" parent="ContentPanel/Margins/VerticalLayout/RollCategoryLineEditLayout" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TEMP"
+virtual_keyboard_type = 2
+select_all_on_focus = true
+
+[node name="AcceptCancelButtons" parent="ContentPanel/Margins/VerticalLayout" index="3" instance=ExtResource("5_nidw0")]
+layout_mode = 2
+
+[connection signal="text_changed" from="ContentPanel/Margins/VerticalLayout/RollNameLineEditLayout/RollNameLineEdit" to="." method="_on_roll_name_line_edit_text_changed"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VerticalLayout/RollNameLineEditLayout/RollNameLineEdit" to="." method="_on_roll_name_line_edit_text_submitted"]
+[connection signal="text_submitted" from="ContentPanel/Margins/VerticalLayout/RollCategoryLineEditLayout/CategoryLineEdit" to="." method="_on_category_line_edit_text_submitted"]
+[connection signal="accept_pressed" from="ContentPanel/Margins/VerticalLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_accept_pressed"]
+[connection signal="cancel_pressed" from="ContentPanel/Margins/VerticalLayout/AcceptCancelButtons" to="." method="_on_accept_cancel_buttons_cancel_pressed"]

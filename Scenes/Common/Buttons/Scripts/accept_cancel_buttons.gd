@@ -6,6 +6,7 @@ class_name AcceptCancelButtons
 
 signal accept_pressed()
 signal cancel_pressed()
+signal override_pressed()
 
 func _on_cancel_button_pressed() -> void:
 	emit_signal("cancel_pressed")
